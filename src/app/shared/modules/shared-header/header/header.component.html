@@ -15,6 +15,44 @@
     </div>
     <div class="d-flex align-items-center justify-content-center nav-user-icon online">
       <img src="assets/image/profile-pic.png" alt="">
+      <ul class="notification">
+        <li class="d-flex algin-items-center">
+          <div class="notification__left">
+            <img src="assets/84c1252b0128cf769639.jpg" alt="">
+          </div>
+          <div class="notification__main">
+            <h4>Huỳnh Gia Huy</h4>
+            <p>See your profile</p>
+          </div>
+        </li>
+        <div class="separate-line"></div>
+        <li class="d-flex algin-items-center">
+          <div class="notification__left">
+            <div class="notification__left-wrapper">
+              <mat-icon>settings</mat-icon>
+            </div>
+          </div>
+          <div class="notification__main">
+            <h4>Setting</h4>
+          </div>
+          <div class="notification__right">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </div>
+        </li>
+        <li class="d-flex algin-items-center" [routerLink]="['//login']">
+          <div class="notification__left">
+            <div class="notification__left-wrapper">
+              <mat-icon>exit_to_app</mat-icon>
+            </div>
+          </div>
+          <div class="notification__main">
+            <h4>Log out</h4>
+          </div>
+          <div class="notification__right">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 

@@ -1,0 +1,292 @@
+<h2 class="text-center d-flex align-items-center" mat-dialog-title>
+  <mat-icon *ngIf="selectedPage != 'create'" class="circle-bg" style="padding: 20px; font-size: 2.2rem"
+    (click)="backToPrePage()">
+    keyboard_backspace</mat-icon><b class="m-auto">{{getDialogTitle(selectedPage)}}</b>
+</h2>
+<mat-dialog-content class="mat-typography" class="p-0" style=" overflow-y: hidden">
+  <!-- Switch Case -->
+  <ng-container [ngSwitch]="selectedPage">
+    <!-- Create Post -->
+    <ng-container *ngSwitchCase="'create'">
+      <ng-container *ngTemplateOutlet="createPost"></ng-container>
+    </ng-container>
+    <!-- Edit All -->
+    <ng-container *ngSwitchCase="'edit'">
+      <ng-container *ngTemplateOutlet="editAll"></ng-container>
+    </ng-container>
+    <!-- Audience -->
+    <ng-container *ngSwitchCase="'audience'">
+      <ng-container *ngTemplateOutlet="selectedAudience"></ng-container>
+    </ng-container>
+    <!-- Tag People -->
+    <ng-container *ngSwitchCase="'tag'">
+      <ng-container *ngTemplateOutlet="tagPeopleTemplateRef"></ng-container>
+    </ng-container>
+    <!-- Feeling -->
+    <ng-container *ngSwitchCase="'feeling'">
+      <ng-container *ngTemplateOutlet="feelingTemplateRef"></ng-container>
+    </ng-container>
+    <!-- Location -->
+    <ng-container *ngSwitchCase="'location'">
+      <ng-container *ngTemplateOutlet="locationTemplateRef"></ng-container>
+    </ng-container>
+
+  </ng-container>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial disabled>Post</button>
+</mat-dialog-actions>
+<!-- PREPARE TEMPLATE -->
+<!-- CREATE POST -->
+<ng-template #createPost>
+  <div class="create-post-container">
+    <div class="post-info">
+      <div class="user-profile">
+        <img src="assets/image/profile-pic.png" alt="">
+        <div class="">
+          <h3>John Nichoson</h3>
+          <small style="cursor: pointer;" (click)="onClickSelectAudience()"
+            class="d-flex justify-content-center align-items-center user-profile--audience">
+            <mat-icon>public</mat-icon>Public <mat-icon>keyboard_arrow_down</mat-icon>
+          </small>
+          <img src="" alt="">
+        </div>
+      </div>
+    </div>
+    <textarea class="post-content" matInput placeholder="What's your mind, Join?"></textarea>
+    <div class="post_image-container" *ngIf="isSelectedFileButton" (click)="onClickPhotoInput($event)">
+      <button class="post__close-button" (click)="closePostImageContainerEle($event)">
+        <mat-icon>close</mat-icon>
+      </button>
+      <div id="post_image" class="post_image d-flex justify-content-center align-items-center" appImageDrag
+        (files)="filesDropped($event)" *ngIf="uploadedFiles.length == 0; else fileSelected">
+        <div class="post-icon__container">
+          <mat-icon>library_add</mat-icon>
+          <h3>Add Photos/Videos <p for="">or drag and drop</p>
+          </h3>
+        </div>
+      </div>
+      <ng-template #fileSelected>
+        <div class="post_image" appImageDrag (files)="filesDropped($event)">
+          <div class="post_image--overlay">
+            <div class="post_image--modifier-container">
+              <button mat-raised-button (click)="onClickEditAll()">Edit All</button>
+              <button mat-raised-button (click)="onClickPhotoInput($event)">Add Photos/Videos</button>
+            </div>
+          </div>
+          <ng-container *ngFor="let file of uploadedFiles">
+            <img class="post_image--image" [src]="file.url" [alt]="file.file.name">
+          </ng-container>
+        </div>
+      </ng-template>
+    </div>
+    <div class="post-add">
+      <h3 for="">Add to your post</h3>
+      <img class="edit-all__item__img" [src]="image">
+      <ul>
+        <li (click)="isSelectedFileButton=!isSelectedFileButton">
+          <label for="photo">
+            <mat-icon class="post-add--green">photo</mat-icon>
+          </label>
+        </li>
+        <li (click)="onClickTagPeople()">
+          <label for="">
+            <mat-icon class="post-add--blue">person_add</mat-icon>
+          </label>
+        </li>
+        <li (click)="onClickFeeling()">
+          <label for="">
+            <mat-icon class="post-add--yellow">tag_faces</mat-icon>
+          </label>
+        </li>
+        <li (click)="onClickLocation()">
+          <label for="">
+            <mat-icon class="post-add--orange"> location_on</mat-icon>
+          </label>
+        </li>
+        <li>
+          <label for="">
+            <mat-icon class="post-add--grey">more_horiz</mat-icon>
+          </label>
+        </li>
+      </ul>
+    </div>
+  </div>
+</ng-template>
+<!-- END CREATE POST -->
+<!-- EDIT ALL -->
+<ng-template #editAll>
+  <div class="edit-all-container">
+    <ng-container *ngIf="uploadedFiles.length != 0; else notItem">
+      <ul class="edit-all-list">
+        <li class="edit-all__item" *ngFor="let file of uploadedFiles; index as i">
+          <div class="edit-all__item__wrap-img" [style.background-image]="file.backgroundImageValue">
+            <img class="edit-all__item__img" [src]="file.url" [alt]="file.file.name">
+          </div>
+          <div class="edit-all__item__caption-box">
+            <input type="text" placeholder="Caption">
+          </div>
+          <div class="edit-all__item__action-box">
+            <button mat-raised-button class="">
+              Edit
+            </button>
+            <button>
+              <mat-icon (click)="removeFile(i)">close</mat-icon>
+            </button>
+          </div>
+        </li>
+      </ul>
+    </ng-container>
+    <ng-template #notItem>
+      dont have item
+    </ng-template>
+  </div>
+</ng-template>
+<!-- END EDIT ALL -->
+<!-- AUDIENCE -->
+<ng-template #selectedAudience>
+  <div class="audience audience-container">
+    <ul>
+      <div>
+        <label for="">Who can see your post?</label>
+        <p>Your post will show up in Feed, on your profile and in search results.</p>
+      </div>
+      <section>
+        <mat-radio-group>
+          <ng-container *ngFor="let audience of audiences">
+            <li>
+              <div class="audience_icon">
+                <mat-icon>{{audience.icon}}</mat-icon>
+              </div>
+              <div class="audience_status">
+                <h3 class="m-0" style="font-weight: 600;">{{audience.title}}</h3>
+                <p class="m-0">{{audience.subTitle}}</p>
+              </div>
+              <div class="audience_type">
+                <ng-container *ngIf="audience.type == 'radio'; else notRadio">
+                  <mat-radio-button class="example-margin" style="margin-left: 2px" [value]="audience.icon">
+                  </mat-radio-button>
+                </ng-container>
+                <ng-template #notRadio>
+                  <mat-icon>keyboard_arrow_right</mat-icon>
+                </ng-template>
+              </div>
+            </li>
+          </ng-container>
+        </mat-radio-group>
+      </section>
+    </ul>
+  </div>
+</ng-template>
+<!-- TAG PEOPLE -->
+<ng-template #tagPeopleTemplateRef>
+  <div class="tag">
+    <div class="tag__search">
+      <div class="search-box">
+        <mat-icon class="search-box__icon">search</mat-icon>
+        <input type="text">
+      </div>
+      <button>Done</button>
+    </div>
+    <div class="tag__people">
+      <ng-container *ngIf="!foundPeoples; else notFoundPeople">
+        <ul class="people-tagged-list" *ngIf="taggedPeoples.length != 0">
+          <p for="" class="people-title">Tagged</p>
+          <div class="people-tagged-item--wrapper">
+            <ng-container *ngFor="let taggedPeople of taggedPeoples; index as i">
+              <li class="people-tagged-item">
+                <p>{{taggedPeople}}</p>
+                <button (click)="removeTag(i)">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </li>
+            </ng-container>
+          </div>
+        </ul>
+        <ul class="people-list">
+          <p for="" class="people-title">Search</p>
+          <li (click)="tagPeople()" class="people-item">
+            <img src="assets/84c1252b0128cf769639 - Copy.jpg">
+            <p>Huynh Gia Huy</p>
+          </li>
+          <li class="people-item">
+            <img src="assets/84c1252b0128cf769639 - Copy.jpg">
+            <p>Huynh Gia Huy</p>
+          </li>
+          <li class="people-item">
+            <img src="assets/84c1252b0128cf769639 - Copy.jpg">
+            <p>Huynh Gia Huy</p>
+          </li>
+        </ul>
+      </ng-container>
+    </div>
+    <ng-template #notFoundPeople>
+      <div class="text-center">Not people found</div>
+    </ng-template>
+  </div>
+</ng-template>
+<!-- END TAG PEOPLE -->
+<!-- FEELING -->
+<ng-template #feelingTemplateRef>
+  <div class="feeling-container">
+    <ul class="feeling-header">
+      <li>
+        Feelings
+      </li>
+    </ul>
+    <div class="feeling-body">
+      <div class="feeling-search">
+        <div class="search-box" style="margin: auto">
+          <mat-icon class="search-box__icon">search</mat-icon>
+          <input type="text">
+        </div>
+      </div>
+      <ul class="feeling-lists">
+        <ng-container *ngFor="let feeling of feelings">
+          <li class="feeling-items" (click)="selectFeeling(feeling)">
+            <div class="feeling-icon-wrapper">
+              <img [src]="feeling.url" alt="">
+            </div>
+            <p>{{feeling.name}}</p>
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+  </div>
+</ng-template>
+<!-- LOCATION -->
+<ng-template #locationTemplateRef>
+  <div class="location">
+    <div class="location__map" *ngIf="location; else notLocation">
+      <agm-map [latitude]="location.lat || 0" [longitude]="location.lng" [zoom]="zoom" [disableDefaultUI]="true">
+      </agm-map>
+      <button class="close_map_btn" (click)="closeLocation()">
+        <mat-icon class="">close</mat-icon>
+      </button>
+    </div>
+    <ng-template #notLocation>
+      <div class="location__search">
+        <div class="search-box" style="margin: auto">
+          <mat-icon class="search-box__icon">search</mat-icon>
+          <input type="text">
+        </div>
+      </div>
+      <ul class="location__list">
+        <ng-container *ngFor="let l of locations; index as i">
+          <li class="location__item" (click)="selectLocation(i)">
+            <div class="location__wrapper-icon">
+              <mat-icon>location_on</mat-icon>
+            </div>
+            <div class="location__name">
+              <h4>{{l['label'].name}}</h4>
+              <p>{{l['label'].subName}}</p>
+            </div>
+          </li>
+        </ng-container>
+      </ul>
+    </ng-template>
+  </div>
+</ng-template>
+<input #photoInput type="file" multiple accept="image/*" hidden (change)="selectedFile($event)">
+<button></button>
