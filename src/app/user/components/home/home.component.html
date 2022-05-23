@@ -137,33 +137,17 @@
         <div class="separate-line"></div>
         <ul class="react-btn">
           <li class="like-btn">
-            <mat-icon>thumb_up</mat-icon>
+            <div #oldEle>
+              <mat-icon #oldEle>thumb_up</mat-icon>
+            </div>
             <p>Like</p>
             <div class="react-box">
-              <img
-                src="https://scontent.xx.fbcdn.net/m1/v/t6/An8ODe1zojZFxtkCySvD_PWHUfwwSqPRWxNfZiVRQtoYgVOHHeQxpmcNcbugcbUbDZvtBac7oXZXBUiZytVCug9oYjJureLV-72SKTQ6uZ2bhOnT.png?ccb=10-5&oh=00_AT_bfcz4k5d9vic52C5Ho_5EBR-btosnXSISkYC0rVa5bQ&oe=628472D1&_nc_sid=55e238"
-                alt="">
-              <img
-                src="https://scontent.xx.fbcdn.net/m1/v/t6/An99VM2rY72PntBkBOhM_HWN8idYosYnOIsewbGZjMdDq3EUPhv-6VKQFZWM35g4zgPaQ8JMtsjyZm9r4nQSBLpZJm1XHoyq9mDTUQ9Zq-HthVWH.png?ccb=10-5&oh=00_AT800j7sgyW4cGR-RzGuYZBoclRv9nEgLnmaM6amg32XOA&oe=628407F8&_nc_sid=55e238"
-                alt="">
-              <img
-                src="https://scontent.xx.fbcdn.net/m1/v/t6/An-XPBmopWw6qcoRXNJ62ttat7JnWkwC5lGxM1yMHoXVpnkQMTc_AToevZowBIrrvsMyHpSQGrtdAcCQ9IorFar_xvy2Fz2Fe7gr1XXtznu2EWowFFhK.png?ccb=10-5&oh=00_AT_Ewt7DWvDC7jxKJ5wbBldSjLXraDcu9pp0OXgk17o_pQ&oe=62845702&_nc_sid=55e238"
-                alt="">
-              <img
-                src="https://scontent.xx.fbcdn.net/m1/v/t6/An85IUb4K3Vsz4ZBK3nmyxV5BvrVvAeb_MN1EyK1cShAmOKb2DKKSw6TbYCRpwvQRkegvSStvh9s942eRgsl2tFL70Ec7AvPlHjLW8b9HY6bFbXN.png?ccb=10-5&oh=00_AT_nLSxTMcUuzuzWroQgEAMjerakFv6L96MRmYKq3lM32w&oe=62853AFB&_nc_sid=55e238"
-                alt="">
-              <img
-                src="https://scontent.xx.fbcdn.net/m1/v/t6/An_H9Ao3uEtYIkxo3s8MpEyxcsLlzHZfZDm1sesMSGAjp0YZVuOIAips1GGtdXE2udIWRwccuPsURKBQxOp6FmgFieVvVawBonRlxh0jKuAABSdGpFw.png?ccb=10-5&oh=00_AT9WEu5WyMzRoDNkB5LFVe4zfOhI0HIClhzxkK8AXu375A&oe=6285904F&_nc_sid=55e238"
-                alt="">
-              <img
-                src="https://scontent.xx.fbcdn.net/m1/v/t6/An_owOs-UygJd2yvWszP_T3PnMzukn-wa2jnUrpbfAe-TWiVkC0kn11oCbOXjHh2hXNliWJVDSndPV2L6Nxp2bRzVrkkieVQmgZWQG0iTvoL699o7FQD.png?ccb=10-5&oh=00_AT_on0BxW3y3BsyUWzF3sX98lRS-9I5I6Zc2lXrsWAkmwg&oe=62859660&_nc_sid=55e238"
-                alt="">
-              <img
-                src="https://scontent.xx.fbcdn.net/m1/v/t6/An_p_GtpsNlMDEVWZr4AFkAPfy93yAtD7360WrRMu5gFpN7XbkK_meoLOk_IRtI6AwKbiv7I2VaOaEwXhFWrmpNNBG8nKmGs_rVlYdUOYpXf3bWw.png?ccb=10-5&oh=00_AT_Xhclck1nbd7jjTOgEhPvTUssqV1lL68fcTY3QetiSYg&oe=62847CCC&_nc_sid=55e238"
-                alt="">
+              <ng-container *ngFor="let src of srcReactIcons">
+                <img #newEle [src]="src" alt="" (click)="selectNewReact(oldEle,newEle)">
+              </ng-container>
             </div>
           </li>
-          <li class="comment-btn">
+          <li class="comment-btn" (click)="isShowComments=!isShowComments">
             <mat-icon> chat_bubble</mat-icon>
             <p>Comment</p>
           </li>
@@ -172,207 +156,210 @@
             <p>Share</p>
           </li>
         </ul>
-        <div class="separate-line"></div>
       </div>
-      <div class="post-row">
-        <img class="comment-avatar" src="assets/image/profile-pic.png" alt="">
-        <div class="comment-box d-flex">
-          <input #post1Id type="text" placeholder="Write a comment...">
-          <div class="activate">
-            <i class="emoji"></i>
-            <i class="photo"></i>
-            <i class="sticker"></i>
+      <ng-container *ngIf="isShowComments">
+        <div class="separate-line"></div>
+        <div class="post-row">
+          <img class="comment-avatar" src="assets/image/profile-pic.png" alt="">
+          <div class="comment-box d-flex">
+            <input #post1Id type="text" placeholder="Write a comment...">
+            <div class="activate">
+              <i class="emoji"></i>
+              <i class="photo"></i>
+              <i class="sticker"></i>
+            </div>
           </div>
         </div>
-      </div>
-      <ul class="comment-list">
-        <ng-container *ngFor="let comment of commentTree;index as i">
-          <ul class="comment-item">
-            <div class="comment-line parent-comment-line">
-            </div>
-            <!-- Comment detail of parent-->
-            <div class="comment-detail comment-parent">
-              <div class="comment-detail__wrapper-img comment-detail__wrapper-img--parent">
-                <img src="assets/image/profile-pic.png" alt="">
+        <ul class="comment-list">
+          <ng-container *ngFor="let comment of commentTree;index as i">
+            <ul class="comment-item">
+              <div class="comment-line parent-comment-line">
               </div>
-              <div class="comment-detail__wrapper-info">
-                <div class="comment-detail__info comment-detail__info--background">
-                  <p class="">{{comment.user.name}}</p>
-                  <div class="comment-content">{{comment.content}}</div>
+              <!-- Comment detail of parent-->
+              <div class="comment-detail comment-parent">
+                <div class="comment-detail__wrapper-img comment-detail__wrapper-img--parent">
+                  <img src="assets/image/profile-pic.png" alt="">
                 </div>
-                <div class="comment-detail__react">
-                  <div class="comment-detail__react-like">
-                    <div class="react-like">Like
-                    </div>
-                    <div class="react-box">
-                      <img
-                        src="https://scontent.xx.fbcdn.net/m1/v/t6/An8ODe1zojZFxtkCySvD_PWHUfwwSqPRWxNfZiVRQtoYgVOHHeQxpmcNcbugcbUbDZvtBac7oXZXBUiZytVCug9oYjJureLV-72SKTQ6uZ2bhOnT.png?ccb=10-5&oh=00_AT_bfcz4k5d9vic52C5Ho_5EBR-btosnXSISkYC0rVa5bQ&oe=628472D1&_nc_sid=55e238"
-                        alt="">
-                      <img
-                        src="https://scontent.xx.fbcdn.net/m1/v/t6/An99VM2rY72PntBkBOhM_HWN8idYosYnOIsewbGZjMdDq3EUPhv-6VKQFZWM35g4zgPaQ8JMtsjyZm9r4nQSBLpZJm1XHoyq9mDTUQ9Zq-HthVWH.png?ccb=10-5&oh=00_AT800j7sgyW4cGR-RzGuYZBoclRv9nEgLnmaM6amg32XOA&oe=628407F8&_nc_sid=55e238"
-                        alt="">
-                      <img
-                        src="https://scontent.xx.fbcdn.net/m1/v/t6/An-XPBmopWw6qcoRXNJ62ttat7JnWkwC5lGxM1yMHoXVpnkQMTc_AToevZowBIrrvsMyHpSQGrtdAcCQ9IorFar_xvy2Fz2Fe7gr1XXtznu2EWowFFhK.png?ccb=10-5&oh=00_AT_Ewt7DWvDC7jxKJ5wbBldSjLXraDcu9pp0OXgk17o_pQ&oe=62845702&_nc_sid=55e238"
-                        alt="">
-                      <img
-                        src="https://scontent.xx.fbcdn.net/m1/v/t6/An85IUb4K3Vsz4ZBK3nmyxV5BvrVvAeb_MN1EyK1cShAmOKb2DKKSw6TbYCRpwvQRkegvSStvh9s942eRgsl2tFL70Ec7AvPlHjLW8b9HY6bFbXN.png?ccb=10-5&oh=00_AT_nLSxTMcUuzuzWroQgEAMjerakFv6L96MRmYKq3lM32w&oe=62853AFB&_nc_sid=55e238"
-                        alt="">
-                      <img
-                        src="https://scontent.xx.fbcdn.net/m1/v/t6/An_H9Ao3uEtYIkxo3s8MpEyxcsLlzHZfZDm1sesMSGAjp0YZVuOIAips1GGtdXE2udIWRwccuPsURKBQxOp6FmgFieVvVawBonRlxh0jKuAABSdGpFw.png?ccb=10-5&oh=00_AT9WEu5WyMzRoDNkB5LFVe4zfOhI0HIClhzxkK8AXu375A&oe=6285904F&_nc_sid=55e238"
-                        alt="">
-                      <img
-                        src="https://scontent.xx.fbcdn.net/m1/v/t6/An_owOs-UygJd2yvWszP_T3PnMzukn-wa2jnUrpbfAe-TWiVkC0kn11oCbOXjHh2hXNliWJVDSndPV2L6Nxp2bRzVrkkieVQmgZWQG0iTvoL699o7FQD.png?ccb=10-5&oh=00_AT_on0BxW3y3BsyUWzF3sX98lRS-9I5I6Zc2lXrsWAkmwg&oe=62859660&_nc_sid=55e238"
-                        alt="">
-                      <img
-                        src="https://scontent.xx.fbcdn.net/m1/v/t6/An_p_GtpsNlMDEVWZr4AFkAPfy93yAtD7360WrRMu5gFpN7XbkK_meoLOk_IRtI6AwKbiv7I2VaOaEwXhFWrmpNNBG8nKmGs_rVlYdUOYpXf3bWw.png?ccb=10-5&oh=00_AT_Xhclck1nbd7jjTOgEhPvTUssqV1lL68fcTY3QetiSYg&oe=62847CCC&_nc_sid=55e238"
-                        alt="">
-                    </div>
+                <div class="comment-detail__wrapper-info">
+                  <div class="comment-detail__info comment-detail__info--background">
+                    <p class="">{{comment.user.name}}</p>
+                    <div class="comment-content">{{comment.content}}</div>
                   </div>
-                  <div class="comment-detail__react-reply" (click)="onClickRepUser(comment.user.name, rootReplyInput)">
-                    Reply</div>
-                  <label class="comment-detail__react-time">11h</label>
+                  <div class="comment-detail__react">
+                    <div class="comment-detail__react-like">
+                      <div class="react-like">Like
+                      </div>
+                      <div class="react-box">
+                        <img
+                          src="https://scontent.xx.fbcdn.net/m1/v/t6/An8ODe1zojZFxtkCySvD_PWHUfwwSqPRWxNfZiVRQtoYgVOHHeQxpmcNcbugcbUbDZvtBac7oXZXBUiZytVCug9oYjJureLV-72SKTQ6uZ2bhOnT.png?ccb=10-5&oh=00_AT_bfcz4k5d9vic52C5Ho_5EBR-btosnXSISkYC0rVa5bQ&oe=628472D1&_nc_sid=55e238"
+                          alt="">
+                        <img
+                          src="https://scontent.xx.fbcdn.net/m1/v/t6/An99VM2rY72PntBkBOhM_HWN8idYosYnOIsewbGZjMdDq3EUPhv-6VKQFZWM35g4zgPaQ8JMtsjyZm9r4nQSBLpZJm1XHoyq9mDTUQ9Zq-HthVWH.png?ccb=10-5&oh=00_AT800j7sgyW4cGR-RzGuYZBoclRv9nEgLnmaM6amg32XOA&oe=628407F8&_nc_sid=55e238"
+                          alt="">
+                        <img
+                          src="https://scontent.xx.fbcdn.net/m1/v/t6/An-XPBmopWw6qcoRXNJ62ttat7JnWkwC5lGxM1yMHoXVpnkQMTc_AToevZowBIrrvsMyHpSQGrtdAcCQ9IorFar_xvy2Fz2Fe7gr1XXtznu2EWowFFhK.png?ccb=10-5&oh=00_AT_Ewt7DWvDC7jxKJ5wbBldSjLXraDcu9pp0OXgk17o_pQ&oe=62845702&_nc_sid=55e238"
+                          alt="">
+                        <img
+                          src="https://scontent.xx.fbcdn.net/m1/v/t6/An85IUb4K3Vsz4ZBK3nmyxV5BvrVvAeb_MN1EyK1cShAmOKb2DKKSw6TbYCRpwvQRkegvSStvh9s942eRgsl2tFL70Ec7AvPlHjLW8b9HY6bFbXN.png?ccb=10-5&oh=00_AT_nLSxTMcUuzuzWroQgEAMjerakFv6L96MRmYKq3lM32w&oe=62853AFB&_nc_sid=55e238"
+                          alt="">
+                        <img
+                          src="https://scontent.xx.fbcdn.net/m1/v/t6/An_H9Ao3uEtYIkxo3s8MpEyxcsLlzHZfZDm1sesMSGAjp0YZVuOIAips1GGtdXE2udIWRwccuPsURKBQxOp6FmgFieVvVawBonRlxh0jKuAABSdGpFw.png?ccb=10-5&oh=00_AT9WEu5WyMzRoDNkB5LFVe4zfOhI0HIClhzxkK8AXu375A&oe=6285904F&_nc_sid=55e238"
+                          alt="">
+                        <img
+                          src="https://scontent.xx.fbcdn.net/m1/v/t6/An_owOs-UygJd2yvWszP_T3PnMzukn-wa2jnUrpbfAe-TWiVkC0kn11oCbOXjHh2hXNliWJVDSndPV2L6Nxp2bRzVrkkieVQmgZWQG0iTvoL699o7FQD.png?ccb=10-5&oh=00_AT_on0BxW3y3BsyUWzF3sX98lRS-9I5I6Zc2lXrsWAkmwg&oe=62859660&_nc_sid=55e238"
+                          alt="">
+                        <img
+                          src="https://scontent.xx.fbcdn.net/m1/v/t6/An_p_GtpsNlMDEVWZr4AFkAPfy93yAtD7360WrRMu5gFpN7XbkK_meoLOk_IRtI6AwKbiv7I2VaOaEwXhFWrmpNNBG8nKmGs_rVlYdUOYpXf3bWw.png?ccb=10-5&oh=00_AT_Xhclck1nbd7jjTOgEhPvTUssqV1lL68fcTY3QetiSYg&oe=62847CCC&_nc_sid=55e238"
+                          alt="">
+                      </div>
+                    </div>
+                    <div class="comment-detail__react-reply"
+                      (click)="onClickRepUser(comment.user.name, rootReplyInput)">
+                      Reply</div>
+                    <label class="comment-detail__react-time">11h</label>
+                  </div>
                 </div>
               </div>
-            </div>
-            <!-- Child comment -->
-            <ng-container *ngFor="let childComment of comment.comments">
-              <ul class="comment-item comment-child">
-                <div class="comment-line child-comment-line"></div>
-                <div class="comment-detail">
-                  <div class="comment-detail__wrapper-img comment-detail__wrapper-img--child">
-                    <div class="comment-link"></div>
-                    <img src="assets/image/profile-pic.png" alt="">
-                  </div>
-                  <div class="comment-detail__wrapper-info">
-                    <div class="comment-detail__info comment-detail__info--background">
-                      <p class="">{{childComment.user.name}}</p>
-                      <div class="comment-content">{{childComment.content}}</div>
-                    </div>
-                    <div class="comment-detail__react">
-                      <div class="comment-detail__react-like">Like
-                        <div class="react-box">
-                          <img
-                            src="https://scontent.xx.fbcdn.net/m1/v/t6/An8ODe1zojZFxtkCySvD_PWHUfwwSqPRWxNfZiVRQtoYgVOHHeQxpmcNcbugcbUbDZvtBac7oXZXBUiZytVCug9oYjJureLV-72SKTQ6uZ2bhOnT.png?ccb=10-5&oh=00_AT_bfcz4k5d9vic52C5Ho_5EBR-btosnXSISkYC0rVa5bQ&oe=628472D1&_nc_sid=55e238"
-                            alt="">
-                          <img
-                            src="https://scontent.xx.fbcdn.net/m1/v/t6/An99VM2rY72PntBkBOhM_HWN8idYosYnOIsewbGZjMdDq3EUPhv-6VKQFZWM35g4zgPaQ8JMtsjyZm9r4nQSBLpZJm1XHoyq9mDTUQ9Zq-HthVWH.png?ccb=10-5&oh=00_AT800j7sgyW4cGR-RzGuYZBoclRv9nEgLnmaM6amg32XOA&oe=628407F8&_nc_sid=55e238"
-                            alt="">
-                          <img
-                            src="https://scontent.xx.fbcdn.net/m1/v/t6/An-XPBmopWw6qcoRXNJ62ttat7JnWkwC5lGxM1yMHoXVpnkQMTc_AToevZowBIrrvsMyHpSQGrtdAcCQ9IorFar_xvy2Fz2Fe7gr1XXtznu2EWowFFhK.png?ccb=10-5&oh=00_AT_Ewt7DWvDC7jxKJ5wbBldSjLXraDcu9pp0OXgk17o_pQ&oe=62845702&_nc_sid=55e238"
-                            alt="">
-                          <img
-                            src="https://scontent.xx.fbcdn.net/m1/v/t6/An85IUb4K3Vsz4ZBK3nmyxV5BvrVvAeb_MN1EyK1cShAmOKb2DKKSw6TbYCRpwvQRkegvSStvh9s942eRgsl2tFL70Ec7AvPlHjLW8b9HY6bFbXN.png?ccb=10-5&oh=00_AT_nLSxTMcUuzuzWroQgEAMjerakFv6L96MRmYKq3lM32w&oe=62853AFB&_nc_sid=55e238"
-                            alt="">
-                          <img
-                            src="https://scontent.xx.fbcdn.net/m1/v/t6/An_H9Ao3uEtYIkxo3s8MpEyxcsLlzHZfZDm1sesMSGAjp0YZVuOIAips1GGtdXE2udIWRwccuPsURKBQxOp6FmgFieVvVawBonRlxh0jKuAABSdGpFw.png?ccb=10-5&oh=00_AT9WEu5WyMzRoDNkB5LFVe4zfOhI0HIClhzxkK8AXu375A&oe=6285904F&_nc_sid=55e238"
-                            alt="">
-                          <img
-                            src="https://scontent.xx.fbcdn.net/m1/v/t6/An_owOs-UygJd2yvWszP_T3PnMzukn-wa2jnUrpbfAe-TWiVkC0kn11oCbOXjHh2hXNliWJVDSndPV2L6Nxp2bRzVrkkieVQmgZWQG0iTvoL699o7FQD.png?ccb=10-5&oh=00_AT_on0BxW3y3BsyUWzF3sX98lRS-9I5I6Zc2lXrsWAkmwg&oe=62859660&_nc_sid=55e238"
-                            alt="">
-                          <img
-                            src="https://scontent.xx.fbcdn.net/m1/v/t6/An_p_GtpsNlMDEVWZr4AFkAPfy93yAtD7360WrRMu5gFpN7XbkK_meoLOk_IRtI6AwKbiv7I2VaOaEwXhFWrmpNNBG8nKmGs_rVlYdUOYpXf3bWw.png?ccb=10-5&oh=00_AT_Xhclck1nbd7jjTOgEhPvTUssqV1lL68fcTY3QetiSYg&oe=62847CCC&_nc_sid=55e238"
-                            alt="">
-                        </div>
-                      </div>
-                      <div class="comment-detail__react-reply"
-                        (click)="onClickRepUser(childComment.user.name, childReplyInput)">Reply</div>
-                      <label class="comment-detail__react-time">11h</label>
-                    </div>
-                  </div>
-                </div>
-                <!-- Leaf child comment -->
-                <ng-container *ngFor="let c of childComment.comments">
-                  <li class="comment-item comment-sibling">
-                    <div class="comment-detail">
-                      <div class="comment-detail__wrapper-img comment-detail__wrapper-img--child">
-                        <div class="comment-link"></div>
-                        <img src="assets/image/profile-pic.png" alt="">
-                      </div>
-                      <div class="comment-detail__wrapper-info">
-                        <div class="comment-detail__info comment-detail__info--background">
-                          <p class="">{{c.user.name}}</p>
-                          <div class="comment-content">{{c.content}}</div>
-                        </div>
-                        <div class="comment-detail__react">
-                          <div class="comment-detail__react-like">Like
-                            <div class="react-box">
-                              <img
-                                src="https://scontent.xx.fbcdn.net/m1/v/t6/An8ODe1zojZFxtkCySvD_PWHUfwwSqPRWxNfZiVRQtoYgVOHHeQxpmcNcbugcbUbDZvtBac7oXZXBUiZytVCug9oYjJureLV-72SKTQ6uZ2bhOnT.png?ccb=10-5&oh=00_AT_bfcz4k5d9vic52C5Ho_5EBR-btosnXSISkYC0rVa5bQ&oe=628472D1&_nc_sid=55e238"
-                                alt="">
-                              <img
-                                src="https://scontent.xx.fbcdn.net/m1/v/t6/An99VM2rY72PntBkBOhM_HWN8idYosYnOIsewbGZjMdDq3EUPhv-6VKQFZWM35g4zgPaQ8JMtsjyZm9r4nQSBLpZJm1XHoyq9mDTUQ9Zq-HthVWH.png?ccb=10-5&oh=00_AT800j7sgyW4cGR-RzGuYZBoclRv9nEgLnmaM6amg32XOA&oe=628407F8&_nc_sid=55e238"
-                                alt="">
-                              <img
-                                src="https://scontent.xx.fbcdn.net/m1/v/t6/An-XPBmopWw6qcoRXNJ62ttat7JnWkwC5lGxM1yMHoXVpnkQMTc_AToevZowBIrrvsMyHpSQGrtdAcCQ9IorFar_xvy2Fz2Fe7gr1XXtznu2EWowFFhK.png?ccb=10-5&oh=00_AT_Ewt7DWvDC7jxKJ5wbBldSjLXraDcu9pp0OXgk17o_pQ&oe=62845702&_nc_sid=55e238"
-                                alt="">
-                              <img
-                                src="https://scontent.xx.fbcdn.net/m1/v/t6/An85IUb4K3Vsz4ZBK3nmyxV5BvrVvAeb_MN1EyK1cShAmOKb2DKKSw6TbYCRpwvQRkegvSStvh9s942eRgsl2tFL70Ec7AvPlHjLW8b9HY6bFbXN.png?ccb=10-5&oh=00_AT_nLSxTMcUuzuzWroQgEAMjerakFv6L96MRmYKq3lM32w&oe=62853AFB&_nc_sid=55e238"
-                                alt="">
-                              <img
-                                src="https://scontent.xx.fbcdn.net/m1/v/t6/An_H9Ao3uEtYIkxo3s8MpEyxcsLlzHZfZDm1sesMSGAjp0YZVuOIAips1GGtdXE2udIWRwccuPsURKBQxOp6FmgFieVvVawBonRlxh0jKuAABSdGpFw.png?ccb=10-5&oh=00_AT9WEu5WyMzRoDNkB5LFVe4zfOhI0HIClhzxkK8AXu375A&oe=6285904F&_nc_sid=55e238"
-                                alt="">
-                              <img
-                                src="https://scontent.xx.fbcdn.net/m1/v/t6/An_owOs-UygJd2yvWszP_T3PnMzukn-wa2jnUrpbfAe-TWiVkC0kn11oCbOXjHh2hXNliWJVDSndPV2L6Nxp2bRzVrkkieVQmgZWQG0iTvoL699o7FQD.png?ccb=10-5&oh=00_AT_on0BxW3y3BsyUWzF3sX98lRS-9I5I6Zc2lXrsWAkmwg&oe=62859660&_nc_sid=55e238"
-                                alt="">
-                              <img
-                                src="https://scontent.xx.fbcdn.net/m1/v/t6/An_p_GtpsNlMDEVWZr4AFkAPfy93yAtD7360WrRMu5gFpN7XbkK_meoLOk_IRtI6AwKbiv7I2VaOaEwXhFWrmpNNBG8nKmGs_rVlYdUOYpXf3bWw.png?ccb=10-5&oh=00_AT_Xhclck1nbd7jjTOgEhPvTUssqV1lL68fcTY3QetiSYg&oe=62847CCC&_nc_sid=55e238"
-                                alt="">
-                            </div>
-                          </div>
-                          <div class="comment-detail__react-reply"
-                            (click)="onClickRepUser(c.user.name, childReplyInput)">Reply</div>
-                          <label class="comment-detail__react-time">11h</label>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                </ng-container>
-                <!-- COMMENT INPUT -->
-                <ul class="comment-item comment-sibling">
+              <!-- Child comment -->
+              <ng-container *ngFor="let childComment of comment.comments">
+                <ul class="comment-item comment-child">
+                  <div class="comment-line child-comment-line"></div>
                   <div class="comment-detail">
                     <div class="comment-detail__wrapper-img comment-detail__wrapper-img--child">
                       <div class="comment-link"></div>
                       <img src="assets/image/profile-pic.png" alt="">
                     </div>
-                    <div class="comment-box d-flex">
-                      <input #childReplyInput type="text" placeholder="Write a comment...">
-                      <div class="activate">
-                        <i class="emoji"></i>
-                        <i class="photo"></i>
-                        <i class="sticker"></i>
+                    <div class="comment-detail__wrapper-info">
+                      <div class="comment-detail__info comment-detail__info--background">
+                        <p class="">{{childComment.user.name}}</p>
+                        <div class="comment-content">{{childComment.content}}</div>
+                      </div>
+                      <div class="comment-detail__react">
+                        <div class="comment-detail__react-like">Like
+                          <div class="react-box">
+                            <img
+                              src="https://scontent.xx.fbcdn.net/m1/v/t6/An8ODe1zojZFxtkCySvD_PWHUfwwSqPRWxNfZiVRQtoYgVOHHeQxpmcNcbugcbUbDZvtBac7oXZXBUiZytVCug9oYjJureLV-72SKTQ6uZ2bhOnT.png?ccb=10-5&oh=00_AT_bfcz4k5d9vic52C5Ho_5EBR-btosnXSISkYC0rVa5bQ&oe=628472D1&_nc_sid=55e238"
+                              alt="">
+                            <img
+                              src="https://scontent.xx.fbcdn.net/m1/v/t6/An99VM2rY72PntBkBOhM_HWN8idYosYnOIsewbGZjMdDq3EUPhv-6VKQFZWM35g4zgPaQ8JMtsjyZm9r4nQSBLpZJm1XHoyq9mDTUQ9Zq-HthVWH.png?ccb=10-5&oh=00_AT800j7sgyW4cGR-RzGuYZBoclRv9nEgLnmaM6amg32XOA&oe=628407F8&_nc_sid=55e238"
+                              alt="">
+                            <img
+                              src="https://scontent.xx.fbcdn.net/m1/v/t6/An-XPBmopWw6qcoRXNJ62ttat7JnWkwC5lGxM1yMHoXVpnkQMTc_AToevZowBIrrvsMyHpSQGrtdAcCQ9IorFar_xvy2Fz2Fe7gr1XXtznu2EWowFFhK.png?ccb=10-5&oh=00_AT_Ewt7DWvDC7jxKJ5wbBldSjLXraDcu9pp0OXgk17o_pQ&oe=62845702&_nc_sid=55e238"
+                              alt="">
+                            <img
+                              src="https://scontent.xx.fbcdn.net/m1/v/t6/An85IUb4K3Vsz4ZBK3nmyxV5BvrVvAeb_MN1EyK1cShAmOKb2DKKSw6TbYCRpwvQRkegvSStvh9s942eRgsl2tFL70Ec7AvPlHjLW8b9HY6bFbXN.png?ccb=10-5&oh=00_AT_nLSxTMcUuzuzWroQgEAMjerakFv6L96MRmYKq3lM32w&oe=62853AFB&_nc_sid=55e238"
+                              alt="">
+                            <img
+                              src="https://scontent.xx.fbcdn.net/m1/v/t6/An_H9Ao3uEtYIkxo3s8MpEyxcsLlzHZfZDm1sesMSGAjp0YZVuOIAips1GGtdXE2udIWRwccuPsURKBQxOp6FmgFieVvVawBonRlxh0jKuAABSdGpFw.png?ccb=10-5&oh=00_AT9WEu5WyMzRoDNkB5LFVe4zfOhI0HIClhzxkK8AXu375A&oe=6285904F&_nc_sid=55e238"
+                              alt="">
+                            <img
+                              src="https://scontent.xx.fbcdn.net/m1/v/t6/An_owOs-UygJd2yvWszP_T3PnMzukn-wa2jnUrpbfAe-TWiVkC0kn11oCbOXjHh2hXNliWJVDSndPV2L6Nxp2bRzVrkkieVQmgZWQG0iTvoL699o7FQD.png?ccb=10-5&oh=00_AT_on0BxW3y3BsyUWzF3sX98lRS-9I5I6Zc2lXrsWAkmwg&oe=62859660&_nc_sid=55e238"
+                              alt="">
+                            <img
+                              src="https://scontent.xx.fbcdn.net/m1/v/t6/An_p_GtpsNlMDEVWZr4AFkAPfy93yAtD7360WrRMu5gFpN7XbkK_meoLOk_IRtI6AwKbiv7I2VaOaEwXhFWrmpNNBG8nKmGs_rVlYdUOYpXf3bWw.png?ccb=10-5&oh=00_AT_Xhclck1nbd7jjTOgEhPvTUssqV1lL68fcTY3QetiSYg&oe=62847CCC&_nc_sid=55e238"
+                              alt="">
+                          </div>
+                        </div>
+                        <div class="comment-detail__react-reply"
+                          (click)="onClickRepUser(childComment.user.name, childReplyInput)">Reply</div>
+                        <label class="comment-detail__react-time">11h</label>
                       </div>
                     </div>
                   </div>
+                  <!-- Leaf child comment -->
+                  <ng-container *ngFor="let c of childComment.comments">
+                    <li class="comment-item comment-sibling">
+                      <div class="comment-detail">
+                        <div class="comment-detail__wrapper-img comment-detail__wrapper-img--child">
+                          <div class="comment-link"></div>
+                          <img src="assets/image/profile-pic.png" alt="">
+                        </div>
+                        <div class="comment-detail__wrapper-info">
+                          <div class="comment-detail__info comment-detail__info--background">
+                            <p class="">{{c.user.name}}</p>
+                            <div class="comment-content">{{c.content}}</div>
+                          </div>
+                          <div class="comment-detail__react">
+                            <div class="comment-detail__react-like">Like
+                              <div class="react-box">
+                                <img
+                                  src="https://scontent.xx.fbcdn.net/m1/v/t6/An8ODe1zojZFxtkCySvD_PWHUfwwSqPRWxNfZiVRQtoYgVOHHeQxpmcNcbugcbUbDZvtBac7oXZXBUiZytVCug9oYjJureLV-72SKTQ6uZ2bhOnT.png?ccb=10-5&oh=00_AT_bfcz4k5d9vic52C5Ho_5EBR-btosnXSISkYC0rVa5bQ&oe=628472D1&_nc_sid=55e238"
+                                  alt="">
+                                <img
+                                  src="https://scontent.xx.fbcdn.net/m1/v/t6/An99VM2rY72PntBkBOhM_HWN8idYosYnOIsewbGZjMdDq3EUPhv-6VKQFZWM35g4zgPaQ8JMtsjyZm9r4nQSBLpZJm1XHoyq9mDTUQ9Zq-HthVWH.png?ccb=10-5&oh=00_AT800j7sgyW4cGR-RzGuYZBoclRv9nEgLnmaM6amg32XOA&oe=628407F8&_nc_sid=55e238"
+                                  alt="">
+                                <img
+                                  src="https://scontent.xx.fbcdn.net/m1/v/t6/An-XPBmopWw6qcoRXNJ62ttat7JnWkwC5lGxM1yMHoXVpnkQMTc_AToevZowBIrrvsMyHpSQGrtdAcCQ9IorFar_xvy2Fz2Fe7gr1XXtznu2EWowFFhK.png?ccb=10-5&oh=00_AT_Ewt7DWvDC7jxKJ5wbBldSjLXraDcu9pp0OXgk17o_pQ&oe=62845702&_nc_sid=55e238"
+                                  alt="">
+                                <img
+                                  src="https://scontent.xx.fbcdn.net/m1/v/t6/An85IUb4K3Vsz4ZBK3nmyxV5BvrVvAeb_MN1EyK1cShAmOKb2DKKSw6TbYCRpwvQRkegvSStvh9s942eRgsl2tFL70Ec7AvPlHjLW8b9HY6bFbXN.png?ccb=10-5&oh=00_AT_nLSxTMcUuzuzWroQgEAMjerakFv6L96MRmYKq3lM32w&oe=62853AFB&_nc_sid=55e238"
+                                  alt="">
+                                <img
+                                  src="https://scontent.xx.fbcdn.net/m1/v/t6/An_H9Ao3uEtYIkxo3s8MpEyxcsLlzHZfZDm1sesMSGAjp0YZVuOIAips1GGtdXE2udIWRwccuPsURKBQxOp6FmgFieVvVawBonRlxh0jKuAABSdGpFw.png?ccb=10-5&oh=00_AT9WEu5WyMzRoDNkB5LFVe4zfOhI0HIClhzxkK8AXu375A&oe=6285904F&_nc_sid=55e238"
+                                  alt="">
+                                <img
+                                  src="https://scontent.xx.fbcdn.net/m1/v/t6/An_owOs-UygJd2yvWszP_T3PnMzukn-wa2jnUrpbfAe-TWiVkC0kn11oCbOXjHh2hXNliWJVDSndPV2L6Nxp2bRzVrkkieVQmgZWQG0iTvoL699o7FQD.png?ccb=10-5&oh=00_AT_on0BxW3y3BsyUWzF3sX98lRS-9I5I6Zc2lXrsWAkmwg&oe=62859660&_nc_sid=55e238"
+                                  alt="">
+                                <img
+                                  src="https://scontent.xx.fbcdn.net/m1/v/t6/An_p_GtpsNlMDEVWZr4AFkAPfy93yAtD7360WrRMu5gFpN7XbkK_meoLOk_IRtI6AwKbiv7I2VaOaEwXhFWrmpNNBG8nKmGs_rVlYdUOYpXf3bWw.png?ccb=10-5&oh=00_AT_Xhclck1nbd7jjTOgEhPvTUssqV1lL68fcTY3QetiSYg&oe=62847CCC&_nc_sid=55e238"
+                                  alt="">
+                              </div>
+                            </div>
+                            <div class="comment-detail__react-reply"
+                              (click)="onClickRepUser(c.user.name, childReplyInput)">Reply</div>
+                            <label class="comment-detail__react-time">11h</label>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ng-container>
+                  <!-- COMMENT INPUT -->
+                  <ul class="comment-item comment-sibling">
+                    <div class="comment-detail">
+                      <div class="comment-detail__wrapper-img comment-detail__wrapper-img--child">
+                        <div class="comment-link"></div>
+                        <img src="assets/image/profile-pic.png" alt="">
+                      </div>
+                      <div class="comment-box d-flex">
+                        <input #childReplyInput type="text" placeholder="Write a comment...">
+                        <div class="activate">
+                          <i class="emoji"></i>
+                          <i class="photo"></i>
+                          <i class="sticker"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </ul>
                 </ul>
-              </ul>
-            </ng-container>
-            <!-- COMMENT INPUT -->
-            <ul class="comment-item comment-child">
-              <div class="comment-detail">
-                <div class="comment-detail__wrapper-img comment-detail__wrapper-img--child">
-                  <div class="comment-link"></div>
-                  <img src="assets/image/profile-pic.png" alt="">
-                </div>
-                <div class="comment-box d-flex">
-                  <input #rootReplyInput type="text" placeholder="Write a comment...">
-                  <div class="activate">
-                    <i class="emoji"></i>
-                    <i class="photo"></i>
-                    <i class="sticker"></i>
+              </ng-container>
+              <!-- COMMENT INPUT -->
+              <ul class="comment-item comment-child">
+                <div class="comment-detail">
+                  <div class="comment-detail__wrapper-img comment-detail__wrapper-img--child">
+                    <div class="comment-link"></div>
+                    <img src="assets/image/profile-pic.png" alt="">
+                  </div>
+                  <div class="comment-box d-flex">
+                    <input #rootReplyInput type="text" placeholder="Write a comment...">
+                    <div class="activate">
+                      <i class="emoji"></i>
+                      <i class="photo"></i>
+                      <i class="sticker"></i>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </ul>
             </ul>
-          </ul>
-        </ng-container>
-        <div class="view-more-box d-flex justify-content-between align-items-center">
-          <p class="font-weight-600">View more comments</p>
-          <p>12 of 3,711</p>
-        </div>
-        <div class="write-a-comment d-flex justify-content-between align-items-center">
-          <p class="font-weight-600" (click)="navigateTo(post1Id)">Write a comment...</p>
-        </div>
-      </ul>
+          </ng-container>
+          <div class="view-more-box d-flex justify-content-between align-items-center">
+            <p class="font-weight-600">View more comments</p>
+            <p>12 of 3,711</p>
+          </div>
+          <div class="write-a-comment d-flex justify-content-between align-items-center">
+            <p class="font-weight-600" (click)="navigateTo(post1Id)">Write a comment...</p>
+          </div>
+        </ul>
+      </ng-container>
     </div>
     <div class="post-container">
       <div class="post-row">
@@ -536,3 +523,184 @@
     </div>
   </div>
 </div>
+<!-- story-full -->
+<div class="story-full">
+  <div class="content-wrap">
+    <div class="story-content">
+      <div class="story-upload-container">
+        <div class="story-upload">
+          <div class="left-arrow-wrap">
+            <div class="left-arrow">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#fff"
+                stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke="#9e9d9d" d="M15 19l-7-7 7-7" />
+              </svg>
+            </div>
+          </div>
+          <img src="assets\image\feed-image-4.png" alt="" />
+          <div class="right-arrow-wrap">
+            <div class="right-arrow">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#fff"
+                stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke="#9e9d9d" d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+          </div>
+          <div class="my-progress-bar">
+            <div class="my-progress-bar__list">
+              <div class="my-progress-bar__item">
+                <div class="my-progress-bar__live"></div>
+              </div>
+              <div class="my-progress-bar__item">
+              </div>
+              <div class="my-progress-bar__item">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="story-react-container"></div>
+    </div>
+    <div class="story-list-wrap">
+      <div class="close-btn-wrap">
+        <mat-icon class="close-btn">close</mat-icon>
+      </div>
+      <div class="stories-container">
+        <div class="story-creation-wrap">
+          <h2 style="margin: 0">Your Story</h2>
+          <div class="story-creation">
+            <div class="story-wrap story-wrap--grey-bg d-flex justify-content-center align-items-center">
+              <mat-icon>add</mat-icon>
+            </div>
+            <div class="story-info">
+              <h3>Create a story</h3>
+              <span>Share a photo or write something</span>
+            </div>
+          </div>
+        </div>
+        <div class="stories__list">
+          <h2 style="margin: 0">All stories</h2>
+          <div class="stories__item stories__item--selected">
+            <div class="story-wrap story-wrap--old">
+              <img src="assets\image\member-1.png">
+            </div>
+            <div class="story-info">
+              <h3>Cường Nguyễn</h3>
+              <span>6h</span>
+            </div>
+          </div>
+          <div class="stories__item">
+            <div class="story-wrap story-wrap--new">
+              <img src="assets\image\member-1.png">
+            </div>
+            <div class="story-info">
+              <h3>Cường Nguyễn</h3>
+              <span>6h</span>
+            </div>
+          </div>
+          <div class="stories__item">
+            <div class="story-wrap story-wrap--new">
+              <img src="assets\image\member-1.png">
+            </div>
+            <div class="story-info">
+              <h3>Cường Nguyễn</h3>
+              <span>6h</span>
+            </div>
+          </div>
+          <div class="stories__item">
+            <div class="story-wrap story-wrap--new">
+              <img src="assets\image\member-1.png">
+            </div>
+            <div class="story-info">
+              <h3>Cường Nguyễn</h3>
+              <span>6h</span>
+            </div>
+          </div>
+          <div class="stories__item">
+            <div class="story-wrap story-wrap--new">
+              <img src="assets\image\member-1.png">
+            </div>
+            <div class="story-info">
+              <h3>Cường Nguyễn</h3>
+              <span>6h</span>
+            </div>
+          </div>
+          <div class="stories__item">
+            <div class="story-wrap story-wrap--new">
+              <img src="assets\image\member-1.png">
+            </div>
+            <div class="story-info">
+              <h3>Cường Nguyễn</h3>
+              <span>6h</span>
+            </div>
+          </div>
+          <div class="stories__item">
+            <div class="story-wrap story-wrap--new">
+              <img src="assets\image\member-1.png">
+            </div>
+            <div class="story-info">
+              <h3>Cường Nguyễn</h3>
+              <span>6h</span>
+            </div>
+          </div>
+          <div class="stories__item">
+            <div class="story-wrap story-wrap--new">
+              <img src="assets\image\member-1.png">
+            </div>
+            <div class="story-info">
+              <h3>Cường Nguyễn</h3>
+              <span>6h</span>
+            </div>
+          </div>
+          <div class="stories__item">
+            <div class="story-wrap story-wrap--new">
+              <img src="assets\image\member-1.png">
+            </div>
+            <div class="story-info">
+              <h3>Cường Nguyễn</h3>
+              <span>6h</span>
+            </div>
+          </div>
+          <div class="stories__item">
+            <div class="story-wrap story-wrap--new">
+              <img src="assets\image\member-1.png">
+            </div>
+            <div class="story-info">
+              <h3>Cường Nguyễn</h3>
+              <span>6h</span>
+            </div>
+          </div>
+          <div class="stories__item">
+            <div class="story-wrap story-wrap--new">
+              <img src="assets\image\member-1.png">
+            </div>
+            <div class="story-info">
+              <h3>Cường Nguyễn</h3>
+              <span>6h</span>
+            </div>
+          </div>
+          <div class="stories__item">
+            <div class="story-wrap story-wrap--new">
+              <img src="assets\image\member-1.png">
+            </div>
+            <div class="story-info">
+              <h3>Cường Nguyễn</h3>
+              <span>6h</span>
+            </div>
+          </div>
+          <div class="stories__item">
+            <div class="story-wrap story-wrap--new">
+              <img src="assets\image\member-1.png">
+            </div>
+            <div class="story-info">
+              <h3>Cường Nguyễn</h3>
+              <span>6h</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- end story-full -->

@@ -124,6 +124,264 @@
   color: #fff
 }
 
+/* story-full */
+.story-full {
+  background: #222;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 9999;
+}
+
+.close-btn-wrap {
+  padding: 10px;
+  box-shadow: 0 4px 2px -2px #ccc;
+}
+
+.close-btn {
+  position: sticky;
+  left: 100%;
+  font-size: 3.2rem;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  background: var(--background-color-1--);
+}
+
+.close-btn:hover {
+  background: var(--hover-color--);
+}
+
+.content-wrap {
+  display: flex;
+}
+
+.story-content {
+  flex-basis: 70%;
+  height: 100vh;
+  background: var(--background-color-1--);
+}
+
+@keyframes slowMoveToLeft {
+  0% {
+    transform: translateX(0)
+  }
+
+  100% {
+    transform: translateX(-10px)
+  }
+}
+
+@keyframes slowMoveToRight {
+  0% {
+    transform: translateX(0)
+  }
+
+  100% {
+    transform: translateX(10px)
+  }
+}
+
+.left-arrow,
+.right-arrow {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: var(--background-color--);
+  box-shadow: 0 0 5px 0px #ccc;
+  cursor: pointer;
+}
+
+.left-arrow-wrap,
+.right-arrow-wrap {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.left-arrow-wrap {
+  left: -100px
+}
+
+.right-arrow-wrap {
+  right: -100px
+}
+
+.left-arrow-wrap:hover .left-arrow {
+  animation: slowMoveToLeft 200ms linear forwards;
+  background-color: #f9f9f9
+}
+
+.right-arrow-wrap:hover .right-arrow {
+  animation: slowMoveToRight 200ms linear forwards;
+  background-color: #f9f9f9
+}
+
+.story-upload-container {
+  height: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.story-upload {
+  position: relative;
+  width: 35%;
+  height: 90%;
+}
+
+.story-upload img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.story-react-container {
+  height: 10%;
+}
+
+/* my-progress-bar */
+.my-progress-bar {
+  position: absolute;
+  width: 100%;
+  top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.my-progress-bar__list {
+  width: 95%;
+  height: 5px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.my-progress-bar__item {
+  width: 100%;
+  height: 100%;
+  border-radius: 3px;
+  background-color: rgba(255, 255, 255, 0.655);
+  margin: 3px;
+  overflow: hidden;
+}
+
+@keyframes move {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+.my-progress-bar__live {
+  background-color: var(--background-color--);
+  height: 100%;
+  width: 0;
+  animation: move 3s linear infinite forwards;
+}
+
+/* end my-progress-bar */
+
+.story-list-wrap {
+  flex-basis: 30%;
+  background-color: white;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.stories-container {
+  overflow-y: scroll;
+  height: inherit;
+  padding: 10px
+}
+
+.stories__item--selected {
+  background-color: var(--hover-color--);
+}
+
+.story-creation,
+.stories__item {
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  padding: 10px;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.stories__item:hover {
+  background: var(--hover-color--);
+}
+
+.story-wrap {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 100rem;
+}
+
+.story-wrap--new {
+  border: 4px solid var(--primary-color--)
+}
+
+.story-wrap--old {
+  border: 4px solid var(--background-color-1--)
+}
+
+.story-wrap--grey-bg {
+  background-color: var(--background-color-1--);
+}
+
+
+.story-wrap img {
+  width: 50px;
+  height: 50px;
+  border-radius: 100rem;
+  object-fit: cover;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.story-wrap mat-icon {
+  font-size: 3rem;
+}
+
+.story-info {
+  flex: 1;
+  margin-left: 20px;
+  line-height: 80%;
+}
+
+.story-info h3,
+span {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.story-info h3 {
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+
+/* end story-full */
+
 .write-post-container {
   width: 100%;
   background: #fff;
@@ -193,7 +451,7 @@
 .user-profile img {
   width: 45px;
   border-radius: 50%;
-  margin-right: 10px
+  margin-right: 10px;
 }
 
 .user-profile div {}
@@ -238,7 +496,7 @@
   width: 100%;
   background: #fff;
   border-radius: 6px;
-  padding: 20px;
+  padding: 5px 20px;
   color: #626262;
   margin: 20px 0;
 }
@@ -353,6 +611,10 @@
   background-repeat: no-repeat;
   display: inline-block;
   margin: 0 5px
+}
+
+.activate i {
+  cursor: pointer;
 }
 
 .comment-box .activate .emoji {
