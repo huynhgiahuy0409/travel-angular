@@ -136,6 +136,7 @@ table {
 }
 
 :root {
+  --header-height--: 50px;
   --primary-color--: #187ff2;
   --primary-background--: #a5ccf8;
   --background-color--: #fff;
@@ -163,7 +164,8 @@ html {
 body {
   background-color: var(--background-color--);
   height: 100vh;
-  overflow: auto;
+  overflow: hidden;
+
 }
 
 a {

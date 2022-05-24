@@ -25,13 +25,13 @@ export class HomeComponent implements OnInit {
   lat = 10.924067;
   lng = 106.713028;
   srcReactIcons = [
-    'https://scontent.xx.fbcdn.net/m1/v/t6/An8ODe1zojZFxtkCySvD_PWHUfwwSqPRWxNfZiVRQtoYgVOHHeQxpmcNcbugcbUbDZvtBac7oXZXBUiZytVCug9oYjJureLV-72SKTQ6uZ2bhOnT.png?ccb=10-5&oh=00_AT_bfcz4k5d9vic52C5Ho_5EBR-btosnXSISkYC0rVa5bQ&oe=628472D1&_nc_sid=55e238',
-    'https://scontent.xx.fbcdn.net/m1/v/t6/An99VM2rY72PntBkBOhM_HWN8idYosYnOIsewbGZjMdDq3EUPhv-6VKQFZWM35g4zgPaQ8JMtsjyZm9r4nQSBLpZJm1XHoyq9mDTUQ9Zq-HthVWH.png?ccb=10-5&oh=00_AT800j7sgyW4cGR-RzGuYZBoclRv9nEgLnmaM6amg32XOA&oe=628407F8&_nc_sid=55e238',
-    'https://scontent.xx.fbcdn.net/m1/v/t6/An-XPBmopWw6qcoRXNJ62ttat7JnWkwC5lGxM1yMHoXVpnkQMTc_AToevZowBIrrvsMyHpSQGrtdAcCQ9IorFar_xvy2Fz2Fe7gr1XXtznu2EWowFFhK.png?ccb=10-5&oh=00_AT_Ewt7DWvDC7jxKJ5wbBldSjLXraDcu9pp0OXgk17o_pQ&oe=62845702&_nc_sid=55e238',
-    'https://scontent.xx.fbcdn.net/m1/v/t6/An85IUb4K3Vsz4ZBK3nmyxV5BvrVvAeb_MN1EyK1cShAmOKb2DKKSw6TbYCRpwvQRkegvSStvh9s942eRgsl2tFL70Ec7AvPlHjLW8b9HY6bFbXN.png?ccb=10-5&oh=00_AT_nLSxTMcUuzuzWroQgEAMjerakFv6L96MRmYKq3lM32w&oe=62853AFB&_nc_sid=55e238',
-    'https://scontent.xx.fbcdn.net/m1/v/t6/An_H9Ao3uEtYIkxo3s8MpEyxcsLlzHZfZDm1sesMSGAjp0YZVuOIAips1GGtdXE2udIWRwccuPsURKBQxOp6FmgFieVvVawBonRlxh0jKuAABSdGpFw.png?ccb=10-5&oh=00_AT9WEu5WyMzRoDNkB5LFVe4zfOhI0HIClhzxkK8AXu375A&oe=6285904F&_nc_sid=55e238',
-    'https://scontent.xx.fbcdn.net/m1/v/t6/An_owOs-UygJd2yvWszP_T3PnMzukn-wa2jnUrpbfAe-TWiVkC0kn11oCbOXjHh2hXNliWJVDSndPV2L6Nxp2bRzVrkkieVQmgZWQG0iTvoL699o7FQD.png?ccb=10-5&oh=00_AT_on0BxW3y3BsyUWzF3sX98lRS-9I5I6Zc2lXrsWAkmwg&oe=62859660&_nc_sid=55e238',
-    'https://scontent.xx.fbcdn.net/m1/v/t6/An_p_GtpsNlMDEVWZr4AFkAPfy93yAtD7360WrRMu5gFpN7XbkK_meoLOk_IRtI6AwKbiv7I2VaOaEwXhFWrmpNNBG8nKmGs_rVlYdUOYpXf3bWw.png?ccb=10-5&oh=00_AT_Xhclck1nbd7jjTOgEhPvTUssqV1lL68fcTY3QetiSYg&oe=62847CCC&_nc_sid=55e238',
+    'assets/react-image/like.svg',
+    'assets/react-image/love.svg',
+    'assets/react-image/care.svg',
+    'assets/react-image/haha.svg',
+    'assets/react-image/wow.svg',
+    'assets/react-image/sad.svg',
+    'assets/react-image/angry.svg',
   ];
   locations: any[] = [
     {
@@ -178,5 +178,21 @@ export class HomeComponent implements OnInit {
       `width: ${oldEle.offsetWidth}px; height: ${oldEle.offsetHeight}px`
     ); */
     oldEle.replaceWith(cloneNewEle);
+  }
+  focusReplyBox(event: MouseEvent) {
+    const parentElement = document.querySelector('.story-react__reply-box');
+    const siblingElement = document.querySelector('.story-react__react-box');
+    const sendBtn = document.querySelector('.send-btn');
+    siblingElement?.classList.add('hidden');
+    parentElement?.classList.add('open');
+    sendBtn?.classList.add('show');
+    window.addEventListener('click', (e) => {
+      if (e.target !== event.target) {
+        siblingElement?.classList.remove('hidden');
+        sendBtn?.classList.remove('show');
+        siblingElement?.classList.add('story-react__react-box--fadeIn');
+        parentElement?.classList.remove('open');
+      }
+    });
   }
 }

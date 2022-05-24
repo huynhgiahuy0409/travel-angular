@@ -1,274 +1,235 @@
-<shared-header></shared-header>
-<div class="container">
-  <!-- ----------left-sidebar---------- -->
-  <div class="left-sidebar">
-    <div class="left-sidebar__content">
-      <div class="imp-links">
-        <a href=""><img src="assets/image/news.png" alt="">Latest News</a>
-        <a href=""><img src="assets/image/friends.png" alt="">Friends</a>
-        <a href=""><img src="assets/image/group.png" alt="">Group</a>
-        <a href=""><img src="assets/image/marketplace.png" alt="">Market Place</a>
-        <a href=""><img src="assets/image/watch.png" alt="">Market Watch</a>
-        <a href="">See more</a>
-      </div>
-      <div class="shortcut-links">
-        <p>Your Shortcut</p>
-        <a href="">
-          <img src="assets/image/shortcut-1.png" alt="">
-          Web Developer
-        </a>
-        <a href="">
-          <img src="assets/image/shortcut-2.png" alt="">
-          Web Design Course
-        </a>
-        <a href="">
-          <img src="assets/image/shortcut-3.png" alt="">
-          Full Stack
-        </a>
-        <a href="">
-          <img src="assets/image/shortcut-4.png" alt="">
-          Website Experts
-        </a>
-        <a href="">
-          <img src="assets/image/shortcut-4.png" alt="">
-          Website Experts
-        </a>
-        <a href="">
-          <img src="assets/image/shortcut-4.png" alt="">
-          Website Experts
-        </a>
-        <a href="">
-          <img src="assets/image/shortcut-4.png" alt="">
-          Website Experts
-        </a>
-        <a href="">
-          <img src="assets/image/shortcut-4.png" alt="">
-          Website Experts
-        </a>
-        <a href="">
-          <img src="assets/image/shortcut-4.png" alt="">
-          Website Experts
-        </a>
-      </div>
-    </div>
+<div class="home-container">
+  <div class="header-wrap" style="position: sticky">
+    <shared-header></shared-header>
   </div>
-  <!-- ----------main-content---------- -->
-  <div class="main-content">
-    <!-- story-gallery -->
-    <div class="story-gallery">
-      <div class="story story1">
-        <img src="assets/image/upload.png" alt="">
-        <p>Post Story</p>
-      </div>
-      <div class="story story2">
-        <img src="assets/image/member-1.png" alt="">
-        <p>People 1</p>
-      </div>
-      <div class="story story3">
-        <img src="assets/image/member-2.png" alt="">
-        <p>People 2</p>
-      </div>
-      <div class="story story4">
-        <img src="assets/image/member-3.png" alt="">
-        <p>People 3</p>
-      </div>
-      <div class="story story5">
-        <img src="assets/image/member-4.png" alt="">
-        <p>People 4</p>
+  <div class="my-container">
+    <!-- ----------left-sidebar---------- -->
+    <div class="left-sidebar">
+      <div class="left-sidebar__content">
+        <div class="imp-links">
+          <a href=""><img src="assets/image/news.png" alt="">Latest News</a>
+          <a href=""><img src="assets/image/friends.png" alt="">Friends</a>
+          <a href=""><img src="assets/image/group.png" alt="">Group</a>
+          <a href=""><img src="assets/image/marketplace.png" alt="">Market Place</a>
+          <a href=""><img src="assets/image/watch.png" alt="">Market Watch</a>
+          <a href="">See more</a>
+        </div>
+        <div class="shortcut-links">
+          <p>Your Shortcut</p>
+          <a href="">
+            <img src="assets/image/shortcut-1.png" alt="">
+            Web Developer
+          </a>
+          <a href="">
+            <img src="assets/image/shortcut-2.png" alt="">
+            Web Design Course
+          </a>
+          <a href="">
+            <img src="assets/image/shortcut-3.png" alt="">
+            Full Stack
+          </a>
+          <a href="">
+            <img src="assets/image/shortcut-4.png" alt="">
+            Website Experts
+          </a>
+          <a href="">
+            <img src="assets/image/shortcut-4.png" alt="">
+            Website Experts
+          </a>
+          <a href="">
+            <img src="assets/image/shortcut-4.png" alt="">
+            Website Experts
+          </a>
+          <a href="">
+            <img src="assets/image/shortcut-4.png" alt="">
+            Website Experts
+          </a>
+          <a href="">
+            <img src="assets/image/shortcut-4.png" alt="">
+            Website Experts
+          </a>
+          <a href="">
+            <img src="assets/image/shortcut-4.png" alt="">
+            Website Experts
+          </a>
+        </div>
       </div>
     </div>
-    <!-- write-post-container -->
-    <div class="write-post-container">
-      <div class="d-flex align-items-center">
-        <img src="assets/image/profile-pic.png" alt="">
-        <input type="text" placeholder="What's your mind, John?" (click)="openCreatePostDialog()">
-      </div>
-      <div class="separate-line"></div>
-      <ul class="d-flex align-items-center">
-        <li>
-          <mat-icon style="color: rgb(243,66,95)">videocam</mat-icon>
-          <p>Live video</p>
-        </li>
-        <li>
-          <mat-icon style="color: rgb(69,189,98)">photo</mat-icon>
-          <p>Photo/video</p>
-        </li>
-        <li>
-          <mat-icon style="color: rgb(247,185,40)">tag_faces</mat-icon>
-          <p>Feeling/activity</p>
-        </li>
-      </ul>
-    </div>
-    <div class="post-container">
-      <div class="user-profile">
-        <img src="assets/image/profile-pic.png" alt="">
-        <div class="user-profile-name">
-          <h3>John Nichoson</h3>
+    <!-- ----------main-content---------- -->
+    <div class="main-content-wrap">
+      <div class="main-content">
+        <!-- story-gallery -->
+        <div class="story-gallery">
+          <div class="see-all-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
+              class="bi bi-arrow-right-short" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />
+            </svg>
+          </div>
+          <div class="story story1">
+            <div class="story__thumbnail">
+              <img src="/assets/image/status-2.png" alt="">
+            </div>
+            <img src="assets/image/upload.png" alt="">
+            <p>Post Story</p>
+          </div>
+          <div class="story">
+            <div class="story__thumbnail">
+              <img src="/assets/image/status-2.png" alt="">
+            </div>
+            <img src="assets/image/member-2.png" alt="">
+            <p>People 2</p>
+          </div>
+          <div class="story">
+            <div class="story__thumbnail">
+              <img src="/assets/image/status-2.png" alt="">
+            </div>
+            <img src="assets/image/member-2.png" alt="">
+            <p>People 2</p>
+          </div>
+          <div class="story">
+            <div class="story__thumbnail">
+              <img src="/assets/image/status-2.png" alt="">
+            </div>
+            <img src="assets/image/member-2.png" alt="">
+            <p>People 2</p>
+          </div>
+          <div class="story">
+            <div class="story__thumbnail">
+              <img src="/assets/image/status-2.png" alt="">
+            </div>
+            <img src="assets/image/member-2.png" alt="">
+            <p>People 2</p>
+          </div>
+        </div>
+        <!-- write-post-container -->
+        <div class="write-post-container">
           <div class="d-flex align-items-center">
-            <span>June 24 2021, 13:40 pm
-            </span>
-            <mat-icon>public</mat-icon>
+            <img src="assets/image/profile-pic.png" alt="">
+            <input type="text" placeholder="What's your mind, John?" (click)="openCreatePostDialog()">
           </div>
+          <div class="separate-line"></div>
+          <ul class="d-flex align-items-center">
+            <li>
+              <mat-icon style="color: rgb(243,66,95)">videocam</mat-icon>
+              <p>Live video</p>
+            </li>
+            <li>
+              <mat-icon style="color: rgb(69,189,98)">photo</mat-icon>
+              <p>Photo/video</p>
+            </li>
+            <li>
+              <mat-icon style="color: rgb(247,185,40)">tag_faces</mat-icon>
+              <p>Feeling/activity</p>
+            </li>
+          </ul>
         </div>
-      </div>
-      <a href=""><i class="fas fa-ellipsis-v"></i></a>
-      <p class="post-text">
-        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
-        <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </span>
-        , when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-        <a href="">Where does it come from?</a>
-      </p>
-      <img src="assets/image/feed-image-1.png" alt="" class="post-img">
-      <div class="post-react">
-        <div class="post-row justify-content-between">
-          <div class="post-react-left d-flex">
-            <img src="https://static.xx.fbcdn.net/images/emoji.php/v9/te/1.5/28/1f606.png" alt="">
-            <img
-              src="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 16 16'%3e%3cdefs%3e%3clinearGradient id='a' x1='50%25' x2='50%25' y1='0%25' y2='100%25'%3e%3cstop offset='0%25' stop-color='%2318AFFF'/%3e%3cstop offset='100%25' stop-color='%230062DF'/%3e%3c/linearGradient%3e%3cfilter id='c' width='118.8%25' height='118.8%25' x='-9.4%25' y='-9.4%25' filterUnits='objectBoundingBox'%3e%3cfeGaussianBlur in='SourceAlpha' result='shadowBlurInner1' stdDeviation='1'/%3e%3cfeOffset dy='-1' in='shadowBlurInner1' result='shadowOffsetInner1'/%3e%3cfeComposite in='shadowOffsetInner1' in2='SourceAlpha' k2='-1' k3='1' operator='arithmetic' result='shadowInnerInner1'/%3e%3cfeColorMatrix in='shadowInnerInner1' values='0 0 0 0 0 0 0 0 0 0.299356041 0 0 0 0 0.681187726 0 0 0 0.3495684 0'/%3e%3c/filter%3e%3cpath id='b' d='M8 0a8 8 0 00-8 8 8 8 0 1016 0 8 8 0 00-8-8z'/%3e%3c/defs%3e%3cg fill='none'%3e%3cuse fill='url(%23a)' xlink:href='%23b'/%3e%3cuse fill='black' filter='url(%23c)' xlink:href='%23b'/%3e%3cpath fill='white' d='M12.162 7.338c.176.123.338.245.338.674 0 .43-.229.604-.474.725a.73.73 0 01.089.546c-.077.344-.392.611-.672.69.121.194.159.385.015.62-.185.295-.346.407-1.058.407H7.5c-.988 0-1.5-.546-1.5-1V7.665c0-1.23 1.467-2.275 1.467-3.13L7.361 3.47c-.005-.065.008-.224.058-.27.08-.079.301-.2.635-.2.218 0 .363.041.534.123.581.277.732.978.732 1.542 0 .271-.414 1.083-.47 1.364 0 0 .867-.192 1.879-.199 1.061-.006 1.749.19 1.749.842 0 .261-.219.523-.316.666zM3.6 7h.8a.6.6 0 01.6.6v3.8a.6.6 0 01-.6.6h-.8a.6.6 0 01-.6-.6V7.6a.6.6 0 01.6-.6z'/%3e%3c/g%3e%3c/svg%3e"
-              alt="">
-            <img src="https://static.xx.fbcdn.net/images/emoji.php/v9/t48/1.5/28/1f622.png" alt="">
-            <div class="total-react">55K</div>
-          </div>
-          <div class="post-react-right d-flex">
-            <div class="">5K Comments</div>
-            <div class="">1.9K Shares</div>
-          </div>
-        </div>
-        <div class="separate-line"></div>
-        <ul class="react-btn">
-          <li class="like-btn">
-            <div #oldEle>
-              <mat-icon #oldEle>thumb_up</mat-icon>
-            </div>
-            <p>Like</p>
-            <div class="react-box">
-              <ng-container *ngFor="let src of srcReactIcons">
-                <img #newEle [src]="src" alt="" (click)="selectNewReact(oldEle,newEle)">
-              </ng-container>
-            </div>
-          </li>
-          <li class="comment-btn" (click)="isShowComments=!isShowComments">
-            <mat-icon> chat_bubble</mat-icon>
-            <p>Comment</p>
-          </li>
-          <li class="share-btn">
-            <mat-icon>share</mat-icon>
-            <p>Share</p>
-          </li>
-        </ul>
-      </div>
-      <ng-container *ngIf="isShowComments">
-        <div class="separate-line"></div>
-        <div class="post-row">
-          <img class="comment-avatar" src="assets/image/profile-pic.png" alt="">
-          <div class="comment-box d-flex">
-            <input #post1Id type="text" placeholder="Write a comment...">
-            <div class="activate">
-              <i class="emoji"></i>
-              <i class="photo"></i>
-              <i class="sticker"></i>
-            </div>
-          </div>
-        </div>
-        <ul class="comment-list">
-          <ng-container *ngFor="let comment of commentTree;index as i">
-            <ul class="comment-item">
-              <div class="comment-line parent-comment-line">
+        <div class="post-container">
+          <div class="user-profile">
+            <img src="assets/image/profile-pic.png" alt="">
+            <div class="user-profile-name">
+              <h3>John Nichoson</h3>
+              <div class="d-flex align-items-center">
+                <span>June 24 2021, 13:40 pm
+                </span>
+                <mat-icon>public</mat-icon>
               </div>
-              <!-- Comment detail of parent-->
-              <div class="comment-detail comment-parent">
-                <div class="comment-detail__wrapper-img comment-detail__wrapper-img--parent">
-                  <img src="assets/image/profile-pic.png" alt="">
+            </div>
+          </div>
+          <a href=""><i class="fas fa-ellipsis-v"></i></a>
+          <p class="post-text">
+            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+            <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </span>
+            , when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+            <a href="">Where does it come from?</a>
+          </p>
+          <img src="assets/image/feed-image-1.png" alt="" class="post-img">
+          <div class="post-react">
+            <div class="post-row justify-content-between">
+              <div class="post-react-left d-flex">
+                <img style="z-index: 3" src="assets/react-image/like.svg" alt="">
+                <img style="z-index: 2;margin-left: -5px" src="assets/react-image/love.svg" alt="">
+                <img style="z-index: 1;margin-left: -5px" src="assets/react-image/care.svg" alt="">
+                <div class="total-react">55K</div>
+              </div>
+              <div class="post-react-right d-flex">
+                <div class="">5K Comments</div>
+                <div class="">1.9K Shares</div>
+              </div>
+            </div>
+            <div class="separate-line"></div>
+            <ul class="react-btn">
+              <li class="like-btn">
+                <div #oldEle>
+                  <mat-icon #oldEle>thumb_up</mat-icon>
                 </div>
-                <div class="comment-detail__wrapper-info">
-                  <div class="comment-detail__info comment-detail__info--background">
-                    <p class="">{{comment.user.name}}</p>
-                    <div class="comment-content">{{comment.content}}</div>
-                  </div>
-                  <div class="comment-detail__react">
-                    <div class="comment-detail__react-like">
-                      <div class="react-like">Like
-                      </div>
-                      <div class="react-box">
-                        <img
-                          src="https://scontent.xx.fbcdn.net/m1/v/t6/An8ODe1zojZFxtkCySvD_PWHUfwwSqPRWxNfZiVRQtoYgVOHHeQxpmcNcbugcbUbDZvtBac7oXZXBUiZytVCug9oYjJureLV-72SKTQ6uZ2bhOnT.png?ccb=10-5&oh=00_AT_bfcz4k5d9vic52C5Ho_5EBR-btosnXSISkYC0rVa5bQ&oe=628472D1&_nc_sid=55e238"
-                          alt="">
-                        <img
-                          src="https://scontent.xx.fbcdn.net/m1/v/t6/An99VM2rY72PntBkBOhM_HWN8idYosYnOIsewbGZjMdDq3EUPhv-6VKQFZWM35g4zgPaQ8JMtsjyZm9r4nQSBLpZJm1XHoyq9mDTUQ9Zq-HthVWH.png?ccb=10-5&oh=00_AT800j7sgyW4cGR-RzGuYZBoclRv9nEgLnmaM6amg32XOA&oe=628407F8&_nc_sid=55e238"
-                          alt="">
-                        <img
-                          src="https://scontent.xx.fbcdn.net/m1/v/t6/An-XPBmopWw6qcoRXNJ62ttat7JnWkwC5lGxM1yMHoXVpnkQMTc_AToevZowBIrrvsMyHpSQGrtdAcCQ9IorFar_xvy2Fz2Fe7gr1XXtznu2EWowFFhK.png?ccb=10-5&oh=00_AT_Ewt7DWvDC7jxKJ5wbBldSjLXraDcu9pp0OXgk17o_pQ&oe=62845702&_nc_sid=55e238"
-                          alt="">
-                        <img
-                          src="https://scontent.xx.fbcdn.net/m1/v/t6/An85IUb4K3Vsz4ZBK3nmyxV5BvrVvAeb_MN1EyK1cShAmOKb2DKKSw6TbYCRpwvQRkegvSStvh9s942eRgsl2tFL70Ec7AvPlHjLW8b9HY6bFbXN.png?ccb=10-5&oh=00_AT_nLSxTMcUuzuzWroQgEAMjerakFv6L96MRmYKq3lM32w&oe=62853AFB&_nc_sid=55e238"
-                          alt="">
-                        <img
-                          src="https://scontent.xx.fbcdn.net/m1/v/t6/An_H9Ao3uEtYIkxo3s8MpEyxcsLlzHZfZDm1sesMSGAjp0YZVuOIAips1GGtdXE2udIWRwccuPsURKBQxOp6FmgFieVvVawBonRlxh0jKuAABSdGpFw.png?ccb=10-5&oh=00_AT9WEu5WyMzRoDNkB5LFVe4zfOhI0HIClhzxkK8AXu375A&oe=6285904F&_nc_sid=55e238"
-                          alt="">
-                        <img
-                          src="https://scontent.xx.fbcdn.net/m1/v/t6/An_owOs-UygJd2yvWszP_T3PnMzukn-wa2jnUrpbfAe-TWiVkC0kn11oCbOXjHh2hXNliWJVDSndPV2L6Nxp2bRzVrkkieVQmgZWQG0iTvoL699o7FQD.png?ccb=10-5&oh=00_AT_on0BxW3y3BsyUWzF3sX98lRS-9I5I6Zc2lXrsWAkmwg&oe=62859660&_nc_sid=55e238"
-                          alt="">
-                        <img
-                          src="https://scontent.xx.fbcdn.net/m1/v/t6/An_p_GtpsNlMDEVWZr4AFkAPfy93yAtD7360WrRMu5gFpN7XbkK_meoLOk_IRtI6AwKbiv7I2VaOaEwXhFWrmpNNBG8nKmGs_rVlYdUOYpXf3bWw.png?ccb=10-5&oh=00_AT_Xhclck1nbd7jjTOgEhPvTUssqV1lL68fcTY3QetiSYg&oe=62847CCC&_nc_sid=55e238"
-                          alt="">
-                      </div>
-                    </div>
-                    <div class="comment-detail__react-reply"
-                      (click)="onClickRepUser(comment.user.name, rootReplyInput)">
-                      Reply</div>
-                    <label class="comment-detail__react-time">11h</label>
-                  </div>
+                <p>Like</p>
+                <div class="react-box">
+                  <ng-container *ngFor="let src of srcReactIcons">
+                    <img #newEle [src]="src" alt="" (click)="selectNewReact(oldEle,newEle)">
+                  </ng-container>
+                </div>
+              </li>
+              <li class="comment-btn" (click)="isShowComments=!isShowComments">
+                <mat-icon> chat_bubble</mat-icon>
+                <p>Comment</p>
+              </li>
+              <li class="share-btn">
+                <mat-icon>share</mat-icon>
+                <p>Share</p>
+              </li>
+            </ul>
+          </div>
+          <ng-container *ngIf="isShowComments">
+            <div class="separate-line"></div>
+            <div class="post-row">
+              <img class="comment-avatar" src="assets/image/profile-pic.png" alt="">
+              <div class="comment-box d-flex">
+                <input #post1Id type="text" placeholder="Write a comment...">
+                <div class="activate">
+                  <i class="emoji"></i>
+                  <i class="photo"></i>
+                  <i class="sticker"></i>
                 </div>
               </div>
-              <!-- Child comment -->
-              <ng-container *ngFor="let childComment of comment.comments">
-                <ul class="comment-item comment-child">
-                  <div class="comment-line child-comment-line"></div>
-                  <div class="comment-detail">
-                    <div class="comment-detail__wrapper-img comment-detail__wrapper-img--child">
-                      <div class="comment-link"></div>
+            </div>
+            <ul class="comment-list">
+              <ng-container *ngFor="let comment of commentTree;index as i">
+                <ul class="comment-item">
+                  <div class="comment-line parent-comment-line">
+                  </div>
+                  <!-- Comment detail of parent-->
+                  <div class="comment-detail comment-parent">
+                    <div class="comment-detail__wrapper-img comment-detail__wrapper-img--parent">
                       <img src="assets/image/profile-pic.png" alt="">
                     </div>
                     <div class="comment-detail__wrapper-info">
                       <div class="comment-detail__info comment-detail__info--background">
-                        <p class="">{{childComment.user.name}}</p>
-                        <div class="comment-content">{{childComment.content}}</div>
+                        <p class="">{{comment.user.name}}</p>
+                        <div class="comment-content">{{comment.content}}</div>
                       </div>
                       <div class="comment-detail__react">
-                        <div class="comment-detail__react-like">Like
+                        <div class="comment-detail__react-like">
+                          <div class="react-like">Like
+                          </div>
                           <div class="react-box">
-                            <img
-                              src="https://scontent.xx.fbcdn.net/m1/v/t6/An8ODe1zojZFxtkCySvD_PWHUfwwSqPRWxNfZiVRQtoYgVOHHeQxpmcNcbugcbUbDZvtBac7oXZXBUiZytVCug9oYjJureLV-72SKTQ6uZ2bhOnT.png?ccb=10-5&oh=00_AT_bfcz4k5d9vic52C5Ho_5EBR-btosnXSISkYC0rVa5bQ&oe=628472D1&_nc_sid=55e238"
-                              alt="">
-                            <img
-                              src="https://scontent.xx.fbcdn.net/m1/v/t6/An99VM2rY72PntBkBOhM_HWN8idYosYnOIsewbGZjMdDq3EUPhv-6VKQFZWM35g4zgPaQ8JMtsjyZm9r4nQSBLpZJm1XHoyq9mDTUQ9Zq-HthVWH.png?ccb=10-5&oh=00_AT800j7sgyW4cGR-RzGuYZBoclRv9nEgLnmaM6amg32XOA&oe=628407F8&_nc_sid=55e238"
-                              alt="">
-                            <img
-                              src="https://scontent.xx.fbcdn.net/m1/v/t6/An-XPBmopWw6qcoRXNJ62ttat7JnWkwC5lGxM1yMHoXVpnkQMTc_AToevZowBIrrvsMyHpSQGrtdAcCQ9IorFar_xvy2Fz2Fe7gr1XXtznu2EWowFFhK.png?ccb=10-5&oh=00_AT_Ewt7DWvDC7jxKJ5wbBldSjLXraDcu9pp0OXgk17o_pQ&oe=62845702&_nc_sid=55e238"
-                              alt="">
-                            <img
-                              src="https://scontent.xx.fbcdn.net/m1/v/t6/An85IUb4K3Vsz4ZBK3nmyxV5BvrVvAeb_MN1EyK1cShAmOKb2DKKSw6TbYCRpwvQRkegvSStvh9s942eRgsl2tFL70Ec7AvPlHjLW8b9HY6bFbXN.png?ccb=10-5&oh=00_AT_nLSxTMcUuzuzWroQgEAMjerakFv6L96MRmYKq3lM32w&oe=62853AFB&_nc_sid=55e238"
-                              alt="">
-                            <img
-                              src="https://scontent.xx.fbcdn.net/m1/v/t6/An_H9Ao3uEtYIkxo3s8MpEyxcsLlzHZfZDm1sesMSGAjp0YZVuOIAips1GGtdXE2udIWRwccuPsURKBQxOp6FmgFieVvVawBonRlxh0jKuAABSdGpFw.png?ccb=10-5&oh=00_AT9WEu5WyMzRoDNkB5LFVe4zfOhI0HIClhzxkK8AXu375A&oe=6285904F&_nc_sid=55e238"
-                              alt="">
-                            <img
-                              src="https://scontent.xx.fbcdn.net/m1/v/t6/An_owOs-UygJd2yvWszP_T3PnMzukn-wa2jnUrpbfAe-TWiVkC0kn11oCbOXjHh2hXNliWJVDSndPV2L6Nxp2bRzVrkkieVQmgZWQG0iTvoL699o7FQD.png?ccb=10-5&oh=00_AT_on0BxW3y3BsyUWzF3sX98lRS-9I5I6Zc2lXrsWAkmwg&oe=62859660&_nc_sid=55e238"
-                              alt="">
-                            <img
-                              src="https://scontent.xx.fbcdn.net/m1/v/t6/An_p_GtpsNlMDEVWZr4AFkAPfy93yAtD7360WrRMu5gFpN7XbkK_meoLOk_IRtI6AwKbiv7I2VaOaEwXhFWrmpNNBG8nKmGs_rVlYdUOYpXf3bWw.png?ccb=10-5&oh=00_AT_Xhclck1nbd7jjTOgEhPvTUssqV1lL68fcTY3QetiSYg&oe=62847CCC&_nc_sid=55e238"
-                              alt="">
+                            <ng-container *ngFor="let src of srcReactIcons">
+                              <img [src]="src" alt="">
+                            </ng-container>
                           </div>
                         </div>
                         <div class="comment-detail__react-reply"
-                          (click)="onClickRepUser(childComment.user.name, childReplyInput)">Reply</div>
+                          (click)="onClickRepUser(comment.user.name, rootReplyInput)">
+                          Reply</div>
                         <label class="comment-detail__react-time">11h</label>
                       </div>
                     </div>
                   </div>
-                  <!-- Leaf child comment -->
-                  <ng-container *ngFor="let c of childComment.comments">
-                    <li class="comment-item comment-sibling">
+                  <!-- Child comment -->
+                  <ng-container *ngFor="let childComment of comment.comments">
+                    <ul class="comment-item comment-child">
+                      <div class="comment-line child-comment-line"></div>
                       <div class="comment-detail">
                         <div class="comment-detail__wrapper-img comment-detail__wrapper-img--child">
                           <div class="comment-link"></div>
@@ -276,52 +237,80 @@
                         </div>
                         <div class="comment-detail__wrapper-info">
                           <div class="comment-detail__info comment-detail__info--background">
-                            <p class="">{{c.user.name}}</p>
-                            <div class="comment-content">{{c.content}}</div>
+                            <p class="">{{childComment.user.name}}</p>
+                            <div class="comment-content">{{childComment.content}}</div>
                           </div>
                           <div class="comment-detail__react">
                             <div class="comment-detail__react-like">Like
                               <div class="react-box">
-                                <img
-                                  src="https://scontent.xx.fbcdn.net/m1/v/t6/An8ODe1zojZFxtkCySvD_PWHUfwwSqPRWxNfZiVRQtoYgVOHHeQxpmcNcbugcbUbDZvtBac7oXZXBUiZytVCug9oYjJureLV-72SKTQ6uZ2bhOnT.png?ccb=10-5&oh=00_AT_bfcz4k5d9vic52C5Ho_5EBR-btosnXSISkYC0rVa5bQ&oe=628472D1&_nc_sid=55e238"
-                                  alt="">
-                                <img
-                                  src="https://scontent.xx.fbcdn.net/m1/v/t6/An99VM2rY72PntBkBOhM_HWN8idYosYnOIsewbGZjMdDq3EUPhv-6VKQFZWM35g4zgPaQ8JMtsjyZm9r4nQSBLpZJm1XHoyq9mDTUQ9Zq-HthVWH.png?ccb=10-5&oh=00_AT800j7sgyW4cGR-RzGuYZBoclRv9nEgLnmaM6amg32XOA&oe=628407F8&_nc_sid=55e238"
-                                  alt="">
-                                <img
-                                  src="https://scontent.xx.fbcdn.net/m1/v/t6/An-XPBmopWw6qcoRXNJ62ttat7JnWkwC5lGxM1yMHoXVpnkQMTc_AToevZowBIrrvsMyHpSQGrtdAcCQ9IorFar_xvy2Fz2Fe7gr1XXtznu2EWowFFhK.png?ccb=10-5&oh=00_AT_Ewt7DWvDC7jxKJ5wbBldSjLXraDcu9pp0OXgk17o_pQ&oe=62845702&_nc_sid=55e238"
-                                  alt="">
-                                <img
-                                  src="https://scontent.xx.fbcdn.net/m1/v/t6/An85IUb4K3Vsz4ZBK3nmyxV5BvrVvAeb_MN1EyK1cShAmOKb2DKKSw6TbYCRpwvQRkegvSStvh9s942eRgsl2tFL70Ec7AvPlHjLW8b9HY6bFbXN.png?ccb=10-5&oh=00_AT_nLSxTMcUuzuzWroQgEAMjerakFv6L96MRmYKq3lM32w&oe=62853AFB&_nc_sid=55e238"
-                                  alt="">
-                                <img
-                                  src="https://scontent.xx.fbcdn.net/m1/v/t6/An_H9Ao3uEtYIkxo3s8MpEyxcsLlzHZfZDm1sesMSGAjp0YZVuOIAips1GGtdXE2udIWRwccuPsURKBQxOp6FmgFieVvVawBonRlxh0jKuAABSdGpFw.png?ccb=10-5&oh=00_AT9WEu5WyMzRoDNkB5LFVe4zfOhI0HIClhzxkK8AXu375A&oe=6285904F&_nc_sid=55e238"
-                                  alt="">
-                                <img
-                                  src="https://scontent.xx.fbcdn.net/m1/v/t6/An_owOs-UygJd2yvWszP_T3PnMzukn-wa2jnUrpbfAe-TWiVkC0kn11oCbOXjHh2hXNliWJVDSndPV2L6Nxp2bRzVrkkieVQmgZWQG0iTvoL699o7FQD.png?ccb=10-5&oh=00_AT_on0BxW3y3BsyUWzF3sX98lRS-9I5I6Zc2lXrsWAkmwg&oe=62859660&_nc_sid=55e238"
-                                  alt="">
-                                <img
-                                  src="https://scontent.xx.fbcdn.net/m1/v/t6/An_p_GtpsNlMDEVWZr4AFkAPfy93yAtD7360WrRMu5gFpN7XbkK_meoLOk_IRtI6AwKbiv7I2VaOaEwXhFWrmpNNBG8nKmGs_rVlYdUOYpXf3bWw.png?ccb=10-5&oh=00_AT_Xhclck1nbd7jjTOgEhPvTUssqV1lL68fcTY3QetiSYg&oe=62847CCC&_nc_sid=55e238"
-                                  alt="">
+                                <ng-container *ngFor="let src of srcReactIcons">
+                                  <img [src]="src" alt="">
+                                </ng-container>
                               </div>
                             </div>
                             <div class="comment-detail__react-reply"
-                              (click)="onClickRepUser(c.user.name, childReplyInput)">Reply</div>
+                              (click)="onClickRepUser(childComment.user.name, childReplyInput)">Reply</div>
                             <label class="comment-detail__react-time">11h</label>
                           </div>
                         </div>
                       </div>
-                    </li>
+                      <!-- Leaf child comment -->
+                      <ng-container *ngFor="let c of childComment.comments">
+                        <li class="comment-item comment-sibling">
+                          <div class="comment-detail">
+                            <div class="comment-detail__wrapper-img comment-detail__wrapper-img--child">
+                              <div class="comment-link"></div>
+                              <img src="assets/image/profile-pic.png" alt="">
+                            </div>
+                            <div class="comment-detail__wrapper-info">
+                              <div class="comment-detail__info comment-detail__info--background">
+                                <p class="">{{c.user.name}}</p>
+                                <div class="comment-content">{{c.content}}</div>
+                              </div>
+                              <div class="comment-detail__react">
+                                <div class="comment-detail__react-like">Like
+                                  <div class="react-box">
+                                    <ng-container *ngFor="let src of srcReactIcons">
+                                      <img [src]="src" alt="">
+                                    </ng-container>
+                                  </div>
+                                </div>
+                                <div class="comment-detail__react-reply"
+                                  (click)="onClickRepUser(c.user.name, childReplyInput)">Reply</div>
+                                <label class="comment-detail__react-time">11h</label>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      </ng-container>
+                      <!-- COMMENT INPUT -->
+                      <ul class="comment-item comment-sibling">
+                        <div class="comment-detail">
+                          <div class="comment-detail__wrapper-img comment-detail__wrapper-img--child">
+                            <div class="comment-link"></div>
+                            <img src="assets/image/profile-pic.png" alt="">
+                          </div>
+                          <div class="comment-box d-flex">
+                            <input #childReplyInput type="text" placeholder="Write a comment...">
+                            <div class="activate">
+                              <i class="emoji"></i>
+                              <i class="photo"></i>
+                              <i class="sticker"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </ul>
+                    </ul>
                   </ng-container>
                   <!-- COMMENT INPUT -->
-                  <ul class="comment-item comment-sibling">
+                  <ul class="comment-item comment-child">
                     <div class="comment-detail">
                       <div class="comment-detail__wrapper-img comment-detail__wrapper-img--child">
                         <div class="comment-link"></div>
                         <img src="assets/image/profile-pic.png" alt="">
                       </div>
                       <div class="comment-box d-flex">
-                        <input #childReplyInput type="text" placeholder="Write a comment...">
+                        <input #rootReplyInput type="text" placeholder="Write a comment...">
                         <div class="activate">
                           <i class="emoji"></i>
                           <i class="photo"></i>
@@ -332,375 +321,381 @@
                   </ul>
                 </ul>
               </ng-container>
-              <!-- COMMENT INPUT -->
-              <ul class="comment-item comment-child">
-                <div class="comment-detail">
-                  <div class="comment-detail__wrapper-img comment-detail__wrapper-img--child">
-                    <div class="comment-link"></div>
-                    <img src="assets/image/profile-pic.png" alt="">
-                  </div>
-                  <div class="comment-box d-flex">
-                    <input #rootReplyInput type="text" placeholder="Write a comment...">
-                    <div class="activate">
-                      <i class="emoji"></i>
-                      <i class="photo"></i>
-                      <i class="sticker"></i>
-                    </div>
-                  </div>
-                </div>
-              </ul>
+              <div class="view-more-box d-flex justify-content-between align-items-center">
+                <p class="font-weight-600">View more comments</p>
+                <p>12 of 3,711</p>
+              </div>
+              <div class="write-a-comment d-flex justify-content-between align-items-center">
+                <p class="font-weight-600" (click)="navigateTo(post1Id)">Write a comment...</p>
+              </div>
             </ul>
           </ng-container>
-          <div class="view-more-box d-flex justify-content-between align-items-center">
-            <p class="font-weight-600">View more comments</p>
-            <p>12 of 3,711</p>
-          </div>
-          <div class="write-a-comment d-flex justify-content-between align-items-center">
-            <p class="font-weight-600" (click)="navigateTo(post1Id)">Write a comment...</p>
-          </div>
-        </ul>
-      </ng-container>
-    </div>
-    <div class="post-container">
-      <div class="post-row">
-        <div class="user-profile">
-          <img src="assets/image/profile-pic.png" alt="">
-          <div class="">
-            <p>John Nichoson</p>
-            <span>June 24 2021, 13:40 pm</span>
-          </div>
         </div>
-        <a href=""><i class="fas fa-ellipsis-v"></i></a>
-      </div>
-      <p class="post-text">
-        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
-        <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </span>
-        , when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-        <a href="">Where does it come from?</a>
-      </p>
-      <img src="assets/image/feed-image-2.png" alt="" class="post-img">
-      <div class="post-row">
-        <div class="activity-icons">
-          <div><img src="assets/image/like-blue.png" alt="">120</div>
-          <div><img src="assets/image/comments.png" alt="">45</div>
-          <div><img src="assets/image/share.png" alt="">20</div>
-        </div>
-        <div class="post-profile-icon">
-          <img src="assets/image/profile-pic.png" alt="">
-          <i class="fas fa-caret-down"></i>
-        </div>
-      </div>
-    </div>
-    <div class="post-container">
-      <div class="post-row">
-        <div class="user-profile">
-          <img src="assets/image/profile-pic.png" alt="">
-          <div class="">
-            <p>John Nichoson</p>
-            <span>June 24 2021, 13:40 pm</span>
+        <div class="post-container">
+          <div class="post-row">
+            <div class="user-profile">
+              <img src="assets/image/profile-pic.png" alt="">
+              <div class="">
+                <p>John Nichoson</p>
+                <span>June 24 2021, 13:40 pm</span>
+              </div>
+            </div>
+            <a href=""><i class="fas fa-ellipsis-v"></i></a>
+          </div>
+          <p class="post-text">
+            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+            <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </span>
+            , when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+            <a href="">Where does it come from?</a>
+          </p>
+          <img src="assets/image/feed-image-2.png" alt="" class="post-img">
+          <div class="post-row">
+            <div class="activity-icons">
+              <div><img src="assets/image/like-blue.png" alt="">120</div>
+              <div><img src="assets/image/comments.png" alt="">45</div>
+              <div><img src="assets/image/share.png" alt="">20</div>
+            </div>
+            <div class="post-profile-icon">
+              <img src="assets/image/profile-pic.png" alt="">
+              <i class="fas fa-caret-down"></i>
+            </div>
           </div>
         </div>
-        <a href=""><i class="fas fa-ellipsis-v"></i></a>
-      </div>
-      <p class="post-text">
-        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
-        <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </span>
-        , when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-        <a href="">Where does it come from?</a>
-      </p>
-      <img src="assets/image/feed-image-3.png" alt="" class="post-img">
-      <div class="post-row">
-        <div class="activity-icons">
-          <div><img src="assets/image/like-blue.png" alt="">120</div>
-          <div><img src="assets/image/comments.png" alt="">45</div>
-          <div><img src="assets/image/share.png" alt="">20</div>
+        <div class="post-container">
+          <div class="post-row">
+            <div class="user-profile">
+              <img src="assets/image/profile-pic.png" alt="">
+              <div class="">
+                <p>John Nichoson</p>
+                <span>June 24 2021, 13:40 pm</span>
+              </div>
+            </div>
+            <a href=""><i class="fas fa-ellipsis-v"></i></a>
+          </div>
+          <p class="post-text">
+            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+            <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </span>
+            , when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+            <a href="">Where does it come from?</a>
+          </p>
+          <img src="assets/image/feed-image-3.png" alt="" class="post-img">
+          <div class="post-row">
+            <div class="activity-icons">
+              <div><img src="assets/image/like-blue.png" alt="">120</div>
+              <div><img src="assets/image/comments.png" alt="">45</div>
+              <div><img src="assets/image/share.png" alt="">20</div>
+            </div>
+            <div class="post-profile-icon">
+              <img src="assets/image/profile-pic.png" alt="">
+              <i class="fas fa-caret-down"></i>
+            </div>
+          </div>
         </div>
-        <div class="post-profile-icon">
-          <img src="assets/image/profile-pic.png" alt="">
-          <i class="fas fa-caret-down"></i>
-        </div>
+
+        <button class="load-more-btn">Load more</button>
+
+
       </div>
     </div>
+    <!-- ----------right-sidebar---------- -->
+    <div class="right-sidebar">
+      <div class="right-sidebar__content">
+        <div class="sidebar-title">
+          <h4>Events</h4>
+          <a href="">See All</a>
+        </div>
+        <div class="event">
+          <div class="left-event">
+            <h3>18</h3>
+            <span>March</span>
+          </div>
+          <div class="right-event">
+            <h4>Social Media</h4>
+            <p><i class="fa-solid fa-location-dot"></i> Willson Tech Park</p>
+            <a href="">More Info</a>
+          </div>
+        </div>
+        <div class="event">
+          <div class="left-event">
+            <h3>22</h3>
+            <span>June</span>
+          </div>
+          <div class="right-event">
+            <h4>Mobile Marketing</h4>
+            <p><i class="fa-solid fa-location-dot"></i> Willson Tech Park</p>
+            <a href="">More Info</a>
+          </div>
+        </div>
 
-    <button class="load-more-btn">Load more</button>
+        <div class="sidebar-title">
+          <h4>Advertisement</h4>
+          <a href="">Close</a>
+        </div>
+        <img src="assets/image/advertisement.png" alt="" class="sidebar-ads">
 
-
-  </div>
-  <!-- ----------right-sidebar---------- -->
-  <div class="right-sidebar">
-    <div class="right-sidebar__content">
-      <div class="sidebar-title">
-        <h4>Events</h4>
-        <a href="">See All</a>
-      </div>
-      <div class="event">
-        <div class="left-event">
-          <h3>18</h3>
-          <span>March</span>
+        <div class="sidebar-title">
+          <h4>Conversation</h4>
+          <a href="">Hide Chat</a>
         </div>
-        <div class="right-event">
-          <h4>Social Media</h4>
-          <p><i class="fa-solid fa-location-dot"></i> Willson Tech Park</p>
-          <a href="">More Info</a>
+        <div class="online-list">
+          <div class="online">
+            <img src="assets/image/member-1.png" alt="">
+          </div>
+          <p>Alison Mina</p>
         </div>
-      </div>
-      <div class="event">
-        <div class="left-event">
-          <h3>22</h3>
-          <span>June</span>
+        <div class="online-list">
+          <div class="online">
+            <img src="assets/image/member-1.png" alt="">
+          </div>
+          <p>Alison Mina</p>
         </div>
-        <div class="right-event">
-          <h4>Mobile Marketing</h4>
-          <p><i class="fa-solid fa-location-dot"></i> Willson Tech Park</p>
-          <a href="">More Info</a>
+        <div class="online-list">
+          <div class="online">
+            <img src="assets/image/member-1.png" alt="">
+          </div>
+          <p>Alison Mina</p>
         </div>
-      </div>
-
-      <div class="sidebar-title">
-        <h4>Advertisement</h4>
-        <a href="">Close</a>
-      </div>
-      <img src="assets/image/advertisement.png" alt="" class="sidebar-ads">
-
-      <div class="sidebar-title">
-        <h4>Conversation</h4>
-        <a href="">Hide Chat</a>
-      </div>
-      <div class="online-list">
-        <div class="online">
-          <img src="assets/image/member-1.png" alt="">
+        <div class="online-list">
+          <div class="online">
+            <img src="assets/image/member-1.png" alt="">
+          </div>
+          <p>Alison Mina</p>
         </div>
-        <p>Alison Mina</p>
-      </div>
-      <div class="online-list">
-        <div class="online">
-          <img src="assets/image/member-1.png" alt="">
+        <div class="online-list">
+          <div class="online">
+            <img src="assets/image/member-1.png" alt="">
+          </div>
+          <p>Alison Mina</p>
         </div>
-        <p>Alison Mina</p>
-      </div>
-      <div class="online-list">
-        <div class="online">
-          <img src="assets/image/member-1.png" alt="">
+        <div class="online-list">
+          <div class="online">
+            <img src="assets/image/member-1.png" alt="">
+          </div>
+          <p>Alison Mina</p>
         </div>
-        <p>Alison Mina</p>
-      </div>
-      <div class="online-list">
-        <div class="online">
-          <img src="assets/image/member-1.png" alt="">
+        <div class="online-list">
+          <div class="online">
+            <img src="assets/image/member-1.png" alt="">
+          </div>
+          <p>Alison Mina</p>
         </div>
-        <p>Alison Mina</p>
-      </div>
-      <div class="online-list">
-        <div class="online">
-          <img src="assets/image/member-1.png" alt="">
+        <div class="online-list">
+          <div class="online">
+            <img src="assets/image/member-1.png" alt="">
+          </div>
+          <p>Alison Mina</p>
         </div>
-        <p>Alison Mina</p>
-      </div>
-      <div class="online-list">
-        <div class="online">
-          <img src="assets/image/member-1.png" alt="">
+        <div class="online-list">
+          <div class="online">
+            <img src="assets/image/member-1.png" alt="">
+          </div>
+          <p>Alison Mina</p>
         </div>
-        <p>Alison Mina</p>
-      </div>
-      <div class="online-list">
-        <div class="online">
-          <img src="assets/image/member-1.png" alt="">
-        </div>
-        <p>Alison Mina</p>
-      </div>
-      <div class="online-list">
-        <div class="online">
-          <img src="assets/image/member-1.png" alt="">
-        </div>
-        <p>Alison Mina</p>
-      </div>
-      <div class="online-list">
-        <div class="online">
-          <img src="assets/image/member-1.png" alt="">
-        </div>
-        <p>Alison Mina</p>
       </div>
     </div>
   </div>
+  <!-- story-full -->
+  <div class="story-full" style="display: none">
+    <div class="content-wrap">
+      <div class="story-content">
+        <div class="story-upload-container">
+          <div class="story-upload">
+            <div class="left-arrow-wrap">
+              <div class="left-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#fff"
+                  stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke="#9e9d9d" d="M15 19l-7-7 7-7" />
+                </svg>
+              </div>
+            </div>
+            <img src="assets\image\feed-image-4.png" alt="" />
+            <div class="right-arrow-wrap">
+              <div class="right-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#fff"
+                  stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke="#9e9d9d" d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            </div>
+            <div class="my-progress-bar">
+              <div class="my-progress-bar__list">
+                <div class="my-progress-bar__item">
+                  <div class="my-progress-bar__live"></div>
+                </div>
+                <div class="my-progress-bar__item">
+                </div>
+                <div class="my-progress-bar__item">
+                </div>
+              </div>
+              <div class="my-progress-bar__more">
+                <div class="my-progress-bar__user-info">
+                  <img src="assets\image\feed-image-4.png" alt="">
+                  <div>Huỳnh Văn Phát Huỳnh Văn PhátHuỳnh Văn PhátHuỳnh Văn Phát</div>
+                  <p>16g</p>
+                </div>
+                <div class="my-progress-bar__tool">
+                  <i class="play-btn"></i>
+                  <i class="speaker-btn un-mute"></i>
+                  <i class="more-btn"></i>
+                </div>
+              </div>
+            </div>
+            .
+          </div>
+        </div>
+        <div class="story-react-container">
+          <div class="story-react__reply-box">
+            <input (click)="focusReplyBox($event)" class="story-react__input" type="text" placeholder="Reply...">
+            <i disabled class="send-btn"></i>
+          </div>
+          <div class="story-react__react-box react-box">
+            <ng-container *ngFor="let src of srcReactIcons">
+              <img #newEle [src]="src" alt="" (click)="selectNewReact(oldEle,newEle)">
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="story-list-wrap">
+        <div class="close-btn-wrap">
+          <mat-icon class="close-btn">close</mat-icon>
+        </div>
+        <div class="stories-container">
+          <div class="story-creation-wrap">
+            <h2 style="margin: 0">Your Story</h2>
+            <div class="story-creation">
+              <div class="story-wrap story-wrap--grey-bg d-flex justify-content-center align-items-center">
+                <mat-icon>add</mat-icon>
+              </div>
+              <div class="story-info">
+                <h3>Create a story</h3>
+                <span>Share a photo or write something</span>
+              </div>
+            </div>
+          </div>
+          <div class="stories__list">
+            <h2 style="margin: 0">All stories</h2>
+            <div class="stories__item stories__item--selected">
+              <div class="story-wrap story-wrap--old">
+                <img src="assets\image\member-1.png">
+              </div>
+              <div class="story-info">
+                <h3>Cường Nguyễn</h3>
+                <span>6h</span>
+              </div>
+            </div>
+            <div class="stories__item">
+              <div class="story-wrap story-wrap--new">
+                <img src="assets\image\member-1.png">
+              </div>
+              <div class="story-info">
+                <h3>Cường Nguyễn</h3>
+                <span>6h</span>
+              </div>
+            </div>
+            <div class="stories__item">
+              <div class="story-wrap story-wrap--new">
+                <img src="assets\image\member-1.png">
+              </div>
+              <div class="story-info">
+                <h3>Cường Nguyễn</h3>
+                <span>6h</span>
+              </div>
+            </div>
+            <div class="stories__item">
+              <div class="story-wrap story-wrap--new">
+                <img src="assets\image\member-1.png">
+              </div>
+              <div class="story-info">
+                <h3>Cường Nguyễn</h3>
+                <span>6h</span>
+              </div>
+            </div>
+            <div class="stories__item">
+              <div class="story-wrap story-wrap--new">
+                <img src="assets\image\member-1.png">
+              </div>
+              <div class="story-info">
+                <h3>Cường Nguyễn</h3>
+                <span>6h</span>
+              </div>
+            </div>
+            <div class="stories__item">
+              <div class="story-wrap story-wrap--new">
+                <img src="assets\image\member-1.png">
+              </div>
+              <div class="story-info">
+                <h3>Cường Nguyễn</h3>
+                <span>6h</span>
+              </div>
+            </div>
+            <div class="stories__item">
+              <div class="story-wrap story-wrap--new">
+                <img src="assets\image\member-1.png">
+              </div>
+              <div class="story-info">
+                <h3>Cường Nguyễn</h3>
+                <span>6h</span>
+              </div>
+            </div>
+            <div class="stories__item">
+              <div class="story-wrap story-wrap--new">
+                <img src="assets\image\member-1.png">
+              </div>
+              <div class="story-info">
+                <h3>Cường Nguyễn</h3>
+                <span>6h</span>
+              </div>
+            </div>
+            <div class="stories__item">
+              <div class="story-wrap story-wrap--new">
+                <img src="assets\image\member-1.png">
+              </div>
+              <div class="story-info">
+                <h3>Cường Nguyễn</h3>
+                <span>6h</span>
+              </div>
+            </div>
+            <div class="stories__item">
+              <div class="story-wrap story-wrap--new">
+                <img src="assets\image\member-1.png">
+              </div>
+              <div class="story-info">
+                <h3>Cường Nguyễn</h3>
+                <span>6h</span>
+              </div>
+            </div>
+            <div class="stories__item">
+              <div class="story-wrap story-wrap--new">
+                <img src="assets\image\member-1.png">
+              </div>
+              <div class="story-info">
+                <h3>Cường Nguyễn</h3>
+                <span>6h</span>
+              </div>
+            </div>
+            <div class="stories__item">
+              <div class="story-wrap story-wrap--new">
+                <img src="assets\image\member-1.png">
+              </div>
+              <div class="story-info">
+                <h3>Cường Nguyễn</h3>
+                <span>6h</span>
+              </div>
+            </div>
+            <div class="stories__item">
+              <div class="story-wrap story-wrap--new">
+                <img src="assets\image\member-1.png">
+              </div>
+              <div class="story-info">
+                <h3>Cường Nguyễn</h3>
+                <span>6h</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- end story-full -->
 </div>
-<!-- story-full -->
-<div class="story-full">
-  <div class="content-wrap">
-    <div class="story-content">
-      <div class="story-upload-container">
-        <div class="story-upload">
-          <div class="left-arrow-wrap">
-            <div class="left-arrow">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#fff"
-                stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke="#9e9d9d" d="M15 19l-7-7 7-7" />
-              </svg>
-            </div>
-          </div>
-          <img src="assets\image\feed-image-4.png" alt="" />
-          <div class="right-arrow-wrap">
-            <div class="right-arrow">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#fff"
-                stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke="#9e9d9d" d="M9 5l7 7-7 7" />
-              </svg>
-            </div>
-          </div>
-          <div class="my-progress-bar">
-            <div class="my-progress-bar__list">
-              <div class="my-progress-bar__item">
-                <div class="my-progress-bar__live"></div>
-              </div>
-              <div class="my-progress-bar__item">
-              </div>
-              <div class="my-progress-bar__item">
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="story-react-container"></div>
-    </div>
-    <div class="story-list-wrap">
-      <div class="close-btn-wrap">
-        <mat-icon class="close-btn">close</mat-icon>
-      </div>
-      <div class="stories-container">
-        <div class="story-creation-wrap">
-          <h2 style="margin: 0">Your Story</h2>
-          <div class="story-creation">
-            <div class="story-wrap story-wrap--grey-bg d-flex justify-content-center align-items-center">
-              <mat-icon>add</mat-icon>
-            </div>
-            <div class="story-info">
-              <h3>Create a story</h3>
-              <span>Share a photo or write something</span>
-            </div>
-          </div>
-        </div>
-        <div class="stories__list">
-          <h2 style="margin: 0">All stories</h2>
-          <div class="stories__item stories__item--selected">
-            <div class="story-wrap story-wrap--old">
-              <img src="assets\image\member-1.png">
-            </div>
-            <div class="story-info">
-              <h3>Cường Nguyễn</h3>
-              <span>6h</span>
-            </div>
-          </div>
-          <div class="stories__item">
-            <div class="story-wrap story-wrap--new">
-              <img src="assets\image\member-1.png">
-            </div>
-            <div class="story-info">
-              <h3>Cường Nguyễn</h3>
-              <span>6h</span>
-            </div>
-          </div>
-          <div class="stories__item">
-            <div class="story-wrap story-wrap--new">
-              <img src="assets\image\member-1.png">
-            </div>
-            <div class="story-info">
-              <h3>Cường Nguyễn</h3>
-              <span>6h</span>
-            </div>
-          </div>
-          <div class="stories__item">
-            <div class="story-wrap story-wrap--new">
-              <img src="assets\image\member-1.png">
-            </div>
-            <div class="story-info">
-              <h3>Cường Nguyễn</h3>
-              <span>6h</span>
-            </div>
-          </div>
-          <div class="stories__item">
-            <div class="story-wrap story-wrap--new">
-              <img src="assets\image\member-1.png">
-            </div>
-            <div class="story-info">
-              <h3>Cường Nguyễn</h3>
-              <span>6h</span>
-            </div>
-          </div>
-          <div class="stories__item">
-            <div class="story-wrap story-wrap--new">
-              <img src="assets\image\member-1.png">
-            </div>
-            <div class="story-info">
-              <h3>Cường Nguyễn</h3>
-              <span>6h</span>
-            </div>
-          </div>
-          <div class="stories__item">
-            <div class="story-wrap story-wrap--new">
-              <img src="assets\image\member-1.png">
-            </div>
-            <div class="story-info">
-              <h3>Cường Nguyễn</h3>
-              <span>6h</span>
-            </div>
-          </div>
-          <div class="stories__item">
-            <div class="story-wrap story-wrap--new">
-              <img src="assets\image\member-1.png">
-            </div>
-            <div class="story-info">
-              <h3>Cường Nguyễn</h3>
-              <span>6h</span>
-            </div>
-          </div>
-          <div class="stories__item">
-            <div class="story-wrap story-wrap--new">
-              <img src="assets\image\member-1.png">
-            </div>
-            <div class="story-info">
-              <h3>Cường Nguyễn</h3>
-              <span>6h</span>
-            </div>
-          </div>
-          <div class="stories__item">
-            <div class="story-wrap story-wrap--new">
-              <img src="assets\image\member-1.png">
-            </div>
-            <div class="story-info">
-              <h3>Cường Nguyễn</h3>
-              <span>6h</span>
-            </div>
-          </div>
-          <div class="stories__item">
-            <div class="story-wrap story-wrap--new">
-              <img src="assets\image\member-1.png">
-            </div>
-            <div class="story-info">
-              <h3>Cường Nguyễn</h3>
-              <span>6h</span>
-            </div>
-          </div>
-          <div class="stories__item">
-            <div class="story-wrap story-wrap--new">
-              <img src="assets\image\member-1.png">
-            </div>
-            <div class="story-info">
-              <h3>Cường Nguyễn</h3>
-              <span>6h</span>
-            </div>
-          </div>
-          <div class="stories__item">
-            <div class="story-wrap story-wrap--new">
-              <img src="assets\image\member-1.png">
-            </div>
-            <div class="story-info">
-              <h3>Cường Nguyễn</h3>
-              <span>6h</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-<!-- end story-full -->
