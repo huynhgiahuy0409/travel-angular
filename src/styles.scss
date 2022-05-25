@@ -142,11 +142,13 @@ table {
   --background-color--: #fff;
   --background-color-1--: #f5f5f5;
   --text-color--: #ccc;
-  --hover-color--: #e2e2e2
+  --hover-color--: #e2e2e2;
+  --hover-primary-color--: #f3f3f330;
+  --transparent-primary-color--: #ffffff1c
 }
 
 mat-icon {
-  font-size: 2.2rem
+  font-size: 2.2rem;
 }
 
 html {

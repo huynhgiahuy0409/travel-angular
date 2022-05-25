@@ -60,8 +60,8 @@
       <div class="main-content">
         <!-- story-gallery -->
         <div class="story-gallery">
-          <div class="see-all-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
+          <div class="see-all-btn" (click)="isShowStoryFull=!isShowStoryFull">
+            <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" fill="currentColor"
               class="bi bi-arrow-right-short" viewBox="0 0 16 16">
               <path fill-rule="evenodd"
                 d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />
@@ -161,22 +161,20 @@
             <div class="separate-line"></div>
             <ul class="react-btn">
               <li class="like-btn">
-                <div #oldEle>
-                  <mat-icon #oldEle>thumb_up</mat-icon>
-                </div>
+                <i class="like-btn-icon"></i>
                 <p>Like</p>
                 <div class="react-box">
                   <ng-container *ngFor="let src of srcReactIcons">
-                    <img #newEle [src]="src" alt="" (click)="selectNewReact(oldEle,newEle)">
+                    <img #newEle [src]="src" alt="">
                   </ng-container>
                 </div>
               </li>
               <li class="comment-btn" (click)="isShowComments=!isShowComments">
-                <mat-icon> chat_bubble</mat-icon>
+                <i class="comment-btn-icon"></i>
                 <p>Comment</p>
               </li>
-              <li class="share-btn">
-                <mat-icon>share</mat-icon>
+              <li class="shared-btn">
+                <i class="shared-btn-icon"></i>
                 <p>Share</p>
               </li>
             </ul>
@@ -495,207 +493,209 @@
     </div>
   </div>
   <!-- story-full -->
-  <div class="story-full" style="display: none">
-    <div class="content-wrap">
-      <div class="story-content">
-        <div class="story-upload-container">
-          <div class="story-upload">
-            <div class="left-arrow-wrap">
-              <div class="left-arrow">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#fff"
-                  stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke="#9e9d9d" d="M15 19l-7-7 7-7" />
-                </svg>
-              </div>
-            </div>
-            <img src="assets\image\feed-image-4.png" alt="" />
-            <div class="right-arrow-wrap">
-              <div class="right-arrow">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#fff"
-                  stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke="#9e9d9d" d="M9 5l7 7-7 7" />
-                </svg>
-              </div>
-            </div>
-            <div class="my-progress-bar">
-              <div class="my-progress-bar__list">
-                <div class="my-progress-bar__item">
-                  <div class="my-progress-bar__live"></div>
-                </div>
-                <div class="my-progress-bar__item">
-                </div>
-                <div class="my-progress-bar__item">
+  <ng-container *ngIf="isShowStoryFull">
+    <div class="story-full">
+      <div class="content-wrap">
+        <div class="story-content">
+          <div class="story-upload-container">
+            <div class="story-upload">
+              <div class="left-arrow-wrap">
+                <div class="left-arrow">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#fff"
+                    stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke="#9e9d9d" d="M15 19l-7-7 7-7" />
+                  </svg>
                 </div>
               </div>
-              <div class="my-progress-bar__more">
-                <div class="my-progress-bar__user-info">
-                  <img src="assets\image\feed-image-4.png" alt="">
-                  <div>Huỳnh Văn Phát Huỳnh Văn PhátHuỳnh Văn PhátHuỳnh Văn Phát</div>
-                  <p>16g</p>
-                </div>
-                <div class="my-progress-bar__tool">
-                  <i class="play-btn"></i>
-                  <i class="speaker-btn un-mute"></i>
-                  <i class="more-btn"></i>
+              <img src="assets\image\feed-image-4.png" alt="" />
+              <div class="right-arrow-wrap">
+                <div class="right-arrow">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#fff"
+                    stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke="#9e9d9d" d="M9 5l7 7-7 7" />
+                  </svg>
                 </div>
               </div>
-            </div>
-            .
-          </div>
-        </div>
-        <div class="story-react-container">
-          <div class="story-react__reply-box">
-            <input (click)="focusReplyBox($event)" class="story-react__input" type="text" placeholder="Reply...">
-            <i disabled class="send-btn"></i>
-          </div>
-          <div class="story-react__react-box react-box">
-            <ng-container *ngFor="let src of srcReactIcons">
-              <img #newEle [src]="src" alt="" (click)="selectNewReact(oldEle,newEle)">
-            </ng-container>
-          </div>
-        </div>
-      </div>
-      <div class="story-list-wrap">
-        <div class="close-btn-wrap">
-          <mat-icon class="close-btn">close</mat-icon>
-        </div>
-        <div class="stories-container">
-          <div class="story-creation-wrap">
-            <h2 style="margin: 0">Your Story</h2>
-            <div class="story-creation">
-              <div class="story-wrap story-wrap--grey-bg d-flex justify-content-center align-items-center">
-                <mat-icon>add</mat-icon>
+              <div class="my-progress-bar">
+                <div class="my-progress-bar__list">
+                  <div class="my-progress-bar__item">
+                    <div class="my-progress-bar__live"></div>
+                  </div>
+                  <div class="my-progress-bar__item">
+                  </div>
+                  <div class="my-progress-bar__item">
+                  </div>
+                </div>
+                <div class="my-progress-bar__more">
+                  <div class="my-progress-bar__user-info">
+                    <img src="assets\image\feed-image-4.png" alt="">
+                    <div>Huỳnh Văn Phát Huỳnh Văn PhátHuỳnh Văn PhátHuỳnh Văn Phát</div>
+                    <p>16g</p>
+                  </div>
+                  <div class="my-progress-bar__tool">
+                    <i class="play-btn"></i>
+                    <i class="speaker-btn un-mute"></i>
+                    <i class="more-btn"></i>
+                  </div>
+                </div>
               </div>
-              <div class="story-info">
-                <h3>Create a story</h3>
-                <span>Share a photo or write something</span>
-              </div>
+              .
             </div>
           </div>
-          <div class="stories__list">
-            <h2 style="margin: 0">All stories</h2>
-            <div class="stories__item stories__item--selected">
-              <div class="story-wrap story-wrap--old">
-                <img src="assets\image\member-1.png">
-              </div>
-              <div class="story-info">
-                <h3>Cường Nguyễn</h3>
-                <span>6h</span>
-              </div>
+          <div class="story-react-container">
+            <div class="story-react__reply-box">
+              <input (click)="focusReplyBox($event)" class="story-react__input" type="text" placeholder="Reply...">
+              <i disabled class="send-btn"></i>
             </div>
-            <div class="stories__item">
-              <div class="story-wrap story-wrap--new">
-                <img src="assets\image\member-1.png">
-              </div>
-              <div class="story-info">
-                <h3>Cường Nguyễn</h3>
-                <span>6h</span>
-              </div>
-            </div>
-            <div class="stories__item">
-              <div class="story-wrap story-wrap--new">
-                <img src="assets\image\member-1.png">
-              </div>
-              <div class="story-info">
-                <h3>Cường Nguyễn</h3>
-                <span>6h</span>
-              </div>
-            </div>
-            <div class="stories__item">
-              <div class="story-wrap story-wrap--new">
-                <img src="assets\image\member-1.png">
-              </div>
-              <div class="story-info">
-                <h3>Cường Nguyễn</h3>
-                <span>6h</span>
-              </div>
-            </div>
-            <div class="stories__item">
-              <div class="story-wrap story-wrap--new">
-                <img src="assets\image\member-1.png">
-              </div>
-              <div class="story-info">
-                <h3>Cường Nguyễn</h3>
-                <span>6h</span>
-              </div>
-            </div>
-            <div class="stories__item">
-              <div class="story-wrap story-wrap--new">
-                <img src="assets\image\member-1.png">
-              </div>
-              <div class="story-info">
-                <h3>Cường Nguyễn</h3>
-                <span>6h</span>
-              </div>
-            </div>
-            <div class="stories__item">
-              <div class="story-wrap story-wrap--new">
-                <img src="assets\image\member-1.png">
-              </div>
-              <div class="story-info">
-                <h3>Cường Nguyễn</h3>
-                <span>6h</span>
-              </div>
-            </div>
-            <div class="stories__item">
-              <div class="story-wrap story-wrap--new">
-                <img src="assets\image\member-1.png">
-              </div>
-              <div class="story-info">
-                <h3>Cường Nguyễn</h3>
-                <span>6h</span>
-              </div>
-            </div>
-            <div class="stories__item">
-              <div class="story-wrap story-wrap--new">
-                <img src="assets\image\member-1.png">
-              </div>
-              <div class="story-info">
-                <h3>Cường Nguyễn</h3>
-                <span>6h</span>
-              </div>
-            </div>
-            <div class="stories__item">
-              <div class="story-wrap story-wrap--new">
-                <img src="assets\image\member-1.png">
-              </div>
-              <div class="story-info">
-                <h3>Cường Nguyễn</h3>
-                <span>6h</span>
-              </div>
-            </div>
-            <div class="stories__item">
-              <div class="story-wrap story-wrap--new">
-                <img src="assets\image\member-1.png">
-              </div>
-              <div class="story-info">
-                <h3>Cường Nguyễn</h3>
-                <span>6h</span>
-              </div>
-            </div>
-            <div class="stories__item">
-              <div class="story-wrap story-wrap--new">
-                <img src="assets\image\member-1.png">
-              </div>
-              <div class="story-info">
-                <h3>Cường Nguyễn</h3>
-                <span>6h</span>
-              </div>
-            </div>
-            <div class="stories__item">
-              <div class="story-wrap story-wrap--new">
-                <img src="assets\image\member-1.png">
-              </div>
-              <div class="story-info">
-                <h3>Cường Nguyễn</h3>
-                <span>6h</span>
-              </div>
+            <div class="story-react__react-box react-box">
+              <ng-container *ngFor="let src of srcReactIcons">
+                <img #newEle [src]="src" alt="">
+              </ng-container>
             </div>
           </div>
         </div>
+        <div class="story-list-wrap">
+          <div class="close-btn-wrap">
+            <mat-icon class="close-btn" (click)="isShowStoryFull=!isShowStoryFull">close</mat-icon>
+          </div>
+          <div class="stories-container">
+            <div class="story-creation-wrap">
+              <h2 style="margin: 0">Your Story</h2>
+              <div class="story-creation">
+                <div class="story-wrap story-wrap--grey-bg d-flex justify-content-center align-items-center">
+                  <mat-icon>add</mat-icon>
+                </div>
+                <div class="story-info">
+                  <h3>Create a story</h3>
+                  <span>Share a photo or write something</span>
+                </div>
+              </div>
+            </div>
+            <div class="stories__list">
+              <h2 style="margin: 0">All stories</h2>
+              <div class="stories__item stories__item--selected">
+                <div class="story-wrap story-wrap--old">
+                  <img src="assets\image\member-1.png">
+                </div>
+                <div class="story-info">
+                  <h3>Cường Nguyễn</h3>
+                  <span>6h</span>
+                </div>
+              </div>
+              <div class="stories__item">
+                <div class="story-wrap story-wrap--new">
+                  <img src="assets\image\member-1.png">
+                </div>
+                <div class="story-info">
+                  <h3>Cường Nguyễn</h3>
+                  <span>6h</span>
+                </div>
+              </div>
+              <div class="stories__item">
+                <div class="story-wrap story-wrap--new">
+                  <img src="assets\image\member-1.png">
+                </div>
+                <div class="story-info">
+                  <h3>Cường Nguyễn</h3>
+                  <span>6h</span>
+                </div>
+              </div>
+              <div class="stories__item">
+                <div class="story-wrap story-wrap--new">
+                  <img src="assets\image\member-1.png">
+                </div>
+                <div class="story-info">
+                  <h3>Cường Nguyễn</h3>
+                  <span>6h</span>
+                </div>
+              </div>
+              <div class="stories__item">
+                <div class="story-wrap story-wrap--new">
+                  <img src="assets\image\member-1.png">
+                </div>
+                <div class="story-info">
+                  <h3>Cường Nguyễn</h3>
+                  <span>6h</span>
+                </div>
+              </div>
+              <div class="stories__item">
+                <div class="story-wrap story-wrap--new">
+                  <img src="assets\image\member-1.png">
+                </div>
+                <div class="story-info">
+                  <h3>Cường Nguyễn</h3>
+                  <span>6h</span>
+                </div>
+              </div>
+              <div class="stories__item">
+                <div class="story-wrap story-wrap--new">
+                  <img src="assets\image\member-1.png">
+                </div>
+                <div class="story-info">
+                  <h3>Cường Nguyễn</h3>
+                  <span>6h</span>
+                </div>
+              </div>
+              <div class="stories__item">
+                <div class="story-wrap story-wrap--new">
+                  <img src="assets\image\member-1.png">
+                </div>
+                <div class="story-info">
+                  <h3>Cường Nguyễn</h3>
+                  <span>6h</span>
+                </div>
+              </div>
+              <div class="stories__item">
+                <div class="story-wrap story-wrap--new">
+                  <img src="assets\image\member-1.png">
+                </div>
+                <div class="story-info">
+                  <h3>Cường Nguyễn</h3>
+                  <span>6h</span>
+                </div>
+              </div>
+              <div class="stories__item">
+                <div class="story-wrap story-wrap--new">
+                  <img src="assets\image\member-1.png">
+                </div>
+                <div class="story-info">
+                  <h3>Cường Nguyễn</h3>
+                  <span>6h</span>
+                </div>
+              </div>
+              <div class="stories__item">
+                <div class="story-wrap story-wrap--new">
+                  <img src="assets\image\member-1.png">
+                </div>
+                <div class="story-info">
+                  <h3>Cường Nguyễn</h3>
+                  <span>6h</span>
+                </div>
+              </div>
+              <div class="stories__item">
+                <div class="story-wrap story-wrap--new">
+                  <img src="assets\image\member-1.png">
+                </div>
+                <div class="story-info">
+                  <h3>Cường Nguyễn</h3>
+                  <span>6h</span>
+                </div>
+              </div>
+              <div class="stories__item">
+                <div class="story-wrap story-wrap--new">
+                  <img src="assets\image\member-1.png">
+                </div>
+                <div class="story-info">
+                  <h3>Cường Nguyễn</h3>
+                  <span>6h</span>
+                </div>
+              </div>
+            </div>
+          </div>
 
+        </div>
       </div>
     </div>
-  </div>
+  </ng-container>
   <!-- end story-full -->
 </div>

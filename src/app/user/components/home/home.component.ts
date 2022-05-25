@@ -20,6 +20,7 @@ export interface Comment {
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  isShowStoryFull: boolean = false;
   zoom: number = 15;
   title = 'travel';
   lat = 10.924067;
@@ -194,5 +195,8 @@ export class HomeComponent implements OnInit {
         parentElement?.classList.remove('open');
       }
     });
+  }
+  showStoryFull(storyFullElement: HTMLElement) {
+    storyFullElement.style.display = 'block';
   }
 }

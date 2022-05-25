@@ -1,3 +1,7 @@
+.header-wrap {
+  z-index: 1;
+}
+
 /* container */
 .home-container {
   overflow-y: hidden;
@@ -96,6 +100,10 @@
   box-shadow: 0 0 3px #ccc
 }
 
+.story-gallery .see-all-btn:hover {
+  background: var(--hover-color--);
+}
+
 .story {
   flex-basis: 18%;
   position: relative;
@@ -180,8 +188,9 @@
   font-size: 3.2rem;
   cursor: pointer;
   border-radius: 50%;
-  width: 35px;
-  height: 35px;
+  width: 45px;
+  height: 45px;
+  border-radius: 100rem;
   background: var(--background-color-1--);
 }
 
@@ -594,6 +603,7 @@ span {
   padding: 10px;
   color: #626262;
   overflow: hidden;
+
 }
 
 .write-post-container ul {
@@ -704,6 +714,7 @@ span {
   padding: 5px 20px;
   color: #626262;
   margin: 20px 0;
+  box-shadow: 0 0 5px #ccc;
 }
 
 .post-container span {
@@ -969,6 +980,33 @@ span {
 .like-btn:hover {
   border-radius: 5px;
 }
+
+.react-btn li i {
+  background-image: url("/assets/bg-img/tNtc26NZCUe.png");
+  background-size: 26px 834px;
+  width: 18px;
+  height: 18px;
+  background-repeat: no-repeat;
+  display: inline-block;
+  filter: brightness(0) invert(0.3);
+}
+
+.react-btn li p {
+  font-weight: 550;
+}
+
+.like-btn .like-btn-icon {
+  background-position: 0px -336px;
+}
+
+.comment-btn .comment-btn-icon {
+  background-position: 0px -296px;
+}
+
+.shared-btn .shared-btn-icon {
+  background-position: 0px -356px;
+}
+
 
 .like-btn .react-box,
 .comment-detail__react-like .react-box {

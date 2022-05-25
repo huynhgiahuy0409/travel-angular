@@ -4,10 +4,11 @@ nav {
   align-items: center;
   justify-content: space-between;
   background-color: var(--primary-color--);
-  padding: 5px 5%;
+  padding: 5px;
   top: 0;
   z-index: 9999;
   position: sticky;
+  box-shadow: 0 0 9px black;
 }
 
 .logo {
@@ -18,6 +19,83 @@ nav {
 .nav-left,
 .nav-right {
   display: flex;
+}
+
+.nav-right__list {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 40px;
+}
+
+
+.profile__item {
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  padding: 0 5px;
+}
+
+
+.profile__item:hover,
+.nav-right__item:hover {
+  background-color: var(--hover-primary-color--);
+}
+
+
+.profile__item img {
+  width: 35px;
+  height: 35px;
+  border-radius: 100rem;
+}
+
+.profile__item h3 {
+  font-weight: 550;
+  margin: 0 5px;
+  color: white;
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+}
+
+.nav-right__item {
+  border-radius: 50%;
+  background: var(--transparent-primary-color--);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative
+}
+
+.nav-right__item:hover .notification {
+  animation: growUp 0.1s ease-in 0.3s forwards;
+}
+
+/* .nav-right__item:last-child:hover .notification {
+  display: block;
+  animation: growUp 0.1s linear;
+} */
+
+.nav-right__item:before {
+  content: '';
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: -100%;
+  left: 0;
+}
+
+
+.nav-right__list>div,
+li {
+  margin: 0 3px
+}
+
+.nav-right__item>div {
+  color: white;
 }
 
 .nav-left ul li {
@@ -50,49 +128,155 @@ nav {
   padding: 10px;
 }
 
-.nav-user-icon {
-  margin-left: 30px;
-  position: relative;
-  width: 40px;
-  height: 40px;
-}
-
-.nav-user-icon::before {
-  content: '';
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  bottom: -100%;
-  left: 0;
-}
-
-.nav-user-icon:hover .notification {
-  display: block;
-}
 
 .separate-line {
   border-bottom: 2px solid #ccc;
   margin: 5px 0
 }
 
+@keyframes growUp {
+  from {
+    transform: scale(0);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
 .notification {
   width: 360px;
+  max-height: 630px;
   position: absolute;
-  top: 115%;
+  top: 110%;
   right: 0;
   border-radius: 5px;
-  padding: 5px;
-  box-shadow: 0 0 2px 1px #ccc;
+  padding: 10px;
+  box-shadow: 0 0px 5px 0px #ccc;
   background-color: var(--background-color--);
-  display: none;
+  transform-origin: top right;
+  overflow-y: auto;
+  display: block;
+  transform: scale(0);
+}
+
+.notification__title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 5px
+}
+
+.notification__title .mess-search-box {
+  border-radius: 30px;
+  background-color: var(--background-color-1--);
+  height: 35px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 10px
+}
+
+.notification__title .mess-search-box input {
+  flex: 1;
+  background-color: transparent;
+  font-size: 1.4rem;
+  padding: 0 10px
+}
+
+.notification__title:first-child {
+  box-shadow: 0 2px 2px -2px #ccc
 }
 
 
-.nav-user-icon img {
-  width: 40px;
-  border-radius: 50%;
-  cursor: pointer;
+.notification__title h3,
+h1 {
   margin: 0;
+  font-weight: 600;
+}
+
+.notification__title .more-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notification__title .more-btn:hover {
+  background-color: var(--hover-color--);
+}
+
+.notification__title .more-btn i {
+  background-image: url("/assets/bg-img/gDgEYvVGhpx.png");
+  background-position: -22px -96px;
+  background-size: 190px 150px;
+  width: 20px;
+  height: 20px;
+  background-repeat: no-repeat;
+  display: inline-block;
+}
+
+
+.notification__title h1 {
+  font-weight: bold;
+}
+
+.img-wrap {}
+
+.img-wrap img {
+  width: 55px;
+  height: 55px;
+  border-radius: 100rem;
+}
+
+.content-wrap {
+  margin: 0 10px;
+  flex: 1;
+  line-height: 10px;
+}
+
+.content-wrap .main-content .username {
+  font-weight: 550;
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+}
+
+
+.main-content h3 {
+  font-size: 1.4rem;
+  font-weight: 550;
+  display: inline-block;
+  margin: 0;
+  line-height: 1.1;
+}
+
+
+.sub-contain span,
+label {
+  font-size: 1.2rem;
+}
+
+.sub-contain span {
+  color: var(--primary-color--);
+}
+
+.sub-contain label:nth-child(2) {
+  padding: 5px
+}
+
+.more-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.selected-notify {
+  width: 10px;
+  height: 10px;
+  border-radius: 100rem;
+  background-color: var(--primary-color--);
 }
 
 .online {
@@ -127,8 +311,11 @@ nav {
 }
 
 .notification li {
+  display: flex;
+  align-items: center;
   border-radius: 5px;
-  padding: 10px
+  padding: 5px;
+  margin: 0 !important
 }
 
 .notification li:hover {
