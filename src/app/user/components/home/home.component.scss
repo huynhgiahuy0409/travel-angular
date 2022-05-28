@@ -46,11 +46,11 @@
 }
 
 .left-sidebar {
-  left: 0
+  left: 2%
 }
 
 .right-sidebar {
-  right: 0
+  right: 2%
 }
 
 /* main-content */
@@ -63,7 +63,7 @@
 }
 
 .main-content {
-  flex-basis: 50%;
+  flex-basis: 46%;
   position: sticky;
   background-color: #fff;
   height: 100vh;
@@ -135,7 +135,7 @@
   }
 
   100% {
-    transform: scale(1.1, 1.1);
+    transform: scale(1.2, 1.2);
   }
 }
 
@@ -309,17 +309,21 @@
   }
 }
 
-@keyframes fadeIn {
+@keyframes fadeInAndFloatUp {
   from {
     opacity: 0;
-    transform: translateY(50px);
+    z-index: -1;
+    transform: translateY(0);
   }
 
   to {
     opacity: 1;
-    transform: translateY();
+    z-index: 999;
+    transform: translateY(-150%);
   }
 }
+
+
 
 .story-react__reply-box {
   width: 295px;
@@ -352,7 +356,6 @@
   display: block !important;
 }
 
-.story-react__react-box {}
 
 .story-react__react-box--fadeIn {
   animation: fadeIn 0.2s linear forwards;
@@ -606,11 +609,13 @@ span {
 
 }
 
-.write-post-container ul {
-  flex-wrap: nowrap;
+.write-post-container .write-post-container__icons {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }
 
-.write-post-container ul li {
+.write-post-container .write-post-container__icons .write-post-container__icon {
   flex: 1;
   display: flex;
   align-items: center;
@@ -619,18 +624,29 @@ span {
   border-radius: 5px
 }
 
+.write-post-container .write-post-container__icons .write-post-container__icon .write-post-container__icon--cherry-color {
+  color: var(--base-cherry-color--)
+}
+
+.write-post-container .write-post-container__icons .write-post-container__icon .write-post-container__icon--lime-color {
+  color: var(--base-lime-color--)
+}
+
+.write-post-container .write-post-container__icons .write-post-container__icon .write-post-container__icon--lemon-color {
+  color: var(--base-lemon-color--)
+}
+
+.write-post-container .write-post-container__icons p {
+  margin: 0 10px;
+  font-weight: 600;
+  font-size: 1.4rem;
+
+}
+
 .write-post-container ul li:hover {
   background-color: var(--hover-color--);
 }
 
-.write-post-container ul mat-icon {
-  font-size: 3rem;
-  margin: 0 10px
-}
-
-.write-post-container ul li p {
-  margin: 0
-}
 
 .write-post-container div:nth-child(1) {}
 
@@ -775,28 +791,69 @@ span {
   color: #9a9a9a
 }
 
-.react-btn {
+.react-btn__list {
   display: flex;
   align-items: center;
 }
 
-.react-btn li {
+.react-btn__item {
   height: 30px;
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative
 }
 
-.react-btn li:hover {
+.react-btn__item:first-child::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: -100%;
+  position: absolute;
+}
+
+
+.react-btn__list .react-btn__item:hover {
   background-color: var(--hover-color--);
 }
 
-.react-btn li mat-icon {
-  font-size: 2.4rem;
+.react-btn-wrap {
+  display: flex;
+  align-items: center;
+
 }
 
-.react-btn li p {
+.react-btn-wrap .react-name {
+  text-transform: capitalize;
+}
+
+.react-btn-wrap .react-name--like {
+  color: var(--primary-color--)
+}
+
+.react-btn-wrap .react-name--love {
+  color: rgb(243, 62, 88);
+}
+
+.react-btn-wrap .react-name--sad,
+.react-name--haha,
+.react-name--wow,
+.react-name--care {
+  color: rgb(247, 177, 37);
+}
+
+.react-btn-wrap .react-name--angry {
+  color: rgb(233, 113, 15);
+}
+
+.react-btn-wrap>.react-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.react-btn__list li p {
   margin: 0 10px
 }
 
@@ -959,68 +1016,70 @@ span {
   padding: 5px 0px;
   border: 1px solid #ccc;
   background-color: var(--background-color-1--);
-  transition: all 0.2s 0.5s;
-  animation-fill-mode: forwards;
-  display: flex;
+  display: none;
   opacity: 0;
+  /* animation: react-name 0.3s linear forwards; */
 }
 
-.react-box::before {
-  content: "";
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 20px
-}
 
 .like-btn {
   position: relative;
 }
 
+
 .like-btn:hover {
   border-radius: 5px;
 }
 
-.react-btn li i {
+.like-btn-icon-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.react-btn__list .react-btn__item .react-btn-wrap i {
   background-image: url("/assets/bg-img/tNtc26NZCUe.png");
   background-size: 26px 834px;
-  width: 18px;
-  height: 18px;
   background-repeat: no-repeat;
   display: inline-block;
   filter: brightness(0) invert(0.3);
+  width: 18px;
+  height: 18px;
+
 }
 
-.react-btn li p {
+.react-btn__list .react-btn__item .react-btn-wrap p {
   font-weight: 550;
 }
 
-.like-btn .like-btn-icon {
+.like-btn-icon {
   background-position: 0px -336px;
 }
 
-.comment-btn .comment-btn-icon {
+.comment-btn-icon {
   background-position: 0px -296px;
 }
 
-.shared-btn .shared-btn-icon {
+.shared-btn-icon {
   background-position: 0px -356px;
 }
 
 
-.like-btn .react-box,
+.react-btn__list .react-btn__item .react-box,
 .comment-detail__react-like .react-box {
   position: absolute;
   top: 0;
-  left: 50%;
-  transform: translate(-50%, -100%);
-  z-index: 999;
+  left: -50%;
+  z-index: -1;
 }
 
-.like-btn:hover .react-box,
+.react-btn__list .react-btn__item:hover .react-box,
 .comment-detail__react-like:hover .react-box {
-  transform: translate(-50%, -120%);
-  opacity: 1;
+  animation: fadeInAndFloatUp 0.1s linear 0.5s forwards;
+  display: flex;
+}
+
+.react-box--hidden {
+  visibility: hidden !important;
 }
 
 .react-box img {
@@ -1032,6 +1091,7 @@ span {
   transition: transform 300ms;
   transform-origin: bottom;
 }
+
 
 .react-box img:hover {
   transform: scale(1.3);

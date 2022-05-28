@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedMaterialModule } from './shared/modules';
 import { AgmCoreModule } from '@agm/core';
 import { UserModule } from './user/user.module';
+import { NgForm, FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -21,11 +22,11 @@ import { UserModule } from './user/user.module';
     HttpClientModule,
     BrowserAnimationsModule,
     SharedMaterialModule,
+    FormsModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCp3qsNHBlKfgzMkrkr0FTUsNAPsH4yd7Y',
     }),
   ],
-  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

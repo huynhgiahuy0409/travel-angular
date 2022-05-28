@@ -1,5 +1,5 @@
 import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
 import { Observable } from 'rxjs/internal/Observable';
@@ -20,19 +20,20 @@ export interface Comment {
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  posts = [1, 1, 1];
   isShowStoryFull: boolean = false;
   zoom: number = 15;
   title = 'travel';
   lat = 10.924067;
   lng = 106.713028;
   srcReactIcons = [
-    'assets/react-image/like.svg',
-    'assets/react-image/love.svg',
-    'assets/react-image/care.svg',
-    'assets/react-image/haha.svg',
-    'assets/react-image/wow.svg',
-    'assets/react-image/sad.svg',
-    'assets/react-image/angry.svg',
+    { url: 'assets/react-image/like.svg', name: 'like' },
+    { url: 'assets/react-image/love.svg', name: 'love' },
+    { url: 'assets/react-image/care.svg', name: 'care' },
+    { url: 'assets/react-image/haha.svg', name: 'haha' },
+    { url: 'assets/react-image/wow.svg', name: 'wow' },
+    { url: 'assets/react-image/sad.svg', name: 'sad' },
+    { url: 'assets/react-image/angry.svg', name: 'angry' },
   ];
   locations: any[] = [
     {
@@ -119,7 +120,8 @@ export class HomeComponent implements OnInit {
   isShowComments: boolean = false;
   constructor(
     private _uploadFileService: UploadFileService,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    private renderer: Renderer2
   ) {}
 
   ngOnInit(): void {}
@@ -198,5 +200,34 @@ export class HomeComponent implements OnInit {
   }
   showStoryFull(storyFullElement: HTMLElement) {
     storyFullElement.style.display = 'block';
+  }
+  selectReactIcon(
+    event: MouseEvent,
+    reactIconTemplateRef: HTMLElement,
+    name: string
+  ) {
+    event.preventDefault();
+    event.stopPropagation();
+    const reactBtnWrap = reactIconTemplateRef.parentElement?.previousSibling;
+    const reactName = this.renderer.createElement('p');
+    const reactNameValue = this.renderer.createText(name);
+    this.renderer.addClass(reactName, 'react-name');
+    this.renderer.addClass(reactName, `react-name--${name}`);
+    this.renderer.appendChild(reactName, reactNameValue);
+    const reactIconClone = reactIconTemplateRef.cloneNode();
+    this.renderer.setStyle(
+      reactIconClone,
+      'animation',
+      'zoom-in-zoom-out 0.4s ease-out backwards'
+    );
+    reactBtnWrap?.childNodes.item(0).replaceWith(reactIconClone);
+    reactBtnWrap?.childNodes.item(1).replaceWith(reactName);
+    const reactBtnWrapHover = document.querySelector(
+      '.react-btn__list .react-btn__item:hover .react-box'
+    );
+    this.renderer.addClass(reactBtnWrapHover, 'react-box--hidden');
+    setTimeout(() => {
+      this.renderer.removeClass(reactBtnWrapHover, 'react-box--hidden');
+    }, 100);
   }
 }

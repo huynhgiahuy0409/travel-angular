@@ -11,6 +11,14 @@ import { ImageDragDirective } from './directive/image-drag.directive';
 
 import { AgmCoreModule } from '@agm/core';
 import { LoginComponent } from './components/login/login.component';
+import { FormsModule } from '@angular/forms';
+import { environment } from 'src/environments/environment';
+import {
+  RECAPTCHA_SETTINGS,
+  RecaptchaFormsModule,
+  RecaptchaModule,
+  RecaptchaSettings,
+} from 'ng-recaptcha';
 @NgModule({
   declarations: [
     UserComponent,
@@ -25,6 +33,16 @@ import { LoginComponent } from './components/login/login.component';
     SharedHeaderModule,
     SharedMaterialModule,
     AgmCoreModule,
+    FormsModule,
+    RecaptchaModule,
+  ],
+  providers: [
+    {
+      provide: RECAPTCHA_SETTINGS,
+      useValue: {
+        siteKey: environment.recaptcha.siteKey,
+      } as RecaptchaSettings,
+    },
   ],
 })
 export class UserModule {}
