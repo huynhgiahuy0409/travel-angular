@@ -181,8 +181,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   constructor(
     private _uploadFileService: UploadFileService,
     private _dialog: MatDialog,
-    private renderer: Renderer2,
-    private ref: ElementRef
+    private renderer: Renderer2
   ) {}
   ngAfterViewInit(): void {}
 
@@ -309,16 +308,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
   onClickImage(idx: number, srcList: string[], type: 'story' | 'post') {
     if (type === 'post') {
       this.isShowPostFull = true;
+    } else if (type === 'story') {
+      this.isShowPostFull = true;
     }
-    const el: HTMLElement = this.firstElement.nativeElement;
-    console.log(el);
     const imageContainer = document.getElementById(
-      'post-image-detail__container'
-    );
-    console.log(imageContainer);
-    console.log(this.postImageDetailContainer);
-    this.ref.nativeElement = document.getElementById(
-      'post-image-detail__container'
+      `${type}-image-detail__container`
     );
     srcList.forEach((src, index) => {
       const imgEle = this.renderer.createElement('img');

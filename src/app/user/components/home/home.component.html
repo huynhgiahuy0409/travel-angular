@@ -1,7 +1,9 @@
 <div class="home-container">
+  <!-- header -->
   <div class="header-wrap" style="position: sticky">
     <shared-header></shared-header>
   </div>
+  <!-- main -->
   <div class="my-container">
     <!-- ----------left-sidebar---------- -->
     <div class="left-sidebar">
@@ -164,8 +166,10 @@
             </li>
           </ul>
         </div>
+        <!-- posts -->
         <ng-container *ngFor="let p of posts">
           <div class="post-container">
+            <!-- header post -->
             <div class="user-profile">
               <img src="assets/image/profile-pic.png" alt="">
               <div class="user-profile-name">
@@ -177,12 +181,14 @@
                 </div>
               </div>
             </div>
+            <!-- post content -->
             <div class="post-text">
               Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
               <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </span>
               , when an unknown printer took a galley of type and scrambled it to make a type specimen book.
               <a href="">Where does it come from?</a>
             </div>
+            <!------ Sorting display images ------>
             <!-- Less 5 img -->
             <ng-container *ngIf="p.images.length < 5; else elseBlock">
               <div class="post-image-container flex-direction-col">
@@ -245,6 +251,7 @@
                 </div>
               </div>
             </ng-template>
+            <!-- post react: like comment shared -->
             <div class="post-react">
               <div class="post-row justify-content-between">
                 <div class="post-react-left d-flex">
@@ -303,6 +310,7 @@
                   </div>
                 </div>
               </div>
+              <!-- comment tree -->
               <ul class="comment-list">
                 <ng-container *ngFor="let comment of commentTree;index as i">
                   <ul class="comment-item">
@@ -783,7 +791,7 @@
   </ng-container>
   <!-- end story-full -->
   <!-- post image detail -->
-  <div #firstElement *ngIf="isShowPostFull">
+  <div *ngIf="isShowPostFull">
     <div class="post-image-detail-full">
       <div class="content-wrap">
         <div class="post-image-detail__left">
@@ -795,7 +803,7 @@
               </svg>
             </div>
           </div>
-          <div #postImageDetailContainer id="post-image-detail__container" class="image-container">
+          <div id="post-image-detail__container" class="image-container">
           </div>
           <div class="right-arrow-wrap" (click)="moveImage('+')">
             <div class="right-arrow">
@@ -1031,4 +1039,5 @@
       </div>
     </div>
   </div>
+  <!-- end post image detail -->
 </div>
