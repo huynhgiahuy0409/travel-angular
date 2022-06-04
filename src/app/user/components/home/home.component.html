@@ -177,14 +177,74 @@
                 </div>
               </div>
             </div>
-            <a href=""><i class="fas fa-ellipsis-v"></i></a>
-            <p class="post-text">
+            <div class="post-text">
               Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
               <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </span>
               , when an unknown printer took a galley of type and scrambled it to make a type specimen book.
               <a href="">Where does it come from?</a>
-            </p>
-            <img src="assets/image/feed-image-1.png" alt="" class="post-img">
+            </div>
+            <!-- Less 5 img -->
+            <ng-container *ngIf="p.images.length < 5; else elseBlock">
+              <div class="post-image-container flex-direction-col">
+                <!-- length != 1 -->
+                <ng-container *ngIf="p.images.length > 1; else oneImage">
+                  <div class="post-image-wrap">
+                    <ng-container *ngFor="let src of p.images; index as idx">
+                      <ng-container *ngIf="idx == 0">
+                        <img [src]="src" (click)="onClickImage(idx, p.images,'post')">
+                      </ng-container>
+                    </ng-container>
+                  </div>
+                  <div class="post-image-wrap flex-direction-row">
+                    <ng-container *ngFor="let src of p.images; index as idx">
+                      <ng-container *ngIf="idx > 0 && idx < 5">
+                        <img [src]="src" (click)="onClickImage(idx, p.images,'post')">
+                      </ng-container>
+                    </ng-container>
+                  </div>
+                </ng-container>
+                <!-- length == 1 -->
+                <ng-template #oneImage>
+                  <div class="post-image-wrap">
+                    <ng-container *ngFor="let src of p.images; index as idx">
+                      <ng-container *ngIf="idx == 0">
+                        <img [src]="src" (click)="onClickImage(idx, p.images,'post')">
+                      </ng-container>
+                    </ng-container>
+                  </div>
+                </ng-template>
+              </div>
+            </ng-container>
+            <!-- More 5 img -->
+            <ng-template #elseBlock>
+              <div class="post-image-container flex-direction-row">
+                <div class="post-image-wrap flex-direction-col">
+                  <ng-container *ngFor="let src of p.images; index as idx">
+                    <ng-container *ngIf="idx >= 0 && idx < 2">
+                      <img [src]="src" (click)="onClickImage(idx, p.images,'post')">
+                    </ng-container>
+                  </ng-container>
+                </div>
+                <div class="post-image-wrap flex-direction-col">
+                  <ng-container *ngFor="let src of p.images; index as idx">
+                    <ng-container *ngIf="idx > 1 && idx < 4">
+                      <img [src]="src" (click)="onClickImage(idx, p.images,'post')">
+                    </ng-container>
+                    <ng-container *ngIf="idx == 4 && p.images.length > 5">
+                      <div class="last-image-wrap">
+                        <img [src]="src" (click)="onClickImage(idx, p.images,'post')">
+                        <div class="last-image--overlay">
+                          <p>+{{p.images.length-5}}</p>
+                        </div>
+                      </div>
+                    </ng-container>
+                    <ng-container *ngIf="idx == 4 && p.images.length == 5">
+                      <img [src]="src" (click)="onClickImage(idx,p.images,'post')">
+                    </ng-container>
+                  </ng-container>
+                </div>
+              </div>
+            </ng-template>
             <div class="post-react">
               <div class="post-row justify-content-between">
                 <div class="post-react-left d-flex">
@@ -200,11 +260,15 @@
               </div>
               <div class="separate-line"></div>
               <ul class="react-btn__list">
-                <li class="react-btn__item">
+                <li #reactBtnItem class="react-btn__item" (click)="unselectReact(reactBtnItem)">
+                  <!--         <ng-container *ngTemplateOutlet="reactBtnWrapTemplate">
+                  </ng-container>
+                  <ng-template #reactBtnWrapTemplate> -->
                   <div class="react-btn-wrap">
-                    <i #likeBtnIconTemplateRef class="like-btn-icon"></i>
+                    <i class="like-btn-icon"></i>
                     <p class="react-name">Like</p>
                   </div>
+                  <!--   </ng-template> -->
                   <div class="react-box">
                     <ng-container *ngFor="let src of srcReactIcons">
                       <img class="react-icon" #reactIconTemplateRef [src]="src.url" [alt]="src.name"
@@ -230,7 +294,7 @@
               <div class="separate-line"></div>
               <div class="post-row">
                 <img class="comment-avatar" src="assets/image/profile-pic.png" alt="">
-                <div class="comment-box d-flex">
+                <div class="comment-box bg-cl">
                   <input #post1Id type="text" placeholder="Write a comment...">
                   <div class="activate">
                     <i class="emoji"></i>
@@ -260,7 +324,7 @@
                             </div>
                             <div class="react-box">
                               <ng-container *ngFor="let src of srcReactIcons">
-                                <img [src]="src" alt="">
+                                <img [src]="src.url" alt="">
                               </ng-container>
                             </div>
                           </div>
@@ -289,7 +353,7 @@
                               <div class="comment-detail__react-like">Like
                                 <div class="react-box">
                                   <ng-container *ngFor="let src of srcReactIcons">
-                                    <img [src]="src" alt="">
+                                    <img [src]="src.url" alt="">
                                   </ng-container>
                                 </div>
                               </div>
@@ -335,7 +399,7 @@
                               <div class="comment-link"></div>
                               <img src="assets/image/profile-pic.png" alt="">
                             </div>
-                            <div class="comment-box d-flex">
+                            <div class="comment-box bg-cl">
                               <input #childReplyInput type="text" placeholder="Write a comment...">
                               <div class="activate">
                                 <i class="emoji"></i>
@@ -354,7 +418,7 @@
                           <div class="comment-link"></div>
                           <img src="assets/image/profile-pic.png" alt="">
                         </div>
-                        <div class="comment-box d-flex">
+                        <div class="comment-box bg-cl">
                           <input #rootReplyInput type="text" placeholder="Write a comment...">
                           <div class="activate">
                             <i class="emoji"></i>
@@ -525,7 +589,9 @@
                   </svg>
                 </div>
               </div>
-              <img src="assets\image\feed-image-4.png" alt="" />
+              <div id="story-image__container">
+                <img src="assets\image\feed-image-4.png" alt="" />
+              </div>
               <div class="right-arrow-wrap">
                 <div class="right-arrow">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#fff"
@@ -716,4 +782,253 @@
     </div>
   </ng-container>
   <!-- end story-full -->
+  <!-- post image detail -->
+  <div #firstElement *ngIf="isShowPostFull">
+    <div class="post-image-detail-full">
+      <div class="content-wrap">
+        <div class="post-image-detail__left">
+          <div class="left-arrow-wrap" (click)="moveImage('-')">
+            <div class="left-arrow">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#fff"
+                stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke="#9e9d9d" d="M15 19l-7-7 7-7" />
+              </svg>
+            </div>
+          </div>
+          <div #postImageDetailContainer id="post-image-detail__container" class="image-container">
+          </div>
+          <div class="right-arrow-wrap" (click)="moveImage('+')">
+            <div class="right-arrow">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#fff"
+                stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke="#9e9d9d" d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="post-image-detail__right">
+          <div class="header__container">
+            <div class="header__list">
+              <div class="header__item">
+                <button type="button" class="btn-close" aria-label="Close"></button>
+              </div>
+            </div>
+            <div class="separate-line"></div>
+          </div>
+          <div class="post-image-detail__right-wrap">
+            <div class="post-info__container">
+              <div class="post-info__header">
+                <div class="post-info__header-left">
+                  <i class="post-icon"></i>
+                  <p>This is a photo from a post</p>
+                </div>
+                <div class="post-info__header-right">
+                  <p>View post</p>
+                </div>
+              </div>
+              <div class="separate-line"></div>
+              <div class="post-info__content">
+                <div class="post-info__content-top">
+                  <div class="user-info">
+                    <div class="user-info-left">
+                      <img src="assets/image/photo1.png" alt="">
+                    </div>
+                    <div class="user-info-right">
+                      <div class="user-info__username">Huỳnh Gia Huy</div>
+                      <div class="user-info__post-detail">
+                        <div class="post-detail__date">May 30 at 5:28 PM</div>
+                        <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yN/r/7OZI7ybJbP6.png" alt="Only me"
+                          height="16" width="16">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="more-btn">
+                    <svg fill="currentColor" viewBox="0 0 20 20" width="2rem" height="2rem">
+                      <g fill-rule="evenodd" transform="translate(-446 -350)">
+                        <path
+                          d="M458 360a2 2 0 1 1-4 0 2 2 0 0 1 4 0m6 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0m-12 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0">
+                        </path>
+                      </g>
+                    </svg>
+                  </div>
+                </div>
+                <div class="post-info__content-bottom">
+                  <button mat-raised-button>Edit</button>
+                </div>
+              </div>
+            </div>
+            <div class="separate-line"></div>
+            <div class="react-btn__container">
+              <ul class="react-btn__list">
+                <li #reactBtnItem class="react-btn__item" (click)="unselectReact(reactBtnItem)">
+                  <!--         <ng-container *ngTemplateOutlet="reactBtnWrapTemplate">
+                  </ng-container>
+                  <ng-template #reactBtnWrapTemplate> -->
+                  <div class="react-btn-wrap">
+                    <i class="like-btn-icon"></i>
+                    <p class="react-name">Like</p>
+                  </div>
+                  <!--   </ng-template> -->
+                  <div class="react-box">
+                    <ng-container *ngFor="let src of srcReactIcons">
+                      <img class="react-icon" #reactIconTemplateRef [src]="src.url" [alt]="src.name"
+                        (click)="selectReactIcon($event,reactIconTemplateRef, src.name)">
+                    </ng-container>
+                  </div>
+                </li>
+                <li class="react-btn__item" (click)="isShowComments=!isShowComments">
+                  <div class="react-btn-wrap">
+                    <i #likeBtnIconTemplateRef class="comment-btn-icon"></i>
+                    <p>Comment</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="comment__container">
+              <div class="separate-line"></div>
+              <ul class="comment-list">
+                <ng-container *ngFor="let comment of commentTree;index as i">
+                  <ul class="comment-item">
+                    <div class="comment-line parent-comment-line">
+                    </div>
+                    <!-- Comment detail of parent-->
+                    <div class="comment-detail comment-parent">
+                      <div class="comment-detail__wrapper-img comment-detail__wrapper-img--parent">
+                        <img src="assets/image/profile-pic.png" alt="">
+                      </div>
+                      <div class="comment-detail__wrapper-info">
+                        <div class="comment-detail__info comment-detail__info--background-1">
+                          <p class="">{{comment.user.name}}</p>
+                          <div class="comment-content">{{comment.content}}</div>
+                        </div>
+                        <div class="comment-detail__react">
+                          <div class="comment-detail__react-like">
+                            <div class="react-like">Like
+                            </div>
+                            <div class="react-box">
+                              <ng-container *ngFor="let src of srcReactIcons">
+                                <img [src]="src.url" alt="">
+                              </ng-container>
+                            </div>
+                          </div>
+                          <div class="comment-detail__react-reply"
+                            (click)="onClickRepUser(comment.user.name, rootReplyInput)">
+                            Reply</div>
+                          <label class="comment-detail__react-time">11h</label>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Child comment -->
+                    <ng-container *ngFor="let childComment of comment.comments">
+                      <ul class="comment-item comment-child">
+                        <div class="comment-line child-comment-line"></div>
+                        <div class="comment-detail">
+                          <div class="comment-detail__wrapper-img comment-detail__wrapper-img--child">
+                            <div class="comment-link"></div>
+                            <img src="assets/image/profile-pic.png" alt="">
+                          </div>
+                          <div class="comment-detail__wrapper-info">
+                            <div class="comment-detail__info comment-detail__info--background-1">
+                              <p class="">{{childComment.user.name}}</p>
+                              <div class="comment-content">{{childComment.content}}</div>
+                            </div>
+                            <div class="comment-detail__react">
+                              <div class="comment-detail__react-like">Like
+                                <div class="react-box">
+                                  <ng-container *ngFor="let src of srcReactIcons">
+                                    <img [src]="src.url" alt="">
+                                  </ng-container>
+                                </div>
+                              </div>
+                              <div class="comment-detail__react-reply"
+                                (click)="onClickRepUser(childComment.user.name, childReplyInput)">Reply</div>
+                              <label class="comment-detail__react-time">11h</label>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Leaf child comment -->
+                        <ng-container *ngFor="let c of childComment.comments">
+                          <li class="comment-item comment-sibling">
+                            <div class="comment-detail">
+                              <div class="comment-detail__wrapper-img comment-detail__wrapper-img--child">
+                                <div class="comment-link"></div>
+                                <img src="assets/image/profile-pic.png" alt="">
+                              </div>
+                              <div class="comment-detail__wrapper-info">
+                                <div class="comment-detail__info comment-detail__info--background-1">
+                                  <p class="">{{c.user.name}}</p>
+                                  <div class="comment-content">{{c.content}}</div>
+                                </div>
+                                <div class="comment-detail__react">
+                                  <div class="comment-detail__react-like">Like
+                                    <div class="react-box">
+                                      <ng-container *ngFor="let src of srcReactIcons">
+                                        <img [src]="src" alt="">
+                                      </ng-container>
+                                    </div>
+                                  </div>
+                                  <div class="comment-detail__react-reply"
+                                    (click)="onClickRepUser(c.user.name, childReplyInput)">Reply</div>
+                                  <label class="comment-detail__react-time">11h</label>
+                                </div>
+                              </div>
+                            </div>
+                          </li>
+                        </ng-container>
+                        <!-- COMMENT INPUT -->
+                        <ul class="comment-item comment-sibling">
+                          <div class="comment-detail">
+                            <div class="comment-detail__wrapper-img comment-detail__wrapper-img--child">
+                              <div class="comment-link"></div>
+                              <img src="assets/image/profile-pic.png" alt="">
+                            </div>
+                            <div class="comment-box bg-cl-1">
+                              <input #childReplyInput type="text" placeholder="Write a comment...">
+                              <div class="activate">
+                                <i class="emoji"></i>
+                                <i class="photo"></i>
+                                <i class="sticker"></i>
+                              </div>
+                            </div>
+                          </div>
+                        </ul>
+                      </ul>
+                    </ng-container>
+                    <!-- COMMENT INPUT -->
+                    <ul class="comment-item comment-child">
+                      <div class="comment-detail">
+                        <div class="comment-detail__wrapper-img comment-detail__wrapper-img--child">
+                          <div class="comment-link"></div>
+                          <img src="assets/image/profile-pic.png" alt="">
+                        </div>
+                        <div class="comment-box bg-cl-1">
+                          <input #rootReplyInput type="text" placeholder="Write a comment...">
+                          <div class="activate">
+                            <i class="emoji"></i>
+                            <i class="photo"></i>
+                            <i class="sticker"></i>
+                          </div>
+                        </div>
+                      </div>
+                    </ul>
+                  </ul>
+                </ng-container>
+              </ul>
+              <div class="comment__wrap">
+                <img class="comment-avatar" src="assets/image/profile-pic.png" alt="">
+                <div class="comment-box bg-cl-1">
+                  <input #post1Id type="text" placeholder="Write a comment...">
+                  <div class="activate">
+                    <i class="emoji"></i>
+                    <i class="photo"></i>
+                    <i class="sticker"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

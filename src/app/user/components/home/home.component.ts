@@ -1,5 +1,12 @@
 import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnInit,
+  Renderer2,
+  ViewChild,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
 import { Observable } from 'rxjs/internal/Observable';
@@ -19,9 +26,61 @@ export interface Comment {
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
-  posts = [1, 1, 1];
+export class HomeComponent implements OnInit, AfterViewInit {
+  postImageDetailContainer!: ElementRef;
+  posts = [
+    {
+      content: '',
+      images: ['assets/image/feed-image-1.png'],
+    },
+    {
+      content: '',
+      images: [
+        'assets/image/feed-image-1.png',
+        'assets/image/feed-image-2.png',
+      ],
+    },
+    {
+      content: '',
+      images: [
+        'assets/image/feed-image-1.png',
+        'assets/image/feed-image-2.png',
+        'assets/image/feed-image-3.png',
+      ],
+    },
+    {
+      content: '',
+      images: [
+        'assets/image/feed-image-1.png',
+        'assets/image/feed-image-2.png',
+        'assets/image/feed-image-3.png',
+        'assets/image/feed-image-4.png',
+      ],
+    },
+    {
+      content: '',
+      images: [
+        'assets/image/feed-image-1.png',
+        'assets/image/feed-image-2.png',
+        'assets/image/feed-image-3.png',
+        'assets/image/feed-image-4.png',
+        'assets/image/feed-image-5.png',
+      ],
+    },
+    {
+      content: '',
+      images: [
+        'assets/image/feed-image-1.png',
+        'assets/image/feed-image-2.png',
+        'assets/image/feed-image-3.png',
+        'assets/image/feed-image-4.png',
+        'assets/image/feed-image-5.png',
+        'assets/image/feed-image-1.png',
+      ],
+    },
+  ];
   isShowStoryFull: boolean = false;
+  isShowPostFull: boolean = false;
   zoom: number = 15;
   title = 'travel';
   lat = 10.924067;
@@ -63,7 +122,7 @@ export class HomeComponent implements OnInit {
   progress = 0;
   message!: string;
   fileInfos!: Observable<any> | undefined;
-  img: any;
+  /* img: any; */
   /* Customize Commend */
   commentTree: Comment[] = [
     {
@@ -118,11 +177,14 @@ export class HomeComponent implements OnInit {
     },
   ];
   isShowComments: boolean = false;
+  @ViewChild('firstElement') firstElement!: ElementRef;
   constructor(
     private _uploadFileService: UploadFileService,
     private _dialog: MatDialog,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private ref: ElementRef
   ) {}
+  ngAfterViewInit(): void {}
 
   ngOnInit(): void {}
   selectedFile($event: any) {
@@ -156,7 +218,7 @@ export class HomeComponent implements OnInit {
   }
   showImage() {
     this._uploadFileService.showImage().subscribe((v) => {
-      this.img = v;
+      /* this.img = v; */
     });
   }
   openCreatePostDialog() {
@@ -229,5 +291,75 @@ export class HomeComponent implements OnInit {
     setTimeout(() => {
       this.renderer.removeClass(reactBtnWrapHover, 'react-box--hidden');
     }, 100);
+  }
+  unselectReact(reactBtnItem: HTMLElement) {
+    const reactBtnWrap = reactBtnItem.firstChild;
+    const reactIcon = reactBtnWrap?.firstChild;
+    const likeBtnIcon = this.renderer.createElement('i');
+    const reactNameValue = this.renderer.createText('Like');
+    this.renderer.addClass(likeBtnIcon, 'like-btn-icon');
+    const reactName = this.renderer.createElement('p');
+    this.renderer.addClass(reactName, 'react-name');
+    this.renderer.appendChild(reactName, reactNameValue);
+    if (reactIcon) {
+      reactBtnWrap?.childNodes.item(0).replaceWith(likeBtnIcon);
+      reactBtnWrap?.childNodes.item(1).replaceWith(reactName);
+    }
+  }
+  onClickImage(idx: number, srcList: string[], type: 'story' | 'post') {
+    if (type === 'post') {
+      this.isShowPostFull = true;
+    }
+    const el: HTMLElement = this.firstElement.nativeElement;
+    console.log(el);
+    const imageContainer = document.getElementById(
+      'post-image-detail__container'
+    );
+    console.log(imageContainer);
+    console.log(this.postImageDetailContainer);
+    this.ref.nativeElement = document.getElementById(
+      'post-image-detail__container'
+    );
+    srcList.forEach((src, index) => {
+      const imgEle = this.renderer.createElement('img');
+      this.renderer.setAttribute(imgEle, 'src', src);
+      this.renderer.setStyle(imgEle, 'opacity', 0);
+      this.renderer.appendChild(imageContainer, imgEle);
+      this.renderer.setAttribute(imgEle, 'id', `image-detail-${index}`);
+      if (idx === index) {
+        this.renderer.setStyle(imgEle, 'opacity', 1);
+      }
+    });
+  }
+  moveImage(action: '+' | '-') {
+    const imageContainer = document.getElementById('image-container');
+    if (imageContainer!.childNodes.length > 1) {
+      let imageDetail: HTMLElement | null = null;
+      let movedImage = null;
+      imageContainer?.childNodes.forEach((e, i) => {
+        if (
+          document.getElementById(`image-detail-${i}`)!.style!.opacity === '1'
+        ) {
+          imageDetail = document.getElementById(`image-detail-${i}`);
+          if (action == '+') {
+            if (i === imageContainer.childNodes.length - 1) {
+              movedImage = document.getElementById(`image-detail-0`);
+            } else {
+              movedImage = imageDetail!.nextSibling;
+            }
+          } else {
+            if (i === 0) {
+              movedImage = document.getElementById(
+                `image-detail-${imageContainer?.childNodes.length - 1}`
+              );
+            } else {
+              movedImage = imageDetail!.previousSibling;
+            }
+          }
+        }
+      });
+      this.renderer.setStyle(movedImage, 'opacity', 1);
+      this.renderer.setStyle(imageDetail, 'opacity', 0);
+    }
   }
 }

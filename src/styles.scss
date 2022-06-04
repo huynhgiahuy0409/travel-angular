@@ -1,5 +1,3 @@
-/* You can add global styles to this file, and also import other style files */
-
 html,
 body,
 div,
@@ -102,6 +100,29 @@ section {
   display: block;
 }
 
+/* Custom scrollbar */
+/* width */
+::-webkit-scrollbar {
+  width: 11px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--primary-background--);
+  border-radius: 30px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar:hover {
+  background: var(--primary-background--);
+  border: 5px solid transparent;
+  background-clip: content-box;
+}
+
+/* End custom scrollbar */
 body {
   line-height: 1;
 }
@@ -144,7 +165,10 @@ table {
   --text-color--: #ccc;
   --hover-color--: #e2e2e2;
   --hover-primary-color--: #f3f3f330;
-  --transparent-primary-color--: #ffffff1c
+  --transparent-primary-color--: #ffffff1c;
+  --base-cherry-color--: #f3425f;
+  --base-lime-color--: #45bd62;
+  --base-lemon-color--: #f7b928;
 }
 
 mat-icon {

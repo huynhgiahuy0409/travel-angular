@@ -11,7 +11,7 @@ import { ImageDragDirective } from './directive/image-drag.directive';
 
 import { AgmCoreModule } from '@agm/core';
 import { LoginComponent } from './components/login/login.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import {
   RECAPTCHA_SETTINGS,
@@ -34,7 +34,9 @@ import {
     SharedMaterialModule,
     AgmCoreModule,
     FormsModule,
+    ReactiveFormsModule,
     RecaptchaModule,
+    RecaptchaFormsModule,
   ],
   providers: [
     {

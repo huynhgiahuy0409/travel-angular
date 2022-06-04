@@ -20,12 +20,11 @@
         <div class="left-content__main">Bessenger giúp bạn kết nối và chia sẻ với mọi người trong cuộc sống của bạn.
         </div>
 
-        <div id="dang-ky-2" class="left-content__action-btn">
-          <p>Đăng ký</p>
-        </div>
-
-        <div id="dang-nhap-2" style="display: none;" class="left-content__action-btn">
-          <p>Đăng nhập</p>
+        <div class="left-content__action-btn" (click)="isLogin=!isLogin">
+          <p *ngIf="isLogin; else isRegister">Đăng ký</p>
+          <ng-template #isRegister>
+            <p>Đăng nhập</p>
+          </ng-template>
         </div>
 
         <div class="left-content__progress-bar-wrap">
@@ -51,36 +50,205 @@
         <div class="right-form__content">
           <div class="content">
             <div class="content__title">
-              <p>Đăng nhập tài khoản của bạn</p>
+              <p *ngIf="isLogin; else isRegisterContentTitle">Đăng nhập tài khoản của bạn</p>
+              <ng-template #isRegisterContentTitle>
+                <p>Đăng ký tài khoản của bạn</p>
+              </ng-template>
             </div>
-            <form action="" class="content__form">
-              <div class="content__form__input-wrap">
-                <i class="far fa-paper-plane"></i>
-                <input type="text" placeholder="Username">
-              </div>
-              <div class="content__form__input-wrap">
-                <i class="fab fa-keycdn"></i>
-                <input type="text" placeholder="Password">
-                <i class="fa fa-eye" aria-hidden="true"></i>
-              </div>
-              <re-captcha id="recaptcha" name="recaptcha" #recaptcha="ngModel" [(ngModel)]="token" required
-                [class.is-invalid]="recaptcha.invalid && (recaptcha.dirty || recaptcha.touched)">
-              </re-captcha>
-              <div *ngIf="recaptcha.invalid && (recaptcha.dirty || recaptcha.touched)" class="invalid-feedback">
-                <div *ngIf="recaptcha.errors?.['required']">This field is required.</div>
-              </div>
-              <button class="content__form__btn">Đăng nhập</button>
-              <div class="separate-line"></div>
-              <div class="content__form__more-wrap">
-                <p>Đăng ký tài khoản</p>
-                <p>Quên mật khẩu?</p>
-              </div>
-            </form>
+            <ng-container *ngIf="isLogin; else registerFormTemplate">
+              <form [formGroup]="loginForm" (ngSubmit)="onClickSubmit(loginForm.value)" class="content__form">
+                <!-- username -->
+                <div class="content__form__input-wrap">
+                  <div class="content__form__input">
+                    <i class="far fa-paper-plane"></i>
+                    <input #username id="username" type="text" placeholder="Tài khoản" formControlName="username">
+                  </div>
+                  <div class="content__form__input-notify" *ngIf="loginForm.hasError('email', ['username']) &&
+                  loginForm.get('username')?.touched">
+                    <p> Tài khoản không hợp lệ</p>
+                    <p> Ví dụ: nguyenvana@gmail.com</p>
+                  </div>
+                  <div class="content__form__input-notify" *ngIf="loginForm.hasError('required', ['username']) &&
+                  loginForm.get('username')?.touched">
+                    <p> Tài khoản không được để trống</p>
+                  </div>
+                  <!-- <div class="content__form__input-notify" *ngIf="form.hasError('minlength', ['password']) &&
+                  form.get('password')?.touched">
+                    <p> Mật khẩu yêu cầu tối thiểu {{form.get('password')?.errors?.minlength.requiredLength}} kí tự
+                    </p>
+                  </div> -->
+                  <ng-container
+                    *ngIf="loginForm.get('username')!.errors && loginForm.get('username')?.touched ; else validUsernameInput">
+                    {{this.renderer.addClass(username.parentElement, 'content__form__input--invalid')}}
+                  </ng-container>
+                  <ng-template #validUsernameInput>
+                    {{this.renderer.removeClass(username.parentElement, 'content__form__input--invalid')}}
+                  </ng-template>
+                </div>
+                <!-- password -->
+                <div class="content__form__input-wrap">
+                  <div #contentFormInput class="content__form__input">
+                    <i class="fa-solid fa-key"></i>
+                    <input #password id="password" type="password" placeholder="Password" formControlName="password">
+                    <i #eyeIcon class="fa fa-eye" aria-hidden="true" (click)="showPassword(eyeIcon,password)"></i>
+                  </div>
+                  <div class="content__form__input-notify" *ngIf="loginForm.hasError('required', ['password']) &&
+                  loginForm.get('password')?.touched">
+                    <p> Mật khẩu không được để trống</p>
+                  </div>
+                  <div class="content__form__input-notify" *ngIf="loginForm.hasError('minlength', ['password']) &&
+                  loginForm.get('password')?.touched">
+                    <p> Mật khẩu yêu cầu tối thiểu {{loginForm.get('password')?.errors?.minlength.requiredLength}} kí tự
+                    </p>
+                  </div>
+                  <ng-container
+                    *ngIf="loginForm.get('password')!.errors && loginForm.get('password')?.touched ; else validPasswordInput">
+                    {{this.renderer.addClass(password.parentElement, 'content__form__input--invalid')}}
+                  </ng-container>
+                  <ng-template #validPasswordInput>
+                    {{this.renderer.removeClass(password.parentElement, 'content__form__input--invalid')}}
+                  </ng-template>
+                </div>
+                <re-captcha formControlName="recaptchaReactive"
+                  (resolved)="addTokenLog('Reactive form mode resolved', $event)">
+                </re-captcha>
+                <button type="submit" class="content__form__btn" [disabled]="loginForm.invalid">Đăng nhập</button>
+                <div class="separate-line"></div>
+                <div class="content__form__more-wrap">
+                  <p>Đăng ký tài khoản</p>
+                  <p>Quên mật khẩu?</p>
+                </div>
+              </form>
+            </ng-container>
+            <ng-template #registerFormTemplate>
+              <form [formGroup]="registerForm" (ngSubmit)="onClickSubmit(registerForm.value)" class="content__form">
+                <!-- email -->
+                <div class="content__form__input-wrap">
+                  <div class="content__form__input">
+                    <i class="far fa-paper-plane"></i>
+                    <input #email id="username" type="text" placeholder="Email" formControlName="email">
+                  </div>
+                  <div class="content__form__input-notify" *ngIf="registerForm.hasError('email', ['email']) &&
+                  registerForm.get('email')?.touched">
+                    <p> Tài khoản không hợp lệ</p>
+                    <p> Ví dụ: nguyenvana@gmail.com</p>
+                  </div>
+                  <div class="content__form__input-notify" *ngIf="registerForm.hasError('required', ['email']) &&
+                  registerForm.get('email')?.touched">
+                    <p> Email không được để trống</p>
+                  </div>
+                  <ng-container
+                    *ngIf="registerForm.get('email')!.invalid && registerForm.get('email')?.touched ; else validUsernameInput">
+                    {{this.renderer.addClass(email.parentElement, 'content__form__input--invalid')}}
+                  </ng-container>
+                  <ng-template #validUsernameInput>
+                    {{this.renderer.removeClass(email.parentElement, 'content__form__input--invalid')}}
+                  </ng-template>
+                </div>
+                <!-- fullName -->
+                <div class="content__form__input-wrap">
+                  <div #contentFormInput class="content__form__input">
+                    <i class="fas fa-signature"></i>
+                    <input #fullName id="fullName" type="text" placeholder="Họ tên" formControlName="fullName">
+                  </div>
+                  <div class="content__form__input-notify" *ngIf="registerForm.hasError('required', ['fullName']) &&
+                  registerForm.get('fullName')?.touched">
+                    <p> Tên người dùng không được để trống</p>
+                  </div>
+                  <ng-container
+                    *ngIf="registerForm.get('fullName')!.invalid && registerForm.get('fullName')?.touched ; else validPasswordInput">
+                    {{this.renderer.addClass(fullName.parentElement, 'content__form__input--invalid')}}
+                  </ng-container>
+                  <ng-template #validPasswordInput>
+                    {{this.renderer.removeClass(fullName.parentElement, 'content__form__input--invalid')}}
+                  </ng-template>
+                </div>
+                <div class="content__form__input-wrap" formGroupName="passwordGr">
+                  <!-- password -->
+                  <div class="content__form__input-wrap">
+                    <div class="content__form__input">
+                      <i class="fa-solid fa-key"></i>
+                      <input #password id="password" type="password" placeholder="Mật khẩu" formControlName="password">
+                      <i #eyeIcon class="fa fa-eye" aria-hidden="true" (click)="showPassword(eyeIcon,password)"></i>
+                    </div>
+                    <div class="content__form__level-password">
+                      <div id="level-password__progress-bar" class="level-password__progress-bar">
+                        <div class="level-password__progress-bar__child"></div>
+                        <div class="level-password__progress-bar__child"></div>
+                        <div class="level-password__progress-bar__child"></div>
+                        <div class="level-password__progress-bar__child"></div>
+                      </div>
+                      <p>Hãy nhập mật khẩu</p>
+                    </div>
+                    <!--  <div class="content__form__input-notify" *ngIf="registerForm.hasError('required', ['password']) &&
+                    registerForm.get('password')?.touched">
+                      <p> Mật khẩu không được để trống</p>
+                    </div>
+                    <div class="content__form__input-notify" *ngIf="registerForm.hasError('minlength', ['password']) &&
+                    registerForm.get('password')?.touched">
+                      <p> Mật khẩu yêu cầu tối thiểu {{registerForm.get('password')?.errors?.minlength.requiredLength}} kí tự
+                      </p>
+                    </div>
+                    <ng-container
+                      *ngIf="registerForm.get('password')!.errors && registerForm.get('password')?.touched ; else validPasswordInput">
+                      {{this.renderer.addClass(password.parentElement, 'content__form__input--invalid')}}
+                    </ng-container>
+                    <ng-template #validPasswordInput>
+                      {{this.renderer.removeClass(password.parentElement, 'content__form__input--invalid')}}
+                    </ng-template> -->
+                  </div>
+                  <!-- confirm password -->
+                  <div class="content__form__input-wrap" style="margin-top: 10px">
+                    <div class="content__form__input">
+                      <i class="fa-solid fa-lock"></i>
+                      <input #confirmPassword id="confirm-password" type="password" placeholder="Xác nhận mật khẩu"
+                        formControlName="confirmPassword">
+                      <i #confirmPasswordEyeIcon class="fa fa-eye" aria-hidden="true"
+                        (click)="showPassword(confirmPasswordEyeIcon,confirmPassword)"></i>
+                    </div>
+                    <!--  <div class="content__form__input-notify" *ngIf="registerForm.hasError('required', ['password']) &&
+                    registerForm.get('password')?.touched">
+                      <p> Mật khẩu không được để trống</p>
+                    </div>
+                    <div class="content__form__input-notify" *ngIf="registerForm.hasError('minlength', ['password']) &&
+                    registerForm.get('password')?.touched">
+                      <p> Mật khẩu yêu cầu tối thiểu {{registerForm.get('password')?.errors?.minlength.requiredLength}} kí tự
+                      </p>
+                    </div>
+                    <ng-container
+                      *ngIf="registerForm.get('password')!.errors && registerForm.get('password')?.touched ; else validPasswordInput">
+                      {{this.renderer.addClass(password.parentElement, 'content__form__input--invalid')}}
+                    </ng-container>
+                    <ng-template #validPasswordInput>
+                      {{this.renderer.removeClass(password.parentElement, 'content__form__input--invalid')}}
+                    </ng-template> -->
+                  </div>
+                  <div class="content__form__input-notify"
+                    *ngIf="registerForm.get('passwordGr')?.invalid &&
+                  registerForm.get('passwordGr')!.get('password')!.value && registerForm.get('passwordGr')!.get('confirmPassword')!.touched">
+                    <p> Mật khẩu không trùng khớp</p>
+                  </div>
+                </div>
+                <div class="content__form__input-wrap">
+                  <p>Bằng cách đăng ký, bạn xác nhận rằng đã đọc và chấp thuật <span>Thông Báo Người Dùng</span> và
+                    <span> Chính Sách Bảo
+                      Mật</span> của chúng tôi
+                  </p>
+                </div>
+                <button type="submit" class="content__form__btn" [disabled]="registerForm.invalid">Đăng ký</button>
+              </form>
+            </ng-template>
           </div>
         </div>
         <div class="right-form__footer">
-          <p>Chính sách bảo mật</p>
-          <p>Điều khoản sử dụng</p>
+          <ng-container *ngIf="isLogin; else footRegister">
+            <p>Chính sách bảo mật</p>
+            <p>Điều khoản sử dụng</p>
+          </ng-container>
+          <ng-template #footRegister>
+            <p>Bạn đó có tài khoản? <span style="font-weight: 700; cursor: pointer;" (click)="isLogin=!isLogin">Đăng
+                nhập</span></p>
+          </ng-template>
         </div>
       </div>
 
