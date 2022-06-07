@@ -62,7 +62,7 @@
       <div class="main-content">
         <!-- story-gallery -->
         <div class="story-gallery">
-          <div class="see-all-btn" (click)="isShowStoryFull=!isShowStoryFull">
+          <div class="see-all-btn">
             <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" fill="currentColor"
               class="bi bi-arrow-right-short" viewBox="0 0 16 16">
               <path fill-rule="evenodd"
@@ -76,34 +76,17 @@
             <img src="assets/image/upload.png" alt="">
             <p>Post Story</p>
           </div>
-          <div class="story">
-            <div class="story__thumbnail">
-              <img src="/assets/image/status-2.png" alt="">
-            </div>
-            <img src="assets/image/member-2.png" alt="">
-            <p>People 2</p>
-          </div>
-          <div class="story">
-            <div class="story__thumbnail">
-              <img src="/assets/image/status-2.png" alt="">
-            </div>
-            <img src="assets/image/member-2.png" alt="">
-            <p>People 2</p>
-          </div>
-          <div class="story">
-            <div class="story__thumbnail">
-              <img src="/assets/image/status-2.png" alt="">
-            </div>
-            <img src="assets/image/member-2.png" alt="">
-            <p>People 2</p>
-          </div>
-          <div class="story">
-            <div class="story__thumbnail">
-              <img src="/assets/image/status-2.png" alt="">
-            </div>
-            <img src="assets/image/member-2.png" alt="">
-            <p>People 2</p>
-          </div>
+          <ng-container *ngFor="let p of posts, index as idx">
+            <ng-container *ngIf="idx < 4">
+              <div class="story" (click)="displayPost(idx,p,'story')">
+                <div class="story__thumbnail">
+                  <img src="/assets/image/status-2.png" alt="">
+                </div>
+                <img src="assets/image/member-2.png" alt="">
+                <p>People 2</p>
+              </div>
+            </ng-container>
+          </ng-container>
         </div>
         <!-- write-post-container -->
         <div class="write-post-container">
@@ -197,14 +180,14 @@
                   <div class="post-image-wrap">
                     <ng-container *ngFor="let src of p.images; index as idx">
                       <ng-container *ngIf="idx == 0">
-                        <img [src]="src" (click)="onClickImage(idx, p.images,'post')">
+                        <img [src]="src" (click)="displayPost(idx, p,'post')">
                       </ng-container>
                     </ng-container>
                   </div>
                   <div class="post-image-wrap flex-direction-row">
                     <ng-container *ngFor="let src of p.images; index as idx">
                       <ng-container *ngIf="idx > 0 && idx < 5">
-                        <img [src]="src" (click)="onClickImage(idx, p.images,'post')">
+                        <img [src]="src" (click)="displayPost(idx, p,'post')">
                       </ng-container>
                     </ng-container>
                   </div>
@@ -214,7 +197,7 @@
                   <div class="post-image-wrap">
                     <ng-container *ngFor="let src of p.images; index as idx">
                       <ng-container *ngIf="idx == 0">
-                        <img [src]="src" (click)="onClickImage(idx, p.images,'post')">
+                        <img [src]="src" (click)="displayPost(idx, p,'post')">
                       </ng-container>
                     </ng-container>
                   </div>
@@ -227,25 +210,25 @@
                 <div class="post-image-wrap flex-direction-col">
                   <ng-container *ngFor="let src of p.images; index as idx">
                     <ng-container *ngIf="idx >= 0 && idx < 2">
-                      <img [src]="src" (click)="onClickImage(idx, p.images,'post')">
+                      <img [src]="src" (click)="displayPost(idx, p,'post')">
                     </ng-container>
                   </ng-container>
                 </div>
                 <div class="post-image-wrap flex-direction-col">
                   <ng-container *ngFor="let src of p.images; index as idx">
                     <ng-container *ngIf="idx > 1 && idx < 4">
-                      <img [src]="src" (click)="onClickImage(idx, p.images,'post')">
+                      <img [src]="src" (click)="displayPost(idx, p,'post')">
                     </ng-container>
                     <ng-container *ngIf="idx == 4 && p.images.length > 5">
                       <div class="last-image-wrap">
-                        <img [src]="src" (click)="onClickImage(idx, p.images,'post')">
+                        <img [src]="src" (click)="displayPost(idx, p,'post')">
                         <div class="last-image--overlay">
                           <p>+{{p.images.length-5}}</p>
                         </div>
                       </div>
                     </ng-container>
                     <ng-container *ngIf="idx == 4 && p.images.length == 5">
-                      <img [src]="src" (click)="onClickImage(idx,p.images,'post')">
+                      <img [src]="src" (click)="displayPost(idx,p,'post')">
                     </ng-container>
                   </ng-container>
                 </div>
@@ -583,13 +566,12 @@
     </div>
   </div>
   <!-- story-full -->
-  <ng-container *ngIf="isShowStoryFull">
-    <div class="story-full">
+    <div class="post-full" [class.show]="sltStory">
       <div class="content-wrap">
         <div class="story-content">
           <div class="story-upload-container">
             <div class="story-upload">
-              <div class="left-arrow-wrap">
+              <div class="left-arrow-wrap" (click)="moveImage('-' ,'story')">
                 <div class="left-arrow">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#fff"
                     stroke-width="2">
@@ -597,10 +579,9 @@
                   </svg>
                 </div>
               </div>
-              <div id="story-image__container">
-                <img src="assets\image\feed-image-4.png" alt="" />
+              <div #storyImageDetailContainer class="image-container">
               </div>
-              <div class="right-arrow-wrap">
+              <div class="right-arrow-wrap" (click)="moveImage('+' ,'story')">
                 <div class="right-arrow">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#fff"
                     stroke-width="2">
@@ -609,14 +590,14 @@
                 </div>
               </div>
               <div class="my-progress-bar">
-                <div class="my-progress-bar__list">
-                  <div class="my-progress-bar__item">
+                <div #progressBarContainer class="my-progress-bar__list">
+                  <!-- <div class="my-progress-bar__item">
                     <div class="my-progress-bar__live"></div>
                   </div>
                   <div class="my-progress-bar__item">
                   </div>
                   <div class="my-progress-bar__item">
-                  </div>
+                  </div> -->
                 </div>
                 <div class="my-progress-bar__more">
                   <div class="my-progress-bar__user-info">
@@ -648,7 +629,7 @@
         </div>
         <div class="story-list-wrap">
           <div class="close-btn-wrap">
-            <mat-icon class="close-btn" (click)="isShowStoryFull=!isShowStoryFull">close</mat-icon>
+            <mat-icon class="close-btn" (click)="closePost('story')">close</mat-icon>
           </div>
           <div class="stories-container">
             <div class="story-creation-wrap">
@@ -788,14 +769,12 @@
         </div>
       </div>
     </div>
-  </ng-container>
   <!-- end story-full -->
   <!-- post image detail -->
-  <div *ngIf="isShowPostFull">
-    <div class="post-image-detail-full">
+    <div #postImageDetailFull class="post-full" [class.show]="sltPost">
       <div class="content-wrap">
         <div class="post-image-detail__left">
-          <div class="left-arrow-wrap" (click)="moveImage('-')">
+          <div class="left-arrow-wrap" (click)="moveImage('-','post')">
             <div class="left-arrow">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#fff"
                 stroke-width="2">
@@ -803,9 +782,9 @@
               </svg>
             </div>
           </div>
-          <div id="post-image-detail__container" class="image-container">
+          <div #postImageDetailContainer id="post-image-detail__container" class="image-container">
           </div>
-          <div class="right-arrow-wrap" (click)="moveImage('+')">
+          <div class="right-arrow-wrap" (click)="moveImage('+','post')">
             <div class="right-arrow">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#fff"
                 stroke-width="2">
@@ -818,7 +797,7 @@
           <div class="header__container">
             <div class="header__list">
               <div class="header__item">
-                <button type="button" class="btn-close" aria-label="Close"></button>
+                <button type="button" class="btn-close" aria-label="Close" (click)="closePost('post')"></button>
               </div>
             </div>
             <div class="separate-line"></div>
@@ -1038,6 +1017,5 @@
         </div>
       </div>
     </div>
-  </div>
   <!-- end post image detail -->
 </div>

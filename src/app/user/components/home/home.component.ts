@@ -1,11 +1,14 @@
+import { filter } from 'rxjs/operators';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import {
   AfterViewInit,
   Component,
   ElementRef,
   OnInit,
+  QueryList,
   Renderer2,
   ViewChild,
+  ViewChildren,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
@@ -21,19 +24,34 @@ export interface Comment {
   content: string;
   comments?: Comment[];
 }
+export interface Post {
+  user: {
+    username: string;
+    avatarUrl: string;
+  };
+  content: string;
+  images: string[];
+}
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit, AfterViewInit {
-  postImageDetailContainer!: ElementRef;
-  posts = [
+  posts: Post[] = [
     {
+      user: {
+        username: 'Huynh Gia Huy',
+        avatarUrl: 'assets/image/member-1.png',
+      },
       content: '',
       images: ['assets/image/feed-image-1.png'],
     },
     {
+      user: {
+        username: 'Huynh Gia Huy',
+        avatarUrl: 'assets/image/member-1.png',
+      },
       content: '',
       images: [
         'assets/image/feed-image-1.png',
@@ -41,6 +59,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
       ],
     },
     {
+      user: {
+        username: 'Huynh Gia Huy',
+        avatarUrl: 'assets/image/member-1.png',
+      },
       content: '',
       images: [
         'assets/image/feed-image-1.png',
@@ -49,6 +71,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
       ],
     },
     {
+      user: {
+        username: 'Huynh Gia Huy',
+        avatarUrl: 'assets/image/member-1.png',
+      },
       content: '',
       images: [
         'assets/image/feed-image-1.png',
@@ -58,6 +84,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
       ],
     },
     {
+      user: {
+        username: 'Huynh Gia Huy',
+        avatarUrl: 'assets/image/member-1.png',
+      },
       content: '',
       images: [
         'assets/image/feed-image-1.png',
@@ -68,6 +98,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
       ],
     },
     {
+      user: {
+        username: 'Huynh Gia Huy',
+        avatarUrl: 'assets/image/member-1.png',
+      },
       content: '',
       images: [
         'assets/image/feed-image-1.png',
@@ -211,9 +245,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
   }
   getFiles() {
-    this._uploadFileService.getFiles().subscribe((files) => {
-      console.log(files);
-    });
+    this._uploadFileService.getFiles().subscribe((files) => {});
   }
   showImage() {
     this._uploadFileService.showImage().subscribe((v) => {
@@ -236,7 +268,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
   selectNewReact(oldEle: HTMLElement, newEle: HTMLElement) {
     const cloneNewEle = newEle.cloneNode(false);
-    console.log(cloneNewEle);
     /* cloneNewEle.setAttribute(
       'style',
       `width: ${oldEle.offsetWidth}px; height: ${oldEle.offsetHeight}px`
@@ -305,55 +336,153 @@ export class HomeComponent implements OnInit, AfterViewInit {
       reactBtnWrap?.childNodes.item(1).replaceWith(reactName);
     }
   }
-  onClickImage(idx: number, srcList: string[], type: 'story' | 'post') {
-    if (type === 'post') {
-      this.isShowPostFull = true;
-    } else if (type === 'story') {
-      this.isShowPostFull = true;
+  private setNewStoryIndex(post: Post | null) {
+    if (post !== null) {
+      let preStoryIndex = this.seenStory.get(post);
+      if (preStoryIndex != undefined) {
+        this.seenStory.set(post, preStoryIndex + 1);
+      }
     }
-    const imageContainer = document.getElementById(
-      `${type}-image-detail__container`
-    );
-    srcList.forEach((src, index) => {
+  }
+  sltPost!: Post | null;
+  postSltImageIndex!: number;
+  storyIndex!: number;
+  sltStory!: Post | null;
+  storySltImageIndex!: number;
+  seenStory = new Map<Post, number>();
+  @ViewChild('postImageDetailContainer', { static: true })
+  postImageDetailContainer!: ElementRef<HTMLDivElement>;
+  @ViewChild('storyImageDetailContainer', { static: true })
+  storyImageDetailContainer!: ElementRef<HTMLDivElement>;
+  displayPost(idx: number, post: Post, type: 'story' | 'post') {
+    let container!: ElementRef<HTMLDivElement>;
+    if (type == 'post') {
+      this.sltPost = post;
+      this.postSltImageIndex = idx;
+      container = this.postImageDetailContainer;
+    } else if (type === 'story') {
+      this.sltStory = post;
+      console.log(this.sltStory);
+      this.storyIndex = idx;
+      container = this.storyImageDetailContainer;
+      if (this.seenStory.has(post)) {
+        this.setNewStoryIndex(post);
+      } else {
+        this.seenStory.set(post, 0);
+      }
+    }
+    container.nativeElement.innerHTML = '';
+    post.images.forEach((src, index) => {
       const imgEle = this.renderer.createElement('img');
       this.renderer.setAttribute(imgEle, 'src', src);
-      this.renderer.setStyle(imgEle, 'opacity', 0);
-      this.renderer.appendChild(imageContainer, imgEle);
+      this.renderer.appendChild(container.nativeElement, imgEle);
       this.renderer.setAttribute(imgEle, 'id', `image-detail-${index}`);
-      if (idx === index) {
-        this.renderer.setStyle(imgEle, 'opacity', 1);
+      if (index === this.postSltImageIndex && type == 'post') {
+        this.renderer.addClass(imgEle, 'visible');
+      } else if (index === this.seenStory.get(post) && type == 'story') {
+        this.renderer.addClass(imgEle, 'visible');
       }
     });
+    this.addStoryProgressBar(post);
   }
-  moveImage(action: '+' | '-') {
-    const imageContainer = document.getElementById('image-container');
-    if (imageContainer!.childNodes.length > 1) {
-      let imageDetail: HTMLElement | null = null;
-      let movedImage = null;
-      imageContainer?.childNodes.forEach((e, i) => {
-        if (
-          document.getElementById(`image-detail-${i}`)!.style!.opacity === '1'
-        ) {
-          imageDetail = document.getElementById(`image-detail-${i}`);
+  @ViewChild('progressBarContainer', { static: true })
+  progressBarContainer!: ElementRef<HTMLElement>;
+  private addStoryProgressBar(post: Post) {
+    this.progressBarContainer.nativeElement.innerHTML = '';
+    post.images.forEach((src, index) => {
+      const barElement = this.renderer.createElement('div');
+      this.renderer.addClass(barElement, 'my-progress-bar__item');
+      this.renderer.setAttribute(barElement, 'id', `bar-${index}`);
+      this.renderer.appendChild(
+        this.progressBarContainer.nativeElement,
+        barElement
+      );
+    });
+    let barLiveElement = this.renderer.createElement('div');
+    this.renderer.addClass(barLiveElement, 'my-progress-bar__live');
+    let currentBar = this.progressBarContainer.nativeElement.childNodes.item(
+      this.seenStory.get(post) || 0
+    );
+    this.renderer.appendChild(currentBar, barLiveElement);
+    this.renderer.addClass(currentBar, 'active');
+  }
+  moveImage(action: '+' | '-', type: 'story' | 'post') {
+    let imageElements;
+    let movedImageElement;
+    if (type == 'post') {
+      imageElements = this.postImageDetailContainer.nativeElement.childNodes;
+    } else if (type === 'story') {
+      imageElements = this.storyImageDetailContainer.nativeElement.childNodes;
+    }
+    if (imageElements && imageElements.length > 1) {
+      let idx: number = -1;
+      imageElements.forEach((e, index) => {
+        const imageElement = document.getElementById(`image-detail-${index}`);
+        if (imageElement?.classList.contains('visible')) {
+          this.renderer.removeClass(imageElement, 'visible');
+          idx = index;
           if (action == '+') {
-            if (i === imageContainer.childNodes.length - 1) {
-              movedImage = document.getElementById(`image-detail-0`);
+            if (index === imageElements.length - 1) {
+              idx = imageElements.length - 1;
             } else {
-              movedImage = imageDetail!.nextSibling;
+              movedImageElement = imageElement.nextSibling;
+              this.moveBar(action, this.sltStory);
+              this.setNewStoryIndex(this.sltStory);
             }
-          } else {
-            if (i === 0) {
-              movedImage = document.getElementById(
-                `image-detail-${imageContainer?.childNodes.length - 1}`
-              );
+          } else if (action == '-') {
+            if (index === 0) {
+              idx = -1;
             } else {
-              movedImage = imageDetail!.previousSibling;
+              movedImageElement = imageElement.previousSibling;
+              this.moveBar(action, this.sltStory);
+              this.setNewStoryIndex(this.sltStory);
             }
           }
         }
       });
-      this.renderer.setStyle(movedImage, 'opacity', 1);
-      this.renderer.setStyle(imageDetail, 'opacity', 0);
+     
+      if(idx === imageElements.length - 1 && action == '+'){
+        this.displayPost(
+          this.storyIndex + 1,
+          this.posts[this.storyIndex + 1],
+          'story'
+        );
+      }else if(idx === -1 && action == '-'){
+        this.displayPost(
+          this.storyIndex - 1,
+          this.posts[this.storyIndex - 1],
+          'story'
+        );
+      }else {
+        this.renderer.addClass(movedImageElement, 'visible');
+      }
+    }
+  }
+  private moveBar(action: '+' | '-', post: Post | null) {
+    let currentBar;
+    let movedBar;
+    if (post != null) {
+      this.progressBarContainer.nativeElement.childNodes.forEach((e) => {
+        if (e.hasChildNodes()) {
+          currentBar = e;
+          currentBar!.textContent = '';
+          if (action == '+') {
+            movedBar = currentBar.nextSibling;
+          } else {
+            movedBar = currentBar.previousSibling;
+          }
+        }
+      });
+      let barLiveElement = this.renderer.createElement('div');
+      this.renderer.addClass(barLiveElement, 'my-progress-bar__live');
+      this.renderer.appendChild(movedBar, barLiveElement);
+    }
+  }
+  closePost(type: 'post' | 'story') {
+    if (type == 'post') {
+      this.sltPost = null;
+    } else if (type === 'story') {
+      this.sltStory = null;
     }
   }
 }
