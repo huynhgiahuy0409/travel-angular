@@ -30,7 +30,10 @@ export interface Post {
     avatarUrl: string;
   };
   content: string;
-  images: string[];
+  images: {
+    url: string;
+    type: string;
+  }[];
 }
 @Component({
   selector: 'app-home',
@@ -45,7 +48,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
         avatarUrl: 'assets/image/member-1.png',
       },
       content: '',
-      images: ['assets/image/feed-image-1.png'],
+      images: [
+        {
+          url: 'assets/image/feed-image-1.png',
+          type: 'image',
+        },
+      ],
     },
     {
       user: {
@@ -54,62 +62,48 @@ export class HomeComponent implements OnInit, AfterViewInit {
       },
       content: '',
       images: [
-        'assets/image/feed-image-1.png',
-        'assets/image/feed-image-2.png',
+        {
+          url: 'assets/video/mov_bbb.mp4',
+          type: 'video',
+        },
+        {
+          url: 'assets/video/mov_bbb.mp4',
+          type: 'video',
+        },
+        {
+          url: 'assets/video/mov_bbb.mp4',
+          type: 'video',
+        },
+        {
+          url: 'assets/image/feed-image-1.png',
+          type: 'image',
+        },
       ],
     },
     {
       user: {
         username: 'Huynh Gia Huy',
-        avatarUrl: 'assets/image/member-3.png',
+        avatarUrl: 'assets/image/member-2.png',
       },
       content: '',
       images: [
-        'assets/image/feed-image-1.png',
-        'assets/image/feed-image-2.png',
-        'assets/image/feed-image-3.png',
+        {
+          url: 'assets/video/mov_bbb.mp4',
+          type: 'video',
+        },
       ],
     },
     {
       user: {
         username: 'Huynh Gia Huy',
-        avatarUrl: 'assets/image/member-4.png',
+        avatarUrl: 'assets/image/member-2.png',
       },
       content: '',
       images: [
-        'assets/image/feed-image-1.png',
-        'assets/image/feed-image-2.png',
-        'assets/image/feed-image-3.png',
-        'assets/image/feed-image-4.png',
-      ],
-    },
-    {
-      user: {
-        username: 'Huynh Gia Huy',
-        avatarUrl: 'assets/image/member-5.png',
-      },
-      content: '',
-      images: [
-        'assets/image/feed-image-1.png',
-        'assets/image/feed-image-2.png',
-        'assets/image/feed-image-3.png',
-        'assets/image/feed-image-4.png',
-        'assets/image/feed-image-5.png',
-      ],
-    },
-    {
-      user: {
-        username: 'Huynh Gia Huy',
-        avatarUrl: 'assets/image/member-6.png',
-      },
-      content: '',
-      images: [
-        'assets/image/feed-image-1.png',
-        'assets/image/feed-image-2.png',
-        'assets/image/feed-image-3.png',
-        'assets/image/feed-image-4.png',
-        'assets/image/feed-image-5.png',
-        'assets/image/feed-image-1.png',
+        {
+          url: 'assets/video/mov_bbb.mp4',
+          type: 'video',
+        },
       ],
     },
   ];
@@ -336,7 +330,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       reactBtnWrap?.childNodes.item(1).replaceWith(reactName);
     }
   }
-  private setNewStoryIndex(post: Post | null) {
+  private saveSeenStoryIndex(post: Post | null) {
     if (post !== null) {
       let preStoryIndex = this.seenStory.get(post);
       if (preStoryIndex != undefined) {
@@ -346,7 +340,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       }
     }
   }
-  getStoryIndex(post: Post): number {
+  getSeenStoryIndex(post: Post): number {
     if (post !== null) {
       if (this.seenStory.has(post)) {
         let preStoryIndex = this.seenStory.get(post);
@@ -369,7 +363,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
   @ViewChild('storyImageDetailContainer', { static: true })
   storyImageDetailContainer!: ElementRef<HTMLDivElement>;
   displayPost(idx: number, post: Post, type: 'story' | 'post') {
-    this.seenStory.get;
     let container!: ElementRef<HTMLDivElement>;
     if (type == 'post') {
       this.sltPost = post;
@@ -383,7 +376,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       container = this.storyImageDetailContainer;
       if (this.sltStory) {
         if (this.seenStory.has(post)) {
-          this.setNewStoryIndex(post);
+          this.saveSeenStoryIndex(post);
         } else {
           this.seenStory.set(post, 0);
         }
@@ -396,16 +389,32 @@ export class HomeComponent implements OnInit, AfterViewInit {
       (type == 'story' && this.sltStory)
     ) {
       post.images.forEach((src, index) => {
-        const imgEle = this.renderer.createElement('img');
-        this.renderer.setAttribute(imgEle, 'src', src);
-        this.renderer.appendChild(container.nativeElement, imgEle);
-        this.renderer.setAttribute(imgEle, 'id', `image-detail-${index}`);
+        let itemElement;
+        if (src.type == 'image') {
+          itemElement = this.renderer.createElement('img');
+          this.renderer.setAttribute(itemElement, 'src', src.url);
+        } else if (src.type == 'video') {
+          itemElement = this.renderer.createElement('video');
+          let sourceElement = this.renderer.createElement('source');
+          this.renderer.setAttribute(sourceElement, 'src', src.url);
+          this.renderer.setAttribute(sourceElement, 'type', 'video/mp4');
+          this.renderer.appendChild(itemElement, sourceElement);
+        }
+        this.renderer.setAttribute(itemElement, 'id', `image-detail-${index}`);
+        this.renderer.appendChild(container.nativeElement, itemElement);
         if (index === this.postSltImageIndex && type == 'post') {
-          this.renderer.addClass(imgEle, 'visible');
+          this.renderer.setAttribute(itemElement, 'controls', 'true');
+          this.renderer.addClass(itemElement, 'visible');
+          src.type === 'video' ? itemElement.play() : null;
         } else if (index === this.seenStory.get(post) && type == 'story') {
-          this.renderer.addClass(imgEle, 'visible');
+          this.renderer.addClass(itemElement, 'visible');
+          this.renderer.setAttribute(itemElement, 'muted', 'true');
+          src.type === 'video' ? itemElement.play() : null;
         }
       });
+      if (type == 'story') {
+        this.addStoryProgressBar(post);
+      }
     }
   }
   @ViewChild('progressBarContainer', { static: true })
@@ -421,14 +430,21 @@ export class HomeComponent implements OnInit, AfterViewInit {
         barElement
       );
     });
+    let seenStoryIndex = this.seenStory.get(post) || 0;
+    let type = post.images[seenStoryIndex].type;
     let barLiveElement = this.renderer.createElement('div');
     this.renderer.addClass(barLiveElement, 'my-progress-bar__live');
-    let currentBar = this.progressBarContainer.nativeElement.childNodes.item(
-      this.seenStory.get(post) || 0
-    );
-    this.renderer.appendChild(currentBar, barLiveElement);
-    this.renderer.addClass(currentBar, 'active');
+    let barElement =
+      this.progressBarContainer.nativeElement.childNodes.item(seenStoryIndex);
+    if (type == 'image') {
+      this.renderer.setProperty(barLiveElement, 'animation-duration', '15s');
+    } else if (type == 'video') {
+      this.renderer.setStyle(barLiveElement, 'animation-duration', `10s`);
+    }
+    this.renderer.appendChild(barElement, barLiveElement);
+    this.renderer.addClass(barElement, 'active');
   }
+
   movePost(action: '+' | '-') {
     let imageElements;
     let movedImageElement;
@@ -436,7 +452,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
     let imageElementsLength = imageElements.length;
     if (imageElements && imageElements.length > 1) {
       imageElements.forEach((e, index) => {
-        const imageElement = document.getElementById(`image-detail-${index}`);
+        const imageElement = document.getElementById(
+          `image-detail-${index}`
+        ) as HTMLElement;
         if (imageElement?.classList.contains('visible')) {
           this.renderer.removeClass(imageElement, 'visible');
           if (action == '+') {
@@ -444,6 +462,17 @@ export class HomeComponent implements OnInit, AfterViewInit {
               index === imageElementsLength - 1
                 ? document.getElementById(`image-detail-0`)
                 : imageElement.nextSibling;
+                if (movedImageElement!.nodeName === 'VIDEO') {
+                  const tempMovedImagElement =
+                    movedImageElement as HTMLVideoElement;
+                    this.renderer.setAttribute(tempMovedImagElement,'controls','true')
+                  tempMovedImagElement.play();
+                }
+                if (imageElement.nodeName === 'VIDEO') {
+                  const tempImagElement = imageElement as HTMLVideoElement;
+                  tempImagElement.currentTime = 0;
+                  tempImagElement.pause();
+                }
           } else {
             movedImageElement =
               index === 0
@@ -451,14 +480,26 @@ export class HomeComponent implements OnInit, AfterViewInit {
                     `image-detail-${imageElementsLength - 1}`
                   )
                 : imageElement.previousSibling;
+                if (movedImageElement!.nodeName === 'VIDEO') {
+                  const tempMovedImagElement =
+                    movedImageElement as HTMLVideoElement;
+                    this.renderer.setAttribute(tempMovedImagElement,'controls','true')
+                  tempMovedImagElement.play();
+                }
+                if (imageElement.nodeName === 'VIDEO') {
+                  const tempImagElement = imageElement as HTMLVideoElement;
+                  tempImagElement.currentTime = 0;
+                  tempImagElement.pause();
+                }
           }
         }
       });
       this.renderer.addClass(movedImageElement, 'visible');
     }
   }
+  isPauseStory: boolean = false;
   moveStory(action: '+' | '-') {
-    let movedImageElement;
+    let movedImageElement!: HTMLElement;
     let imageElements = this.storyImageDetailContainer.nativeElement.childNodes;
     if (imageElements) {
       let idx: number = -1;
@@ -471,22 +512,41 @@ export class HomeComponent implements OnInit, AfterViewInit {
             if (index === imageElements.length - 1) {
               idx = imageElements.length - 1;
             } else {
-              movedImageElement = imageElement.nextSibling;
+              movedImageElement = imageElement.nextSibling as HTMLElement;
               this.moveBar(action, this.sltStory);
-              this.setNewStoryIndex(this.sltStory);
+              this.saveSeenStoryIndex(this.sltStory);
+              if (movedImageElement.nodeName === 'VIDEO') {
+                const tempMovedImagElement =
+                  movedImageElement as HTMLVideoElement;
+                tempMovedImagElement.play();
+              }
+              if (imageElement.nodeName === 'VIDEO') {
+                const tempImagElement = imageElement as HTMLVideoElement;
+                tempImagElement.currentTime = 0;
+                tempImagElement.pause();
+              }
             }
           } else {
             if (index === 0) {
               idx = -1;
             } else {
-              movedImageElement = imageElement.previousSibling;
+              movedImageElement = imageElement.previousSibling as HTMLElement;
               this.moveBar(action, this.sltStory);
-              this.setNewStoryIndex(this.sltStory);
+              this.saveSeenStoryIndex(this.sltStory);
+              if (movedImageElement.nodeName === 'VIDEO') {
+                const tempMovedImagElement =
+                  movedImageElement as HTMLVideoElement;
+                tempMovedImagElement.play();
+              }
+              if (imageElement.nodeName === 'VIDEO') {
+                const tempImagElement = imageElement as HTMLVideoElement;
+                tempImagElement.currentTime = 0;
+                tempImagElement.pause();
+              }
             }
           }
         }
       });
-      console.log(movedImageElement);
       if (idx === imageElements.length - 1 && action == '+') {
         this.displayPost(
           this.storyIndex + 1,
@@ -527,8 +587,45 @@ export class HomeComponent implements OnInit, AfterViewInit {
   closePost(type: 'post' | 'story') {
     if (type == 'post') {
       this.sltPost = null;
+      this.postImageDetailContainer.nativeElement.innerHTML = '';
     } else if (type === 'story') {
       this.sltStory = null;
+      this.storyImageDetailContainer.nativeElement.innerHTML = '';
     }
+  }
+  @ViewChild('storyVideoPlayBtnIcon', { static: true })
+  storyVideoPlayBtnIcon!: ElementRef;
+  storyPlayPause() {
+    this.storyImageDetailContainer.nativeElement.childNodes.forEach((e, i) => {
+      const temp = e as HTMLElement;
+      if (temp.classList.contains('visible') && temp.nodeName === 'VIDEO') {
+        const videoEl = temp as HTMLVideoElement;
+        if (videoEl.paused) {
+          videoEl.play();
+          this.isPauseStory = false;
+        } else {
+          videoEl.pause();
+          this.isPauseStory = true;
+        }
+      }
+    });
+  }
+  isMutedStory: boolean= false
+  storyMuteUnmute(){
+    console.log('ok')
+    this.storyImageDetailContainer.nativeElement.childNodes.forEach((e, i) => {
+      const temp = e as HTMLElement;
+      if (temp.classList.contains('visible') && temp.nodeName === 'VIDEO') {
+        const videoEl = temp as HTMLVideoElement;
+        if (videoEl.muted) {
+          this.isMutedStory = false;
+          videoEl.muted = false
+        } else {
+          this.isMutedStory = true;
+          videoEl.muted = true
+        }
+        console.log(this.isMutedStory)
+      }
+    });
   }
 }

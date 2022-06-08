@@ -80,10 +80,18 @@
             <ng-container *ngIf="idx < 4">
               <div class="story" (click)="displayPost(idx,p,'story')" >
                 <div class="story__thumbnail">
-                  <img [src]="p.images[this.getStoryIndex(p)]" alt="" >
+                  <ng-container *ngIf="p.images[this.getSeenStoryIndex(p)].type === 'image'; else storyVideoTemplateVar">
+                    <img [src]="p.images[this.getSeenStoryIndex(p)].url" alt="" >
+                  </ng-container>
+                  <ng-template #storyVideoTemplateVar>
+                    <video preload="metadata">
+                      <source [src]="p.images[this.getSeenStoryIndex(p)].url" type="video/mp4">
+                    </video>
+                  </ng-template>
                 </div>
                 <img [src]="p.user['avatarUrl']" alt="" [class.seen-story]="this.seenStory.has(p)">
                 <p>People 2</p>
+
               </div>
             </ng-container>
           </ng-container>
@@ -180,14 +188,38 @@
                   <div class="post-image-wrap">
                     <ng-container *ngFor="let src of p.images; index as idx">
                       <ng-container *ngIf="idx == 0">
-                        <img [src]="src" (click)="displayPost(idx, p,'post')">
+                        <ng-container *ngIf="src.type === 'image'; else postVideoTemplateVar">
+                          <img [src]="src.url" (click)="displayPost(idx, p,'post')">
+                        </ng-container>
+                        <ng-template #postVideoTemplateVar>
+                          <div class="video-wrap" (click)="displayPost(idx, p,'post')">
+                            <video width="400" preload="metadata">
+                              <source src="https://www.w3schools.com/html/mov_bbb.mp4#t=0.5" type="video/mp4">
+                            </video>
+                            <div class="video-play-btn">
+                              <i #storyVideoPlayBtnIcon class="bi bi-play-fill"></i>
+                            </div>
+                          </div>
+                        </ng-template>
                       </ng-container>
                     </ng-container>
                   </div>
                   <div class="post-image-wrap flex-direction-row">
                     <ng-container *ngFor="let src of p.images; index as idx">
                       <ng-container *ngIf="idx > 0 && idx < 5">
-                        <img [src]="src" (click)="displayPost(idx, p,'post')">
+                        <ng-container *ngIf="src.type === 'image'; else postVideoTemplateVar">
+                          <img [src]="src.url" (click)="displayPost(idx, p,'post')">
+                        </ng-container>
+                        <ng-template #postVideoTemplateVar>
+                          <div class="video-wrap" (click)="displayPost(idx, p,'post')">
+                            <video width="400" preload="metadata">
+                              <source src="https://www.w3schools.com/html/mov_bbb.mp4#t=0.5" type="video/mp4">
+                            </video>
+                            <div class="video-play-btn">
+                              <i class="bi bi-play-fill"></i>
+                            </div>
+                          </div>
+                        </ng-template>
                       </ng-container>
                     </ng-container>
                   </div>
@@ -197,7 +229,19 @@
                   <div class="post-image-wrap">
                     <ng-container *ngFor="let src of p.images; index as idx">
                       <ng-container *ngIf="idx == 0">
-                        <img [src]="src" (click)="displayPost(idx, p,'post')">
+                        <ng-container *ngIf="src.type === 'image'; else postVideoTemplateVar">
+                          <img [src]="src.url" (click)="displayPost(idx, p,'post')">
+                        </ng-container>
+                        <ng-template #postVideoTemplateVar>
+                          <div class="video-wrap" (click)="displayPost(idx, p,'post')">
+                            <video width="400" preload="metadata">
+                              <source src="https://www.w3schools.com/html/mov_bbb.mp4#t=0.5" type="video/mp4">
+                            </video>
+                            <div class="video-play-btn">
+                              <i class="bi bi-play-fill"></i>
+                            </div>
+                          </div>
+                        </ng-template>
                       </ng-container>
                     </ng-container>
                   </div>
@@ -210,25 +254,73 @@
                 <div class="post-image-wrap flex-direction-col">
                   <ng-container *ngFor="let src of p.images; index as idx">
                     <ng-container *ngIf="idx >= 0 && idx < 2">
-                      <img [src]="src" (click)="displayPost(idx, p,'post')">
+                      <ng-container *ngIf="src.type === 'image'; else postVideoTemplateVar">
+                        <img [src]="src.url" (click)="displayPost(idx, p,'post')">
+                      </ng-container>
+                      <ng-template #postVideoTemplateVar>
+                        <div class="video-wrap" (click)="displayPost(idx, p,'post')">
+                          <video width="400" preload="metadata">
+                            <source src="https://www.w3schools.com/html/mov_bbb.mp4#t=0.5" type="video/mp4">
+                          </video>
+                          <div class="video-play-btn">
+                            <i class="bi bi-play-fill"></i>
+                          </div>
+                        </div>
+                      </ng-template>
                     </ng-container>
                   </ng-container>
                 </div>
                 <div class="post-image-wrap flex-direction-col">
                   <ng-container *ngFor="let src of p.images; index as idx">
                     <ng-container *ngIf="idx > 1 && idx < 4">
-                      <img [src]="src" (click)="displayPost(idx, p,'post')">
+                      <ng-container *ngIf="src.type === 'image'; else postVideoTemplateVar">
+                        <img [src]="src.url" (click)="displayPost(idx, p,'post')">
+                      </ng-container>
+                      <ng-template #postVideoTemplateVar>
+                        <div class="video-wrap" (click)="displayPost(idx, p,'post')">
+                          <video width="400" preload="metadata" autoplay>
+                            <source src="https://www.w3schools.com/html/mov_bbb.mp4#t=0.5" type="video/mp4">
+                          </video>
+                          <div class="video-play-btn">
+                            <i class="bi bi-play-fill"></i>
+                          </div>
+                        </div>
+                      </ng-template>
                     </ng-container>
                     <ng-container *ngIf="idx == 4 && p.images.length > 5">
                       <div class="last-image-wrap">
-                        <img [src]="src" (click)="displayPost(idx, p,'post')">
+                        <ng-container *ngIf="src.type === 'image'; else postVideoTemplateVar">
+                          <img [src]="src.url" (click)="displayPost(idx, p,'post')">
+                        </ng-container>
                         <div class="last-image--overlay">
                           <p>+{{p.images.length-5}}</p>
                         </div>
+                        <ng-template #postVideoTemplateVar>
+                          <div class="video-wrap" (click)="displayPost(idx, p,'post')">
+                            <video width="400" preload="metadata">
+                              <source src="https://www.w3schools.com/html/mov_bbb.mp4#t=0.5" type="video/mp4">
+                            </video>
+                            <div class="video-play-btn">
+                              <i class="bi bi-play-fill"></i>
+                            </div>
+                          </div>
+                        </ng-template>
                       </div>
                     </ng-container>
                     <ng-container *ngIf="idx == 4 && p.images.length == 5">
-                      <img [src]="src" (click)="displayPost(idx,p,'post')">
+                      <ng-container *ngIf="src.type === 'image'; else postVideoTemplateVar">
+                        <img [src]="src.url" (click)="displayPost(idx, p,'post')">
+                      </ng-container>
+                      <ng-template #postVideoTemplateVar>
+                        <div class="video-wrap" (click)="displayPost(idx, p,'post')">
+                          <video width="400" preload="metadata">
+                            <source src="https://www.w3schools.com/html/mov_bbb.mp4#t=0.5" type="video/mp4">
+                          </video>
+                          <div class="video-play-btn">
+                            <i class="bi bi-play-fill"></i>
+                          </div>
+                        </div>
+                      </ng-template>
                     </ng-container>
                   </ng-container>
                 </div>
@@ -606,13 +698,12 @@
                     <p>16g</p>
                   </div>
                   <div class="my-progress-bar__tool">
-                    <i class="play-btn"></i>
-                    <i class="speaker-btn un-mute"></i>
+                    <i id="story-play-pause" class="pause-btn" [class.play]="isPauseStory"  (click)="storyPlayPause()"></i>
+                    <i id="story-mute-unmute" class="mute-btn" [class.un-mute]="isMutedStory" (click)="storyMuteUnmute()"></i>
                     <i class="more-btn"></i>
                   </div>
                 </div>
               </div>
-              .
             </div>
           </div>
           <div class="story-react-container">
