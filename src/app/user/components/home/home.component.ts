@@ -346,14 +346,18 @@ export class HomeComponent implements OnInit, AfterViewInit {
       }
     }
   }
-  getStoryIndex(post: Post): number{
+  getStoryIndex(post: Post): number {
     if (post !== null) {
-      let preStoryIndex = this.seenStory.get(post);
-      if (preStoryIndex != undefined) {
-        return preStoryIndex + 1 
-      }
+      if (this.seenStory.has(post)) {
+        let preStoryIndex = this.seenStory.get(post);
+        if (preStoryIndex != undefined) {
+          return post.images.length - 1 === preStoryIndex
+            ? preStoryIndex
+            : preStoryIndex + 1;
+        }
+      } else return 0;
     }
-    return 0
+    return 0;
   }
   sltPost!: Post | null;
   postSltImageIndex!: number;
@@ -365,19 +369,19 @@ export class HomeComponent implements OnInit, AfterViewInit {
   @ViewChild('storyImageDetailContainer', { static: true })
   storyImageDetailContainer!: ElementRef<HTMLDivElement>;
   displayPost(idx: number, post: Post, type: 'story' | 'post') {
-  this.seenStory.get
+    this.seenStory.get;
     let container!: ElementRef<HTMLDivElement>;
     if (type == 'post') {
       this.sltPost = post;
-      this.sltStory = null
+      this.sltStory = null;
       this.postSltImageIndex = idx;
       container = this.postImageDetailContainer;
     } else if (type === 'story') {
       this.sltStory = post;
-      this.sltPost = null
+      this.sltPost = null;
       this.storyIndex = idx;
       container = this.storyImageDetailContainer;
-      if(this.sltStory){
+      if (this.sltStory) {
         if (this.seenStory.has(post)) {
           this.setNewStoryIndex(post);
         } else {
@@ -387,7 +391,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
       }
     }
     container.nativeElement.innerHTML = '';
-    if((type == 'post' && this.sltPost ) || (type == 'story' && this.sltStory )){
+    if (
+      (type == 'post' && this.sltPost) ||
+      (type == 'story' && this.sltStory)
+    ) {
       post.images.forEach((src, index) => {
         const imgEle = this.renderer.createElement('img');
         this.renderer.setAttribute(imgEle, 'src', src);
@@ -426,16 +433,24 @@ export class HomeComponent implements OnInit, AfterViewInit {
     let imageElements;
     let movedImageElement;
     imageElements = this.postImageDetailContainer.nativeElement.childNodes;
-    let imageElementsLength = imageElements.length
+    let imageElementsLength = imageElements.length;
     if (imageElements && imageElements.length > 1) {
       imageElements.forEach((e, index) => {
         const imageElement = document.getElementById(`image-detail-${index}`);
         if (imageElement?.classList.contains('visible')) {
           this.renderer.removeClass(imageElement, 'visible');
           if (action == '+') {
-            movedImageElement = index === imageElementsLength  -1 ? document.getElementById(`image-detail-0`): imageElement.nextSibling
-          } else{
-            movedImageElement =  index === 0 ?document.getElementById(`image-detail-${imageElementsLength-1}`):imageElement.previousSibling
+            movedImageElement =
+              index === imageElementsLength - 1
+                ? document.getElementById(`image-detail-0`)
+                : imageElement.nextSibling;
+          } else {
+            movedImageElement =
+              index === 0
+                ? document.getElementById(
+                    `image-detail-${imageElementsLength - 1}`
+                  )
+                : imageElement.previousSibling;
           }
         }
       });
@@ -453,14 +468,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
           this.renderer.removeClass(imageElement, 'visible');
           idx = index;
           if (action == '+') {
-            if (index === imageElements.length - 1 ) {
+            if (index === imageElements.length - 1) {
               idx = imageElements.length - 1;
             } else {
               movedImageElement = imageElement.nextSibling;
               this.moveBar(action, this.sltStory);
               this.setNewStoryIndex(this.sltStory);
             }
-          } else{
+          } else {
             if (index === 0) {
               idx = -1;
             } else {
@@ -471,7 +486,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
           }
         }
       });
-      console.log(movedImageElement)
+      console.log(movedImageElement);
       if (idx === imageElements.length - 1 && action == '+') {
         this.displayPost(
           this.storyIndex + 1,
