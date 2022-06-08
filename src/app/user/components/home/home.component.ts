@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     {
       user: {
         username: 'Huynh Gia Huy',
-        avatarUrl: 'assets/image/member-1.png',
+        avatarUrl: 'assets/image/member-2.png',
       },
       content: '',
       images: [
@@ -61,7 +61,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     {
       user: {
         username: 'Huynh Gia Huy',
-        avatarUrl: 'assets/image/member-1.png',
+        avatarUrl: 'assets/image/member-3.png',
       },
       content: '',
       images: [
@@ -73,7 +73,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     {
       user: {
         username: 'Huynh Gia Huy',
-        avatarUrl: 'assets/image/member-1.png',
+        avatarUrl: 'assets/image/member-4.png',
       },
       content: '',
       images: [
@@ -86,7 +86,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     {
       user: {
         username: 'Huynh Gia Huy',
-        avatarUrl: 'assets/image/member-1.png',
+        avatarUrl: 'assets/image/member-5.png',
       },
       content: '',
       images: [
@@ -100,7 +100,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     {
       user: {
         username: 'Huynh Gia Huy',
-        avatarUrl: 'assets/image/member-1.png',
+        avatarUrl: 'assets/image/member-6.png',
       },
       content: '',
       images: [
@@ -340,50 +340,66 @@ export class HomeComponent implements OnInit, AfterViewInit {
     if (post !== null) {
       let preStoryIndex = this.seenStory.get(post);
       if (preStoryIndex != undefined) {
-        this.seenStory.set(post, preStoryIndex + 1);
+        preStoryIndex === post.images.length - 1
+          ? this.seenStory.set(post, preStoryIndex)
+          : this.seenStory.set(post, preStoryIndex + 1);
       }
     }
   }
+  getStoryIndex(post: Post): number{
+    if (post !== null) {
+      let preStoryIndex = this.seenStory.get(post);
+      if (preStoryIndex != undefined) {
+        return preStoryIndex + 1 
+      }
+    }
+    return 0
+  }
   sltPost!: Post | null;
   postSltImageIndex!: number;
-  storyIndex!: number;
   sltStory!: Post | null;
-  storySltImageIndex!: number;
+  storyIndex!: number;
   seenStory = new Map<Post, number>();
   @ViewChild('postImageDetailContainer', { static: true })
   postImageDetailContainer!: ElementRef<HTMLDivElement>;
   @ViewChild('storyImageDetailContainer', { static: true })
   storyImageDetailContainer!: ElementRef<HTMLDivElement>;
   displayPost(idx: number, post: Post, type: 'story' | 'post') {
+  this.seenStory.get
     let container!: ElementRef<HTMLDivElement>;
     if (type == 'post') {
       this.sltPost = post;
+      this.sltStory = null
       this.postSltImageIndex = idx;
       container = this.postImageDetailContainer;
     } else if (type === 'story') {
       this.sltStory = post;
-      console.log(this.sltStory);
+      this.sltPost = null
       this.storyIndex = idx;
       container = this.storyImageDetailContainer;
-      if (this.seenStory.has(post)) {
-        this.setNewStoryIndex(post);
-      } else {
-        this.seenStory.set(post, 0);
+      if(this.sltStory){
+        if (this.seenStory.has(post)) {
+          this.setNewStoryIndex(post);
+        } else {
+          this.seenStory.set(post, 0);
+        }
+        this.addStoryProgressBar(post);
       }
     }
     container.nativeElement.innerHTML = '';
-    post.images.forEach((src, index) => {
-      const imgEle = this.renderer.createElement('img');
-      this.renderer.setAttribute(imgEle, 'src', src);
-      this.renderer.appendChild(container.nativeElement, imgEle);
-      this.renderer.setAttribute(imgEle, 'id', `image-detail-${index}`);
-      if (index === this.postSltImageIndex && type == 'post') {
-        this.renderer.addClass(imgEle, 'visible');
-      } else if (index === this.seenStory.get(post) && type == 'story') {
-        this.renderer.addClass(imgEle, 'visible');
-      }
-    });
-    this.addStoryProgressBar(post);
+    if((type == 'post' && this.sltPost ) || (type == 'story' && this.sltStory )){
+      post.images.forEach((src, index) => {
+        const imgEle = this.renderer.createElement('img');
+        this.renderer.setAttribute(imgEle, 'src', src);
+        this.renderer.appendChild(container.nativeElement, imgEle);
+        this.renderer.setAttribute(imgEle, 'id', `image-detail-${index}`);
+        if (index === this.postSltImageIndex && type == 'post') {
+          this.renderer.addClass(imgEle, 'visible');
+        } else if (index === this.seenStory.get(post) && type == 'story') {
+          this.renderer.addClass(imgEle, 'visible');
+        }
+      });
+    }
   }
   @ViewChild('progressBarContainer', { static: true })
   progressBarContainer!: ElementRef<HTMLElement>;
@@ -406,15 +422,30 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.renderer.appendChild(currentBar, barLiveElement);
     this.renderer.addClass(currentBar, 'active');
   }
-  moveImage(action: '+' | '-', type: 'story' | 'post') {
+  movePost(action: '+' | '-') {
     let imageElements;
     let movedImageElement;
-    if (type == 'post') {
-      imageElements = this.postImageDetailContainer.nativeElement.childNodes;
-    } else if (type === 'story') {
-      imageElements = this.storyImageDetailContainer.nativeElement.childNodes;
-    }
+    imageElements = this.postImageDetailContainer.nativeElement.childNodes;
+    let imageElementsLength = imageElements.length
     if (imageElements && imageElements.length > 1) {
+      imageElements.forEach((e, index) => {
+        const imageElement = document.getElementById(`image-detail-${index}`);
+        if (imageElement?.classList.contains('visible')) {
+          this.renderer.removeClass(imageElement, 'visible');
+          if (action == '+') {
+            movedImageElement = index === imageElementsLength  -1 ? document.getElementById(`image-detail-0`): imageElement.nextSibling
+          } else{
+            movedImageElement =  index === 0 ?document.getElementById(`image-detail-${imageElementsLength-1}`):imageElement.previousSibling
+          }
+        }
+      });
+      this.renderer.addClass(movedImageElement, 'visible');
+    }
+  }
+  moveStory(action: '+' | '-') {
+    let movedImageElement;
+    let imageElements = this.storyImageDetailContainer.nativeElement.childNodes;
+    if (imageElements) {
       let idx: number = -1;
       imageElements.forEach((e, index) => {
         const imageElement = document.getElementById(`image-detail-${index}`);
@@ -422,14 +453,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
           this.renderer.removeClass(imageElement, 'visible');
           idx = index;
           if (action == '+') {
-            if (index === imageElements.length - 1) {
+            if (index === imageElements.length - 1 ) {
               idx = imageElements.length - 1;
             } else {
               movedImageElement = imageElement.nextSibling;
               this.moveBar(action, this.sltStory);
               this.setNewStoryIndex(this.sltStory);
             }
-          } else if (action == '-') {
+          } else{
             if (index === 0) {
               idx = -1;
             } else {
@@ -440,20 +471,20 @@ export class HomeComponent implements OnInit, AfterViewInit {
           }
         }
       });
-     
-      if(idx === imageElements.length - 1 && action == '+'){
+      console.log(movedImageElement)
+      if (idx === imageElements.length - 1 && action == '+') {
         this.displayPost(
           this.storyIndex + 1,
           this.posts[this.storyIndex + 1],
           'story'
         );
-      }else if(idx === -1 && action == '-'){
+      } else if (idx === -1 && action == '-') {
         this.displayPost(
           this.storyIndex - 1,
           this.posts[this.storyIndex - 1],
           'story'
         );
-      }else {
+      } else {
         this.renderer.addClass(movedImageElement, 'visible');
       }
     }

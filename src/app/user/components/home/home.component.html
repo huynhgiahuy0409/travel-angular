@@ -78,11 +78,11 @@
           </div>
           <ng-container *ngFor="let p of posts, index as idx">
             <ng-container *ngIf="idx < 4">
-              <div class="story" (click)="displayPost(idx,p,'story')">
+              <div class="story" (click)="displayPost(idx,p,'story')" >
                 <div class="story__thumbnail">
-                  <img src="/assets/image/status-2.png" alt="">
+                  <img [src]="p.images[this.getStoryIndex(p)]" alt="" >
                 </div>
-                <img src="assets/image/member-2.png" alt="">
+                <img [src]="p.user['avatarUrl']" alt="" [class.seen-story]="this.seenStory.has(p)">
                 <p>People 2</p>
               </div>
             </ng-container>
@@ -571,7 +571,7 @@
         <div class="story-content">
           <div class="story-upload-container">
             <div class="story-upload">
-              <div class="left-arrow-wrap" (click)="moveImage('-' ,'story')">
+              <div class="left-arrow-wrap" (click)="moveStory('-')">
                 <div class="left-arrow">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#fff"
                     stroke-width="2">
@@ -581,7 +581,7 @@
               </div>
               <div #storyImageDetailContainer class="image-container">
               </div>
-              <div class="right-arrow-wrap" (click)="moveImage('+' ,'story')">
+              <div class="right-arrow-wrap" (click)="moveStory('+')">
                 <div class="right-arrow">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#fff"
                     stroke-width="2">
@@ -646,120 +646,12 @@
             </div>
             <div class="stories__list">
               <h2 style="margin: 0">All stories</h2>
-              <div class="stories__item stories__item--selected">
-                <div class="story-wrap story-wrap--old">
-                  <img src="assets\image\member-1.png">
+              <div class="stories__item" [class.stories__item--selected]="sltStory === p" *ngFor="let p of posts, index as idx" (click)="displayPost(idx,p,'story')">
+                <div class="story-wrap"  [class.story-wrap--old]="this.seenStory.has(p)" [class.story-wrap--new]="!this.seenStory.has(p)">
+                  <img [src]="p.user['avatarUrl']">
                 </div>
                 <div class="story-info">
-                  <h3>Cường Nguyễn</h3>
-                  <span>6h</span>
-                </div>
-              </div>
-              <div class="stories__item">
-                <div class="story-wrap story-wrap--new">
-                  <img src="assets\image\member-1.png">
-                </div>
-                <div class="story-info">
-                  <h3>Cường Nguyễn</h3>
-                  <span>6h</span>
-                </div>
-              </div>
-              <div class="stories__item">
-                <div class="story-wrap story-wrap--new">
-                  <img src="assets\image\member-1.png">
-                </div>
-                <div class="story-info">
-                  <h3>Cường Nguyễn</h3>
-                  <span>6h</span>
-                </div>
-              </div>
-              <div class="stories__item">
-                <div class="story-wrap story-wrap--new">
-                  <img src="assets\image\member-1.png">
-                </div>
-                <div class="story-info">
-                  <h3>Cường Nguyễn</h3>
-                  <span>6h</span>
-                </div>
-              </div>
-              <div class="stories__item">
-                <div class="story-wrap story-wrap--new">
-                  <img src="assets\image\member-1.png">
-                </div>
-                <div class="story-info">
-                  <h3>Cường Nguyễn</h3>
-                  <span>6h</span>
-                </div>
-              </div>
-              <div class="stories__item">
-                <div class="story-wrap story-wrap--new">
-                  <img src="assets\image\member-1.png">
-                </div>
-                <div class="story-info">
-                  <h3>Cường Nguyễn</h3>
-                  <span>6h</span>
-                </div>
-              </div>
-              <div class="stories__item">
-                <div class="story-wrap story-wrap--new">
-                  <img src="assets\image\member-1.png">
-                </div>
-                <div class="story-info">
-                  <h3>Cường Nguyễn</h3>
-                  <span>6h</span>
-                </div>
-              </div>
-              <div class="stories__item">
-                <div class="story-wrap story-wrap--new">
-                  <img src="assets\image\member-1.png">
-                </div>
-                <div class="story-info">
-                  <h3>Cường Nguyễn</h3>
-                  <span>6h</span>
-                </div>
-              </div>
-              <div class="stories__item">
-                <div class="story-wrap story-wrap--new">
-                  <img src="assets\image\member-1.png">
-                </div>
-                <div class="story-info">
-                  <h3>Cường Nguyễn</h3>
-                  <span>6h</span>
-                </div>
-              </div>
-              <div class="stories__item">
-                <div class="story-wrap story-wrap--new">
-                  <img src="assets\image\member-1.png">
-                </div>
-                <div class="story-info">
-                  <h3>Cường Nguyễn</h3>
-                  <span>6h</span>
-                </div>
-              </div>
-              <div class="stories__item">
-                <div class="story-wrap story-wrap--new">
-                  <img src="assets\image\member-1.png">
-                </div>
-                <div class="story-info">
-                  <h3>Cường Nguyễn</h3>
-                  <span>6h</span>
-                </div>
-              </div>
-              <div class="stories__item">
-                <div class="story-wrap story-wrap--new">
-                  <img src="assets\image\member-1.png">
-                </div>
-                <div class="story-info">
-                  <h3>Cường Nguyễn</h3>
-                  <span>6h</span>
-                </div>
-              </div>
-              <div class="stories__item">
-                <div class="story-wrap story-wrap--new">
-                  <img src="assets\image\member-1.png">
-                </div>
-                <div class="story-info">
-                  <h3>Cường Nguyễn</h3>
+                  <h3>{{p.user['username']}}</h3>
                   <span>6h</span>
                 </div>
               </div>
@@ -774,7 +666,7 @@
     <div #postImageDetailFull class="post-full" [class.show]="sltPost">
       <div class="content-wrap">
         <div class="post-image-detail__left">
-          <div class="left-arrow-wrap" (click)="moveImage('-','post')">
+          <div class="left-arrow-wrap" (click)="movePost('-')">
             <div class="left-arrow">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#fff"
                 stroke-width="2">
@@ -784,7 +676,7 @@
           </div>
           <div #postImageDetailContainer id="post-image-detail__container" class="image-container">
           </div>
-          <div class="right-arrow-wrap" (click)="moveImage('+','post')">
+          <div class="right-arrow-wrap" (click)="movePost('+')">
             <div class="right-arrow">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#fff"
                 stroke-width="2">
