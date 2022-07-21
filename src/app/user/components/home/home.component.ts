@@ -15,6 +15,7 @@ import { MatIcon } from '@angular/material/icon';
 import { Observable } from 'rxjs/internal/Observable';
 import { UploadFileService } from '../../services/upload-file.service';
 import { CreatePostDialogComponent } from './dialog/create-post-dialog/create-post-dialog.component';
+import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 export interface User {
   name: string;
   url: string;
@@ -25,6 +26,7 @@ export interface Comment {
   comments?: Comment[];
 }
 export interface Post {
+  id: number,
   user: {
     username: string;
     avatarUrl: string;
@@ -43,6 +45,7 @@ export interface Post {
 export class HomeComponent implements OnInit, AfterViewInit {
   posts: Post[] = [
     {
+      id: 1,
       user: {
         username: 'Huynh Gia Huy',
         avatarUrl: 'assets/image/member-1.png',
@@ -56,6 +59,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       ],
     },
     {
+      id: 2,
       user: {
         username: 'Huynh Gia Huy',
         avatarUrl: 'assets/image/member-2.png',
@@ -81,6 +85,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       ],
     },
     {
+      id: 2,
       user: {
         username: 'Huynh Gia Huy',
         avatarUrl: 'assets/image/member-2.png',
@@ -94,6 +99,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       ],
     },
     {
+      id: 3,
       user: {
         username: 'Huynh Gia Huy',
         avatarUrl: 'assets/image/member-2.png',
@@ -113,15 +119,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
   title = 'travel';
   lat = 10.924067;
   lng = 106.713028;
-  srcReactIcons = [
-    { url: 'assets/react-image/like.svg', name: 'like' },
-    { url: 'assets/react-image/love.svg', name: 'love' },
-    { url: 'assets/react-image/care.svg', name: 'care' },
-    { url: 'assets/react-image/haha.svg', name: 'haha' },
-    { url: 'assets/react-image/wow.svg', name: 'wow' },
-    { url: 'assets/react-image/sad.svg', name: 'sad' },
-    { url: 'assets/react-image/angry.svg', name: 'angry' },
-  ];
   locations: any[] = [
     {
       lat: 10.8999964,
@@ -152,6 +149,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
   fileInfos!: Observable<any> | undefined;
   /* img: any; */
   /* Customize Commend */
+  srcReactIcons = [
+    { url: 'assets/react-image/like.svg', name: 'like' },
+    { url: 'assets/react-image/love.svg', name: 'love' },
+    { url: 'assets/react-image/care.svg', name: 'care' },
+    { url: 'assets/react-image/haha.svg', name: 'haha' },
+    { url: 'assets/react-image/wow.svg', name: 'wow' },
+    { url: 'assets/react-image/sad.svg', name: 'sad' },
+    { url: 'assets/react-image/angry.svg', name: 'angry' },
+  ];
   commentTree: Comment[] = [
     {
       user: {
@@ -205,15 +211,47 @@ export class HomeComponent implements OnInit, AfterViewInit {
     },
   ];
   isShowComments: boolean = false;
+  routerUrl!: string
   @ViewChild('firstElement') firstElement!: ElementRef;
+  @ViewChild('coverImageList') coverImageList!: ElementRef
   constructor(
     private _uploadFileService: UploadFileService,
     private _dialog: MatDialog,
-    private renderer: Renderer2
-  ) {}
-  ngAfterViewInit(): void {}
+    private renderer: Renderer2,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
+  ) { }
+  ngAfterViewInit(): void {
+     this.autoNextCover()
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.routerUrl = this.router.url
+    this.router.events.pipe(filter(event => event instanceof NavigationStart)).subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        console.log(event);
+
+        this.routerUrl = event.url
+      }
+    })
+  }
+  autoNextCover() {
+    let coverIdx = 0
+    setInterval(() => {
+      let list = this.coverImageList.nativeElement.childNodes
+      let item: HTMLElement = list[coverIdx]
+      let preItem: HTMLElement = list[coverIdx - 1]
+      if(coverIdx == list.length){
+        coverIdx = 0
+        item = list[coverIdx]
+      }else if(coverIdx == 0){
+        preItem = list[list.length - 1]
+      }
+      this.renderer.setStyle(item, "opacity", 1)
+      this.renderer.setStyle(preItem, "opacity", 0)
+      coverIdx++
+    }, 3000)
+  }
   selectedFile($event: any) {
     this.selectedFiles = $event.target.files;
   }
@@ -239,7 +277,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
   }
   getFiles() {
-    this._uploadFileService.getFiles().subscribe((files) => {});
+    this._uploadFileService.getFiles().subscribe((files) => { });
   }
   showImage() {
     this._uploadFileService.showImage().subscribe((v) => {
@@ -462,35 +500,35 @@ export class HomeComponent implements OnInit, AfterViewInit {
               index === imageElementsLength - 1
                 ? document.getElementById(`image-detail-0`)
                 : imageElement.nextSibling;
-                if (movedImageElement!.nodeName === 'VIDEO') {
-                  const tempMovedImagElement =
-                    movedImageElement as HTMLVideoElement;
-                    this.renderer.setAttribute(tempMovedImagElement,'controls','true')
-                  tempMovedImagElement.play();
-                }
-                if (imageElement.nodeName === 'VIDEO') {
-                  const tempImagElement = imageElement as HTMLVideoElement;
-                  tempImagElement.currentTime = 0;
-                  tempImagElement.pause();
-                }
+            if (movedImageElement!.nodeName === 'VIDEO') {
+              const tempMovedImagElement =
+                movedImageElement as HTMLVideoElement;
+              this.renderer.setAttribute(tempMovedImagElement, 'controls', 'true')
+              tempMovedImagElement.play();
+            }
+            if (imageElement.nodeName === 'VIDEO') {
+              const tempImagElement = imageElement as HTMLVideoElement;
+              tempImagElement.currentTime = 0;
+              tempImagElement.pause();
+            }
           } else {
             movedImageElement =
               index === 0
                 ? document.getElementById(
-                    `image-detail-${imageElementsLength - 1}`
-                  )
+                  `image-detail-${imageElementsLength - 1}`
+                )
                 : imageElement.previousSibling;
-                if (movedImageElement!.nodeName === 'VIDEO') {
-                  const tempMovedImagElement =
-                    movedImageElement as HTMLVideoElement;
-                    this.renderer.setAttribute(tempMovedImagElement,'controls','true')
-                  tempMovedImagElement.play();
-                }
-                if (imageElement.nodeName === 'VIDEO') {
-                  const tempImagElement = imageElement as HTMLVideoElement;
-                  tempImagElement.currentTime = 0;
-                  tempImagElement.pause();
-                }
+            if (movedImageElement!.nodeName === 'VIDEO') {
+              const tempMovedImagElement =
+                movedImageElement as HTMLVideoElement;
+              this.renderer.setAttribute(tempMovedImagElement, 'controls', 'true')
+              tempMovedImagElement.play();
+            }
+            if (imageElement.nodeName === 'VIDEO') {
+              const tempImagElement = imageElement as HTMLVideoElement;
+              tempImagElement.currentTime = 0;
+              tempImagElement.pause();
+            }
           }
         }
       });
@@ -610,9 +648,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
       }
     });
   }
-  isMutedStory: boolean= false
-  storyMuteUnmute(){
-    console.log('ok')
+  isMutedStory: boolean = false
+  storyMuteUnmute() {
     this.storyImageDetailContainer.nativeElement.childNodes.forEach((e, i) => {
       const temp = e as HTMLElement;
       if (temp.classList.contains('visible') && temp.nodeName === 'VIDEO') {

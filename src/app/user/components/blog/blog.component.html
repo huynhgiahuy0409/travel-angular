@@ -1,0 +1,84 @@
+<div class="container">
+    <div class="header box-shadow">
+        <img src="assets/image/anhbia.jpg" alt="">
+        <div class="grid wide">
+            <div class="nav__list row ">
+                <div class="nav__item col l-3 m-3 c-3" routerLinkActive="nav__item--slt"
+                    [routerLinkActiveOptions]="{ exact: true }" [routerLink]="'/blog/1'">Bài chia sẽ</div>
+                <div class="nav__item col l-3 m-3 c-3" routerLinkActive="nav__item--slt" [routerLink]="'/blog/1/a'">Hoạt
+                    động</div>
+                <div class="nav__item col l-3 m-3 c-3" routerLinkActive="nav__item--slt"
+                    [routerLink]="'/blog/1/follower'">Theo dõi</div>
+                <div class="nav__item col l-3 m-3 c-3" routerLinkActive="nav__item--slt"
+                    [routerLink]="'/blog/1/following'">Đang theo dõi</div>
+            </div>
+        </div>
+    </div>
+    <div class="main">
+        <div class="grid">
+            <div class="row">
+                <div class="col l-3 m-0 c-0">
+                    <div class="main__left">
+                        <div class="user-info__list">
+                            <div class="user-info__item">
+                                <div class="avatar d-flex align-items-center justify-content-center">
+                                    <img src="assets/image/member-1.png" alt="">
+                                </div>
+                                <h1 class="username">Sam Nguyen</h1>
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <div class="follow-btn d-flex align-items-center justify-content-center">
+                                        <i style="margin-right: 10px;" class="fa fa-rss xs:d-none"
+                                            aria-hidden="true"></i>
+                                        <span>Follow</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="user-info__item">
+                                <div class="row no-gutters" style="margin: 5px 0">
+                                    <div class="mr-r-5">
+                                        <i class="fa-solid fa-earth-americas"></i>
+                                    </div>
+                                    <div class="">
+                                        <span class="primary-color mr-r-5">0</span>
+                                        <span>nước</span>
+                                    </div>
+                                </div>
+                                <div class="row no-gutters" style="margin: 5px 0">
+                                    <div class="mr-r-5">
+                                        <i class="fa-solid fa-location-dot"></i>
+                                    </div>
+                                    <div class="">
+                                        <span class="primary-color mr-r-5">28</span>
+                                        <span>tỉnh thành</span>
+                                    </div>
+                                </div>
+                                <div class="row no-gutters" style="margin: 5px 0">
+                                    <div class="mr-r-5">
+                                        <i class="fa-solid fa-user"></i>
+                                    </div>
+                                    <div class="">
+                                        <span class=" mr-r-5">Có</span>
+                                        <span class="primary-color mr-r-5">0 người</span>
+                                        <span>theo dõi</span>
+                                    </div>
+                                </div>
+                                <div class="row no-gutters" style="margin: 5px 0">
+                                    <div class="mr-r-5">
+                                        <i class="fa-solid fa-user-plus"></i>
+                                    </div>
+                                    <div class="">
+                                        <span class=" mr-r-5">Đang theo dõi</span>
+                                        <span class="primary-color">0 người</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col l-9 m-12 c-12">
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+.header {
+    height: 60px;
+    position: sticky;
+    top: 0;
+    box-shadow: 0 0 5px #ccc;
+    padding: 5px
+}
+
+.header .header__logo {
+    min-width: 200px;
+}
+
+.header .login-form__list {}
+
+.header .login-form__item {
+    margin: 0 5px
+}
+
+.main {
+    height: calc(100vh - 60px);
+    background-color: rgb(233, 235, 238);
+}
+
+.main .find-account {
+    max-width: 500px;
+    height: 275px;
+    box-shadow: 0 0 5px #ccc;
+    border-radius: 5px;
+    background-color: var(--white-color--);
+}
+
+.main .find-account__header {
+    height: 60px;
+    padding: 10px;
+}
+
+.main .find-account__header h1 {
+    margin: auto 0;
+}
+
+.main .find-account__main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 10px;
+    height: calc(100% - 60px - 70px);
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+.main .find-account__footer {
+    height: 70px
+}
+.main .find-account__footer button{
+    margin: 0 10px
+}

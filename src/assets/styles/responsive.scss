@@ -1,0 +1,28 @@
+/* Responsive */
+/* Mobile */
+@media (max-width: 739px) {
+    .hide-on-mobile {
+        display: none !important;
+    }
+}
+
+/* Tablet */
+@media (min-width: 740px) and (max-width: 1023px) {
+    .hide-on-tablet {
+        display: none !important;
+    }
+}
+
+/* > Tablet */
+@media (min-width: 1023px) and (max-width: 1113px) {
+    .hide-on-big-tablet {
+        display: none !important;
+    }
+}
+
+/* > PC medium resolution */
+@media (min-width: 1113px) {
+    .hide-on-pc {
+        display: none !important;
+    }
+}

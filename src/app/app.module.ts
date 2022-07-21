@@ -8,7 +8,6 @@ import { ImagesLazyloadModule } from './shared/images-lazyload/images-lazyload.m
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedMaterialModule } from './shared/modules';
-import { AgmCoreModule } from '@agm/core';
 import { UserModule } from './user/user.module';
 import { NgForm, FormsModule } from '@angular/forms';
 @NgModule({
@@ -23,9 +22,9 @@ import { NgForm, FormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     SharedMaterialModule,
     FormsModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCp3qsNHBlKfgzMkrkr0FTUsNAPsH4yd7Y',
-    }),
+    // AgmCoreModule.forRoot({
+    //   apiKey: 'AIzaSyCp3qsNHBlKfgzMkrkr0FTUsNAPsH4yd7Y',
+    // }),
   ],
   bootstrap: [AppComponent],
 })

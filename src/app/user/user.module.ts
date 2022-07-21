@@ -1,3 +1,4 @@
+import { LoginModule } from './components/login/login.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -9,7 +10,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CreatePostDialogComponent } from './components/home/dialog/create-post-dialog/create-post-dialog.component';
 import { ImageDragDirective } from './directive/image-drag.directive';
 
-import { AgmCoreModule } from '@agm/core';
 import { LoginComponent } from './components/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
@@ -19,24 +19,28 @@ import {
   RecaptchaModule,
   RecaptchaSettings,
 } from 'ng-recaptcha';
+import { RegisterDialogComponent } from './components/login/dialog/register-dialog/register-dialog.component';
+import { IdentifyComponent } from './components/identify/identify.component';
+import { ReviewPostDetailComponent } from './components/review-post-detail/review-post-detail.component';
+import { HomeModule } from './components/home/home.module';
 @NgModule({
   declarations: [
     UserComponent,
-    HomeComponent,
     CreatePostDialogComponent,
     ImageDragDirective,
-    LoginComponent,
+    RegisterDialogComponent,
+    IdentifyComponent,
+    ReviewPostDetailComponent,
   ],
   imports: [
     CommonModule,
     UserRoutingModule,
     SharedHeaderModule,
     SharedMaterialModule,
-    AgmCoreModule,
     FormsModule,
     ReactiveFormsModule,
-    RecaptchaModule,
-    RecaptchaFormsModule,
+    LoginModule,
+    HomeModule
   ],
   providers: [
     {

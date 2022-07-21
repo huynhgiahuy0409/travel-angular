@@ -1,10 +1,6 @@
 <div class="login-page">
-
-  <div class="container">
-
-    <!-- Change version -->
-
-    <div class="left">
+  <div class="container row no-gutters">
+    <div class="left col l-8">
       <img id="hinh1" class="img" src="assets/login-page/background1.jpg" alt="">
       <img id="hinh2" class="img" src="assets/login-page/background2.jpg" alt="">
       <img id="hinh3" class="img" src="assets/login-page/background3.jpg" alt="">
@@ -39,8 +35,7 @@
       </div>
 
     </div>
-
-    <div class="right">
+    <div class="right col l-4">
       <div class="right-form">
         <div class="right-form__header">
           <img src="assets/login-page/icon.ico" alt="">
@@ -114,8 +109,8 @@
                 <button type="submit" class="content__form__btn" [disabled]="loginForm.invalid">Đăng nhập</button>
                 <div class="separate-line"></div>
                 <div class="content__form__more-wrap">
-                  <p>Đăng ký tài khoản</p>
-                  <p>Quên mật khẩu?</p>
+                  <p (click)="onClickRegister()">Đăng ký tài khoản</p>
+                  <p [routerLink]="'/login/identify'">Quên mật khẩu?</p>
                 </div>
               </form>
             </ng-container>
@@ -250,7 +245,6 @@
           </ng-template>
         </div>
       </div>
-
     </div>
 
     <div class="quen-mat-khau" id="quen-mat-khau">

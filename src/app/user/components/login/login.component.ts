@@ -15,7 +15,9 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { map, filter, scan, tap } from 'rxjs/operators';
+import { RegisterDialogComponent } from './dialog/register-dialog/register-dialog.component';
 export function matchedPassword(c: AbstractControl) {
   const passwordValue = c.get('password')?.value;
   console.log(passwordValue);
@@ -39,7 +41,7 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   registerForm!: FormGroup;
   public log: string[] = [];
-  constructor(private fb: FormBuilder, public renderer: Renderer2) {
+  constructor(private matDialog: MatDialog, private fb: FormBuilder, public renderer: Renderer2) {
     this.loginForm = new FormGroup({
       username: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [
@@ -194,5 +196,11 @@ export class LoginComponent implements OnInit {
         this.renderer.setStyle(nextSiblingProgressBarEle, 'color', colors[4]);
       }
     });
+  }
+  onClickRegister(){
+    this.matDialog.open(RegisterDialogComponent, {
+      maxWidth: "435px",
+      maxHeight: "100vh"
+    })
   }
 }

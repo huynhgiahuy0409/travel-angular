@@ -1,0 +1,38 @@
+<div class="grid">
+    <div class="row no-gutters header align-item-center justify-content-between">
+        <div class="header__logo col"></div>
+        <ul class="login-form__list d-flex align-items-center">
+            <li class="hide-on-mobile login-form__item  d-flex align-items-center">
+                <div class="field field--color">
+                    <input type="text" placeholder="Tài khoản">
+                </div>
+            </li>
+            <li class="hide-on-mobile login-form__item  d-flex align-items-center">
+                <div class="field field--color">
+                    <input type="text" placeholder="Mật khẩu">
+                </div>
+            </li>
+            <li class="login-form__item  d-flex align-items-center">
+                <button [routerLink]="'/login'" mat-raised-button class="primary-color-btn font-weight-550">Đăng
+                    nhập</button>
+            </li>
+        </ul>
+    </div>
+    <div class="row main d-flex justify-content-center align-items-center">
+        <div class="find-account">
+            <div class="find-account__header  d-flex align-items-center">
+                <h1>Tìm tài khoản của bạn</h1>
+            </div>
+            <div class="find-account__main">
+                <p>Vui lòng nhập địa chỉ email hoặc số điện thoại di động của bạn để tìm kiếm tài khoản của bạn.</p>
+                <div class="field">
+                    <input type="text" placeholder="Email">
+                </div>
+            </div>
+            <div class="find-account__footer d-flex align-items-center justify-content-end">
+                <button mat-raised-button [routerLink]="'/login'">Hủy</button>
+                <button mat-raised-button class="primary-color-btn">Tìm kiếm</button>
+            </div>
+        </div>
+    </div>
+</div>

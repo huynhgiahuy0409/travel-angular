@@ -1,998 +1,552 @@
+<div class="header-wrap" style="position: sticky">
+  <shared-header></shared-header>
+</div>
 <div class="home-container">
   <!-- header -->
-  <div class="header-wrap" style="position: sticky">
-    <shared-header></shared-header>
-  </div>
   <!-- main -->
-  <div class="my-container">
-    <!-- ----------left-sidebar---------- -->
-    <div class="left-sidebar">
-      <div class="left-sidebar__content">
-        <div class="imp-links">
-          <a href=""><img src="assets/image/news.png" alt="">Latest News</a>
-          <a href=""><img src="assets/image/friends.png" alt="">Friends</a>
-          <a href=""><img src="assets/image/group.png" alt="">Group</a>
-          <a href=""><img src="assets/image/marketplace.png" alt="">Market Place</a>
-          <a href=""><img src="assets/image/watch.png" alt="">Market Watch</a>
-          <a href="">See more</a>
-        </div>
-        <div class="shortcut-links">
-          <p>Your Shortcut</p>
-          <a href="">
-            <img src="assets/image/shortcut-1.png" alt="">
-            Web Developer
-          </a>
-          <a href="">
-            <img src="assets/image/shortcut-2.png" alt="">
-            Web Design Course
-          </a>
-          <a href="">
-            <img src="assets/image/shortcut-3.png" alt="">
-            Full Stack
-          </a>
-          <a href="">
-            <img src="assets/image/shortcut-4.png" alt="">
-            Website Experts
-          </a>
-          <a href="">
-            <img src="assets/image/shortcut-4.png" alt="">
-            Website Experts
-          </a>
-          <a href="">
-            <img src="assets/image/shortcut-4.png" alt="">
-            Website Experts
-          </a>
-          <a href="">
-            <img src="assets/image/shortcut-4.png" alt="">
-            Website Experts
-          </a>
-          <a href="">
-            <img src="assets/image/shortcut-4.png" alt="">
-            Website Experts
-          </a>
-          <a href="">
-            <img src="assets/image/shortcut-4.png" alt="">
-            Website Experts
-          </a>
+  <!-- cover -->
+  <div class="cover box-shadow" *ngIf="routerUrl == '/home'">
+    <div class="content hide-on-mobile">
+      <h1>Đi & khám phá theo cách của bạn</h1>
+    </div>
+    <ul #coverImageList class="cover-image__list hide-on-mobile">
+      <div class="cover-image__item">
+        <img src="assets/image/cover-image.jpg" alt="">
+      </div>
+      <div class="cover-image__item">
+        <img src="assets/image/cover-image-1.jpg" alt="">
+      </div>
+      <div class="cover-image__item">
+        <img src="assets/image/cover-image-2.jpg" alt="">
+      </div>
+    </ul>
+    <div class="cover-action">
+      <div class="grid wide">
+        <div class="row cover-action__list">
+          <div class="col l-3 m-3 c-3 cover-action__item d-flex align-items-center">
+            <button mat-raised-button style="display: flex;"
+              class="w-fit primary-color-btn align-items-center justify-content-center">Chia sẽ ngay</button>
+          </div>
+          <div class="col l-3 m-3 c-3 cover-action__item">
+            <h4>
+              Tạo blog cá nhân
+            </h4>
+            <p class="hide-on-mobile">Tạo blog bằng cách chia sẻ trải nghiệm chuyến đi của bạn</p>
+          </div>
+          <div class="col l-3 m-3 c-3 cover-action__item">
+            <h4>
+              Hỏi đáp thắc mắc
+            </h4>
+            <p class="hide-on-mobile">Đặt câu hỏi và giúp thành viên khác giải đáp thắc mắc</p>
+          </div>
+          <div class="col l-3 m-3 c-3 cover-action__item">
+            <h4>
+              Hành trình
+            </h4>
+            <p class="hide-on-mobile">Chia sẻ lich trình đã đi hoặc lập hành trình chuyến tiếp</p>
+          </div>
         </div>
       </div>
     </div>
-    <!-- ----------main-content---------- -->
-    <div class="main-content-wrap">
-      <div class="main-content">
-        <!-- story-gallery -->
-        <div class="story-gallery">
-          <div class="see-all-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" fill="currentColor"
-              class="bi bi-arrow-right-short" viewBox="0 0 16 16">
-              <path fill-rule="evenodd"
-                d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />
-            </svg>
-          </div>
-          <div class="story story1">
-            <div class="story__thumbnail">
-              <img src="/assets/image/status-2.png" alt="">
+  </div>
+  <div class="my-container grid">
+    <div class="row">
+      <!-- ----------left-sidebar---------- -->
+      <div class="col l-3 m-0 c-0">
+        <div class="left-sidebar">
+          <div class="left-sidebar__content">
+            <div class="imp-links">
+              <a href=""><img src="assets/image/news.png" alt="">Latest News</a>
+              <a href=""><img src="assets/image/friends.png" alt="">Friends</a>
+              <a href=""><img src="assets/image/group.png" alt="">Group</a>
+              <a href=""><img src="assets/image/marketplace.png" alt="">Market Place</a>
+              <a href=""><img src="assets/image/watch.png" alt="">Market Watch</a>
+              <a href="">See more</a>
             </div>
-            <img src="assets/image/upload.png" alt="">
-            <p>Post Story</p>
-          </div>
-          <ng-container *ngFor="let p of posts, index as idx">
-            <ng-container *ngIf="idx < 4">
-              <div class="story" (click)="displayPost(idx,p,'story')" >
-                <div class="story__thumbnail">
-                  <ng-container *ngIf="p.images[this.getSeenStoryIndex(p)].type === 'image'; else storyVideoTemplateVar">
-                    <img [src]="p.images[this.getSeenStoryIndex(p)].url" alt="" >
-                  </ng-container>
-                  <ng-template #storyVideoTemplateVar>
-                    <video preload="metadata">
-                      <source [src]="p.images[this.getSeenStoryIndex(p)].url" type="video/mp4">
-                    </video>
-                  </ng-template>
-                </div>
-                <img [src]="p.user['avatarUrl']" alt="" [class.seen-story]="this.seenStory.has(p)">
-                <p>People 2</p>
-
-              </div>
-            </ng-container>
-          </ng-container>
-        </div>
-        <!-- write-post-container -->
-        <div class="write-post-container">
-          <div class="d-flex align-items-center">
-            <img src="assets/image/profile-pic.png" alt="">
-            <input type="text" placeholder="What's your mind, John?" (click)="openCreatePostDialog()">
-          </div>
-          <div class="separate-line"></div>
-          <ul class="write-post-container__icons">
-            <li class="write-post-container__icon">
-              <svg fill="currentColor" viewBox="0 0 24 24" width="2.4rem" height="2.4rem"
-                class="write-post-container__icon--cherry-color">
-                <g fill-rule="evenodd" transform="translate(-444 -156)">
-                  <g>
-                    <path
-                      d="M113.029 2.514c-.363-.088-.746.014-1.048.234l-2.57 1.88a.999.999 0 0 0-.411.807v8.13a1 1 0 0 0 .41.808l2.602 1.901c.219.16.477.242.737.242.253 0 .508-.077.732-.235.34-.239.519-.65.519-1.065V3.735a1.25 1.25 0 0 0-.971-1.22m-20.15 6.563c.1-.146 2.475-3.578 5.87-3.578 3.396 0 5.771 3.432 5.87 3.578a.749.749 0 0 1 0 .844c-.099.146-2.474 3.578-5.87 3.578-3.395 0-5.77-3.432-5.87-3.578a.749.749 0 0 1 0-.844zM103.75 19a3.754 3.754 0 0 0 3.75-3.75V3.75A3.754 3.754 0 0 0 103.75 0h-10A3.754 3.754 0 0 0 90 3.75v11.5A3.754 3.754 0 0 0 93.75 19h10z"
-                      transform="translate(354 158.5)"></path>
-                    <path
-                      d="M98.75 12c1.379 0 2.5-1.121 2.5-2.5S100.129 7 98.75 7a2.503 2.503 0 0 0-2.5 2.5c0 1.379 1.121 2.5 2.5 2.5"
-                      transform="translate(354 158.5)"></path>
-                  </g>
-                </g>
-              </svg>
-              <p>Live video</p>
-            </li>
-            <li class="write-post-container__icon">
-              <svg fill="currentColor" viewBox="0 0 24 24" width="2.4rem" height="2.4rem"
-                class="write-post-container__icon--lime-color">
-                <g fill-rule="evenodd" transform="translate(-444 -156)">
-                  <g>
-                    <path
-                      d="m96.968 22.425-.648.057a2.692 2.692 0 0 1-1.978-.625 2.69 2.69 0 0 1-.96-1.84L92.01 4.32a2.702 2.702 0 0 1 .79-2.156c.47-.472 1.111-.731 1.774-.79l2.58-.225a.498.498 0 0 1 .507.675 4.189 4.189 0 0 0-.251 1.11L96.017 18.85a4.206 4.206 0 0 0 .977 3.091s.459.364-.026.485m8.524-16.327a1.75 1.75 0 1 1-3.485.305 1.75 1.75 0 0 1 3.485-.305m5.85 3.011a.797.797 0 0 0-1.129-.093l-3.733 3.195a.545.545 0 0 0-.062.765l.837.993a.75.75 0 1 1-1.147.966l-2.502-2.981a.797.797 0 0 0-1.096-.12L99 14.5l-.5 4.25c-.06.674.326 2.19 1 2.25l11.916 1.166c.325.026 1-.039 1.25-.25.252-.21.89-.842.917-1.166l.833-8.084-3.073-3.557z"
-                      transform="translate(352 156.5)"></path>
-                    <path fill-rule="nonzero"
-                      d="m111.61 22.963-11.604-1.015a2.77 2.77 0 0 1-2.512-2.995L98.88 3.09A2.77 2.77 0 0 1 101.876.58l11.603 1.015a2.77 2.77 0 0 1 2.513 2.994l-1.388 15.862a2.77 2.77 0 0 1-2.994 2.513zm.13-1.494.082.004a1.27 1.27 0 0 0 1.287-1.154l1.388-15.862a1.27 1.27 0 0 0-1.148-1.37l-11.604-1.014a1.27 1.27 0 0 0-1.37 1.15l-1.387 15.86a1.27 1.27 0 0 0 1.149 1.37l11.603 1.016z"
-                      transform="translate(352 156.5)"></path>
-                  </g>
-                </g>
-              </svg>
-              <p>Photo/video</p>
-            </li>
-            <li class="write-post-container__icon">
-              <svg fill="currentColor" viewBox="0 0 24 24" width="2.4rem" height="2.4rem"
-                class="write-post-container__icon--lemon-color">
-                <g fill-rule="evenodd" transform="translate(-444 -156)">
-                  <g>
-                    <path
-                      d="M107.285 13c.49 0 .841.476.712.957-.623 2.324-2.837 4.043-5.473 4.043-2.636 0-4.85-1.719-5.473-4.043-.13-.48.222-.957.712-.957h9.522z"
-                      transform="translate(353.5 156.5)"></path>
-                    <path fill-rule="nonzero"
-                      d="M114.024 11.5c0 6.351-5.149 11.5-11.5 11.5s-11.5-5.149-11.5-11.5S96.173 0 102.524 0s11.5 5.149 11.5 11.5zm-2 0a9.5 9.5 0 1 0-19 0 9.5 9.5 0 0 0 19 0z"
-                      transform="translate(353.5 156.5)"></path>
-                    <path
-                      d="M99.524 8.5c0 .829-.56 1.5-1.25 1.5s-1.25-.671-1.25-1.5.56-1.5 1.25-1.5 1.25.671 1.25 1.5m8.5 0c0 .829-.56 1.5-1.25 1.5s-1.25-.671-1.25-1.5.56-1.5 1.25-1.5 1.25.671 1.25 1.5m-.739 4.5h-9.522c-.49 0-.841.476-.712.957.623 2.324 2.837 4.043 5.473 4.043 2.636 0 4.85-1.719 5.473-4.043.13-.48-.222-.957-.712-.957m-2.165 2c-.667.624-1.592 1-2.596 1a3.799 3.799 0 0 1-2.596-1h5.192"
-                      transform="translate(353.5 156.5)"></path>
-                  </g>
-                </g>
-              </svg>
-              <p>Feeling/activity</p>
-            </li>
-          </ul>
-        </div>
-        <!-- posts -->
-        <ng-container *ngFor="let p of posts">
-          <div class="post-container">
-            <!-- header post -->
-            <div class="user-profile">
-              <img src="assets/image/profile-pic.png" alt="">
-              <div class="user-profile-name">
-                <h3>John Nichoson</h3>
-                <div class="d-flex align-items-center">
-                  <span>June 24 2021, 13:40 pm
-                  </span>
-                  <mat-icon>public</mat-icon>
-                </div>
-              </div>
-            </div>
-            <!-- post content -->
-            <div class="post-text">
-              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
-              <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </span>
-              , when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-              <a href="">Where does it come from?</a>
-            </div>
-            <!------ Sorting display images ------>
-            <!-- Less 5 img -->
-            <ng-container *ngIf="p.images.length < 5; else elseBlock">
-              <div class="post-image-container flex-direction-col">
-                <!-- length != 1 -->
-                <ng-container *ngIf="p.images.length > 1; else oneImage">
-                  <div class="post-image-wrap">
-                    <ng-container *ngFor="let src of p.images; index as idx">
-                      <ng-container *ngIf="idx == 0">
-                        <ng-container *ngIf="src.type === 'image'; else postVideoTemplateVar">
-                          <img [src]="src.url" (click)="displayPost(idx, p,'post')">
-                        </ng-container>
-                        <ng-template #postVideoTemplateVar>
-                          <div class="video-wrap" (click)="displayPost(idx, p,'post')">
-                            <video width="400" preload="metadata">
-                              <source src="https://www.w3schools.com/html/mov_bbb.mp4#t=0.5" type="video/mp4">
-                            </video>
-                            <div class="video-play-btn">
-                              <i #storyVideoPlayBtnIcon class="bi bi-play-fill"></i>
-                            </div>
-                          </div>
-                        </ng-template>
-                      </ng-container>
-                    </ng-container>
-                  </div>
-                  <div class="post-image-wrap flex-direction-row">
-                    <ng-container *ngFor="let src of p.images; index as idx">
-                      <ng-container *ngIf="idx > 0 && idx < 5">
-                        <ng-container *ngIf="src.type === 'image'; else postVideoTemplateVar">
-                          <img [src]="src.url" (click)="displayPost(idx, p,'post')">
-                        </ng-container>
-                        <ng-template #postVideoTemplateVar>
-                          <div class="video-wrap" (click)="displayPost(idx, p,'post')">
-                            <video width="400" preload="metadata">
-                              <source src="https://www.w3schools.com/html/mov_bbb.mp4#t=0.5" type="video/mp4">
-                            </video>
-                            <div class="video-play-btn">
-                              <i class="bi bi-play-fill"></i>
-                            </div>
-                          </div>
-                        </ng-template>
-                      </ng-container>
-                    </ng-container>
-                  </div>
-                </ng-container>
-                <!-- length == 1 -->
-                <ng-template #oneImage>
-                  <div class="post-image-wrap">
-                    <ng-container *ngFor="let src of p.images; index as idx">
-                      <ng-container *ngIf="idx == 0">
-                        <ng-container *ngIf="src.type === 'image'; else postVideoTemplateVar">
-                          <img [src]="src.url" (click)="displayPost(idx, p,'post')">
-                        </ng-container>
-                        <ng-template #postVideoTemplateVar>
-                          <div class="video-wrap" (click)="displayPost(idx, p,'post')">
-                            <video width="400" preload="metadata">
-                              <source src="https://www.w3schools.com/html/mov_bbb.mp4#t=0.5" type="video/mp4">
-                            </video>
-                            <div class="video-play-btn">
-                              <i class="bi bi-play-fill"></i>
-                            </div>
-                          </div>
-                        </ng-template>
-                      </ng-container>
-                    </ng-container>
-                  </div>
-                </ng-template>
-              </div>
-            </ng-container>
-            <!-- More 5 img -->
-            <ng-template #elseBlock>
-              <div class="post-image-container flex-direction-row">
-                <div class="post-image-wrap flex-direction-col">
-                  <ng-container *ngFor="let src of p.images; index as idx">
-                    <ng-container *ngIf="idx >= 0 && idx < 2">
-                      <ng-container *ngIf="src.type === 'image'; else postVideoTemplateVar">
-                        <img [src]="src.url" (click)="displayPost(idx, p,'post')">
-                      </ng-container>
-                      <ng-template #postVideoTemplateVar>
-                        <div class="video-wrap" (click)="displayPost(idx, p,'post')">
-                          <video width="400" preload="metadata">
-                            <source src="https://www.w3schools.com/html/mov_bbb.mp4#t=0.5" type="video/mp4">
-                          </video>
-                          <div class="video-play-btn">
-                            <i class="bi bi-play-fill"></i>
-                          </div>
-                        </div>
-                      </ng-template>
-                    </ng-container>
-                  </ng-container>
-                </div>
-                <div class="post-image-wrap flex-direction-col">
-                  <ng-container *ngFor="let src of p.images; index as idx">
-                    <ng-container *ngIf="idx > 1 && idx < 4">
-                      <ng-container *ngIf="src.type === 'image'; else postVideoTemplateVar">
-                        <img [src]="src.url" (click)="displayPost(idx, p,'post')">
-                      </ng-container>
-                      <ng-template #postVideoTemplateVar>
-                        <div class="video-wrap" (click)="displayPost(idx, p,'post')">
-                          <video width="400" preload="metadata" autoplay>
-                            <source src="https://www.w3schools.com/html/mov_bbb.mp4#t=0.5" type="video/mp4">
-                          </video>
-                          <div class="video-play-btn">
-                            <i class="bi bi-play-fill"></i>
-                          </div>
-                        </div>
-                      </ng-template>
-                    </ng-container>
-                    <ng-container *ngIf="idx == 4 && p.images.length > 5">
-                      <div class="last-image-wrap">
-                        <ng-container *ngIf="src.type === 'image'; else postVideoTemplateVar">
-                          <img [src]="src.url" (click)="displayPost(idx, p,'post')">
-                        </ng-container>
-                        <div class="last-image--overlay">
-                          <p>+{{p.images.length-5}}</p>
-                        </div>
-                        <ng-template #postVideoTemplateVar>
-                          <div class="video-wrap" (click)="displayPost(idx, p,'post')">
-                            <video width="400" preload="metadata">
-                              <source src="https://www.w3schools.com/html/mov_bbb.mp4#t=0.5" type="video/mp4">
-                            </video>
-                            <div class="video-play-btn">
-                              <i class="bi bi-play-fill"></i>
-                            </div>
-                          </div>
-                        </ng-template>
-                      </div>
-                    </ng-container>
-                    <ng-container *ngIf="idx == 4 && p.images.length == 5">
-                      <ng-container *ngIf="src.type === 'image'; else postVideoTemplateVar">
-                        <img [src]="src.url" (click)="displayPost(idx, p,'post')">
-                      </ng-container>
-                      <ng-template #postVideoTemplateVar>
-                        <div class="video-wrap" (click)="displayPost(idx, p,'post')">
-                          <video width="400" preload="metadata">
-                            <source src="https://www.w3schools.com/html/mov_bbb.mp4#t=0.5" type="video/mp4">
-                          </video>
-                          <div class="video-play-btn">
-                            <i class="bi bi-play-fill"></i>
-                          </div>
-                        </div>
-                      </ng-template>
-                    </ng-container>
-                  </ng-container>
-                </div>
-              </div>
-            </ng-template>
-            <!-- post react: like comment shared -->
-            <div class="post-react">
-              <div class="post-row justify-content-between">
-                <div class="post-react-left d-flex">
-                  <img style="z-index: 3" src="assets/react-image/like.svg" alt="">
-                  <img style="z-index: 2;margin-left: -5px" src="assets/react-image/love.svg" alt="">
-                  <img style="z-index: 1;margin-left: -5px" src="assets/react-image/care.svg" alt="">
-                  <div class="total-react">55K</div>
-                </div>
-                <div class="post-react-right d-flex">
-                  <div class="">5K Comments</div>
-                  <div class="">1.9K Shares</div>
-                </div>
-              </div>
-              <div class="separate-line"></div>
-              <ul class="react-btn__list">
-                <li #reactBtnItem class="react-btn__item" (click)="unselectReact(reactBtnItem)">
-                  <!--         <ng-container *ngTemplateOutlet="reactBtnWrapTemplate">
-                  </ng-container>
-                  <ng-template #reactBtnWrapTemplate> -->
-                  <div class="react-btn-wrap">
-                    <i class="like-btn-icon"></i>
-                    <p class="react-name">Like</p>
-                  </div>
-                  <!--   </ng-template> -->
-                  <div class="react-box">
-                    <ng-container *ngFor="let src of srcReactIcons">
-                      <img class="react-icon" #reactIconTemplateRef [src]="src.url" [alt]="src.name"
-                        (click)="selectReactIcon($event,reactIconTemplateRef, src.name)">
-                    </ng-container>
-                  </div>
-                </li>
-                <li class="react-btn__item" (click)="isShowComments=!isShowComments">
-                  <div class="react-btn-wrap">
-                    <i #likeBtnIconTemplateRef class="comment-btn-icon"></i>
-                    <p>Comment</p>
-                  </div>
-                </li>
-                <li class="react-btn__item">
-                  <div class="react-btn-wrap">
-                    <i #likeBtnIconTemplateRef class="shared-btn-icon"></i>
-                    <p>Shared</p>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <ng-container *ngIf="isShowComments">
-              <div class="separate-line"></div>
-              <div class="post-row">
-                <img class="comment-avatar" src="assets/image/profile-pic.png" alt="">
-                <div class="comment-box bg-cl">
-                  <input #post1Id type="text" placeholder="Write a comment...">
-                  <div class="activate">
-                    <i class="emoji"></i>
-                    <i class="photo"></i>
-                    <i class="sticker"></i>
-                  </div>
-                </div>
-              </div>
-              <!-- comment tree -->
-              <ul class="comment-list">
-                <ng-container *ngFor="let comment of commentTree;index as i">
-                  <ul class="comment-item">
-                    <div class="comment-line parent-comment-line">
-                    </div>
-                    <!-- Comment detail of parent-->
-                    <div class="comment-detail comment-parent">
-                      <div class="comment-detail__wrapper-img comment-detail__wrapper-img--parent">
-                        <img src="assets/image/profile-pic.png" alt="">
-                      </div>
-                      <div class="comment-detail__wrapper-info">
-                        <div class="comment-detail__info comment-detail__info--background">
-                          <p class="">{{comment.user.name}}</p>
-                          <div class="comment-content">{{comment.content}}</div>
-                        </div>
-                        <div class="comment-detail__react">
-                          <div class="comment-detail__react-like">
-                            <div class="react-like">Like
-                            </div>
-                            <div class="react-box">
-                              <ng-container *ngFor="let src of srcReactIcons">
-                                <img [src]="src.url" alt="">
-                              </ng-container>
-                            </div>
-                          </div>
-                          <div class="comment-detail__react-reply"
-                            (click)="onClickRepUser(comment.user.name, rootReplyInput)">
-                            Reply</div>
-                          <label class="comment-detail__react-time">11h</label>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- Child comment -->
-                    <ng-container *ngFor="let childComment of comment.comments">
-                      <ul class="comment-item comment-child">
-                        <div class="comment-line child-comment-line"></div>
-                        <div class="comment-detail">
-                          <div class="comment-detail__wrapper-img comment-detail__wrapper-img--child">
-                            <div class="comment-link"></div>
-                            <img src="assets/image/profile-pic.png" alt="">
-                          </div>
-                          <div class="comment-detail__wrapper-info">
-                            <div class="comment-detail__info comment-detail__info--background">
-                              <p class="">{{childComment.user.name}}</p>
-                              <div class="comment-content">{{childComment.content}}</div>
-                            </div>
-                            <div class="comment-detail__react">
-                              <div class="comment-detail__react-like">Like
-                                <div class="react-box">
-                                  <ng-container *ngFor="let src of srcReactIcons">
-                                    <img [src]="src.url" alt="">
-                                  </ng-container>
-                                </div>
-                              </div>
-                              <div class="comment-detail__react-reply"
-                                (click)="onClickRepUser(childComment.user.name, childReplyInput)">Reply</div>
-                              <label class="comment-detail__react-time">11h</label>
-                            </div>
-                          </div>
-                        </div>
-                        <!-- Leaf child comment -->
-                        <ng-container *ngFor="let c of childComment.comments">
-                          <li class="comment-item comment-sibling">
-                            <div class="comment-detail">
-                              <div class="comment-detail__wrapper-img comment-detail__wrapper-img--child">
-                                <div class="comment-link"></div>
-                                <img src="assets/image/profile-pic.png" alt="">
-                              </div>
-                              <div class="comment-detail__wrapper-info">
-                                <div class="comment-detail__info comment-detail__info--background">
-                                  <p class="">{{c.user.name}}</p>
-                                  <div class="comment-content">{{c.content}}</div>
-                                </div>
-                                <div class="comment-detail__react">
-                                  <div class="comment-detail__react-like">Like
-                                    <div class="react-box">
-                                      <ng-container *ngFor="let src of srcReactIcons">
-                                        <img [src]="src" alt="">
-                                      </ng-container>
-                                    </div>
-                                  </div>
-                                  <div class="comment-detail__react-reply"
-                                    (click)="onClickRepUser(c.user.name, childReplyInput)">Reply</div>
-                                  <label class="comment-detail__react-time">11h</label>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                        </ng-container>
-                        <!-- COMMENT INPUT -->
-                        <ul class="comment-item comment-sibling">
-                          <div class="comment-detail">
-                            <div class="comment-detail__wrapper-img comment-detail__wrapper-img--child">
-                              <div class="comment-link"></div>
-                              <img src="assets/image/profile-pic.png" alt="">
-                            </div>
-                            <div class="comment-box bg-cl">
-                              <input #childReplyInput type="text" placeholder="Write a comment...">
-                              <div class="activate">
-                                <i class="emoji"></i>
-                                <i class="photo"></i>
-                                <i class="sticker"></i>
-                              </div>
-                            </div>
-                          </div>
-                        </ul>
-                      </ul>
-                    </ng-container>
-                    <!-- COMMENT INPUT -->
-                    <ul class="comment-item comment-child">
-                      <div class="comment-detail">
-                        <div class="comment-detail__wrapper-img comment-detail__wrapper-img--child">
-                          <div class="comment-link"></div>
-                          <img src="assets/image/profile-pic.png" alt="">
-                        </div>
-                        <div class="comment-box bg-cl">
-                          <input #rootReplyInput type="text" placeholder="Write a comment...">
-                          <div class="activate">
-                            <i class="emoji"></i>
-                            <i class="photo"></i>
-                            <i class="sticker"></i>
-                          </div>
-                        </div>
-                      </div>
-                    </ul>
-                  </ul>
-                </ng-container>
-                <div class="view-more-box d-flex justify-content-between align-items-center">
-                  <p class="font-weight-600">View more comments</p>
-                  <p>12 of 3,711</p>
-                </div>
-                <div class="write-a-comment d-flex justify-content-between align-items-center">
-                  <p class="font-weight-600" (click)="navigateTo(post1Id)">Write a comment...</p>
-                </div>
-              </ul>
-            </ng-container>
-          </div>
-        </ng-container>
-        <div class="post-container">
-          <div class="post-row">
-            <div class="user-profile">
-              <img src="assets/image/profile-pic.png" alt="">
-              <div class="">
-                <p>John Nichoson</p>
-                <span>June 24 2021, 13:40 pm</span>
-              </div>
-            </div>
-            <a href=""><i class="fas fa-ellipsis-v"></i></a>
-          </div>
-          <p class="post-text">
-            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
-            <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </span>
-            , when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-            <a href="">Where does it come from?</a>
-          </p>
-          <img src="assets/image/feed-image-2.png" alt="" class="post-img">
-          <div class="post-row">
-            <div class="activity-icons">
-              <div><img src="assets/image/like-blue.png" alt="">120</div>
-              <div><img src="assets/image/comments.png" alt="">45</div>
-              <div><img src="assets/image/share.png" alt="">20</div>
-            </div>
-            <div class="post-profile-icon">
-              <img src="assets/image/profile-pic.png" alt="">
-              <i class="fas fa-caret-down"></i>
+            <div class="shortcut-links">
+              <p>Your Shortcut</p>
+              <a href="">
+                <img src="assets/image/shortcut-1.png" alt="">
+                Web Developer
+              </a>
+              <a href="">
+                <img src="assets/image/shortcut-2.png" alt="">
+                Web Design Course
+              </a>
+              <a href="">
+                <img src="assets/image/shortcut-3.png" alt="">
+                Full Stack
+              </a>
+              <a href="">
+                <img src="assets/image/shortcut-4.png" alt="">
+                Website Experts
+              </a>
+              <a href="">
+                <img src="assets/image/shortcut-4.png" alt="">
+                Website Experts
+              </a>
+              <a href="">
+                <img src="assets/image/shortcut-4.png" alt="">
+                Website Experts
+              </a>
+              <a href="">
+                <img src="assets/image/shortcut-4.png" alt="">
+                Website Experts
+              </a>
+              <a href="">
+                <img src="assets/image/shortcut-4.png" alt="">
+                Website Experts
+              </a>
+              <a href="">
+                <img src="assets/image/shortcut-4.png" alt="">
+                Website Experts
+              </a>
             </div>
           </div>
         </div>
-
-        <button class="load-more-btn">Load more</button>
-
-
       </div>
-    </div>
-    <!-- ----------right-sidebar---------- -->
-    <div class="right-sidebar">
-      <div class="right-sidebar__content">
-        <div class="sidebar-title">
-          <h4>Events</h4>
-          <a href="">See All</a>
-        </div>
-        <div class="event">
-          <div class="left-event">
-            <h3>18</h3>
-            <span>March</span>
-          </div>
-          <div class="right-event">
-            <h4>Social Media</h4>
-            <p><i class="fa-solid fa-location-dot"></i> Willson Tech Park</p>
-            <a href="">More Info</a>
-          </div>
-        </div>
-        <div class="event">
-          <div class="left-event">
-            <h3>22</h3>
-            <span>June</span>
-          </div>
-          <div class="right-event">
-            <h4>Mobile Marketing</h4>
-            <p><i class="fa-solid fa-location-dot"></i> Willson Tech Park</p>
-            <a href="">More Info</a>
-          </div>
-        </div>
+      <!-- ----------main-content---------- -->
+      <div class="col l-6 m-9 c-12">
+        <router-outlet></router-outlet>
+      </div>
+      <!-- ----------right-sidebar---------- -->
+      <div class="col l-3 m-3 c-0">
+        <div class="right-sidebar">
+          <div class="right-sidebar__content">
+            <div class="sidebar-title">
+              <h4>Events</h4>
+              <a href="">See All</a>
+            </div>
+            <div class="event">
+              <div class="left-event">
+                <h3>18</h3>
+                <span>March</span>
+              </div>
+              <div class="right-event">
+                <h4>Social Media</h4>
+                <p><i class="fa-solid fa-location-dot"></i> Willson Tech Park</p>
+                <a href="">More Info</a>
+              </div>
+            </div>
+            <div class="event">
+              <div class="left-event">
+                <h3>22</h3>
+                <span>June</span>
+              </div>
+              <div class="right-event">
+                <h4>Mobile Marketing</h4>
+                <p><i class="fa-solid fa-location-dot"></i> Willson Tech Park</p>
+                <a href="">More Info</a>
+              </div>
+            </div>
 
-        <div class="sidebar-title">
-          <h4>Advertisement</h4>
-          <a href="">Close</a>
-        </div>
-        <img src="assets/image/advertisement.png" alt="" class="sidebar-ads">
+            <div class="sidebar-title">
+              <h4>Advertisement</h4>
+              <a href="">Close</a>
+            </div>
+            <img src="assets/image/advertisement.png" alt="" class="sidebar-ads">
 
-        <div class="sidebar-title">
-          <h4>Conversation</h4>
-          <a href="">Hide Chat</a>
-        </div>
-        <div class="online-list">
-          <div class="online">
-            <img src="assets/image/member-1.png" alt="">
+            <div class="sidebar-title">
+              <h4>Conversation</h4>
+              <a href="">Hide Chat</a>
+            </div>
+            <div class="online-list">
+              <div class="online">
+                <img src="assets/image/member-1.png" alt="">
+              </div>
+              <p>Alison Mina</p>
+            </div>
+            <div class="online-list">
+              <div class="online">
+                <img src="assets/image/member-1.png" alt="">
+              </div>
+              <p>Alison Mina</p>
+            </div>
+            <div class="online-list">
+              <div class="online">
+                <img src="assets/image/member-1.png" alt="">
+              </div>
+              <p>Alison Mina</p>
+            </div>
+            <div class="online-list">
+              <div class="online">
+                <img src="assets/image/member-1.png" alt="">
+              </div>
+              <p>Alison Mina</p>
+            </div>
+            <div class="online-list">
+              <div class="online">
+                <img src="assets/image/member-1.png" alt="">
+              </div>
+              <p>Alison Mina</p>
+            </div>
+            <div class="online-list">
+              <div class="online">
+                <img src="assets/image/member-1.png" alt="">
+              </div>
+              <p>Alison Mina</p>
+            </div>
+            <div class="online-list">
+              <div class="online">
+                <img src="assets/image/member-1.png" alt="">
+              </div>
+              <p>Alison Mina</p>
+            </div>
+            <div class="online-list">
+              <div class="online">
+                <img src="assets/image/member-1.png" alt="">
+              </div>
+              <p>Alison Mina</p>
+            </div>
+            <div class="online-list">
+              <div class="online">
+                <img src="assets/image/member-1.png" alt="">
+              </div>
+              <p>Alison Mina</p>
+            </div>
           </div>
-          <p>Alison Mina</p>
-        </div>
-        <div class="online-list">
-          <div class="online">
-            <img src="assets/image/member-1.png" alt="">
-          </div>
-          <p>Alison Mina</p>
-        </div>
-        <div class="online-list">
-          <div class="online">
-            <img src="assets/image/member-1.png" alt="">
-          </div>
-          <p>Alison Mina</p>
-        </div>
-        <div class="online-list">
-          <div class="online">
-            <img src="assets/image/member-1.png" alt="">
-          </div>
-          <p>Alison Mina</p>
-        </div>
-        <div class="online-list">
-          <div class="online">
-            <img src="assets/image/member-1.png" alt="">
-          </div>
-          <p>Alison Mina</p>
-        </div>
-        <div class="online-list">
-          <div class="online">
-            <img src="assets/image/member-1.png" alt="">
-          </div>
-          <p>Alison Mina</p>
-        </div>
-        <div class="online-list">
-          <div class="online">
-            <img src="assets/image/member-1.png" alt="">
-          </div>
-          <p>Alison Mina</p>
-        </div>
-        <div class="online-list">
-          <div class="online">
-            <img src="assets/image/member-1.png" alt="">
-          </div>
-          <p>Alison Mina</p>
-        </div>
-        <div class="online-list">
-          <div class="online">
-            <img src="assets/image/member-1.png" alt="">
-          </div>
-          <p>Alison Mina</p>
         </div>
       </div>
     </div>
   </div>
   <!-- story-full -->
-    <div class="post-full" [class.show]="sltStory">
-      <div class="content-wrap">
-        <div class="story-content">
-          <div class="story-upload-container">
-            <div class="story-upload">
-              <div class="left-arrow-wrap" (click)="moveStory('-')">
-                <div class="left-arrow">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#fff"
-                    stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke="#9e9d9d" d="M15 19l-7-7 7-7" />
-                  </svg>
-                </div>
+  <div class="post-full" [class.show]="sltStory">
+    <div class="content-wrap">
+      <div class="story-content">
+        <div class="story-upload-container">
+          <div class="story-upload">
+            <div class="left-arrow-wrap" (click)="moveStory('-')">
+              <div class="left-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#fff"
+                  stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke="#9e9d9d" d="M15 19l-7-7 7-7" />
+                </svg>
               </div>
-              <div #storyImageDetailContainer class="image-container">
+            </div>
+            <div #storyImageDetailContainer class="image-container">
+            </div>
+            <div class="right-arrow-wrap" (click)="moveStory('+')">
+              <div class="right-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#fff"
+                  stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke="#9e9d9d" d="M9 5l7 7-7 7" />
+                </svg>
               </div>
-              <div class="right-arrow-wrap" (click)="moveStory('+')">
-                <div class="right-arrow">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#fff"
-                    stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke="#9e9d9d" d="M9 5l7 7-7 7" />
-                  </svg>
-                </div>
-              </div>
-              <div class="my-progress-bar">
-                <div #progressBarContainer class="my-progress-bar__list">
-                  <!-- <div class="my-progress-bar__item">
+            </div>
+            <div class="my-progress-bar">
+              <div #progressBarContainer class="my-progress-bar__list">
+                <!-- <div class="my-progress-bar__item">
                     <div class="my-progress-bar__live"></div>
                   </div>
                   <div class="my-progress-bar__item">
                   </div>
                   <div class="my-progress-bar__item">
                   </div> -->
+              </div>
+              <div class="my-progress-bar__more">
+                <div class="my-progress-bar__user-info">
+                  <img src="assets\image\feed-image-4.png" alt="">
+                  <div>Huỳnh Văn Phát Huỳnh Văn PhátHuỳnh Văn PhátHuỳnh Văn Phát</div>
+                  <p>16g</p>
                 </div>
-                <div class="my-progress-bar__more">
-                  <div class="my-progress-bar__user-info">
-                    <img src="assets\image\feed-image-4.png" alt="">
-                    <div>Huỳnh Văn Phát Huỳnh Văn PhátHuỳnh Văn PhátHuỳnh Văn Phát</div>
-                    <p>16g</p>
-                  </div>
-                  <div class="my-progress-bar__tool">
-                    <i id="story-play-pause" class="pause-btn" [class.play]="isPauseStory"  (click)="storyPlayPause()"></i>
-                    <i id="story-mute-unmute" class="mute-btn" [class.un-mute]="isMutedStory" (click)="storyMuteUnmute()"></i>
-                    <i class="more-btn"></i>
-                  </div>
+                <div class="my-progress-bar__tool">
+                  <i id="story-play-pause" class="pause-btn" [class.play]="isPauseStory" (click)="storyPlayPause()"></i>
+                  <i id="story-mute-unmute" class="mute-btn" [class.un-mute]="isMutedStory"
+                    (click)="storyMuteUnmute()"></i>
+                  <i class="more-btn"></i>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="story-react-container">
-            <div class="story-react__reply-box">
-              <input (click)="focusReplyBox($event)" class="story-react__input" type="text" placeholder="Reply...">
-              <i disabled class="send-btn"></i>
-            </div>
-            <div class="story-react__react-box react-box">
-              <ng-container *ngFor="let src of srcReactIcons">
-                <img #newEle [src]="src" alt="">
-              </ng-container>
             </div>
           </div>
         </div>
-        <div class="story-list-wrap">
-          <div class="close-btn-wrap">
-            <mat-icon class="close-btn" (click)="closePost('story')">close</mat-icon>
+        <div class="story-react-container">
+          <div class="story-react__reply-box">
+            <input (click)="focusReplyBox($event)" class="story-react__input" type="text" placeholder="Reply...">
+            <i disabled class="send-btn"></i>
           </div>
-          <div class="stories-container">
-            <div class="story-creation-wrap">
-              <h2 style="margin: 0">Your Story</h2>
-              <div class="story-creation">
-                <div class="story-wrap story-wrap--grey-bg d-flex justify-content-center align-items-center">
-                  <mat-icon>add</mat-icon>
-                </div>
-                <div class="story-info">
-                  <h3>Create a story</h3>
-                  <span>Share a photo or write something</span>
-                </div>
-              </div>
-            </div>
-            <div class="stories__list">
-              <h2 style="margin: 0">All stories</h2>
-              <div class="stories__item" [class.stories__item--selected]="sltStory === p" *ngFor="let p of posts, index as idx" (click)="displayPost(idx,p,'story')">
-                <div class="story-wrap"  [class.story-wrap--old]="this.seenStory.has(p)" [class.story-wrap--new]="!this.seenStory.has(p)">
-                  <img [src]="p.user['avatarUrl']">
-                </div>
-                <div class="story-info">
-                  <h3>{{p.user['username']}}</h3>
-                  <span>6h</span>
-                </div>
-              </div>
-            </div>
+          <div class="story-react__react-box react-box">
+            <ng-container *ngFor="let src of srcReactIcons">
+              <img #newEle [src]="src" alt="">
+            </ng-container>
           </div>
-
         </div>
       </div>
-    </div>
-  <!-- end story-full -->
-  <!-- post image detail -->
-    <div #postImageDetailFull class="post-full" [class.show]="sltPost">
-      <div class="content-wrap">
-        <div class="post-image-detail__left">
-          <div class="left-arrow-wrap" (click)="movePost('-')">
-            <div class="left-arrow">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#fff"
-                stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke="#9e9d9d" d="M15 19l-7-7 7-7" />
-              </svg>
+      <div class="story-list-wrap">
+        <div class="close-btn-wrap">
+          <mat-icon class="close-btn" (click)="closePost('story')">close</mat-icon>
+        </div>
+        <div class="stories-container">
+          <div class="story-creation-wrap">
+            <h2 style="margin: 0">Your Story</h2>
+            <div class="story-creation">
+              <div class="story-wrap story-wrap--grey-bg d-flex justify-content-center align-items-center">
+                <mat-icon>add</mat-icon>
+              </div>
+              <div class="story-info">
+                <h3>Create a story</h3>
+                <span>Share a photo or write something</span>
+              </div>
             </div>
           </div>
-          <div #postImageDetailContainer id="post-image-detail__container" class="image-container">
-          </div>
-          <div class="right-arrow-wrap" (click)="movePost('+')">
-            <div class="right-arrow">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#fff"
-                stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke="#9e9d9d" d="M9 5l7 7-7 7" />
-              </svg>
+          <div class="stories__list">
+            <h2 style="margin: 0">All stories</h2>
+            <div class="stories__item" [class.stories__item--selected]="sltStory === p"
+              *ngFor="let p of posts, index as idx" (click)="displayPost(idx,p,'story')">
+              <div class="story-wrap" [class.story-wrap--old]="this.seenStory.has(p)"
+                [class.story-wrap--new]="!this.seenStory.has(p)">
+                <img [src]="p.user['avatarUrl']">
+              </div>
+              <div class="story-info">
+                <h3>{{p.user['username']}}</h3>
+                <span>6h</span>
+              </div>
             </div>
           </div>
         </div>
-        <div class="post-image-detail__right">
-          <div class="header__container">
-            <div class="header__list">
-              <div class="header__item">
-                <button type="button" class="btn-close" aria-label="Close" (click)="closePost('post')"></button>
-              </div>
-            </div>
-            <div class="separate-line"></div>
+
+      </div>
+    </div>
+  </div>
+  <!-- end story-full -->
+  <!-- post image detail -->
+  <div #postImageDetailFull class="post-full" [class.show]="sltPost">
+    <div class="content-wrap">
+      <div class="post-image-detail__left">
+        <div class="left-arrow-wrap" (click)="movePost('-')">
+          <div class="left-arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#fff"
+              stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke="#9e9d9d" d="M15 19l-7-7 7-7" />
+            </svg>
           </div>
-          <div class="post-image-detail__right-wrap">
-            <div class="post-info__container">
-              <div class="post-info__header">
-                <div class="post-info__header-left">
-                  <i class="post-icon"></i>
-                  <p>This is a photo from a post</p>
-                </div>
-                <div class="post-info__header-right">
-                  <p>View post</p>
-                </div>
+        </div>
+        <div #postImageDetailContainer id="post-image-detail__container" class="image-container">
+        </div>
+        <div class="right-arrow-wrap" (click)="movePost('+')">
+          <div class="right-arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#fff"
+              stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke="#9e9d9d" d="M9 5l7 7-7 7" />
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="post-image-detail__right">
+        <div class="header__container">
+          <div class="header__list">
+            <div class="header__item">
+              <button type="button" class="btn-close" aria-label="Close" (click)="closePost('post')"></button>
+            </div>
+          </div>
+          <div class="separate-line"></div>
+        </div>
+        <div class="post-image-detail__right-wrap">
+          <div class="post-info__container">
+            <div class="post-info__header">
+              <div class="post-info__header-left">
+                <i class="post-icon"></i>
+                <p>This is a photo from a post</p>
               </div>
-              <div class="separate-line"></div>
-              <div class="post-info__content">
-                <div class="post-info__content-top">
-                  <div class="user-info">
-                    <div class="user-info-left">
-                      <img src="assets/image/photo1.png" alt="">
-                    </div>
-                    <div class="user-info-right">
-                      <div class="user-info__username">Huỳnh Gia Huy</div>
-                      <div class="user-info__post-detail">
-                        <div class="post-detail__date">May 30 at 5:28 PM</div>
-                        <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yN/r/7OZI7ybJbP6.png" alt="Only me"
-                          height="16" width="16">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="more-btn">
-                    <svg fill="currentColor" viewBox="0 0 20 20" width="2rem" height="2rem">
-                      <g fill-rule="evenodd" transform="translate(-446 -350)">
-                        <path
-                          d="M458 360a2 2 0 1 1-4 0 2 2 0 0 1 4 0m6 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0m-12 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0">
-                        </path>
-                      </g>
-                    </svg>
-                  </div>
-                </div>
-                <div class="post-info__content-bottom">
-                  <button mat-raised-button>Edit</button>
-                </div>
+              <div class="post-info__header-right">
+                <p>View post</p>
               </div>
             </div>
             <div class="separate-line"></div>
-            <div class="react-btn__container">
-              <ul class="react-btn__list">
-                <li #reactBtnItem class="react-btn__item" (click)="unselectReact(reactBtnItem)">
-                  <!--         <ng-container *ngTemplateOutlet="reactBtnWrapTemplate">
+            <div class="post-info__content">
+              <div class="post-info__content-top">
+                <div class="user-info">
+                  <div class="user-info-left">
+                    <img src="assets/image/photo1.png" alt="">
+                  </div>
+                  <div class="user-info-right">
+                    <div class="user-info__username">Huỳnh Gia Huy</div>
+                    <div class="user-info__post-detail">
+                      <div class="post-detail__date">May 30 at 5:28 PM</div>
+                      <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yN/r/7OZI7ybJbP6.png" alt="Only me" height="16"
+                        width="16">
+                    </div>
+                  </div>
+                </div>
+                <div class="more-btn">
+                  <svg fill="currentColor" viewBox="0 0 20 20" width="2rem" height="2rem">
+                    <g fill-rule="evenodd" transform="translate(-446 -350)">
+                      <path
+                        d="M458 360a2 2 0 1 1-4 0 2 2 0 0 1 4 0m6 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0m-12 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0">
+                      </path>
+                    </g>
+                  </svg>
+                </div>
+              </div>
+              <div class="post-info__content-bottom">
+                <button mat-raised-button>Edit</button>
+              </div>
+            </div>
+          </div>
+          <div class="separate-line"></div>
+          <div class="react-btn__container">
+            <ul class="react-btn__list">
+              <li #reactBtnItem class="react-btn__item" (click)="unselectReact(reactBtnItem)">
+                <!--         <ng-container *ngTemplateOutlet="reactBtnWrapTemplate">
                   </ng-container>
                   <ng-template #reactBtnWrapTemplate> -->
-                  <div class="react-btn-wrap">
-                    <i class="like-btn-icon"></i>
-                    <p class="react-name">Like</p>
+                <div class="react-btn-wrap">
+                  <i class="like-btn-icon"></i>
+                  <p class="react-name">Like</p>
+                </div>
+                <!--   </ng-template> -->
+                <div class="react-box">
+                  <ng-container *ngFor="let src of srcReactIcons">
+                    <img class="react-icon" #reactIconTemplateRef [src]="src.url" [alt]="src.name"
+                      (click)="selectReactIcon($event,reactIconTemplateRef, src.name)">
+                  </ng-container>
+                </div>
+              </li>
+              <li class="react-btn__item" (click)="isShowComments=!isShowComments">
+                <div class="react-btn-wrap">
+                  <i #likeBtnIconTemplateRef class="comment-btn-icon"></i>
+                  <p>Comment</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="comment__container">
+            <div class="separate-line"></div>
+            <ul class="comment-list">
+              <ng-container *ngFor="let comment of commentTree;index as i">
+                <ul class="comment-item">
+                  <div class="comment-line parent-comment-line">
                   </div>
-                  <!--   </ng-template> -->
-                  <div class="react-box">
-                    <ng-container *ngFor="let src of srcReactIcons">
-                      <img class="react-icon" #reactIconTemplateRef [src]="src.url" [alt]="src.name"
-                        (click)="selectReactIcon($event,reactIconTemplateRef, src.name)">
-                    </ng-container>
-                  </div>
-                </li>
-                <li class="react-btn__item" (click)="isShowComments=!isShowComments">
-                  <div class="react-btn-wrap">
-                    <i #likeBtnIconTemplateRef class="comment-btn-icon"></i>
-                    <p>Comment</p>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="comment__container">
-              <div class="separate-line"></div>
-              <ul class="comment-list">
-                <ng-container *ngFor="let comment of commentTree;index as i">
-                  <ul class="comment-item">
-                    <div class="comment-line parent-comment-line">
+                  <!-- Comment detail of parent-->
+                  <div class="comment-detail comment-parent">
+                    <div class="comment-detail__wrapper-img comment-detail__wrapper-img--parent">
+                      <img src="assets/image/profile-pic.png" alt="">
                     </div>
-                    <!-- Comment detail of parent-->
-                    <div class="comment-detail comment-parent">
-                      <div class="comment-detail__wrapper-img comment-detail__wrapper-img--parent">
-                        <img src="assets/image/profile-pic.png" alt="">
+                    <div class="comment-detail__wrapper-info">
+                      <div class="comment-detail__info comment-detail__info--background-1">
+                        <p class="">{{comment.user.name}}</p>
+                        <div class="comment-content">{{comment.content}}</div>
                       </div>
-                      <div class="comment-detail__wrapper-info">
-                        <div class="comment-detail__info comment-detail__info--background-1">
-                          <p class="">{{comment.user.name}}</p>
-                          <div class="comment-content">{{comment.content}}</div>
-                        </div>
-                        <div class="comment-detail__react">
-                          <div class="comment-detail__react-like">
-                            <div class="react-like">Like
-                            </div>
-                            <div class="react-box">
-                              <ng-container *ngFor="let src of srcReactIcons">
-                                <img [src]="src.url" alt="">
-                              </ng-container>
-                            </div>
+                      <div class="comment-detail__react">
+                        <div class="comment-detail__react-like">
+                          <div class="react-like">Like
                           </div>
-                          <div class="comment-detail__react-reply"
-                            (click)="onClickRepUser(comment.user.name, rootReplyInput)">
-                            Reply</div>
-                          <label class="comment-detail__react-time">11h</label>
+                          <div class="react-box">
+                            <ng-container *ngFor="let src of srcReactIcons">
+                              <img [src]="src.url" alt="">
+                            </ng-container>
+                          </div>
                         </div>
+                        <div class="comment-detail__react-reply"
+                          (click)="onClickRepUser(comment.user.name, rootReplyInput)">
+                          Reply</div>
+                        <label class="comment-detail__react-time">11h</label>
                       </div>
                     </div>
-                    <!-- Child comment -->
-                    <ng-container *ngFor="let childComment of comment.comments">
-                      <ul class="comment-item comment-child">
-                        <div class="comment-line child-comment-line"></div>
-                        <div class="comment-detail">
-                          <div class="comment-detail__wrapper-img comment-detail__wrapper-img--child">
-                            <div class="comment-link"></div>
-                            <img src="assets/image/profile-pic.png" alt="">
-                          </div>
-                          <div class="comment-detail__wrapper-info">
-                            <div class="comment-detail__info comment-detail__info--background-1">
-                              <p class="">{{childComment.user.name}}</p>
-                              <div class="comment-content">{{childComment.content}}</div>
-                            </div>
-                            <div class="comment-detail__react">
-                              <div class="comment-detail__react-like">Like
-                                <div class="react-box">
-                                  <ng-container *ngFor="let src of srcReactIcons">
-                                    <img [src]="src.url" alt="">
-                                  </ng-container>
-                                </div>
-                              </div>
-                              <div class="comment-detail__react-reply"
-                                (click)="onClickRepUser(childComment.user.name, childReplyInput)">Reply</div>
-                              <label class="comment-detail__react-time">11h</label>
-                            </div>
-                          </div>
-                        </div>
-                        <!-- Leaf child comment -->
-                        <ng-container *ngFor="let c of childComment.comments">
-                          <li class="comment-item comment-sibling">
-                            <div class="comment-detail">
-                              <div class="comment-detail__wrapper-img comment-detail__wrapper-img--child">
-                                <div class="comment-link"></div>
-                                <img src="assets/image/profile-pic.png" alt="">
-                              </div>
-                              <div class="comment-detail__wrapper-info">
-                                <div class="comment-detail__info comment-detail__info--background-1">
-                                  <p class="">{{c.user.name}}</p>
-                                  <div class="comment-content">{{c.content}}</div>
-                                </div>
-                                <div class="comment-detail__react">
-                                  <div class="comment-detail__react-like">Like
-                                    <div class="react-box">
-                                      <ng-container *ngFor="let src of srcReactIcons">
-                                        <img [src]="src" alt="">
-                                      </ng-container>
-                                    </div>
-                                  </div>
-                                  <div class="comment-detail__react-reply"
-                                    (click)="onClickRepUser(c.user.name, childReplyInput)">Reply</div>
-                                  <label class="comment-detail__react-time">11h</label>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                        </ng-container>
-                        <!-- COMMENT INPUT -->
-                        <ul class="comment-item comment-sibling">
-                          <div class="comment-detail">
-                            <div class="comment-detail__wrapper-img comment-detail__wrapper-img--child">
-                              <div class="comment-link"></div>
-                              <img src="assets/image/profile-pic.png" alt="">
-                            </div>
-                            <div class="comment-box bg-cl-1">
-                              <input #childReplyInput type="text" placeholder="Write a comment...">
-                              <div class="activate">
-                                <i class="emoji"></i>
-                                <i class="photo"></i>
-                                <i class="sticker"></i>
-                              </div>
-                            </div>
-                          </div>
-                        </ul>
-                      </ul>
-                    </ng-container>
-                    <!-- COMMENT INPUT -->
+                  </div>
+                  <!-- Child comment -->
+                  <ng-container *ngFor="let childComment of comment.comments">
                     <ul class="comment-item comment-child">
+                      <div class="comment-line child-comment-line"></div>
                       <div class="comment-detail">
                         <div class="comment-detail__wrapper-img comment-detail__wrapper-img--child">
                           <div class="comment-link"></div>
                           <img src="assets/image/profile-pic.png" alt="">
                         </div>
-                        <div class="comment-box bg-cl-1">
-                          <input #rootReplyInput type="text" placeholder="Write a comment...">
-                          <div class="activate">
-                            <i class="emoji"></i>
-                            <i class="photo"></i>
-                            <i class="sticker"></i>
+                        <div class="comment-detail__wrapper-info">
+                          <div class="comment-detail__info comment-detail__info--background-1">
+                            <p class="">{{childComment.user.name}}</p>
+                            <div class="comment-content">{{childComment.content}}</div>
+                          </div>
+                          <div class="comment-detail__react">
+                            <div class="comment-detail__react-like">Like
+                              <div class="react-box">
+                                <ng-container *ngFor="let src of srcReactIcons">
+                                  <img [src]="src.url" alt="">
+                                </ng-container>
+                              </div>
+                            </div>
+                            <div class="comment-detail__react-reply"
+                              (click)="onClickRepUser(childComment.user.name, childReplyInput)">Reply</div>
+                            <label class="comment-detail__react-time">11h</label>
                           </div>
                         </div>
                       </div>
+                      <!-- Leaf child comment -->
+                      <ng-container *ngFor="let c of childComment.comments">
+                        <li class="comment-item comment-sibling">
+                          <div class="comment-detail">
+                            <div class="comment-detail__wrapper-img comment-detail__wrapper-img--child">
+                              <div class="comment-link"></div>
+                              <img src="assets/image/profile-pic.png" alt="">
+                            </div>
+                            <div class="comment-detail__wrapper-info">
+                              <div class="comment-detail__info comment-detail__info--background-1">
+                                <p class="">{{c.user.name}}</p>
+                                <div class="comment-content">{{c.content}}</div>
+                              </div>
+                              <div class="comment-detail__react">
+                                <div class="comment-detail__react-like">Like
+                                  <div class="react-box">
+                                    <ng-container *ngFor="let src of srcReactIcons">
+                                      <img [src]="src" alt="">
+                                    </ng-container>
+                                  </div>
+                                </div>
+                                <div class="comment-detail__react-reply"
+                                  (click)="onClickRepUser(c.user.name, childReplyInput)">Reply</div>
+                                <label class="comment-detail__react-time">11h</label>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      </ng-container>
+                      <!-- COMMENT INPUT -->
+                      <ul class="comment-item comment-sibling">
+                        <div class="comment-detail">
+                          <div class="comment-detail__wrapper-img comment-detail__wrapper-img--child">
+                            <div class="comment-link"></div>
+                            <img src="assets/image/profile-pic.png" alt="">
+                          </div>
+                          <div class="comment-box bg-cl-1">
+                            <input #childReplyInput type="text" placeholder="Write a comment...">
+                            <div class="activate">
+                              <i class="emoji"></i>
+                              <i class="photo"></i>
+                              <i class="sticker"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </ul>
                     </ul>
+                  </ng-container>
+                  <!-- COMMENT INPUT -->
+                  <ul class="comment-item comment-child">
+                    <div class="comment-detail">
+                      <div class="comment-detail__wrapper-img comment-detail__wrapper-img--child">
+                        <div class="comment-link"></div>
+                        <img src="assets/image/profile-pic.png" alt="">
+                      </div>
+                      <div class="comment-box bg-cl-1">
+                        <input #rootReplyInput type="text" placeholder="Write a comment...">
+                        <div class="activate">
+                          <i class="emoji"></i>
+                          <i class="photo"></i>
+                          <i class="sticker"></i>
+                        </div>
+                      </div>
+                    </div>
                   </ul>
-                </ng-container>
-              </ul>
-              <div class="comment__wrap">
-                <img class="comment-avatar" src="assets/image/profile-pic.png" alt="">
-                <div class="comment-box bg-cl-1">
-                  <input #post1Id type="text" placeholder="Write a comment...">
-                  <div class="activate">
-                    <i class="emoji"></i>
-                    <i class="photo"></i>
-                    <i class="sticker"></i>
-                  </div>
+                </ul>
+              </ng-container>
+            </ul>
+            <div class="comment__wrap">
+              <img class="comment-avatar" src="assets/image/profile-pic.png" alt="">
+              <div class="comment-box bg-cl-1">
+                <input #post1Id type="text" placeholder="Write a comment...">
+                <div class="activate">
+                  <i class="emoji"></i>
+                  <i class="photo"></i>
+                  <i class="sticker"></i>
                 </div>
               </div>
             </div>
@@ -1000,5 +554,6 @@
         </div>
       </div>
     </div>
+  </div>
   <!-- end post image detail -->
 </div>

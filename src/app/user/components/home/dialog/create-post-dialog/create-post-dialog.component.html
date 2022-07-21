@@ -259,8 +259,8 @@
 <ng-template #locationTemplateRef>
   <div class="location">
     <div class="location__map" *ngIf="location; else notLocation">
-      <agm-map [latitude]="location.lat || 0" [longitude]="location.lng" [zoom]="zoom" [disableDefaultUI]="true">
-      </agm-map>
+      <!-- <agm-map [latitude]="location.lat || 0" [longitude]="location.lng" [zoom]="zoom" [disableDefaultUI]="true">
+      </agm-map> -->
       <button class="close_map_btn" (click)="closeLocation()">
         <mat-icon class="">close</mat-icon>
       </button>
