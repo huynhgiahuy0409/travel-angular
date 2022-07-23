@@ -103,9 +103,9 @@
                     {{this.renderer.removeClass(password.parentElement, 'content__form__input--invalid')}}
                   </ng-template>
                 </div>
-                <re-captcha formControlName="recaptchaReactive"
+                <!-- <re-captcha formControlName="recaptchaReactive"
                   (resolved)="addTokenLog('Reactive form mode resolved', $event)">
-                </re-captcha>
+                </re-captcha> -->
                 <button type="submit" class="content__form__btn" [disabled]="loginForm.invalid">Đăng nhập</button>
                 <div class="separate-line"></div>
                 <div class="content__form__more-wrap">

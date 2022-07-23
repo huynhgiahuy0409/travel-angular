@@ -3,9 +3,9 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
-    "types": ["googlemaps"],
+    "types": ["node","google.maps"],
     "skipLibCheck": true
   },
   "files": ["src/main.ts", "src/polyfills.ts"],
-  "include": ["src/**/*.d.ts"]
+  "include": ["src/**/*.d.ts", "decs.d.ts"]
 }

@@ -25,6 +25,14 @@
       </div>
       <div
         class="home__item"
+        [routerLink]="'/home/journeys'"
+        routerLinkActive="home__item--slt"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+      <i class="fa-solid fa-map"></i>
+      </div>
+      <div
+        class="home__item"
         [routerLink]="'/home/user-posts'"
         routerLinkActive="home__item--slt"
       >

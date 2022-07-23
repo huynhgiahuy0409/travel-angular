@@ -15,6 +15,9 @@ const routes: Routes = [
             {
                 path: 'user-posts', component: UserPostComponent
             },
+            {
+                path: 'journeys', component: UserPostComponent
+            },
         ],
     },
 ];

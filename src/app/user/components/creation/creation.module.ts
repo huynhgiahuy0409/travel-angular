@@ -7,6 +7,9 @@ import { ReviewPostComponent } from './components/review-post/review-post.compon
 import { UserPostComponent } from './components/user-post/user-post.component';
 import { SharedMaterialModule } from 'src/app/shared/modules';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { JourneyComponent } from './components/journey/journey.component';
+import { RouteDetailMapDialogComponent } from './components/journey/dialog/route-detail-map-dialog/route-detail-map-dialog.component';
+import { LocationDetailDialogComponent } from './components/journey/dialog/location-detail-dialog/location-detail-dialog.component';
 
 
 @NgModule({
@@ -14,6 +17,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CreationComponent,
     ReviewPostComponent,
     UserPostComponent,
+    JourneyComponent,
+    RouteDetailMapDialogComponent,
+    LocationDetailDialogComponent,
   ],
   imports: [
     CommonModule,

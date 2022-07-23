@@ -1,0 +1,105 @@
+<div class="container grid">
+    <div class="header"></div>
+    <div class="main pd-10">
+        <div class="d-flex day-action">
+            <div class="mr-r-10">
+                <button mat-raised-button (click)="addTab()">Thêm ngày mới</button>
+            </div>
+            <button mat-raised-button class="example-delete-tab-button" [disabled]="tabs.length === 1"
+                (click)="removeTab(initialDay)">
+                Xóa ngày
+            </button>
+        </div>
+        <mat-tab-group [selectedIndex]="initialDay" (selectedIndexChange)="selectedIndexChange($event)">
+            <mat-tab *ngFor="let tab of tabs; let index = index" [label]="tab">
+                <div class="row no-gutters step__list">
+                    <div class="step__item col l-6">
+                        <h1 class="step__title">Chọn địa điểm khám phá</h1>
+                        <div class="d-flex">
+                            <mat-form-field appearance="fill" class="mr-r-10">
+                                <mat-label>Chọn địa điểm dựa trên</mat-label>
+                                <mat-select [formControl]="placeOptionCtrl">
+                                    <mat-option value="1">Địa điểm có sẵn</mat-option>
+                                    <mat-option value="2">Tìm kiếm từ bản đồ</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <div class="row no-gutters flex-fit">
+                                <div class="col l-12" *ngIf="placeOptionCtrl.value == 1">
+                                    <mat-form-field appearance="fill" class=" w-fit">
+                                        <mat-label>Chọn tỉnh thành phố</mat-label>
+                                        <mat-select>
+                                            <mat-option value="1">An giang</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col l-12" *ngIf="placeOptionCtrl.value == 2">
+                                    <div class="field d-flex align-items-center">
+                                        <i class="fa-solid fa-magnifying-glass mr-r-10"></i>
+                                        <input #searchPlaceInput type="text" placeholder="Tìm kiếm"
+                                            [formControl]="searchPlaceCtrl">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <div class="content-place__list row mr-0" *ngIf="placeOptionSlt == 1">
+                                <div class="col l-4" *ngFor="let place of places">
+                                    <div class="content-place__item box-shadow">
+                                        <div class="content-place__image-wrap">
+                                            <img class="place-image-detail" src="assets/image/place-1.jpg" alt="">
+                                        </div>
+                                        <div class="place-name">
+                                            <h4>Phố đi bộ Nguyễn Huệ</h4>
+                                            <p><span class="primary-color">2950</span> thành viên đã đến</p>
+                                        </div>
+                                        <div class="overlay">
+                                            <i class="fa-solid fa-circle-plus"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-map" *ngIf="placeOptionSlt == 2">
+                                <ng-container *ngIf="(placeAutocompleteResponse$ | async) as placeAutocompleteResponse">
+                                    <div class="autocomplete__list box-shadow">
+                                        <div class="autocomplete__item"
+                                            *ngFor="let prediction of placeAutocompleteResponse.predictions"
+                                            (click)="selectPlaceDetail(prediction)"
+                                            >
+                                            <span>{{prediction.description}}</span>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step__item col l-6">
+                        <h1 class="step__title">Hành trình</h1>
+                        <div class="timeline__list">
+                            <div class="timeline__item" *ngFor="let place of places">
+                                <div class="header" (click)="openLocationDetail()">
+                                    <div class="name">
+                                        <i class="fa-solid fa-location-dot mr-r-5"></i>
+                                        <span>Hồ tây DakMil</span>
+                                    </div>
+                                    <div class="option d-flex">
+                                        <i class="fa-solid fa-bars mr-r-10"></i>
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </div>
+                                </div>
+                                <div class="main">
+                                    <div class="liner"></div>
+                                    <button mat-raised-button class="route-detail-btn" (click)="openRouteDetail()">
+                                        <i class="fa-solid fa-map-location mr-r-10"></i>
+                                        <span>Xem chi tiết đường đi</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

@@ -13,12 +13,6 @@ import { ImageDragDirective } from './directive/image-drag.directive';
 import { LoginComponent } from './components/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
-import {
-  RECAPTCHA_SETTINGS,
-  RecaptchaFormsModule,
-  RecaptchaModule,
-  RecaptchaSettings,
-} from 'ng-recaptcha';
 import { RegisterDialogComponent } from './components/login/dialog/register-dialog/register-dialog.component';
 import { IdentifyComponent } from './components/identify/identify.component';
 import { ReviewPostDetailComponent } from './components/review-post-detail/review-post-detail.component';
@@ -43,12 +37,12 @@ import { HomeModule } from './components/home/home.module';
     HomeModule
   ],
   providers: [
-    {
-      provide: RECAPTCHA_SETTINGS,
-      useValue: {
-        siteKey: environment.recaptcha.siteKey,
-      } as RecaptchaSettings,
-    },
+    // {
+    //   provide: RECAPTCHA_SETTINGS,
+    //   useValue: {
+    //     siteKey: environment.recaptcha.siteKey,
+    //   } as RecaptchaSettings,
+    // },
   ],
 })
 export class UserModule {}

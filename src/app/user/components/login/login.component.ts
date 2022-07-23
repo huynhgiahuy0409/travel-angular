@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
         Validators.required,
         Validators.minLength(10),
       ]),
-      recaptchaReactive: new FormControl('recaptcha', Validators.required),
+      // recaptchaReactive: new FormControl('recaptcha', Validators.required),
     });
     this.registerForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),

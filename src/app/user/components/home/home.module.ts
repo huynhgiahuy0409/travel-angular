@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RecaptchaFormsModule, RecaptchaModule } from 'ng-recaptcha';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { SharedHeaderModule, SharedMaterialModule } from 'src/app/shared/modules';
