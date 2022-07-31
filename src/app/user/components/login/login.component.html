@@ -50,7 +50,7 @@
               </ng-template>
             </div>
             <ng-container *ngIf="isLogin; else registerFormTemplate">
-              <form [formGroup]="loginForm" (ngSubmit)="onClickSubmit(loginForm.value)" class="content__form">
+              <form [formGroup]="loginForm" (ngSubmit)="loginSubmit()" class="content__form">
                 <!-- username -->
                 <div class="content__form__input-wrap">
                   <div class="content__form__input">
@@ -95,6 +95,10 @@
                     <p> Mật khẩu yêu cầu tối thiểu {{loginForm.get('password')?.errors?.minlength.requiredLength}} kí tự
                     </p>
                   </div>
+                  <div class="content__form__input-notify" *ngIf="notExistAccount">
+                    <p>Tài khoản hoặc mật khẩu không đúng
+                    </p>
+                  </div>
                   <ng-container
                     *ngIf="loginForm.get('password')!.errors && loginForm.get('password')?.touched ; else validPasswordInput">
                     {{this.renderer.addClass(password.parentElement, 'content__form__input--invalid')}}
@@ -115,7 +119,7 @@
               </form>
             </ng-container>
             <ng-template #registerFormTemplate>
-              <form [formGroup]="registerForm" (ngSubmit)="onClickSubmit(registerForm.value)" class="content__form">
+              <form [formGroup]="registerForm" class="content__form">
                 <!-- email -->
                 <div class="content__form__input-wrap">
                   <div class="content__form__input">

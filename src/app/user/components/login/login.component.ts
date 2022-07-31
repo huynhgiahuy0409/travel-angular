@@ -1,3 +1,5 @@
+import { UserInfoResponse } from './../../../shared/models/response';
+import { CookieService } from 'ngx-cookie-service';
 import {
   Component,
   OnChanges,
@@ -18,15 +20,18 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { map, filter, scan, tap } from 'rxjs/operators';
 import { RegisterDialogComponent } from './dialog/register-dialog/register-dialog.component';
+import { Router } from '@angular/router';
+import { LoginRequest } from 'src/app/shared/models/request';
+import { AuthService } from '../../services/auth.service';
+import { AuthenticationResponse } from 'src/app/shared/models/response';
+import { UserService } from '../../services/user.service';
 export function matchedPassword(c: AbstractControl) {
   const passwordValue = c.get('password')?.value;
-  console.log(passwordValue);
   const confirmPasswordValue = c.get('confirmPassword')?.value;
-  console.log(confirmPasswordValue);
   if (passwordValue === confirmPasswordValue) {
     return null;
   } else {
-    return { isMatch: false };
+    return { notMatch: true };
   }
 }
 @Component({
@@ -40,8 +45,17 @@ export class LoginComponent implements OnInit {
   token: string | undefined;
   loginForm!: FormGroup;
   registerForm!: FormGroup;
+  notExistAccount: boolean = false
   public log: string[] = [];
-  constructor(private matDialog: MatDialog, private fb: FormBuilder, public renderer: Renderer2) {
+  constructor(
+    private router: Router,
+    private matDialog: MatDialog,
+    private fb: FormBuilder,
+    public renderer: Renderer2,
+    private cookieService: CookieService,
+    private authService: AuthService,
+    private userService: UserService,
+  ) {
     this.loginForm = new FormGroup({
       username: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [
@@ -64,6 +78,9 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.cookieService.check('c-user')) {
+      this.router.navigate(['/confirmemail']);
+    }
     this.runSlideShow(3000);
     this.registerForm.valueChanges.subscribe((e) => {
       this.setLevelPassword('level-password__progress-bar', e);
@@ -123,9 +140,7 @@ export class LoginComponent implements OnInit {
     console.log(message);
     console.log(token);
   }
-  onClickSubmit(formValue: any) {
-    console.log(formValue);
-  }
+  /*  */
   checkStrength(p: string) {
     let force = 0;
     const regex = /[$-/:-?{-~!"^_@`\[\]]/g;
@@ -197,10 +212,38 @@ export class LoginComponent implements OnInit {
       }
     });
   }
-  onClickRegister(){
+  onClickRegister() {
     this.matDialog.open(RegisterDialogComponent, {
-      maxWidth: "435px",
-      maxHeight: "100vh"
+      maxWidth: '435px',
+      maxHeight: '100vh',
+    });
+  }
+  loginSubmit() {
+    let loginFormValue = this.loginForm.value;
+    let loginRequest: LoginRequest = {
+      ...loginFormValue,
+      email: loginFormValue.username,
+    };
+    this.authService.login(loginRequest).subscribe(response => {
+      if(response){
+        let data: UserInfoResponse | AuthenticationResponse | null = response.data
+        let message = response.message
+        if(message ==='ACTIVE'){
+          let authResponse = data as AuthenticationResponse
+          let user = authResponse.user
+          let JWT = authResponse.jwt
+          this.userService.userBSub.next(user)
+          this.authService.JWTBSub.next(JWT)
+          this.router.navigate(['/home'])        
+        }else if(message ==='INACTIVE'){
+          let userInfo  = data as UserInfoResponse
+          let userId = userInfo.id
+          this.cookieService.set("c-user", userId + "")
+          this.router.navigate(['/confirmemail'])        
+        }
+      }else{
+        this.notExistAccount = true
+      }
     })
   }
 }

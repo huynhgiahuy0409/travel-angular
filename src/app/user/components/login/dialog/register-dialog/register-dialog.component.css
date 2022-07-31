@@ -1,0 +1,15 @@
+.register-btn {
+  background-color: var(--primary-color--);
+  color: #fff;
+}
+
+.sex {
+  margin: 10px 0;
+}
+
+.sex-wrap {
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+/*# sourceMappingURL=register-dialog.component.css.map */

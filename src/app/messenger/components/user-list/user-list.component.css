@@ -1,0 +1,121 @@
+.header {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  height: 100px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.search-box {
+  background-color: whitesmoke;
+  border-radius: 30px;
+  height: 35px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 10px;
+}
+
+.search-box i {
+  margin-right: 10px;
+}
+
+.search-box input {
+  background-color: transparent;
+  font-size: 1.4rem;
+}
+
+.chat-user__list {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: calc(100% - 100px);
+  padding: 10px;
+}
+
+.chat-user__item {
+  height: 65px;
+  border-radius: 5px;
+  padding: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  overflow: hidden;
+}
+
+.chat-user__item .user-avatar {
+  height: 50px;
+  height: 50px;
+  -o-object-fit: contain;
+     object-fit: contain;
+  border-radius: 50%;
+  border: 0.5px solid #ccc;
+  margin-right: 10px;
+}
+
+.chat-user__item .current-chat {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.current-chat .current-chat__username {
+  font-weight: 550;
+}
+
+.chat-user__item .check {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.chat-user__item:hover {
+  background-color: var(--hover-color--);
+}
+
+/* Responsive */
+/* Mobile */
+@media (max-width: 739px) {
+  .hide-on-mobile {
+    display: none;
+  }
+  .chat-user__item {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .chat-user__item .user-avatar {
+    margin: 0;
+  }
+}
+
+/* Tablet */
+@media (min-width: 740px) and (max-width: 1023px) {
+  .hide-on-tablet {
+    display: none;
+  }
+  .chat-user__item {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+}
+
+/* > PC medium resolution */
+/*# sourceMappingURL=user-list.component.css.map */

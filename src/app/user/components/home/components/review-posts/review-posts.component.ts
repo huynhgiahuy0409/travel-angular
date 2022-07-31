@@ -1,8 +1,10 @@
-import { filter } from 'rxjs/operators';
+import { ReviewPostDetailComponent } from './../../../post-detail/components/review-post-detail/review-post-detail.component';
+import { concatMap, filter } from 'rxjs/operators';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import {
   AfterViewInit,
   Component,
+  ComponentRef,
   ElementRef,
   OnInit,
   QueryList,
@@ -15,7 +17,16 @@ import { MatIcon } from '@angular/material/icon';
 import { Observable } from 'rxjs/internal/Observable';
 import { UploadFileService } from 'src/app/user/services/upload-file.service';
 import { CreatePostDialogComponent } from '../../dialog/create-post-dialog';
-
+import { ReviewPostComponent } from '../../../creation/components/review-post/review-post.component';
+import { ReviewPostResponse, UploadFileResponse } from 'src/app/shared/models/response';
+import { ReviewPostService } from 'src/app/user/services/review-post.service';
+import { FilterPostService } from 'src/app/user/services/filter-post.service';
+import { FilterPost } from 'src/app/shared/models/model';
+import { DIRECT_LINK_IMAGE, FEMALE_DEFAULT_AVATAR_URL, MALE_DEFAULT_AVATAR_URL, UNDEFINED_DEFAULT_AVATAR_URL } from 'src/app/shared/models/constant';
+import { UserService } from 'src/app/user/services/user.service';
+import { Router } from '@angular/router';
+import { ReviewPostDestroyService } from './review-post-destroy.service';
+import { DirectLinkService } from 'src/app/user/services/direct-link.service';
 export interface User {
   name: string;
   url: string;
@@ -42,7 +53,13 @@ export interface Post {
   templateUrl: './review-posts.component.html',
   styleUrls: ['./review-posts.component.scss'],
 })
-export class ReviewPostsComponent implements OnInit {
+export class ReviewPostsComponent implements OnInit, AfterViewInit {
+  @ViewChild(ReviewPostDetailComponent)
+  reviewPostDetailComponent!: ComponentRef<ReviewPostDetailComponent>
+  maleDefaultAvatarURL: string = MALE_DEFAULT_AVATAR_URL
+  femaleDefaultAvatarURL: string = FEMALE_DEFAULT_AVATAR_URL
+  undefinedDefaultAvatarURL: string = UNDEFINED_DEFAULT_AVATAR_URL
+  directLinkImageURL = DIRECT_LINK_IMAGE
   posts: Post[] = [
     {
       id: 1,
@@ -113,6 +130,7 @@ export class ReviewPostsComponent implements OnInit {
       ],
     },
   ];
+  reviewPosts: ReviewPostResponse[] = []
   isShowStoryFull: boolean = false;
   isShowPostFull: boolean = false;
   zoom: number = 15;
@@ -215,34 +233,56 @@ export class ReviewPostsComponent implements OnInit {
   constructor(
     private _uploadFileService: UploadFileService,
     private _dialog: MatDialog,
-    private renderer: Renderer2
-  ) {}
-  ngAfterViewInit(): void {}
+    private renderer: Renderer2,
+    private reviewPostService: ReviewPostService,
+    private filterPostService: FilterPostService,
+    private userService: UserService,
+    private router: Router,
+    private reviewPostDestroyService: ReviewPostDestroyService,
+    public directLinkService: DirectLinkService
+  ) {
+    this.filterPostService.filterPost$.pipe(concatMap(filterPost => {
+      return this.reviewPostService.findAll(filterPost.pageable);
+    })).subscribe((response) => {
+      this.reviewPosts = this.reviewPosts.concat(response)
+      console.log(this.reviewPosts);
+    }
+    )
+  }
+  ngAfterViewInit(): void {
+    console.log(this.reviewPostDetailComponent);
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.reviewPostDestroyService.isDestroy$.subscribe(isCloseReviewPostDetail => {
+      if(isCloseReviewPostDetail){
+        this.reviewPostDetailComponent.destroy()
+      }
+    })
+  }
   selectedFile($event: any) {
     this.selectedFiles = $event.target.files;
   }
   upload() {
-    this.progress = 0;
-    this.currentFile = this.selectedFiles.item(0);
-    if (this.currentFile) {
-      this._uploadFileService.upload(this.currentFile).subscribe(
-        (event) => {
-          if (event.type === HttpEventType.UploadProgress && event.total) {
-            this.progress = Math.round((100 * event.loaded) / event.total);
-          } else if (event instanceof HttpResponse) {
-            this.message = event.body ? event.body.message : '';
-            this.fileInfos = this._uploadFileService.getFiles();
-          }
-        },
-        (err) => {
-          this.progress = 0;
-          this.message = 'Could not upload the file';
-          this.fileInfos = undefined;
-        }
-      );
-    }
+    // this.progress = 0;
+    // this.currentFile = this.selectedFiles.item(0);
+    // if (this.currentFile) {
+    //   this._uploadFileService.upload([this.currentFile]).subscribe(
+    //     (event) => {
+    //       if (event.type === HttpEventType.UploadProgress && event.total) {
+    //         this.progress = Math.round((100 * event.loaded) / event.total);
+    //       } else if (event instanceof HttpResponse) {
+    //         this.message = event.body ? event.body.message : '';
+    //         this.fileInfos = this._uploadFileService.getFiles();
+    //       }
+    //     },
+    //     (err) => {
+    //       this.progress = 0;
+    //       this.message = 'Could not upload the file';
+    //       this.fileInfos = undefined;
+    //     }
+    //   );
+    // }
   }
   getFiles() {
     this._uploadFileService.getFiles().subscribe((files) => {});
@@ -253,8 +293,9 @@ export class ReviewPostsComponent implements OnInit {
     });
   }
   openCreatePostDialog() {
-    const dialogRef = this._dialog.open(CreatePostDialogComponent, {
+    const dialogRef = this._dialog.open(ReviewPostComponent, {
       width: 'auto',
+      height: '90vh'
     });
   }
   navigateTo(element: any) {
@@ -641,5 +682,28 @@ export class ReviewPostsComponent implements OnInit {
         console.log(this.isMutedStory);
       }
     });
+  }
+  openReviewDetail(reviewPostId: number){
+    this.router.navigate([`/home/review-post/${reviewPostId}`])
+  }
+  /* infinite scroll */
+  onScrollDown($event: any){
+    console.log($event);
+    let currFilter: FilterPost = this.filterPostService.filterPostBSub.value
+    let pageable = currFilter.pageable
+    pageable.pageIndex++
+    this.filterPostService.filterPostBSub.next(currFilter)    
+
+    
+  }
+  onScrollUp($event: any){
+    console.log($event);
+  }
+  determineFileType(uploadFile: UploadFileResponse){
+    let result = uploadFile.contentType.startsWith("image")? "IMAGE" : "VIDEO"
+    return result
+  }
+  dateTimeFormula(timestamp: Date){
+    return new Date(timestamp).toLocaleString()
   }
 }

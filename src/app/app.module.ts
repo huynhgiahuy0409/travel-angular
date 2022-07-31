@@ -5,13 +5,18 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ImagesLazyloadModule } from './shared/images-lazyload/images-lazyload.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedMaterialModule } from './shared/modules';
 import { UserModule } from './user/user.module';
 import { NgForm, FormsModule } from '@angular/forms';
+import { JWTInterceptor } from './core/jwt.iterceptor';
+import { CookieService } from 'ngx-cookie-service';
+import { LoginModule } from './user/components/login/login.module';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { PageNotFoundComponent } from './shared/components/pagen-not-found/page-not-found.component';
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, PageNotFoundComponent],
   imports: [
     BrowserModule,
     RouterModule,
@@ -22,11 +27,17 @@ import { NgForm, FormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     SharedMaterialModule,
     FormsModule,
+    LoginModule,
     // AgmCoreModule.forRoot({
     //   apiKey: 'AIzaSyCp3qsNHBlKfgzMkrkr0FTUsNAPsH4yd7Y',
     // }),
+    InfiniteScrollModule
   ],
   bootstrap: [AppComponent],
- 
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true },
+    CookieService,
+  ],
+
 })
 export class AppModule {}

@@ -25,6 +25,8 @@
     "@goongmaps/goong-sdk": "^1.0.7",
     "@mapbox/polyline": "^1.1.1",
     "ng-recaptcha": "^8.0.0",
+    "ngx-cookie-service": "^12.0.0",
+    "ngx-infinite-scroll": "^10.0.1",
     "require": "^2.4.20",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",

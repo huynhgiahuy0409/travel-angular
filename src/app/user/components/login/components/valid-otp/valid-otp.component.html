@@ -1,0 +1,52 @@
+<div class="grid" *ngIf="userInfo">
+    <div class="row no-gutters header align-item-center justify-content-between">
+        <div class="header__logo col"></div>
+        <ul class="login-form__list d-flex align-items-center">
+            <div class="profile__item">
+                <img src="assets/image/profile-pic.png" alt="">
+                <h3>{{userInfo.fullName}}</h3>
+            </div>
+            <li class="more-option-btn login-form__item d-flex align-items-center">
+                <i class="fa-solid fa-sort-down d-flex align-items-center"></i>
+                <ul class="notification hidden">
+                    <!-- <div class="separate-line"></div> -->
+                    <li (click)="onClickLogout()">
+                        <div class="notification__left">
+                            <div class="notification__left-wrapper">
+                                <mat-icon>exit_to_app</mat-icon>
+                            </div>
+                        </div>
+                        <div class="notification__main">
+                            <h4>Log out</h4>
+                        </div>
+                        <div class="notification__right">
+                            <mat-icon>keyboard_arrow_right</mat-icon>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <mat-progress-bar *ngIf="progressBarService.progressBar$ | async" mode="indeterminate"></mat-progress-bar>
+    <div class="row main d-flex justify-content-center align-items-center">
+        <div class="find-account">
+            <div class="find-account__header d-flex align-items-center">
+                <h1>Nhập mã xác nhận</h1>
+            </div>
+            <div class="find-account__main">
+                <p>
+                    Để xác nhận tài khoản của bạn, hãy nhập mã gồm 6 chữ số mà chúng tôi đã gửi đến:
+                    {{userInfo.email}}
+                </p>
+                <div class="field">
+                    <input type="number" placeholder="6-digit code" [formControl]="OTPCtrl"/>
+                </div>
+                <div *ngIf="isWrongCode" class="mr-l-5" style="color: var(--base-cherry-color--)">Số bạn đã nhập không khớp với mã. Vui lòng thử lại.</div>
+            </div>
+            <div class="find-account__footer d-flex align-items-center justify-content-end">
+                <button mat-raised-button [routerLink]="'/login'">Hủy</button>
+                <button mat-raised-button class="primary-color-btn" [disabled]="OTPCtrl.invalid" (click)="validOTP()">Tiếp theo</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,5 @@
-<nav class="row no-gutters">
+<nav class="row no-gutters" *ngIf="user$ | async as user">
   <div class="col l-3 m-3 c-4 nav-left">
-    <img src="assets/image/logo.png" alt="" class="logo" />
     <div class="search-box hide-on-mobile hide-on-tablet hide-on-big-tablet">
       <img src="assets/image/search.png" alt="" />
       <input type="text" placeholder="Search" />
@@ -15,37 +14,39 @@
   </div>
   <div class="col l-6 m-3 c-12  nav-main">
     <div class="home__list d-flex align-items-center justify-content-center">
-      <div
+      <a
         class="home__item"
         [routerLink]="'/home'"
         routerLinkActive="home__item--slt"
         [routerLinkActiveOptions]="{ exact: true }"
       >
         <i class="fa-solid fa-users"></i>
-      </div>
-      <div
+      </a>
+      <a
         class="home__item"
         [routerLink]="'/home/journeys'"
         routerLinkActive="home__item--slt"
         [routerLinkActiveOptions]="{ exact: true }"
       >
       <i class="fa-solid fa-map"></i>
-      </div>
-      <div
+      </a>
+      <a
         class="home__item"
         [routerLink]="'/home/user-posts'"
         routerLinkActive="home__item--slt"
       >
         <i class="fa-solid fa-house"></i>
-      </div>
+      </a>
     </div>
   </div>
   <div class="col l-3 m-3 c-8  nav-right">
     <ul class="nav-right__list">
-      <div class="profile__item">
-        <img src="assets/image/profile-pic.png" alt="" />
+      <div class="profile__item" [routerLink]="['/blog/1']">
+        <img [src]="maleDefaultAvatarURL" alt="" *ngIf="!user.avt && user.gender === 'MALE' "/>
+        <img [src]="femaleDefaultAvatarURL" alt="" *ngIf="!user.avt && user.gender === 'FEMALE' "/>
+        <img [src]="undefinedDefaultAvatarURL" alt="" *ngIf="!user.avt && user.gender === 'UNDEFINED' "/>
         <h3 class="hide-on-mobile hide-on-tablet hide-on-big-tablet">
-          Huỳnh Gia Huy
+          {{user.fullName}}
         </h3>
       </div>
       <li class="nav-right__item">
@@ -260,7 +261,7 @@
           </svg>
         </div>
         <ul class="notification">
-          <li>
+          <li [routerLink]="['/blog/1']">
             <div class="notification__left">
               <img src="assets/84c1252b0128cf769639.jpg" alt="" />
             </div>
@@ -270,7 +271,7 @@
             </div>
           </li>
           <div class="separate-line"></div>
-          <li>
+          <li [routerLink]="['/settings/account']">
             <div class="notification__left">
               <div class="notification__left-wrapper">
                 <mat-icon>settings</mat-icon>
@@ -283,7 +284,7 @@
               <mat-icon>keyboard_arrow_right</mat-icon>
             </div>
           </li>
-          <li [routerLink]="['//login']">
+          <li (click)="logout()">
             <div class="notification__left">
               <div class="notification__left-wrapper">
                 <mat-icon>exit_to_app</mat-icon>

@@ -14,17 +14,16 @@ import { LoginComponent } from './components/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { RegisterDialogComponent } from './components/login/dialog/register-dialog/register-dialog.component';
-import { IdentifyComponent } from './components/identify/identify.component';
-import { ReviewPostDetailComponent } from './components/review-post-detail/review-post-detail.component';
+import { IdentifyComponent } from './components/login/components/identify/identify.component';
 import { HomeModule } from './components/home/home.module';
+import { JourneyDetailComponent } from './components/post-detail/components/journey-detail/journey-detail.component';
+import { CookieService } from 'ngx-cookie-service';
 @NgModule({
   declarations: [
     UserComponent,
     CreatePostDialogComponent,
     ImageDragDirective,
-    RegisterDialogComponent,
-    IdentifyComponent,
-    ReviewPostDetailComponent,
+    JourneyDetailComponent,
   ],
   imports: [
     CommonModule,
@@ -33,8 +32,7 @@ import { HomeModule } from './components/home/home.module';
     SharedMaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    LoginModule,
-    HomeModule
+    HomeModule,
   ],
   providers: [
     // {

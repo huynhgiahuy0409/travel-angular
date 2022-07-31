@@ -1,0 +1,46 @@
+.setting {
+  overflow: auto;
+  height: 100vh;
+  min-width: 900px;
+}
+
+.setting__list {
+  min-width: 360px;
+  height: 100%;
+  padding: 10px;
+}
+
+.setting__item {
+  height: 45px;
+  border-radius: 5px;
+}
+
+.setting__item {
+  height: 45px;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.setting__item i {
+  font-size: 1.8rem;
+  margin-right: 10px;
+}
+
+.setting__item span {
+  font-weight: 550;
+}
+
+.setting__item:hover {
+  background-color: var(--hover-color--);
+}
+
+.main {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  background-color: var(--background-color-1--);
+  padding: 15px;
+  min-width: calc(100% - 360px);
+  overflow: auto;
+}
+/*# sourceMappingURL=settings.component.css.map */

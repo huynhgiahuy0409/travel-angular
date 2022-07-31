@@ -1,0 +1,103 @@
+.header {
+    height: 60px;
+    position: sticky;
+    top: 0;
+    box-shadow: 0 0 5px #ccc;
+    padding: 5px
+}
+
+.header .header__logo {
+    min-width: 200px;
+}
+
+.header .login-form__list {}
+.header .login-form__list .more-option-btn::before{
+    position: absolute;
+    content: '';
+    top: 100%;
+    width: 100%;
+    height: 100%;
+}
+.header .login-form__list .more-option-btn:hover .notification{
+    display: block;
+}
+
+.header .login-form__item {
+    border-radius: 50%;
+    background: rgba(24, 127, 242, 0.2);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.header .login-form__item i {
+    color: var(--primary-color--);
+    position: absolute;
+    font-size: 2rem;
+    top: 5px;
+}
+
+.login-form__list .profile__item {
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding: 0 5px;
+}
+
+.login-form__list .profile__item img {
+    width: 35px;
+    height: 35px;
+    border-radius: 100rem;
+}
+
+.login-form__list .profile__item h3 {
+    font-weight: 550;
+    margin: 0 5px;
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+}
+
+.main {
+    height: calc(100vh - 60px);
+    background-color: rgb(233, 235, 238);
+}
+
+.main .find-account {
+    max-width: 500px;
+    height: 275px;
+    box-shadow: 0 0 5px #ccc;
+    border-radius: 5px;
+    background-color: var(--white-color--);
+}
+
+.main .find-account__header {
+    height: 60px;
+    padding: 10px;
+}
+
+.main .find-account__header h1 {
+    margin: auto 0;
+}
+
+.main .find-account__main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 10px;
+    height: calc(100% - 60px - 70px);
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+.main .find-account__footer {
+    height: 70px
+}
+
+.main .find-account__footer button {
+    margin: 0 10px
+}

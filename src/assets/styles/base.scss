@@ -213,12 +213,20 @@ button {
   border: unset;
   outline: none;
 }
+button:disabled, button[disabled]{
+  cursor: not-allowed;
+  pointer-events: all !important;
+
+}
 
 .primary-color-btn {
   background-color: var(--primary-color--);
   color: var(--white-color--)
 }
-
+.icon-btn{
+  border-radius: 50%;
+  background-color: white;
+}
 /* font weight */
 .font-weight-550 {
   font-weight: 550;

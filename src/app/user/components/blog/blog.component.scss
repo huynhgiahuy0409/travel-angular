@@ -1,119 +1,119 @@
-.container{
-    width: 100vw;
-    height: 100vh;
-    overflow-y: auto;
+.header-wrap {
+    z-index: 999;
+}
+.container {
+  width: 100vw;
+  height: 100vh;
+  overflow-y: auto;
 }
 .container .header {
-    z-index: 1;
-    background: var(--white-color--);
+  z-index: 1;
+  background: var(--white-color--);
 }
-.image-wrap{
-    position: relative;
+.image-wrap {
+  position: relative;
 }
-.container .header img{
-    height: 480px;
-    width: 100%;
-    object-fit: cover;
-    padding: 20px
+.container .header img {
+  height: 480px;
+  width: 100%;
+  object-fit: cover;
+  padding: 20px;
 }
-.nav__list{
-    margin: auto;
+.nav__list {
+  margin: auto;
 }
-.nav__item{
-    font-size: 1.8rem;
-    text-align: center;
-    padding-bottom: 10px;
+.nav__item {
+  text-align: center;
+  padding-bottom: 10px;
 }
-.nav__item:hover{
-    border-bottom: 2px solid var(--primary-color--);
+.nav__item:hover {
+  border-bottom: 3px solid var(--primary-color--);
 }
-.nav__item--slt{
-    border-bottom: 2px solid var(--primary-color--);
+.nav__item--slt {
+  border-bottom: 3px solid var(--primary-color--);
+  color: var(--primary-color--);
 }
-.main{
-    margin: 10px
+.main {
+  margin: 10px;
 }
-.main .main__left{
-    padding: 10px;
-    box-shadow: 0 0 3px #ccc;
+.main .main__left {
+  padding: 10px;
+  box-shadow: 0 0 3px #ccc;
 }
-.main .main__left .user-info__list{
-    
+.main .main__left .user-info__list {
 }
-.main .main__left .user-info__item{
-    border-bottom: 1px solid #ccc;
-    padding: 10px 0
+.main .main__left .user-info__item {
+  border-bottom: 1px solid #ccc;
+  padding: 10px 0;
 }
-.main .main__left .user-info__item .avatar{
+.main .main__left .user-info__item .avatar {
 }
-.main .main__left .user-info__item img{
-    width: 120px;
-    object-fit: contain;
-    border-radius: 50%;
-    border: 1px solid var(--primary-color--);
+.main .main__left .user-info__item img {
+  width: 120px;
+  object-fit: contain;
+  border-radius: 50%;
+  border: 1px solid var(--primary-color--);
 }
-.main .main__left .user-info__item .username{
-    text-align: center;
+.main .main__left .user-info__item .username {
+  text-align: center;
 }
-.main .main__left .user-info__item .follow-btn{
-    width: 120px;
-    border-radius: 5px;
-    border: 1px solid var(--primary-color--);
-    padding: 5px;
-    color: var(--primary-color--);
-    cursor: pointer;
+.main .main__left .user-info__item .follow-btn {
+  width: 120px;
+  border-radius: 5px;
+  border: 1px solid var(--primary-color--);
+  padding: 5px;
+  color: var(--primary-color--);
+  cursor: pointer;
 }
-.main .main__left .user-info__item i{
-    color: var(--primary-color--);
+.main .main__left .user-info__item i {
+  color: var(--primary-color--);
 }
-
 
 /* Responsive */
 /* Mobile */
 @media (max-width: 739px) {
-    .hide-on-mobile {
-        display: none !important;
-    }
-    .container .header img{
-        height: 240px;
-    }
-    .nav__item{
-        font-size: 1.4rem;
-    }
+  .hide-on-mobile {
+    display: none !important;
+  }
+  .container .header img {
+    height: 240px;
+  }
+  .nav__item {
+    font-size: 1.4rem;
+  }
 }
 
 /* Tablet */
 @media (min-width: 740px) and (max-width: 1023px) {
-    .hide-on-tablet {
-        display: none !important;
-    }
-    .container .header img{
-        height: 360px;
-    }
-    .nav__item{
-        font-size: 1.6rem;
-    }
+  .hide-on-tablet {
+    display: none !important;
+  }
+  .container .header img {
+    height: 360px;
+  }
+  .nav__item {
+    font-size: 1.6rem;
+  }
 }
 
 /* > Tablet */
 @media (min-width: 1023px) and (max-width: 1113px) {
-    .hide-on-big-tablet {
-        display: none !important;
-    }
-    .container .header img{
-        height: 360px;
-    }
-    .nav__item{
-        font-size: 1.6rem;
-    }
+  .hide-on-big-tablet {
+    display: none !important;
+  }
+  .container .header img {
+    height: 360px;
+  }
+  .nav__item {
+    font-size: 1.6rem;
+  }
 }
 
 /* > PC medium resolution */
 @media (min-width: 1113px) {
-    .hide-on-pc {
-        display: none !important;
-    }
-    .grid.wide{
-    
-    }
+  .hide-on-pc {
+    display: none !important;
+  }
+  .grid.wide {
+  }
 }

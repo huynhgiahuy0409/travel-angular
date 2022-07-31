@@ -1,0 +1,141 @@
+:root {
+  --header-height--: 100px;
+  --day-action-height--: 40px
+;
+}
+
+.day-action {
+  height: var(--day-action-height--);
+}
+
+.step__item .step__title {
+  font-size: 1.6rem;
+}
+
+/* content */
+.step__item .content {
+  height: 100vh;
+  overflow-y: auto;
+}
+
+/* content-place */
+.content-place__item {
+  margin: 5px;
+  border-radius: 5px;
+  overflow: hidden;
+  max-height: 250px;
+  position: relative;
+}
+
+.content-place__item .overlay {
+  display: none;
+}
+
+.content-place__item .overlay i {
+  color: white;
+  font-size: 3rem;
+}
+
+.content-place__item:hover .overlay {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.content-place__item h4 {
+  font-weight: 550;
+}
+
+.content-place__item .content-place__image-wrap {
+  position: relative;
+}
+
+.content-place__item .content-place__image-wrap {
+  position: relative;
+}
+
+.content-place__item .content-place__image-wrap img {
+  width: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+.content-place__item .place-name {
+  padding: 10px;
+}
+
+/* content-map */
+.content-map .autocomplete__list {
+  overflow: hidden;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.content-map .autocomplete__item {
+  padding: 10px;
+}
+
+.content-map .autocomplete__item span {
+  font-weight: 550;
+}
+
+.content-map .autocomplete__item:hover {
+  background-color: var(--hover-color--);
+}
+
+.map-wrap {
+  height: 100%;
+}
+
+.map-wrap #map {
+  width: 100%;
+  height: 50%;
+}
+
+/*  */
+.timeline__list {
+  padding: 10px;
+  height: 100vh;
+}
+
+.timeline__item .header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 10px;
+}
+
+.timeline__item .header:hover {
+  background-color: var(--hover-color--);
+}
+
+.timeline__item .main {
+  width: 100%;
+  margin: 0 auto;
+  right: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  height: 60px;
+  padding: 10px;
+  -webkit-transform: translateX(3px);
+          transform: translateX(3px);
+}
+
+.timeline__item .main .liner {
+  border-left: 4px dotted #ccc;
+  height: 100%;
+}
+/*# sourceMappingURL=journey.component.css.map */

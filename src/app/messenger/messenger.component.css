@@ -1,0 +1,134 @@
+.main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 60px;
+  height: 100vh;
+  padding: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.sidebar__list {
+  width: 45px;
+  margin: 0 auto;
+  top: 0;
+}
+
+.sidebar__item {
+  width: 100%;
+  height: 35px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.sidebar__item:hover {
+  background-color: var(--hover-color--);
+}
+
+.sidebar__bottom {
+  bottom: 0;
+}
+
+.sidebar__bottom .avatar,
+.sidebar__bottom .logout-btn {
+  width: 35px;
+  height: 35px;
+  margin: 5px auto;
+  border-radius: 50%;
+}
+
+.sidebar__bottom .avatar img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+  border-radius: 50%;
+}
+
+.sidebar__bottom .logout-btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.sidebar__bottom .logout-btn i {
+  font-size: 2rem;
+}
+
+.sidebar__bottom .logout-btn:hover {
+  background-color: var(--hover-color--);
+}
+
+/* sidebar end */
+/* content */
+.content {
+  width: calc(100% - 60px);
+  overflow: hidden;
+}
+
+/* user-list chat-box*/
+.content .user-list, .content .chat-box {
+  position: relative;
+  overflow: hidden;
+  height: 100vh;
+  padding: 10px;
+}
+
+.content .chat-box {
+  padding: unset;
+}
+
+.content .user-list {
+  border-right: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+}
+
+/* user-list end*/
+/* Responsive */
+/* Mobile */
+@media (max-width: 739px) {
+  .hide-on-mobile {
+    display: none;
+  }
+  .content .user-list {
+    padding: 0;
+  }
+}
+
+/* Tablet */
+@media (min-width: 740px) and (max-width: 1023px) {
+  .hide-on-tablet {
+    display: none;
+  }
+}
+
+/* > PC medium resolution */
+/*# sourceMappingURL=messenger.component.css.map */

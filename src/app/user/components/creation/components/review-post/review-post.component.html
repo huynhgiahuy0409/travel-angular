@@ -1,134 +1,245 @@
-<div class="container">
-    <div class="grid">
-        <div class="row">
-            <div class="col c-12 m-12 c-12">
-                <div class="cover box-shadow">
-                    <div class="init-cover-image" *ngIf="!coverImageSrc">
-                        <label for="add-media-input"
-                            class="content d-flex align-items-center justify-content-center">
-                            <div class="content__image-logo mr-r-10">
-                                <i class="fa-solid fa-circle-plus"></i>
-                            </div>
-                            <div class="content__text d-flex align-items-center justify-content-center">
-                                <h1>Thêm ảnh bìa cho bài viết</h1>
-                            </div>
-                            <input (change)="reviewSltImage($event)" style="display: none" type="file" id="add-media-input"
-                                accept="image/*" />
-                        </label>
-                        <div class="init-image"></div>
-                    </div>
-                    <div class="cover-image" *ngIf="coverImageSrc">
-                        <div class="cover-image__action">
-                            <button id="edit-cover-image-btn" (click)="onClickEditCoverImage()" mat-raised-button #editCoverImageBtn class="d-flex align-items-center">
-                                <i class="fa-solid fa-camera mr-r-5"></i>
-                                <span>Chỉnh sửa ảnh bìa</span>
-                            </button>
-                            <div #coverImageActionSelect class="cover-image__action-select box-shadow">
-                                <div class="cover-image__action-option">
-                                    <i class="fa-solid fa-upload mr-r-10"></i>
-                                    <span> Tải ảnh lên </span>
-                                </div>
-                                <div class="cover-image__action-option">
-                                    <i class="fa-solid fa-trash-can mr-r-10"></i>
-                                    <span>Xóa</span>
-                                </div>
-                            </div>
-                        </div>
-                        <img [src]="coverImageSrc" class="cover-image" *ngIf="coverImageSrc" />
-                    </div>
+<h2 mat-dialog-title style="font-weight: 550; text-align: center">
+  Tạo bài viết review
+</h2>
+<mat-dialog-content class="mat-typography">
+  <div class="grid" [formGroup]="reviewPostFromGroup">
+    <div class="row">
+      <div class="col c-12 m-12 c-12">
+        <div class="cover box-shadow">
+          <div class="init-cover-image" *ngIf="!coverImageSrc">
+            <label for="add-media-input" class="content d-flex align-items-center justify-content-center">
+              <div class="content__image-logo mr-r-10">
+                <i class="fa-solid fa-circle-plus"></i>
+              </div>
+              <div class="content__text d-flex align-items-center justify-content-center">
+                <h1>Thêm ảnh bìa cho bài viết</h1>
+              </div>
+           
+            </label>
+            <div class="init-image"></div>
+          </div>
+          <div class="cover-image" *ngIf="coverImageSrc">
+            <div class="cover-image__action">
+              <button id="edit-cover-image-btn" (click)="onClickEditCoverImage()" mat-raised-button #editCoverImageBtn
+                class="d-flex align-items-center">
+                <i class="fa-solid fa-camera mr-r-5"></i>
+                <span>Chỉnh sửa ảnh bìa</span>
+              </button>
+              <div #coverImageActionSelect class="cover-image__action-select box-shadow">
+                <div class="cover-image__action-option " (click)="coverImageInput.click()">
+                  <i class="fa-solid fa-upload mr-r-10"></i>
+                  <span> Tải ảnh lên </span>
                 </div>
+                <div class="cover-image__action-option" (click)="removeCoverImage()">
+                  <i class="fa-solid fa-trash-can mr-r-10"></i>
+                  <span>Xóa</span>
+                </div>
+              </div>
             </div>
+            <img [src]="coverImageSrc" class="cover-image" *ngIf="coverImageSrc" />
+          </div>
         </div>
-        <div class="grid wide field__list">
-            <div class="row mr-10 field__item">
-                <div class="col l-12 m-12 c-12">
-                    <div class="field box-shadow">
-                        <input type="text" placeholder="Tiêu đề bài viết" />
-                    </div>
-                </div>
-            </div>
-            <div class="row mr-10 field__item">
-                <div class="col l-12 m-12 c-12">
-                    <div class="field box-shadow">
-                        <input type="text" placeholder="Giới thiệu ngắn (bio)" />
-                    </div>
-                </div>
-            </div>
-            <div class="row mr-10 field__item">
-                <div class="col l-3 m-6 c-6">
-                    <div class="field box-shadow">
-                        <input type="date" placeholder="Ngày bắt đầu" />
-                    </div>
-                </div>
-                <div class="col l-3 m-6 c-6">
-                    <div class="field box-shadow d-flex align-items-center jusitfy-content-between">
-                        <input type="number" placeholder="Tổng số ngày" />
-                        <i class="fa-solid fa-clock"></i>
-                    </div>
-                </div>
-                <div class="col l-3 m-6 c-6">
-                    <div class="field box-shadow d-flex align-items-center jusitfy-content-between">
-                        <input type="text" placeholder="Chi phí chuyến đi" />
-                        <i class="fa-solid fa-dollar-sign"></i>
-                    </div>
-                </div>
-                <div class="col l-3 m-6 c-6">
-                    <div class="field box-shadow d-flex align-items-center jusitfy-content-between">
-                        <input type="text" placeholder="Số người tham gia chuyến đi" />
-                        <i class="fa-solid fa-users"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="row mr-10 field__item">
-                <div class="col l-12 m-12 c-12">
-                    <mat-form-field class="w-fit box-shadow" appearance="fill">
-                        <mat-label>Nhập tìm kiếm tag</mat-label>
-                        <mat-chip-list #chipList>
-                            <mat-chip *ngFor="let sltLocationTag of sltLocationTags" (removed)="remove(sltLocationTag)">
-                                {{ sltLocationTag }}
-                                <button matChipRemove>
-                                    <mat-icon>cancel</mat-icon>
-                                </button>
-                            </mat-chip>
-                            <input placeholder="Ex: Cà mau" #locationTagInput [formControl]="locationTagCtrl"
-                                [matAutocomplete]="auto" [matChipInputFor]="chipList"
-                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                (matChipInputTokenEnd)="add($event)" />
-                        </mat-chip-list>
-                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-                            <mat-option *ngFor="let locationTag of filteredLocationTags | async" [value]="locationTag">
-                                {{ locationTag }}
-                            </mat-option>
-                        </mat-autocomplete>
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="row mr-10 field__item">
-                <div class="col l-12 m-12 c-12">
-                    <textarea class="description-box field box-shadow w-fit" type="text"
-                        placeholder="Nội dung bài viết"></textarea>
-                </div>
-            </div>
-            <div class="row mr-10 field__item">
-                <div class="col l-12 m-12 c-12 d-flex align-items-center">
-                    <i class="fa-solid fa-images mr-r-10"></i>
-                    <h4 style="margin: 0">Tạo album ảnh cuối bài viết</h4>
-                </div>
-            </div>
-            <div class="row mr-10 field__item image__list">
-                <div class="col l-3 m-6 c-6 i image__item d-flex align-items-center">
-                    <img class="w-fit" style="border-radius: 5px" src="/assets/image/content-image.jpg" alt="" />
-                </div>
-                <div class="col l-3 m-6 c-6 image__item d-flex align-items-center">
-                    <img class="w-fit" style="border-radius: 5px" src="/assets/image/content-image.jpg" alt="" />
-                </div>
-                <div class="col l-3 m-6 c-6 image__item d-flex align-items-center">
-                    <img class="w-fit" style="border-radius: 5px" src="/assets/image/content-image.jpg" alt="" />
-                </div>
-                <div class="col l-3 m-6 c-6 image__item d-flex align-items-center">
-                    <img class="w-fit" style="border-radius: 5px" src="/assets/image/content-image.jpg" alt="" />
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
-</div>
+    <div class="grid wide field__list">
+      <div class="row mr-10 field__item">
+        <div class="col l-12 m-12 c-12">
+          <div class="field box-shadow">
+            <input type="text" placeholder="Tiêu đề bài viết"  formControlName="title"/>
+          </div>
+        </div>
+      </div>
+      <div class="row mr-10 field__item">
+        <div class="col l-12 m-12 c-12">
+          <div class="field box-shadow">
+            <input type="text" placeholder="Giới thiệu ngắn (bio)" formControlName="bio"/>
+          </div>
+        </div>
+      </div>
+      <div class="row mr-10 field__item">
+        <div class="col l-3 m-6 c-6">
+          <div class="field box-shadow">
+            <input type="date" placeholder="Ngày bắt đầu" formControlName="departureDay"/>
+          </div>
+        </div>
+        <div class="col l-3 m-6 c-6">
+          <div class="field box-shadow d-flex align-items-center jusitfy-content-between">
+            <input type="number" placeholder="Tổng số ngày" formControlName="totalDay"/>
+            <i class="fa-solid fa-clock"></i>
+          </div>
+        </div>
+        <div class="col l-3 m-6 c-6">
+          <div class="field box-shadow d-flex align-items-center jusitfy-content-between">
+            <input type="text" placeholder="Chi phí chuyến đi" formControlName="cost"/>
+            <i class="fa-solid fa-dollar-sign"></i>
+          </div>
+        </div>
+        <div class="col l-3 m-6 c-6">
+          <div class="field box-shadow d-flex align-items-center jusitfy-content-between">
+            <input type="text" placeholder="Số người tham gia chuyến đi" formControlName="participantNumber"/>
+            <i class="fa-solid fa-users"></i>
+          </div>
+        </div>
+      </div>
+      <div class="row mr-10 field__item">
+        <div class="col l-12 m-12 c-12">
+          <mat-form-field class="w-fit box-shadow" appearance="fill">
+            <mat-label>Nhập tìm kiếm tag</mat-label>
+            <mat-chip-list #chipList>
+              <mat-chip *ngFor="let sltLocationTag of sltLocationTags" (removed)="remove(sltLocationTag)">
+                {{ sltLocationTag }}
+                <button matChipRemove>
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip>
+              <input placeholder="Ex: Cà mau" #locationTagInput formControlName="tags" [matAutocomplete]="auto"
+                [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                (matChipInputTokenEnd)="add($event)" />
+            </mat-chip-list>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+              <mat-option *ngFor="let locationTag of filteredLocationTags | async" [value]="locationTag">
+                #{{ locationTag }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row mr-10 field__item">
+        <div class="col l-12 m-12 c-12">
+          <textarea class="description-box field box-shadow w-fit" type="text"
+            placeholder="Nội dung bài viết" formControlName="content"></textarea>
+        </div>
+      </div>
+      <label for="add-image-input" class="row mr-10 field__item addition-images">
+        <div class="col l-12 m-12 c-12 d-flex align-items-center">
+          <i class="fa-solid fa-images mr-r-10"></i>
+          <h4 style="margin: 0">Tạo album ảnh cuối bài viết</h4>
+          <input #addImageInput type="file" id="add-image-input" class="hidden" multiple
+            (change)="changeListImages(addImageInput)" />
+        </div>
+      </label>
+      <div class="review-post__image" *ngIf="reviewImagesSrcs.length > 0">
+        <!-- 1 image -->
+        <div class="image__list one" *ngIf="reviewImagesSrcs.length == 1">
+          <div class="image__item">
+            <img [src]="reviewImagesSrcs[0]" alt="" />
+          </div>
+        </div>
+        <!-- 2 images -->
+        <div class="image__list two" *ngIf="reviewImagesSrcs.length == 2">
+          <div class="row">
+            <div class="col l-6 m-6 c-6" *ngFor="let reviewImagesSrc of reviewImagesSrcs">
+              <div class="image__item">
+                <img [src]="reviewImagesSrc" alt="" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 3 images -->
+        <div class="image__list three" *ngIf="reviewImagesSrcs.length == 3">
+          <div class="row">
+            <div class="col l-12 m-12 c-12">
+              <div class="image__item">
+                <img [src]="reviewImagesSrcs[0]" alt="" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <ng-container *ngFor="let reviewImagesSrc of reviewImagesSrcs, index as idx">
+              <div class="col l-6 m-6 c-6" *ngIf="idx > 0 && idx < 3">
+                <div class="image__item">
+                  <img [src]="reviewImagesSrc" alt="" />
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <!-- 4 images -->
+        <div class="image__list four" *ngIf="reviewImagesSrcs.length == 4">
+          <div class="row">
+            <div class="col l-12 m-12 c-12">
+              <div class="image__item">
+                <img [src]="reviewImagesSrcs[0]" alt="" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <ng-container *ngFor="let reviewImagesSrc of reviewImagesSrcs, index as idx">
+              <div class="col l-4 m-4 c-4" *ngIf="idx > 0 && idx < 4">
+                <div class="image__item">
+                  <img [src]="reviewImagesSrc" alt="" />
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <!-- 5 images -->
+        <div class="image__list five" *ngIf="reviewImagesSrcs.length >= 5">
+          <div class="row">
+            <ng-container *ngFor="let reviewImagesSrc of reviewImagesSrcs, index as idx">
+              <div class="col l-6 m-6 c-6" *ngIf="idx >= 0 && idx < 2">
+                <div class="image__item">
+                  <img [src]="reviewImagesSrc" alt="" />
+                </div>
+              </div>
+            </ng-container>
+          </div>
+          <ng-container *ngIf="reviewImagesSrcs.length == 5">
+            <div class="row">
+              <ng-container *ngFor="let reviewImagesSrc of reviewImagesSrcs, index as idx">
+                <div class="col l-4 m-4 c-4" *ngIf="idx > 1 && idx < 5">
+                  <div class="image__item">
+                    <img [src]="reviewImagesSrc" alt="" />
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="reviewImagesSrcs.length > 5">
+            <div class="row">
+              <ng-container *ngFor="let reviewImagesSrc of reviewImagesSrcs, index as idx">
+                <div class="col l-4 m-4 c-4" *ngIf="idx > 1 && idx < 4">
+                  <div class="image__item">
+                    <img [src]="reviewImagesSrc" alt="" />
+                  </div>
+                </div>
+              </ng-container>
+              <div class="col l-4 m-4 c-4">
+                <div class="image__item" style="position: relative">
+                  <img [src]="reviewImagesSrcs[5]" alt="" />
+                  <div class="image__item--overlay">
+                    <span>+{{ reviewImagesSrcs.length - 5 }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+        <div class="action__list">
+          <div class="action-update__list">
+            <div class="action-update__item">
+              <button mat-raised-button class="d-flex" (click)="addImageInput.click()">
+                <i class="fa-solid fa-file-circle-plus mr-r-10"></i>
+                <span>Thêm hình ảnh</span>
+              </button>
+            </div>
+          </div>
+          <div class="action-update__list">
+            <div class="action-update__item">
+              <i class="fa-solid fa-xmark icon-btn box-shadow" (click)="clearImages()"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Hủy</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="createReviewPost()">
+    Tạo bài viết
+  </button>
+</mat-dialog-actions>
+<input #coverImageInput (change)="coverImageChange(coverImageInput)" style="display: none" type="file" id="add-media-input"
+accept="image/*" />

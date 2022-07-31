@@ -18,20 +18,24 @@
             </li>
         </ul>
     </div>
+    <mat-progress-bar *ngIf="progressBarService.progressBar$ | async" mode="indeterminate"></mat-progress-bar>
     <div class="row main d-flex justify-content-center align-items-center">
         <div class="find-account">
             <div class="find-account__header  d-flex align-items-center">
                 <h1>Tìm tài khoản của bạn</h1>
             </div>
             <div class="find-account__main">
-                <p>Vui lòng nhập địa chỉ email hoặc số điện thoại di động của bạn để tìm kiếm tài khoản của bạn.</p>
+                <p>Vui lòng nhập địa chỉ email của bạn để tìm kiếm tài khoản của bạn.</p>
                 <div class="field">
-                    <input type="text" placeholder="Email">
+                    <input type="text" placeholder="Email" [formControl]="usernameCtrl">
                 </div>
+                <div *ngIf="!isExistEmail" class="mr-l-5" style="color: var(--base-cherry-color--)">Email không tồn tại</div>
+                <div *ngIf="usernameCtrl.hasError('required') && usernameCtrl.touched" class="mr-l-5" style="color: var(--base-cherry-color--)">Không được bỏ trống</div>
+                <div *ngIf="usernameCtrl.hasError('email') && usernameCtrl.touched" class="mr-l-5" style="color: var(--base-cherry-color--)">Email không hợp lệ</div>
             </div>
             <div class="find-account__footer d-flex align-items-center justify-content-end">
                 <button mat-raised-button [routerLink]="'/login'">Hủy</button>
-                <button mat-raised-button class="primary-color-btn">Tìm kiếm</button>
+                <button mat-raised-button class="primary-color-btn" [disabled]="usernameCtrl.invalid" (click)="searchUsername()">Tìm kiếm</button>
             </div>
         </div>
     </div>

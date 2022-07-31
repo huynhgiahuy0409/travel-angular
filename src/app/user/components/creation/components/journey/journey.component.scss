@@ -3,17 +3,6 @@
     --day-action-height--: 40px
 }
 
-.container {
-    width: 100vw;
-    height: 100vh;
-    overflow-y: auto;
-}
-
-.container .header {
-    height: var(--header-height--);
-}
-
-.container .main {}
 
 .day-action {
     height: var(--day-action-height--);
@@ -89,6 +78,13 @@
 }
 .content-map .autocomplete__item:hover{
     background-color: var(--hover-color--);
+}
+.map-wrap{
+    height: 100%;
+}
+.map-wrap #map{
+    width: 100%;
+    height: 50%;
 }
 
 

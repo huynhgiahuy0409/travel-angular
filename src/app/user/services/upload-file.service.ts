@@ -8,6 +8,8 @@ import {
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { BASE_URL } from 'src/app/shared/models/constant';
+import { APIResponse } from 'src/app/shared/models/model';
+import { UploadFileResponse } from 'src/app/shared/models/response';
 
 @Injectable({
   providedIn: 'root',
@@ -19,28 +21,47 @@ export class UploadFileService {
     }),
     params: {},
   };
-  constructor(private http: HttpClient) {}
-  upload(file: File): Observable<HttpEvent<any>> {
+  constructor(private httpClient: HttpClient) {}
+  multipleUpload(files: File[]): Observable<APIResponse<UploadFileResponse[]>> {
+    let url = `${BASE_URL}/member/users/me/files`;
+    const formData: FormData = new FormData();
+    files.forEach((file) => {
+      formData.append('file', file);
+    });
+    return this.httpClient.post<APIResponse<UploadFileResponse[]>>(
+      url,
+      formData,
+      {
+        reportProgress: true,
+        responseType: 'json',
+      }
+    );
+  }
+  upload(file: File): Observable<APIResponse<UploadFileResponse>> {
+    let url = `${BASE_URL}/member/users/me/files`;
     const formData: FormData = new FormData();
     formData.append('file', file);
-    const req = new HttpRequest('POST', `${BASE_URL}/public/upload`, formData, {
-      reportProgress: true,
-      responseType: 'json',
-    });
-    return this.http.request(req);
+    return this.httpClient.post<APIResponse<UploadFileResponse>>(
+      url,
+      formData,
+      {
+        reportProgress: true,
+        responseType: 'json',
+      }
+    );
   }
   getFiles(): Observable<any> {
-    return this.http.get(`${BASE_URL}/public/files`);
+    return this.httpClient.get(`${BASE_URL}/public/files`);
   }
   showImage() {
-    return this.http.get(`${BASE_URL}/public/filename`, this.httpOptions);
+    return this.httpClient.get(`${BASE_URL}/public/filename`, this.httpOptions);
   }
   getFile() {
     const httpParams = new HttpParams().set(
       'filename',
       'video-1650252391-1651060200520-1651980799675.mp4'
     );
-    return this.http.get(`${BASE_URL}/public/filename`, {
+    return this.httpClient.get(`${BASE_URL}/public/filename`, {
       responseType: 'blob',
       params: httpParams,
     });

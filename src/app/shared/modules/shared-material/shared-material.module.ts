@@ -13,6 +13,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatSelectModule} from '@angular/material/select';
 import {MatStepperModule} from '@angular/material/stepper';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 @NgModule({
   declarations: [],
   imports: [CommonModule],
@@ -29,7 +30,8 @@ import {MatStepperModule} from '@angular/material/stepper';
     MatAutocompleteModule,
     MatTabsModule,
     MatSelectModule,
-    MatStepperModule
+    MatStepperModule,
+    MatProgressBarModule
   ],
 })
 export class SharedMaterialModule {}

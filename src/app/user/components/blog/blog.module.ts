@@ -6,7 +6,7 @@ import { BlogComponent } from './blog.component';
 import { ReviewPostComponent } from './components/review-post/review-post.component';
 import { FollowerComponent } from './components/follower/follower.component';
 import { FollowingComponent } from './components/following/following.component';
-
+import { SharedHeaderModule, SharedMaterialModule } from 'src/app/shared/modules';
 
 @NgModule({
   declarations: [
@@ -17,7 +17,8 @@ import { FollowingComponent } from './components/following/following.component';
   ],
   imports: [
     CommonModule,
-    BlogRoutingModule
+    BlogRoutingModule,
+    SharedHeaderModule
   ]
 })
 export class BlogModule { }

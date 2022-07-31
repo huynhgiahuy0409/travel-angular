@@ -256,25 +256,25 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.selectedFiles = $event.target.files;
   }
   upload() {
-    this.progress = 0;
-    this.currentFile = this.selectedFiles.item(0);
-    if (this.currentFile) {
-      this._uploadFileService.upload(this.currentFile).subscribe(
-        (event) => {
-          if (event.type === HttpEventType.UploadProgress && event.total) {
-            this.progress = Math.round((100 * event.loaded) / event.total);
-          } else if (event instanceof HttpResponse) {
-            this.message = event.body ? event.body.message : '';
-            this.fileInfos = this._uploadFileService.getFiles();
-          }
-        },
-        (err) => {
-          this.progress = 0;
-          this.message = 'Could not upload the file';
-          this.fileInfos = undefined;
-        }
-      );
-    }
+    // this.progress = 0;
+    // this.currentFile = this.selectedFiles.item(0);
+    // if (this.currentFile) {
+    //   this._uploadFileService.upload([this.currentFile]).subscribe(
+    //     (event) => {
+    //       if (event.type === HttpEventType.UploadProgress && event.total) {
+    //         this.progress = Math.round((100 * event.loaded) / event.total);
+    //       } else if (event instanceof HttpResponse) {
+    //         this.message = event.body ? event.body.message : '';
+    //         this.fileInfos = this._uploadFileService.getFiles();
+    //       }
+    //     },
+    //     (err) => {
+    //       this.progress = 0;
+    //       this.message = 'Could not upload the file';
+    //       this.fileInfos = undefined;
+    //     }
+    //   );
+    // }
   }
   getFiles() {
     this._uploadFileService.getFiles().subscribe((files) => { });

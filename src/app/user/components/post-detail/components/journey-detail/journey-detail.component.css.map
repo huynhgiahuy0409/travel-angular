@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "journey-detail.component.scss"
+    ],
+    "names": [],
+    "file": "journey-detail.component.css"
+}
