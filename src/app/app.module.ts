@@ -15,6 +15,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { LoginModule } from './user/components/login/login.module';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { PageNotFoundComponent } from './shared/components/pagen-not-found/page-not-found.component';
+import { QRCodeModule } from 'angularx-qrcode';
 @NgModule({
   declarations: [AppComponent, PageNotFoundComponent],
   imports: [
@@ -31,7 +32,8 @@ import { PageNotFoundComponent } from './shared/components/pagen-not-found/page-
     // AgmCoreModule.forRoot({
     //   apiKey: 'AIzaSyCp3qsNHBlKfgzMkrkr0FTUsNAPsH4yd7Y',
     // }),
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    QRCodeModule
   ],
   bootstrap: [AppComponent],
   providers: [

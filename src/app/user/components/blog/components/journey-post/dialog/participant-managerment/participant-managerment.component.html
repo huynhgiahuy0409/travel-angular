@@ -1,0 +1,51 @@
+<h2 mat-dialog-title style="text-align: center">Quản lí thành viên</h2>
+<mat-dialog-content class="mat-typography">
+    <mat-tab-group class="w-fit">
+        <mat-tab label="Chờ xét duyệt">
+            <div class="participant__list">
+                <div class="participant__item d-flex align-items-center" *ngFor="let waitingParticipant of waitingParticipants">
+                    <div class="avatar">
+                        <img [src]="maleDefaultAvatarURL" alt="" *ngIf="!waitingParticipant.user.avt && waitingParticipant.user.gender === 'MALE' "/>
+                        <img [src]="femaleDefaultAvatarURL" alt="" *ngIf="!waitingParticipant.user.avt && waitingParticipant.user.gender === 'FEMALE' "/>
+                        <img [src]="undefinedDefaultAvatarURL" alt="" *ngIf="!waitingParticipant.user.avt && waitingParticipant.user.gender === 'UNDEFINED' "/>
+                    </div>
+                    <div class="name" style="flex: 1">
+                        {{waitingParticipant.user.fullName}}
+                    </div>
+                    <div class="action__list d-flex">
+                        <div class="action__item">
+                            <button class="primary-btn" mat-raised-button (click)="updateParticipant(waitingParticipant, 2)">Chấp nhận</button>
+                        </div>
+                        <div class="action__item">
+                            <button class="warn-btn" mat-raised-button (click)="updateParticipant(waitingParticipant, -1)">Từ chối</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Đã duyệt">
+            <div class="participant__item d-flex align-items-center" *ngFor="let approvedParticipant of approvedParticipants">
+                <div class="avatar">
+                    <img [src]="maleDefaultAvatarURL" alt="" *ngIf="!approvedParticipant.user.avt && approvedParticipant.user.gender === 'MALE' "/>
+                    <img [src]="femaleDefaultAvatarURL" alt="" *ngIf="!approvedParticipant.user.avt && approvedParticipant.user.gender === 'FEMALE' "/>
+                    <img [src]="undefinedDefaultAvatarURL" alt="" *ngIf="!approvedParticipant.user.avt && approvedParticipant.user.gender === 'UNDEFINED' "/>
+                </div>
+                <div class="name" style="flex: 1">
+                    {{approvedParticipant.user.fullName}}
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Đã từ chối">
+            <div class="participant__item d-flex align-items-center" *ngFor="let denyParticipant of denyParticipants">
+                <div class="avatar">
+                    <img [src]="maleDefaultAvatarURL" alt="" *ngIf="!denyParticipant.user.avt && denyParticipant.user.gender === 'MALE' "/>
+                    <img [src]="femaleDefaultAvatarURL" alt="" *ngIf="!denyParticipant.user.avt && denyParticipant.user.gender === 'FEMALE' "/>
+                    <img [src]="undefinedDefaultAvatarURL" alt="" *ngIf="!denyParticipant.user.avt && denyParticipant.user.gender === 'UNDEFINED' "/>
+                </div>
+                <div class="name" style="flex: 1">
+                    {{denyParticipant.user.fullName}}
+                </div>
+            </div>
+        </mat-tab>
+      </mat-tab-group>
+</mat-dialog-content>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DIRECT_LINK_IMAGE, FEMALE_DEFAULT_AVATAR_URL, MALE_DEFAULT_AVATAR_URL, UNDEFINED_DEFAULT_AVATAR_URL } from 'src/app/shared/models/constant';
+import { DEFAULT_PROVINCE_PLACE_URL, DIRECT_LINK_IMAGE, FEMALE_DEFAULT_AVATAR_URL, MALE_DEFAULT_AVATAR_URL, UNDEFINED_DEFAULT_AVATAR_URL } from 'src/app/shared/models/constant';
 
 @Injectable({
   providedIn: 'root'
@@ -9,9 +9,13 @@ export class DirectLinkService {
   femaleDefaultAvatarURL: string = FEMALE_DEFAULT_AVATAR_URL
   undefinedDefaultAvatarURL: string = UNDEFINED_DEFAULT_AVATAR_URL
   directLinkImageURL = DIRECT_LINK_IMAGE
+  defaultProvincePlaceURL: string = DEFAULT_PROVINCE_PLACE_URL;
   constructor() { }
   getURLImage(email: string, imageName: string, ext: string){
     return this.directLinkImageURL + email + "/" + imageName + "." + ext
+  }
+  getURLProvincePlace(imageName: string){
+    return this.defaultProvincePlaceURL + imageName
   }
   getDefaultAvatarURL(gender: string){
     if(gender === "MALE"){

@@ -62,6 +62,19 @@
             </li>
         </ul>
     </div>
+    <form [formGroup]="searchFormGroup" class="journey-search-box box-shadow">
+        <i class="fa-solid fa-magnifying-glass" ></i>
+        <mat-form-field appearance="fill">
+            <mat-label>Tiêu chí tìm kiếm</mat-label>
+            <mat-select formControlName="order">
+                <mat-option value="title">Tiêu đề bài viết</mat-option>
+                <mat-option value="tag">Tag</mat-option>
+                <mat-option value="cost">Chi phí chuyến đi</mat-option>
+                <mat-option value="provinceName">Tỉnh/Thành phố</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <input type="text" formControlName="search"/>
+    </form>
     <!-- posts -->
     <div class="post-container box-shadow" *ngFor="let reviewPost of reviewPosts">
         <!-- header post -->
@@ -82,6 +95,11 @@
         </div>
         <div class="post-text">
             {{ reviewPost.bio }}
+        </div>
+        <div class="standard__list" *ngIf="reviewPost.reviewPostTags">
+            <div class="standard__item" *ngFor="let tag of reviewPost.reviewPostTags">
+                <span style="color: var(--primary-color--)">#{{tag.name}}</span>
+            </div>
         </div>
         <!------ Sorting display images ------>
         <div class="review-post__image" (click)="openReviewDetail(reviewPost.id)">

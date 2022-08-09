@@ -2,7 +2,7 @@ import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { BASE_URL } from 'src/app/shared/models/constant';
-import { APIResponse, Pageable } from 'src/app/shared/models/model';
+import { APIResponse, FilterJourneyPost, FilterReviewPost, Pageable, Sortable } from 'src/app/shared/models/model';
 import { ReviewPostRequest } from 'src/app/shared/models/request';
 import { ReviewPostResponse } from 'src/app/shared/models/response';
 
@@ -14,30 +14,35 @@ export class ReviewPostService {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
     }),
-    params: new HttpParams(),
   };
   constructor(private httpClient: HttpClient) {}
   createReviewPost(
     reviewPostRequest: ReviewPostRequest,
     coverMediaId?: number,
     postMediaIds?: number[]
-  ): Observable<APIResponse<number>> {
+  ): Observable<APIResponse<ReviewPostResponse>> {
     const url = `${BASE_URL}/member/review-post`;
-    console.log(coverMediaId);
-    console.log(postMediaIds);
-    
+  
+    let paramsObject = {
+      coverImageId: -1 || null,
+      reviewPostImageIds: [-1]
+    }
     if (coverMediaId) {
-      this.httpOptions.params = this.httpOptions.params.set('coverImageId', coverMediaId);
+      paramsObject.coverImageId = coverMediaId
     }
     if (postMediaIds) {
-      this.httpOptions.params = this.httpOptions.params.set('reviewPostImageIds', postMediaIds + '');
+      paramsObject.reviewPostImageIds = postMediaIds 
     }
-    console.log(this.httpOptions);
-    
-    return this.httpClient.post<APIResponse<number>>(
+    let httpOptions = {
+      headers: this.httpOptions.headers,
+      params: new HttpParams({
+        fromObject: paramsObject
+      })
+    }
+    return this.httpClient.post<APIResponse<ReviewPostResponse>>(
       url,
       reviewPostRequest,
-      this.httpOptions
+      httpOptions
     );
   }
   findById(id: number){
@@ -47,17 +52,69 @@ export class ReviewPostService {
       this.httpOptions
     );
   }
-  findAll(pageable: Pageable){
+  findAll(filter: FilterReviewPost){
     const url = `${BASE_URL}/member/review-posts`;
-    this.httpOptions.params = new HttpParams({
-      fromObject: {
-        pageIndex: pageable.pageIndex,
-        pageSize: pageable.pageSize,
-      }
-    })
+    let params = new HttpParams()
+    params = params.append('pageIndex', filter.pageable.pageIndex)  
+    params = params.append('pageSize', filter.pageable.pageSize)
+    if(filter.pageable.sortable){
+      params = params.append("dir", filter.pageable.sortable.dir)
+      params = params.append("order", filter.pageable.sortable.order)
+    }
+    if(filter.title){
+      params = params.append("title", filter.title)
+    }else if(filter.tag){
+      params = params.append("tag", filter.tag)
+    }else if(filter.cost){
+      params = params.append("cost", filter.cost)
+    }else if(filter.provinceName){
+      params = params.append("provinceName", filter.provinceName)
+    }
+    let httpOptions = {
+      headers: this.httpOptions.headers,
+      params: params
+    }
+    
     return this.httpClient.get<ReviewPostResponse[]>(
       url,
-      this.httpOptions
+      httpOptions
+    );
+  }
+  findAllByProvinceIdWithPaging(provinceId: number, pageable: Pageable): Observable<ReviewPostResponse[]>{
+    const url = `${BASE_URL}/member/province/${provinceId}/review-posts`
+    let params = new HttpParams()
+    params = params.append('pageIndex', pageable.pageIndex)  
+    params = params.append('pageSize', pageable.pageSize)
+    if(pageable.sortable){
+      params = params.append("dir", pageable.sortable.dir)
+      params = params.append("order", pageable.sortable.order)
+    }
+    let httpOptions = {
+      headers: this.httpOptions.headers,
+      params: params
+    }
+    return this.httpClient.get<ReviewPostResponse[]>(
+      url,
+      httpOptions
+    );
+  }
+  findAllByUserIdWithPaging(userId: number, pageable: Pageable): Observable<ReviewPostResponse[]>{
+    const url = `${BASE_URL}/member/user/${userId}/review-posts`
+    let params = new HttpParams()
+    params = params.append('pageIndex', pageable.pageIndex)  
+    params = params.append('pageSize', pageable.pageSize)
+    if(pageable.sortable){
+      params = params.append("dir", pageable.sortable.dir)
+      params = params.append("order", pageable.sortable.order)
+    }
+    let httpOptions = {
+      headers: this.httpOptions.headers,
+      params: params
+    }
+    
+    return this.httpClient.get<ReviewPostResponse[]>(
+      url,
+      httpOptions
     );
   }
 }

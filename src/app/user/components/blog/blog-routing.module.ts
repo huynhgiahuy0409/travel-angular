@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BlogComponent } from './blog.component';
 import { FollowerComponent } from './components/follower/follower.component';
 import { FollowingComponent } from './components/following/following.component';
+import { JourneyPostComponent } from './components/journey-post/journey-post.component';
 import { ReviewPostComponent } from './components/review-post/review-post.component';
 
 const routes: Routes = [
@@ -12,7 +13,16 @@ const routes: Routes = [
     children: [
       {
         path: '',
+        redirectTo: 'review-post',
+        pathMatch: 'full'
+      },
+      {
+        path: 'review-post',
         component: ReviewPostComponent,
+      },
+      {
+        path: 'journey-post',
+        component: JourneyPostComponent,
       },
       {
         path: 'follower',

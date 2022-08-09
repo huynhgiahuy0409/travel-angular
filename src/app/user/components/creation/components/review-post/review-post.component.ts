@@ -21,7 +21,10 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { ReviewPostService } from 'src/app/user/services/review-post.service';
 import { UploadFileService } from 'src/app/user/services/upload-file.service';
 import { APIResponse } from 'src/app/shared/models/model';
-import { UploadFileResponse } from 'src/app/shared/models/response';
+import { DistrictResponse, ProvinceResponse, UploadFileResponse } from 'src/app/shared/models/response';
+import { LocalService } from 'src/app/user/services/local.service';
+import { NotifyDialogService } from 'src/app/user/services/notify-dialog.service';
+import { MatDialogRef } from '@angular/material/dialog';
 interface ReviewMedia$ {
   coverMedia$?: Observable<APIResponse<UploadFileResponse>> | null;
   postMedias$?: Observable<APIResponse<UploadFileResponse>> | null;
@@ -57,11 +60,17 @@ export class ReviewPostComponent implements OnInit {
   addImagesInput!: ElementRef<HTMLInputElement>;
   /* form */
   reviewPostFromGroup!: FormGroup;
+  /* local */
+  provinces$!: Observable<ProvinceResponse[]>
+  district$!: Observable<DistrictResponse[]>
   constructor(
     private renderer: Renderer2,
     private reviewPostService: ReviewPostService,
     private fb: FormBuilder,
-    private uploadFileService: UploadFileService
+    private uploadFileService: UploadFileService,
+    private localService: LocalService,
+    private notifyDialogService: NotifyDialogService,
+    public dialogRef: MatDialogRef<ReviewPostComponent>
   ) {
     this.filteredLocationTags = this.locationTagCtrl.valueChanges.pipe(
       startWith(null),
@@ -79,13 +88,22 @@ export class ReviewPostComponent implements OnInit {
       cost: [''],
       participantNumber: [''],
       tags: [''],
+      provinceId: ['', [Validators.required]],
+      districtId: ['']
     });
     this.reviewPostFromGroup.valueChanges.subscribe((v) => {
       console.log(v);
     });
+    /* init local */
+    this.provinces$ = this.localService.findAllProvince()
+    this.provinces$.subscribe(v => {
+      console.log(v)
+    })
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+  }
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
     return this.allLocations.filter((location) =>
@@ -204,9 +222,6 @@ export class ReviewPostComponent implements OnInit {
             const postIds: number[] | undefined = postMediasData
               ? postMediasData.map((i) => i.id)
               : undefined;
-              console.log(coverIds![0]);
-              console.log(postIds);
-              
             return this.reviewPostService.createReviewPost(
               this.reviewPostFromGroup.value,
               coverIds![0],
@@ -214,13 +229,22 @@ export class ReviewPostComponent implements OnInit {
             );
           })
         )
-        .subscribe((v) => {
-          console.log(v);
+        .subscribe((response) => {
+          this.dialogRef.close({
+            createdReviewPost: response.data
+          })
         });
-    } else {
+      } else {
       this.reviewPostService
-        .createReviewPost(this.reviewPostFromGroup.value, undefined, undefined)
-        .subscribe();
+      .createReviewPost(this.reviewPostFromGroup.value, undefined, undefined)
+      .subscribe((response) => {
+          this.dialogRef.close({
+            createdReviewPost: response.data
+          })
+        });
     }
+  }
+  onProvince(value: number){
+    this.district$ = this.localService.findAllDistrictByProvince(value)
   }
 }

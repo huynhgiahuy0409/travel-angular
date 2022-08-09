@@ -5,15 +5,17 @@ import { JourneysComponent } from './components/journeys/journeys.component';
 import { ReviewPostsComponent } from './components/review-posts/review-posts.component';
 import { UserPostComponent } from './components/user-post/user-post.component';
 import { HomeComponent } from './home.component';
+import { JourneyDetailComponent } from '../post-detail/components/journey-detail/journey-detail.component';
+import { MomoPaymentComponent } from './components/momo-payment/momo-payment.component';
 
 const routes: Routes = [
     {
         path: '',
         component: HomeComponent,
         children: [
-            {path: '', redirectTo: 'review-post', pathMatch: 'full'},
+            {path: '', redirectTo: 'review-posts', pathMatch: 'full'},
             {
-                path: 'review-post', component: ReviewPostsComponent,
+                path: 'review-posts', component: ReviewPostsComponent,
                 children: [
                     {
                         path: ':id', component: ReviewPostDetailComponent
@@ -24,9 +26,17 @@ const routes: Routes = [
                 path: 'user-posts', component: UserPostComponent
             },
             {
-                path: 'journeys', component: JourneysComponent
+                path: 'journey-posts', component: JourneysComponent,
+                children: [
+                    {
+                        path: ':id', component: JourneyDetailComponent
+                    },
+                ]
             },
         ],
+    },
+    {
+        path: 'journey-post/:id/payment', component: MomoPaymentComponent
     },
 ];
 

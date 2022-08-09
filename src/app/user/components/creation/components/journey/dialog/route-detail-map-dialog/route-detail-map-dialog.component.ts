@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, Optional } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as goongjs from '@goongmaps/goong-js';
 import * as goongsdk from '@goongmaps/goong-sdk';
 import * as polyline from '@mapbox/polyline';
 import { GOONG_API_KEY } from 'src/app/shared/models/constant';
+import { Uluru } from 'src/app/shared/models/model';
 @Component({
   selector: 'app-route-detail-map-dialog',
   templateUrl: './route-detail-map-dialog.component.html',
@@ -13,18 +15,20 @@ export class RouteDetailMapDialogComponent implements OnInit {
   originLat!: number
   desLong!: number
   desLat!: number
+  constructor(@Optional() @Inject(MAT_DIALOG_DATA) public data: {srcUluru: Uluru, desUluru: Uluru}){
 
+  }
   ngOnInit(): void {
-    this.originLong = 106.70322045500006
-    this.originLat = 10.776714870000035
-    this.desLong = 107.08426
-    this.desLat = 10.34599
+    this.originLong = this.data.srcUluru.lng
+    this.originLat = this.data.srcUluru.lat
+    this.desLong = this.data.desUluru.lng
+    this.desLat = this.data.desUluru.lat
     goongjs.accessToken = 'IDnak9Ntt41NhsSK12He1C2vzvxvkRQ8uWXeLHe2';
     var map = new goongjs.Map({
-      container: 'map',
+      container: 'route-map',
       style: 'https://tiles.goong.io/assets/goong_map_web.json',
       center: [(this.originLong + this.desLong) / 2, (this.originLat + this.desLat) / 2],
-      zoom: 8,
+      zoom: 11,
     });
     map.on('load', () => {
       var layers = map.getStyle().layers;
@@ -80,10 +84,10 @@ export class RouteDetailMapDialogComponent implements OnInit {
         });
     });
     new goongjs.Marker()
-      .setLngLat([106.70322045500006, 10.776714870000035])
+      .setLngLat([this.originLong,this.originLat])
       .addTo(map);
     new goongjs.Marker()
-      .setLngLat([107.08426, 10.34599])
+      .setLngLat([this.desLong,this.desLat])
       .addTo(map);
   }
 }

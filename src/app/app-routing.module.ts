@@ -4,6 +4,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './user/components/login';
 import { AuthGuardService } from './user/services/auth-guard.service';
 import { PageNotFoundComponent } from './shared/components/pagen-not-found/page-not-found.component';
+import { ForgetPasswordComponent } from './user/components/login/components/forget-password/forget-password.component';
+import { IdentifyComponent } from './user/components/login/components/identify/identify.component';
+import { ValidOTPComponent } from './user/components/login/components/valid-otp/valid-otp.component';
 
 const routes: Routes = [
   {
@@ -14,6 +17,19 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'confirmemail', component: ValidOTPComponent
+  },
+  {
+    path: 'recover/code', component: ValidOTPComponent
+  },
+  {
+    path: 'recover/password', component: ForgetPasswordComponent
+  },
+  {
+    path: 'identify',
+    component: IdentifyComponent,
   },
   {
     path: "**", component: PageNotFoundComponent

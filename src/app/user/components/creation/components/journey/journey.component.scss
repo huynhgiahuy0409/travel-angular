@@ -2,8 +2,35 @@
     --header-height--: 100px;
     --day-action-height--: 40px
 }
+/* common */
+.description-box {
+    max-width: 100%;
+}
 
+/* journey */
+.journey__list{
+    
+}
+.journey__list .journey__item{
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+.journey__item .journey__title{
+    font-weight: 550;
+}
+/*  */
 
+/* journey-detail */
+.journey-detail__list{
+    padding-left: 10px;
+}
+.journey-detail__list .journey-detail__item{
+}
+/*  */
+/* journey cost list */
+.journey-cost__list{
+}
 .day-action {
     height: var(--day-action-height--);
 }
@@ -13,12 +40,11 @@
 .step__item {}
 
 .step__item .step__title {
-    font-size: 1.6rem;
-
+    margin: 0
 }
 /* content */
 .step__item .content {
-    height: 100vh;
+    height: auto;
     overflow-y: auto;
 }
 /* content-place */
@@ -28,8 +54,12 @@
     margin: 5px;
     border-radius: 5px;
     overflow: hidden;
-    max-height: 250px;
+    max-height: 300px;
+    min-height: 300px;
     position: relative;
+}
+.content-place__item h4, .content-place__item p{
+    margin: 0
 }
 .content-place__item .overlay{
   display: none
@@ -65,33 +95,45 @@
 
 /* content-map */
 
-.content-map .autocomplete__list{
+.autocomplete__list{
     overflow: hidden;
     border-radius: 5px;
     border: 1px solid #ccc;
 }
-.content-map .autocomplete__item{
+.autocomplete__item{
     padding: 10px;
 }
-.content-map .autocomplete__item span{
+.autocomplete__item span{
     font-weight: 550;
 }
-.content-map .autocomplete__item:hover{
+.autocomplete__item:hover{
     background-color: var(--hover-color--);
 }
 .map-wrap{
+    width: 100%;
+    height: 300px;
+    overflow: auto;
+    position: relative;
+}
+.map-wrap #visit-map{
+    width: 100%;
     height: 100%;
 }
-.map-wrap #map{
-    width: 100%;
-    height: 50%;
+
+.map-wrap:hover #confirm-map-place-btn{
+    display: inline-block;
+}
+.map-wrap #confirm-map-place-btn{
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    display: none;
 }
 
 
 /*  */
 .timeline__list {
     padding: 10px;
-    height: 100vh;
 }
 
 .timeline__item {}
@@ -109,7 +151,9 @@
 
 .timeline__item .header .name {}
 
-.timeline__item .header .action {}
+.timeline__item:last-child .main {
+    display: none;
+}
 
 .timeline__item .main {
     width: 100%;
@@ -124,8 +168,19 @@
 }
 
 .timeline__item .main .liner {
-    border-left: 4px dotted #ccc;
+    border-left: 3px dotted #ccc;
     height: 100%;
 }
 
 .timeline__item .main .route-detail-btn {}
+/* departure place */
+#departure-place-search{
+    position: relative;
+}
+#departure-place-search .autocomplete__list{
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+}

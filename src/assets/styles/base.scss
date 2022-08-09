@@ -169,6 +169,17 @@ textarea {
   border: none;
   outline: none;
 }
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
 
 ol,
 ul {
@@ -219,8 +230,19 @@ button:disabled, button[disabled]{
 
 }
 
-.primary-color-btn {
+.primary-btn {
   background-color: var(--primary-color--);
+  color: var(--white-color--)
+}
+.warn-btn {
+  background-color: var(--base-cherry-color--);
+  color: var(--white-color--)
+}
+.warn-btn {
+  background-color: var(--base-cherry-color--);
+  color: var(--white-color--)
+}
+.warn-btn i, .primary-btn i{
   color: var(--white-color--)
 }
 .icon-btn{
@@ -238,11 +260,16 @@ button:disabled, button[disabled]{
 
 .field {
   height: 50px;
-  min-width: 190px;
-  padding: 0 10px;
+  min-height: 50px;
+  max-width: 100%;
+  padding: 10px;
   border-radius: 10px;
   border: 1px solid #ccc;
   display: flex;
+  align-items: center;
+}
+.field.text-area {
+  height: 80px;
 }
 
 .field--color {
@@ -289,13 +316,7 @@ button:disabled, button[disabled]{
 .flex-fit{
   flex: 100%
 }
-.show {
-  display: block;
-}
 
-.hidden {
-  display: none
-}
 
 .overlay {
   position: absolute;

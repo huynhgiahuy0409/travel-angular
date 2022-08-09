@@ -4,8 +4,8 @@ import { Injectable } from '@angular/core';
 import { GOONG_URL, BASE_URL } from 'src/app/shared/models/constant';
 import {
   ForwardGeocodingResponse,
-  PlaceAutocompleteResponse,
-  PlaceDetailResponse,
+  GoongPlaceAutocompleteResponse,
+  GoongPlaceDetailResponse,
 } from 'src/app/shared/models/response';
 
 @Injectable({
@@ -23,15 +23,15 @@ export class GoongMapService {
     const url = `${BASE_URL}/public/goong/geocode/address/${address}`;
     return this.httpClient.get<ForwardGeocodingResponse>(url, this.httpOptions);
   }
-  getPlaceAutocomplete(input: string): Observable<PlaceAutocompleteResponse> {
+  getPlaceAutocomplete(input: string): Observable<GoongPlaceAutocompleteResponse> {
     const url = `${BASE_URL}/public/goong/place/autocomplete/${input}`;
-    return this.httpClient.get<PlaceAutocompleteResponse>(
+    return this.httpClient.get<GoongPlaceAutocompleteResponse>(
       url,
       this.httpOptions
     );
   }
   getPlaceDetailByPlaceId(placeId: string){
     const url = `${BASE_URL}/public/goong/place/detail/${placeId}`;
-    return this.httpClient.get<PlaceDetailResponse>(url, this.httpOptions);
+    return this.httpClient.get<GoongPlaceDetailResponse>(url, this.httpOptions);
   }
 }

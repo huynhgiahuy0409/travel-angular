@@ -213,7 +213,7 @@ button {
   outline: none;
 }
 
-.primary-color-btn {
+.primary-btn {
   background-color: var(--primary-color--);
   color: var(--white-color--);
 }

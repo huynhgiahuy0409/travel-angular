@@ -16,6 +16,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { UploadFileService } from '../../services/upload-file.service';
 import { CreatePostDialogComponent } from './dialog/create-post-dialog/create-post-dialog.component';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
+import { ProgressBarService } from '../../services/progress-bar.service';
 export interface User {
   name: string;
   url: string;
@@ -219,7 +220,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     private _dialog: MatDialog,
     private renderer: Renderer2,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public progressBarService: ProgressBarService
   ) { }
   ngAfterViewInit(): void {
      this.autoNextCover()

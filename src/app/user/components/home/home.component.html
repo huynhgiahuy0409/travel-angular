@@ -1,54 +1,8 @@
-<div class="header-wrap" style="position: sticky">
-  <shared-header></shared-header>
+<div class="overlay"  *ngIf="progressBarService.progressBar$ | async" mode="indeterminate">
+  <mat-spinner></mat-spinner>
 </div>
+<shared-header></shared-header>
 <div class="home-container">
-  <!-- header -->
-  <!-- main -->
-  <!-- cover -->
-  <div class="cover box-shadow" *ngIf="routerUrl == '/home'">
-    <div class="content hide-on-mobile">
-      <h1>Đi & khám phá theo cách của bạn</h1>
-    </div>
-    <ul #coverImageList class="cover-image__list hide-on-mobile">
-      <div class="cover-image__item">
-        <img src="assets/image/cover-image.jpg" alt="">
-      </div>
-      <div class="cover-image__item">
-        <img src="assets/image/cover-image-1.jpg" alt="">
-      </div>
-      <div class="cover-image__item">
-        <img src="assets/image/cover-image-2.jpg" alt="">
-      </div>
-    </ul>
-    <div class="cover-action">
-      <div class="grid wide">
-        <div class="row cover-action__list">
-          <div class="col l-3 m-3 c-3 cover-action__item d-flex align-items-center">
-            <button mat-raised-button style="display: flex;"
-              class="w-fit primary-color-btn align-items-center justify-content-center">Chia sẽ ngay</button>
-          </div>
-          <div class="col l-3 m-3 c-3 cover-action__item">
-            <h4>
-              Tạo blog cá nhân
-            </h4>
-            <p class="hide-on-mobile">Tạo blog bằng cách chia sẻ trải nghiệm chuyến đi của bạn</p>
-          </div>
-          <div class="col l-3 m-3 c-3 cover-action__item">
-            <h4>
-              Hỏi đáp thắc mắc
-            </h4>
-            <p class="hide-on-mobile">Đặt câu hỏi và giúp thành viên khác giải đáp thắc mắc</p>
-          </div>
-          <div class="col l-3 m-3 c-3 cover-action__item">
-            <h4>
-              Hành trình
-            </h4>
-            <p class="hide-on-mobile">Chia sẻ lich trình đã đi hoặc lập hành trình chuyến tiếp</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
   <div class="my-container grid">
     <div class="row">
       <!-- ----------left-sidebar---------- -->

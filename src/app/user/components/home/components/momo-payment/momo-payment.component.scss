@@ -1,0 +1,51 @@
+.payment-container {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.momo{
+    display: flex;
+    background-color: #fff;
+    margin: 20px 0;
+    box-shadow: 0 0 5px #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.momo__left{
+    flex-basis: 20%;
+    background-color: rgb(175,32,112);
+    color: white;
+    padding: 20px
+}
+.momo__info{
+    display: flex;
+    border-top: 1px solid rgb(150, 28, 97);
+    border-bottom: 1px solid rgb(150, 28, 97);
+    padding: 10px 0
+}
+.momo__info-icon{
+    margin-right: 20px
+}
+.momo__info-text{
+}
+.momo__info-text h4{
+    margin: 0
+}
+.momo__right{
+    flex: 1;
+    padding: 20px;
+}
+.momo__right .header{
+    padding: 20px 0
+}
+.momo__right .main{
+    border-top: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+}
+.momo__right .header img{
+    width: 100px;
+    object-fit: contain;
+}

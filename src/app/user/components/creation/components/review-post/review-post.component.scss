@@ -119,28 +119,7 @@
     background: var(--hover-color--);
 }
 
-::ng-deep .mat-form-field {
-    border-radius: 10px;
-    overflow: hidden;
-    border: 1px solid #ccc;
-}
 
-::ng-deep .mat-form-field-wrapper {
-    padding: 0 !important;
-}
-
-::ng-deep .mat-form-field-underline {
-    bottom: unset;
-    width: 0 !important;
-}
-
-::ng-deep .mat-form-field-appearance-fill .mat-form-field-underline::before {
-    width: 0;
-}
-
-::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
-    background-color: #fff;
-}
 
 .field__list {}
 
@@ -364,4 +343,7 @@
 
 .show {
     display: block;
+}
+.mat-form-field{
+    padding: 5px
 }

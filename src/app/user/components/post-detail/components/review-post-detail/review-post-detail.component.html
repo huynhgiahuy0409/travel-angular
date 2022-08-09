@@ -1,450 +1,553 @@
 <div class="container" *ngIf="reviewPostResponse$ | async as reviewPost">
-    <div class="header box-shadow">
-        <div class="cover-image-wrap">
-            <img class="cover-image" [src]="
+  <div class="header box-shadow">
+    <div class="cover-image-wrap">
+      <img
+        class="cover-image"
+        [src]="
           directLinkService.getURLImage(
             reviewPost.user.email,
             reviewPost.coverImage.name,
             reviewPost.coverImage.ext
           )
-        " alt="" />
-        </div>
-        <div class="row no-gutters">
-            <div class="col l-3 m-4 c-12">
-                <div class="user-info">
-                    <div class="avatar d-flex align-items-center justify-content-center">
-                        <img [src]="
-            directLinkService.getDefaultAvatarURL(
-              reviewPost.user.gender
-            )
-          " alt="" />
-                        <div class="title hide-on-mobile">
-                            <h1>{{ reviewPost.title }}</h1>
-                            <ul class="location-tag__list d-flex">
-                                <li class="location-tag__item d-flex">#Mũi Gành Dầu</li>
-                                <li class="location-tag__item d-flex">#Phú quốc</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="username d-flex align-items-center justify-content-center">
-                        <span>{{reviewPost.user.fullName}}</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col l-9 m-8 c-0">
-                <div class="row no-gutters justify-content-between align-item-center">
-                    <div class="follow-btn box-shadow d-flex align-items-center justify-content-center">
-                        <i style="margin-right: 10px" class="fa fa-rss xs:d-none" aria-hidden="true"></i>
-                        <span>Follow</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row hide-on-pc hide-on-tablet hide-on-big-tablet">
-            <div class="col l-0 m-0 c-12 d-flex align-item-center justify-content-center">
-                <div class="title">
-                    <h1>
-                        {{reviewPost.title}}
-                    </h1>
-                    <ul class="location-tag__list d-flex align-item-center justify-content-center">
-                        <li class="location-tag__item d-flex">#Mũi Gành Dầu</li>
-                        <li class="location-tag__item d-flex">#Phú quốc</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+        "
+        alt=""
+      />
     </div>
-    <div class="main">
-        <div class="grid wide">
-            <div class="row">
-                <div class="col l-12 m-12 c-12">
-                    <div class="header d-flex align-item-center justify-content-between">
-                        <ul class="step-location__list d-flex">
-                            <i class="fa-solid fa-map-pin d-flex align-items-center"></i>
-                            <li class="step-location__item">Châu á</li>
-                            <li class="step-location__item">Việt nam</li>
-                            <li class="step-location__item">Kiên giang</li>
-                        </ul>
-                        <ul class="action__list d-flex">
-                            <li class="action__item">
-                                <i class="fa-regular fa-calendar mr-r-5"></i>
-                                <span>{{dateUtilsService.dateTimeFormula(reviewPost.createdDate)}}</span>
-                            </li>
-                            <li class="action__item">
-                                <i class="fa-regular fa-heart mr-r-5"></i>
-                                <span>20</span>
-                            </li>
-                            <li class="action__item">
-                                <i class="fa-solid fa-comment-dots mr-r-5"></i>
-                                <span>20</span>
-                            </li>
-                            <li class="action__item">
-                                <i class="fa-solid fa-share"></i>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="content__list">
-                        <div class="content__item">
-                            <div class="content__bio box-shadow">
-                                {{reviewPost.bio}}
-                            </div>
-                        </div>
-                        <div class="content__item">
-                            <div class="content__detail">
-                                {{reviewPost.content}}
-                            </div>
-                        </div>
-                        <div class="content__item">
-                            <h4 class="content__title">Video</h4>
-                        </div>
-                        <div class="content__item">
-                            <h4 class="content__title">Hình ảnh</h4>
-                            
-<!------ Sorting display images ------>
-<div class="review-post__image">
-    <!-- 1 image -->
-    <div class="image__list one" *ngIf="reviewPost.images.length == 1">
-        <div class="image__item">
-            <img [src]="
-            directLinkService.getURLImage(
-        reviewPost.user.email,
-        reviewPost.images[0].image.name,
-        reviewPost.images[0].image.ext
-      )
-    " alt="" />
-        </div>
-    </div>
-    <!-- 2 images -->
-    <div class="image__list two" *ngIf="reviewPost.images.length == 2">
-        <div class="row">
-            <div class="col l-6 m-6 c-6" *ngFor="let reviewPostImage of reviewPost.images; index as idx">
-                <div class="image__item">
-                    <img [src]="
-          directLinkService.getURLImage(
-            reviewPost.user.email,
-            reviewPostImage.image.name,
-            reviewPostImage.image.ext
-          )
-        " alt="" />
-                </div>
+    <div class="row no-gutters">
+      <div class="col l-3 m-4 c-12">
+        <div class="user-info">
+          <div class="avatar d-flex align-items-center justify-content-center">
+            <img
+              [src]="
+                directLinkService.getDefaultAvatarURL(reviewPost.user.gender)
+              "
+              alt=""
+            />
+            <div class="title hide-on-mobile">
+              <h1>{{ reviewPost.title }}</h1>
+              <ul class="location-tag__list d-flex">
+                <li
+                  class="location-tag__item d-flex"
+                  *ngFor="let tag of reviewPost.reviewPostTags"
+                >
+                  #{{ tag.name }}
+                </li>
+              </ul>
             </div>
+          </div>
+          <div
+            class="username d-flex align-items-center justify-content-center"
+          >
+            <span>{{ reviewPost.user.fullName }}</span>
+          </div>
         </div>
+      </div>
+      <div class="col l-9 m-8 c-0">
+        <div class="row no-gutters justify-content-between align-item-center">
+          <div
+            class="follow-btn box-shadow d-flex align-items-center justify-content-center"
+          >
+            <i
+              style="margin-right: 10px"
+              class="fa fa-rss xs:d-none"
+              aria-hidden="true"
+            ></i>
+            <span>Follow</span>
+          </div>
+        </div>
+      </div>
     </div>
-    <!-- 3 images -->
-    <div class="image__list three" *ngIf="reviewPost.images.length == 3">
-        <div class="row">
-            <ng-container *ngFor="let reviewPostImage of reviewPost.images; index as idx">
-                <div class="col l-12 m-12 c-12" *ngIf="idx === 0">
-                    <div class="image__item">
-                        <img [src]="
-            directLinkService.getURLImage(
-              reviewPost.user.email,
-              reviewPostImage.image.name,
-              reviewPostImage.image.ext
-            )
-          " alt="" />
-                    </div>
-                </div>
-            </ng-container>
+    <div class="row hide-on-pc hide-on-tablet hide-on-big-tablet">
+      <div
+        class="col l-0 m-0 c-12 d-flex align-item-center justify-content-center"
+      >
+        <div class="title">
+          <h1>
+            {{ reviewPost.title }}
+          </h1>
         </div>
-        <div class="row">
-            <ng-container *ngFor="let reviewPostImage of reviewPost.images; index as idx">
-                <div class="col l-6 m-6 c-6" *ngIf="idx > 0">
-                    <div class="image__item">
-                        <img [src]="
-            directLinkService.getURLImage(
-              reviewPost.user.email,
-              reviewPostImage.image.name,
-              reviewPostImage.image.ext
-            )
-          " alt="" />
-                    </div>
-                </div>
-            </ng-container>
-        </div>
+      </div>
     </div>
-    <!-- 4 images -->
-    <div class="image__list four" *ngIf="reviewPost.images.length == 4">
-        <div class="row">
-            <ng-container *ngFor="let reviewPostImage of reviewPost.images; index as idx">
-                <div class="col l-12 m-12 c-12" *ngIf="idx == 0">
-                    <div class="image__item">
-                        <img [src]="
-            directLinkService.getURLImage(
-              reviewPost.user.email,
-              reviewPostImage.image.name,
-              reviewPostImage.image.ext
-            )
-          " alt="" />
-                    </div>
-                </div>
-            </ng-container>
-        </div>
-        <div class="row">
-            <ng-container *ngFor="let reviewPostImage of reviewPost.images; index as idx">
-                <div class="col l-4 m-4 c-4" *ngIf="idx > 0">
-                    <div class="image__item">
-                        <img [src]="
-            directLinkService.getURLImage(
-              reviewPost.user.email,
-              reviewPostImage.image.name,
-              reviewPostImage.image.ext
-            )
-          " alt="" />
-                    </div>
-                </div>
-            </ng-container>
-        </div>
-    </div>
-    <!-- 5 images -->
-    <div class="image__list five" *ngIf="reviewPost.images.length >= 5">
-        <div class="row">
-            <ng-container *ngFor="let reviewPostImage of reviewPost.images; index as idx">
-                <div class="col l-6 m-6 c-6" *ngIf="idx >= 0 && idx <= 1">
-                    <div class="image__item">
-                        <img [src]="
-            directLinkService.getURLImage(
-              reviewPost.user.email,
-              reviewPostImage.image.name,
-              reviewPostImage.image.ext
-            )
-          " alt="" />
-                    </div>
-                </div>
-            </ng-container>
-        </div>
-        <div class="row">
-            <ng-container *ngFor="let reviewPostImage of reviewPost.images; index as idx">
-                <div class="col l-4 m-4 c-4" *ngIf="idx > 1 && idx < 4">
-                    <div class="image__item">
-                        <img [src]="
-            directLinkService.getURLImage(
-              reviewPost.user.email,
-              reviewPostImage.image.name,
-              reviewPostImage.image.ext
-            )
-          " alt="" />
-                    </div>
-                </div>
-            </ng-container>
-            <div class="col l-4 m-4 c-4" *ngIf="reviewPost.images.length == 5">
-                <div class="image__item">
-                    <img [src]="
-          directLinkService.getURLImage(
-            reviewPost.user.email,
-            reviewPost.images[4].image.name,
-            reviewPost.images[4].image.ext
-          )
-        " alt="" />
-                </div>
+  </div>
+  <div class="main">
+    <div class="grid wide">
+      <div class="row">
+        <div class="col l-12 m-12 c-12">
+          <div class="header d-flex align-item-center justify-content-between">
+            <ul class="step-location__list d-flex">
+              <i class="fa-solid fa-map-pin d-flex align-items-center"></i>
+              <li class="step-location__item">Châu á</li>
+              <li class="step-location__item">Việt Nam</li>
+              <li class="step-location__item" *ngIf="reviewPost.province">
+                {{ reviewPost.province.name }}
+              </li>
+              <li class="step-location__item" *ngIf="reviewPost.district">
+                {{
+                  reviewPost.district.prefix + " " + reviewPost.district.name
+                }}
+              </li>
+            </ul>
+            <ul class="action__list d-flex">
+              <li class="action__item">
+                <i class="fa-regular fa-calendar mr-r-5"></i>
+                <span>{{
+                  dateUtilsService.dateTimeFormula(reviewPost.createdDate)
+                }}</span>
+              </li>
+              <li class="action__item">
+                <i class="fa-regular fa-heart mr-r-5"></i>
+                <span>20</span>
+              </li>
+              <li class="action__item">
+                <i class="fa-solid fa-comment-dots mr-r-5"></i>
+                <span>20</span>
+              </li>
+              <li class="action__item">
+                <i class="fa-solid fa-share"></i>
+              </li>
+            </ul>
+          </div>
+          <div class="content__list">
+            <div class="content__item">
+              <div class="content__bio box-shadow">
+                {{ reviewPost.bio }}
+              </div>
             </div>
-            <div class="col l-4 m-4 c-4" *ngIf="reviewPost.images.length > 5">
-                <div class="image__item" style="position: relative">
-                    <img [src]="
-          directLinkService.getURLImage(
-            reviewPost.user.email,
-            reviewPost.images[4].image.name,
-            reviewPost.images[4].image.ext
-          )
-        " alt="" />
-                    <div class="image__item--overlay">
-                        <span>+{{ reviewPost.images.length - 5 }}</span>
-                    </div>
-                </div>
+            <div class="content__item">
+              <div class="content__detail">
+                {{ reviewPost.content }}
+              </div>
             </div>
-        </div>
-    </div>
-</div>
+            <div class="content__item">
+              <h4 class="content__title">Video</h4>
+            </div>
+            <div class="content__item">
+              <h4 class="content__title">Hình ảnh</h4>
 
-                        </div>
-                        <div class="content__item">
-                            <h4 class="content__title">Bài viết cùng tác giả</h4>
-                            <div class="grid">
-                                <div class="row">
-                                    <div class="col l-3 m-6 c-6">
-                                        <div class="d-flex author-post__list">
-                                            <div
-                                                class="l-12 m-12 c-12 box-shadow p-0 border-radius-5 author-post__list author-post">
-                                                <img src="assets/image/content-image.jpg" alt="" />
-                                                <div class="author-post__content">
-                                                    <div class="author-post__title">
-                                                        Review 3 ngày 1 điêmReview 3 ngày 1 điêmReview 3
-                                                        ngày 1 điêmReview 3 ngày 1 điêmReview 3 ngày 1 điêm
-                                                    </div>
-                                                    <div class="author-post__bio">
-                                                        Review 3 ngày 1 điêmReview 3 ngày 1 điêmReview 3
-                                                        ngày 1 điêmReview 3 ngày 1 điêmReview 3 ngày 1
-                                                        điêmReview 3 ngày 1 điêmReview 3 ngày 1 điêmReview 3
-                                                        ngày 1 điêm
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col l-3 m-6 c-6">
-                                        <div class="d-flex author-post__list">
-                                            <div
-                                                class="l-12 m-12 c-12 box-shadow p-0 border-radius-5 author-post__list author-post">
-                                                <img src="assets/image/content-image.jpg" alt="" />
-                                                <div class="author-post__content">
-                                                    <div class="author-post__title">
-                                                        Review 3 ngày 1 điêmReview 3 ngày 1 điêmReview 3
-                                                        ngày 1 điêmReview 3 ngày 1 điêmReview 3 ngày 1 điêm
-                                                    </div>
-                                                    <div class="author-post__bio">
-                                                        Review 3 ngày 1 điêmReview 3 ngày 1 điêmReview 3
-                                                        ngày 1 điêmReview 3 ngày 1 điêmReview 3 ngày 1
-                                                        điêmReview 3 ngày 1 điêmReview 3 ngày 1 điêmReview 3
-                                                        ngày 1 điêm
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="content__item">
-                            <h4 class="content__title">Bài viết liên quan</h4>
-                            <div class="grid">
-                                <div class="row no-gutters relative-post__list">
-                                    <div class="col l-12 m-12 c-12 relative-post__item box-shadow p-0 border-radius-5">
-                                        <div class="row h-fit no-gutters">
-                                            <div class="col l-3 m-6 c-6 h-fit">
-                                                <img class="w-fit h-fit" src="assets/image/content-image.jpg" alt="" />
-                                            </div>
-                                            <div class="col l-9 m-6 c-6 relative-post">
-                                                <div class="relative-post__content">
-                                                    <div class="relative-post__title">
-                                                        Review 3 ngày 1 điêm
-                                                    </div>
-                                                    <div class="relative-post__bio">
-                                                        Bài viết này Quantrimang.com sẽ cùng bạn tìm hiểu
-                                                        cách xử lý đoạn text quá dài gây tình trạng tràn ra
-                                                        ngoài phần tử chứa nó bằng cách sử dụng các thuộc
-                                                        tính:Bài viết này Quantrimang.com sẽ cùng bạn tìm
-                                                        hiểu cách xử lý đoạn text quá dài gây tình trạng
-                                                        tràn ra ngoài phần tử chứa nó bằng cách sử dụng các
-                                                        thuộc tính:Bài viết này Quantrimang.com sẽ cùng bạn
-                                                        tìm hiểu cách xử lý đoạn text quá dài gây tình trạng
-                                                        tràn ra ngoài phần tử chứa nó bằng cách sử dụng các
-                                                        thuộc tính:Bài viết này Quantrimang.com sẽ cùng bạn
-                                                        tìm hiểu cách xử lý đoạn text quá dài gây tình trạng
-                                                        tràn ra ngoài phần tử chứa nó bằng cách sử dụng các
-                                                        thuộc tính:Bài viết này Quantrimang.com sẽ cùng bạn
-                                                        tìm hiểu cách xử lý đoạn text quá dài gây tình trạng
-                                                        tràn ra ngoài phần tử chứa nó bằng cách sử dụng các
-                                                        thuộc tính:Bài viết này Quantrimang.com sẽ cùng bạn
-                                                        tìm hiểu cách xử lý đoạn text quá dài gây tình trạng
-                                                        tràn ra ngoài phần tử chứa nó bằng cách sử dụng các
-                                                        thuộc tính:
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col l-12 m-12 c-12 relative-post__item box-shadow p-0 border-radius-5">
-                                        <div class="row h-fit no-gutters">
-                                            <div class="col l-3 m-6 c-6 h-fit">
-                                                <img class="w-fit h-fit" src="assets/image/content-image.jpg" alt="" />
-                                            </div>
-                                            <div class="col l-9 m-6 c-6 relative-post">
-                                                <div class="relative-post__content">
-                                                    <div class="relative-post__title">
-                                                        Review 3 ngày 1 điêm
-                                                    </div>
-                                                    <div class="relative-post__bio">
-                                                        Bài viết này Quantrimang.com sẽ cùng bạn tìm hiểu
-                                                        cách xử lý đoạn text quá dài gây tình trạng tràn ra
-                                                        ngoài phần tử chứa nó bằng cách sử dụng các thuộc
-                                                        tính:Bài viết này Quantrimang.com sẽ cùng bạn tìm
-                                                        hiểu cách xử lý đoạn text quá dài gây tình trạng
-                                                        tràn ra ngoài phần tử chứa nó bằng cách sử dụng các
-                                                        thuộc tính:Bài viết này Quantrimang.com sẽ cùng bạn
-                                                        tìm hiểu cách xử lý đoạn text quá dài gây tình trạng
-                                                        tràn ra ngoài phần tử chứa nó bằng cách sử dụng các
-                                                        thuộc tính:Bài viết này Quantrimang.com sẽ cùng bạn
-                                                        tìm hiểu cách xử lý đoạn text quá dài gây tình trạng
-                                                        tràn ra ngoài phần tử chứa nó bằng cách sử dụng các
-                                                        thuộc tính:Bài viết này Quantrimang.com sẽ cùng bạn
-                                                        tìm hiểu cách xử lý đoạn text quá dài gây tình trạng
-                                                        tràn ra ngoài phần tử chứa nó bằng cách sử dụng các
-                                                        thuộc tính:Bài viết này Quantrimang.com sẽ cùng bạn
-                                                        tìm hiểu cách xử lý đoạn text quá dài gây tình trạng
-                                                        tràn ra ngoài phần tử chứa nó bằng cách sử dụng các
-                                                        thuộc tính:
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="content__item">
-                            <h4 class="content__title">Địa điểm liên quan</h4>
-                            <div class="grid">
-                                <div class="row">
-                                    <div class="col l-3 m-6 c-6">
-                                        <div class="d-flex author-post__list">
-                                            <div
-                                                class="l-12 m-12 c-12 box-shadow p-0 border-radius-5 author-post__list author-post">
-                                                <img src="assets/image/content-image.jpg" alt="" />
-                                                <div class="author-post__content">
-                                                    <div class="author-post__title">
-                                                        Review 3 ngày 1 điêmReview 3 ngày 1 điêmReview 3
-                                                        ngày 1 điêmReview 3 ngày 1 điêmReview 3 ngày 1 điêm
-                                                    </div>
-                                                    <div class="author-post__bio">
-                                                        Review 3 ngày 1 điêmReview 3 ngày 1 điêmReview 3
-                                                        ngày 1 điêmReview 3 ngày 1 điêmReview 3 ngày 1
-                                                        điêmReview 3 ngày 1 điêmReview 3 ngày 1 điêmReview 3
-                                                        ngày 1 điêm
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col l-3 m-6 c-6">
-                                        <div class="d-flex author-post__list">
-                                            <div
-                                                class="l-12 m-12 c-12 box-shadow p-0 border-radius-5 author-post__list author-post">
-                                                <img src="assets/image/content-image.jpg" alt="" />
-                                                <div class="author-post__content">
-                                                    <div class="author-post__title">
-                                                        Review 3 ngày 1 điêmReview 3 ngày 1 điêmReview 3
-                                                        ngày 1 điêmReview 3 ngày 1 điêmReview 3 ngày 1 điêm
-                                                    </div>
-                                                    <div class="author-post__bio">
-                                                        Review 3 ngày 1 điêmReview 3 ngày 1 điêmReview 3
-                                                        ngày 1 điêmReview 3 ngày 1 điêmReview 3 ngày 1
-                                                        điêmReview 3 ngày 1 điêmReview 3 ngày 1 điêmReview 3
-                                                        ngày 1 điêm
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="content__item">
-                            <h4 class="content__title">Giá khách sạn tại tỉnh: TTH</h4>
-                        </div>
-                        <div class="content__item">
-                            <h4 class="content__title">
-                                Tham khảo những hành trình chi tiết khác
-                            </h4>
-                        </div>
+              <!------ Sorting display images ------>
+              <div class="review-post__image">
+                <!-- 1 image -->
+                <div
+                  class="image__list one"
+                  *ngIf="reviewPost.images.length == 1"
+                >
+                  <div class="image__item">
+                    <img
+                      [src]="
+                        directLinkService.getURLImage(
+                          reviewPost.user.email,
+                          reviewPost.images[0].image.name,
+                          reviewPost.images[0].image.ext
+                        )
+                      "
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <!-- 2 images -->
+                <div
+                  class="image__list two"
+                  *ngIf="reviewPost.images.length == 2"
+                >
+                  <div class="row">
+                    <div
+                      class="col l-6 m-6 c-6"
+                      *ngFor="
+                        let reviewPostImage of reviewPost.images;
+                        index as idx
+                      "
+                    >
+                      <div class="image__item">
+                        <img
+                          [src]="
+                            directLinkService.getURLImage(
+                              reviewPost.user.email,
+                              reviewPostImage.image.name,
+                              reviewPostImage.image.ext
+                            )
+                          "
+                          alt=""
+                        />
+                      </div>
                     </div>
+                  </div>
                 </div>
-                <div class="col l-0 m-0 c-0">
-                    <div class="price-info p-12">a</div>
+                <!-- 3 images -->
+                <div
+                  class="image__list three"
+                  *ngIf="reviewPost.images.length == 3"
+                >
+                  <div class="row">
+                    <ng-container
+                      *ngFor="
+                        let reviewPostImage of reviewPost.images;
+                        index as idx
+                      "
+                    >
+                      <div class="col l-12 m-12 c-12" *ngIf="idx === 0">
+                        <div class="image__item">
+                          <img
+                            [src]="
+                              directLinkService.getURLImage(
+                                reviewPost.user.email,
+                                reviewPostImage.image.name,
+                                reviewPostImage.image.ext
+                              )
+                            "
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
+                  <div class="row">
+                    <ng-container
+                      *ngFor="
+                        let reviewPostImage of reviewPost.images;
+                        index as idx
+                      "
+                    >
+                      <div class="col l-6 m-6 c-6" *ngIf="idx > 0">
+                        <div class="image__item">
+                          <img
+                            [src]="
+                              directLinkService.getURLImage(
+                                reviewPost.user.email,
+                                reviewPostImage.image.name,
+                                reviewPostImage.image.ext
+                              )
+                            "
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
                 </div>
+                <!-- 4 images -->
+                <div
+                  class="image__list four"
+                  *ngIf="reviewPost.images.length == 4"
+                >
+                  <div class="row">
+                    <ng-container
+                      *ngFor="
+                        let reviewPostImage of reviewPost.images;
+                        index as idx
+                      "
+                    >
+                      <div class="col l-12 m-12 c-12" *ngIf="idx == 0">
+                        <div class="image__item">
+                          <img
+                            [src]="
+                              directLinkService.getURLImage(
+                                reviewPost.user.email,
+                                reviewPostImage.image.name,
+                                reviewPostImage.image.ext
+                              )
+                            "
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
+                  <div class="row">
+                    <ng-container
+                      *ngFor="
+                        let reviewPostImage of reviewPost.images;
+                        index as idx
+                      "
+                    >
+                      <div class="col l-4 m-4 c-4" *ngIf="idx > 0">
+                        <div class="image__item">
+                          <img
+                            [src]="
+                              directLinkService.getURLImage(
+                                reviewPost.user.email,
+                                reviewPostImage.image.name,
+                                reviewPostImage.image.ext
+                              )
+                            "
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+                <!-- 5 images -->
+                <div
+                  class="image__list five"
+                  *ngIf="reviewPost.images.length >= 5"
+                >
+                  <div class="row">
+                    <ng-container
+                      *ngFor="
+                        let reviewPostImage of reviewPost.images;
+                        index as idx
+                      "
+                    >
+                      <div class="col l-6 m-6 c-6" *ngIf="idx >= 0 && idx <= 1">
+                        <div class="image__item">
+                          <img
+                            [src]="
+                              directLinkService.getURLImage(
+                                reviewPost.user.email,
+                                reviewPostImage.image.name,
+                                reviewPostImage.image.ext
+                              )
+                            "
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
+                  <div class="row">
+                    <ng-container
+                      *ngFor="
+                        let reviewPostImage of reviewPost.images;
+                        index as idx
+                      "
+                    >
+                      <div class="col l-4 m-4 c-4" *ngIf="idx > 1 && idx < 4">
+                        <div class="image__item">
+                          <img
+                            [src]="
+                              directLinkService.getURLImage(
+                                reviewPost.user.email,
+                                reviewPostImage.image.name,
+                                reviewPostImage.image.ext
+                              )
+                            "
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                    </ng-container>
+                    <div
+                      class="col l-4 m-4 c-4"
+                      *ngIf="reviewPost.images.length == 5"
+                    >
+                      <div class="image__item">
+                        <img
+                          [src]="
+                            directLinkService.getURLImage(
+                              reviewPost.user.email,
+                              reviewPost.images[4].image.name,
+                              reviewPost.images[4].image.ext
+                            )
+                          "
+                          alt=""
+                        />
+                      </div>
+                    </div>
+                    <div
+                      class="col l-4 m-4 c-4"
+                      *ngIf="reviewPost.images.length > 5"
+                    >
+                      <div class="image__item" style="position: relative">
+                        <img
+                          [src]="
+                            directLinkService.getURLImage(
+                              reviewPost.user.email,
+                              reviewPost.images[4].image.name,
+                              reviewPost.images[4].image.ext
+                            )
+                          "
+                          alt=""
+                        />
+                        <div class="image__item--overlay">
+                          <span>+{{ reviewPost.images.length - 5 }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+            <div
+              class="content__item"
+              *ngIf="authorReviewPostsResponse$ | async as authorReviewPosts"
+            >
+              <h4 class="content__title">Bài viết cùng tác giả mới nhất</h4>
+
+              <div class="grid">
+                <div class="row">
+                  <div
+                    class="col l-3 m-6 c-6"
+                    *ngFor="let authorReviewPost of authorReviewPosts"
+                  >
+                    <div class="d-flex author-post__list">
+                      <div
+                        class="l-12 m-12 c-12 box-shadow p-0 border-radius-5 author-post__list author-post"
+                      >
+                        <img
+                          [src]="
+                            directLinkService.getURLImage(
+                              authorReviewPost.user.email,
+                              authorReviewPost.coverImage.name,
+                              authorReviewPost.coverImage.ext
+                            )
+                          "
+                          alt=""
+                        />
+                        <div class="author-post__content">
+                          <div class="author-post__title">
+                            {{ authorReviewPost.title }}
+                          </div>
+                          <div class="author-post__bio">
+                            {{ authorReviewPost.bio }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="content__item">
+              <h4 class="content__title">Bài viết liên quan</h4>
+              <div class="grid" *ngIf="(relativeReviewPostsResponse$ | async) as relativeReviewPosts">
+                <div class="row no-gutters relative-post__list">
+                  <div
+                    class="col l-12 m-12 c-12 relative-post__item box-shadow p-0 border-radius-5"
+                    *ngFor="let relativeReviewPost of relativeReviewPosts"
+                  >
+                    <div class="row h-fit no-gutters">
+                      <div class="col l-3 m-6 c-6 h-fit">
+                        <img
+                          class="relative-post__thumbnail"
+                          [src]="
+                          directLinkService.getURLImage(
+                            relativeReviewPost.user.email,
+                            relativeReviewPost.coverImage.name,
+                            relativeReviewPost.coverImage.ext
+                          )
+                        "
+                          alt=""
+                        />
+                      </div>
+                      <div class="col l-9 m-6 c-6 relative-post">
+                        <div class="relative-post__content">
+                          <div class="relative-post__title">
+                            {{relativeReviewPost.title}}
+                          </div>
+                          <div class="relative-post__bio">
+                            {{relativeReviewPost.title}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="content__item">
+              <h4 class="content__title">Địa điểm liên quan</h4>
+              <div class="grid">
+                <div class="row">
+                  <div class="col l-3 m-6 c-6">
+                    <div class="d-flex author-post__list">
+                      <div
+                        class="l-12 m-12 c-12 box-shadow p-0 border-radius-5 author-post__list author-post"
+                      >
+                        <img src="assets/image/content-image.jpg" alt="" />
+                        <div class="author-post__content">
+                          <div class="author-post__title">
+                            Review 3 ngày 1 điêmReview 3 ngày 1 điêmReview 3
+                            ngày 1 điêmReview 3 ngày 1 điêmReview 3 ngày 1 điêm
+                          </div>
+                          <div class="author-post__bio">
+                            Review 3 ngày 1 điêmReview 3 ngày 1 điêmReview 3
+                            ngày 1 điêmReview 3 ngày 1 điêmReview 3 ngày 1
+                            điêmReview 3 ngày 1 điêmReview 3 ngày 1 điêmReview 3
+                            ngày 1 điêm
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col l-3 m-6 c-6">
+                    <div class="d-flex author-post__list">
+                      <div
+                        class="l-12 m-12 c-12 box-shadow p-0 border-radius-5 author-post__list author-post"
+                      >
+                        <img src="assets/image/content-image.jpg" alt="" />
+                        <div class="author-post__content">
+                          <div class="author-post__title">
+                            Review 3 ngày 1 điêmReview 3 ngày 1 điêmReview 3
+                            ngày 1 điêmReview 3 ngày 1 điêmReview 3 ngày 1 điêm
+                          </div>
+                          <div class="author-post__bio">
+                            Review 3 ngày 1 điêmReview 3 ngày 1 điêmReview 3
+                            ngày 1 điêmReview 3 ngày 1 điêmReview 3 ngày 1
+                            điêmReview 3 ngày 1 điêmReview 3 ngày 1 điêmReview 3
+                            ngày 1 điêm
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="content__item">
+              <h4 class="content__title">Giá khách sạn tại tỉnh: TTH</h4>
+            </div>
+            <div class="content__item">
+              <h4 class="content__title">
+                Tham khảo những hành trình chi tiết khác
+              </h4>
+            </div>
+            <div class="content__item">
+              <header class='header text-center'>
+                <h4>Đánh giá độ hữu ích của bài viết</h4>
+              </header>
+              <section class='rating-widget'>
+                <!-- Rating Stars Box -->
+                <div class='rating-stars text-center'>
+                  <ul #starsTemplateRef id='stars'>
+                    <li class='star' title='Poor' data-value='1' (mouseover)="mouseOver($event)">
+                      <i class='fa fa-star fa-fw'></i>
+                    </li>
+                    <li class='star' title='Fair' data-value='2' (mouseover)="mouseOver($event)">
+                      <i class='fa fa-star fa-fw'></i>
+                    </li>
+                    <li class='star' title='Good' data-value='3' (mouseover)="mouseOver($event)">
+                      <i class='fa fa-star fa-fw'></i>
+                    </li>
+                    <li class='star' title='Excellent' data-value='4' (mouseover)="mouseOver($event)">
+                      <i class='fa fa-star fa-fw'></i>
+                    </li>
+                    <li class='star' title='WOW!!!' data-value='5' (mouseover)="mouseOver($event)">
+                      <i class='fa fa-star fa-fw'></i>
+                    </li>
+                  </ul>
+                </div>
+                
+                <div class='success-box'>
+                  <div class='clearfix'></div>
+                  <img alt='tick image' width='32' src='data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA0MjYuNjY3IDQyNi42NjciIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQyNi42NjcgNDI2LjY2NzsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSI1MTJweCIgaGVpZ2h0PSI1MTJweCI+CjxwYXRoIHN0eWxlPSJmaWxsOiM2QUMyNTk7IiBkPSJNMjEzLjMzMywwQzk1LjUxOCwwLDAsOTUuNTE0LDAsMjEzLjMzM3M5NS41MTgsMjEzLjMzMywyMTMuMzMzLDIxMy4zMzMgIGMxMTcuODI4LDAsMjEzLjMzMy05NS41MTQsMjEzLjMzMy0yMTMuMzMzUzMzMS4xNTcsMCwyMTMuMzMzLDB6IE0xNzQuMTk5LDMyMi45MThsLTkzLjkzNS05My45MzFsMzEuMzA5LTMxLjMwOWw2Mi42MjYsNjIuNjIyICBsMTQwLjg5NC0xNDAuODk4bDMxLjMwOSwzMS4zMDlMMTc0LjE5OSwzMjIuOTE4eiIvPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K'/>
+                  <div class='text-message'></div>
+                  <div class='clearfix'></div>
+                </div>
+              </section>
+            </div>
+          </div>
         </div>
+        <div class="col l-0 m-0 c-0">
+          <div class="price-info p-12">a</div>
+        </div>
+      </div>
     </div>
-    <div class="close-btn" style="position: absolute; right: 40px; top: 40px" (click)="onClickClose()">
-        <i class="fa-solid fa-xmark" style="font-size: 2rem; color: white"></i>
-    </div>
+  </div>
+  <div
+    class="close-btn"
+    style="position: absolute; right: 40px; top: 40px"
+    (click)="onClickClose()"
+  >
+    <i class="fa-solid fa-xmark" style="font-size: 2rem; color: white"></i>
+  </div>
 </div>

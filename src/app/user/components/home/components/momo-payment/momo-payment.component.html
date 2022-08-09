@@ -1,0 +1,52 @@
+<div class="payment-container" *ngIf="journeyPost">
+    <div class="momo">
+        <div class="momo__left">
+            <div class="momo__info">
+                <div class="momo__info-text">
+                    <h4>Nhà cung cấp</h4>
+                    <h4>MOMO</h4>
+                </div>
+            </div>
+            <div class="momo__info">
+                <mat-icon class="momo__info-icon"> money</mat-icon>
+                <div class="momo__info-text">
+                    <h4>Số tiền</h4>
+                    <h4>{{journeyPost.journeyInfo.totalPayment}}</h4>
+                </div>
+            </div>
+            <div class="momo__info">
+                <mat-icon class="momo__info-icon">credit_card</mat-icon>
+                <div class="momo__info-text">
+                    <h4>Thông tin</h4>
+                    <h4>{{journeyPost.momoContent}}</h4>
+                </div>
+            </div>
+            <div class="momo__info">
+                <mat-icon class="momo__info-icon">receipt</mat-icon>
+                <div class="momo__info-text">
+                    <h4>Đơn hàng</h4>
+                    <h4>{{journeyPost.momoContent}}</h4>
+                    <h4>A</h4>
+                </div>
+            </div>
+        </div>
+        <div class="momo__right">
+            <div class="header d-flex align-items-center justify-content-between">
+                <img src="assets/logo/MoMo_Logo.png" alt="">
+                <img src="assets/logo/MoMo_Logo.png" alt="">
+            </div>
+            <div class="main">
+                <h1 style="padding: 10px; color: rgb(150, 28, 97);">Quét mã để thanh toán</h1>
+                <qrcode [qrdata]="myAngularxQrCode" [width]="256"></qrcode>
+                <div class="">
+                    <img style="width: 24px;" src="assets/icon/noun-scan-1647111.png" alt="">
+                    <span>Sử dụng App <span style="font-weight: 550">Momo</span> hoặc ứng dụng Camere hỗ trợ QR code để quét mã</span>
+                </div>
+                <div class="">
+                    <img style="width: 24px; margin: 0 5px" src="assets/icon/loading.png" alt="">
+                    <span>Đang chờ quét...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

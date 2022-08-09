@@ -1,3 +1,4 @@
+import { QRCodeModule } from 'angularx-qrcode';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -9,11 +10,12 @@ import { UserPostComponent } from './components/user-post/user-post.component';
 import { JourneysComponent } from './components/journeys/journeys.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ReviewPostDetailComponent } from '../post-detail/components/review-post-detail/review-post-detail.component';
+import { MomoPaymentComponent } from './components/momo-payment/momo-payment.component';
 
 
 
 @NgModule({
-    declarations: [HomeComponent, ReviewPostsComponent, UserPostComponent, JourneysComponent, ReviewPostDetailComponent],
+    declarations: [HomeComponent, ReviewPostsComponent, UserPostComponent, JourneysComponent, ReviewPostDetailComponent, MomoPaymentComponent],
     imports: [
         CommonModule,
         HomeRoutingModule,
@@ -21,7 +23,8 @@ import { ReviewPostDetailComponent } from '../post-detail/components/review-post
         ReactiveFormsModule,
         SharedMaterialModule,
         SharedHeaderModule,
-        InfiniteScrollModule
+        InfiniteScrollModule,
+        QRCodeModule
     ]
 })
 export class HomeModule { }

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import * as goongjs from '@goongmaps/goong-js';
 import * as goongsdk from '@goongmaps/goong-sdk';
 import * as polyline from '@mapbox/polyline';
+import { ProgressBarService } from './user/services/progress-bar.service';
 // import * as goongDirections from '@goongmaps/goong-sdk/services/directions';
 // import * as goongSdk from '@goongmaps/goong-sdk'
 // import * as polyline from '@mapbox/polyline'
@@ -14,6 +15,9 @@ import * as polyline from '@mapbox/polyline';
 export class AppComponent implements OnInit {
   long!: number;
   lat!: number;
+  constructor(public progressBarService: ProgressBarService){
+
+  }
   ngOnInit(): void {
   }
   onScroll() {

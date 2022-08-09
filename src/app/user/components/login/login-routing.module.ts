@@ -19,7 +19,7 @@ const routes: Routes = [
     path: 'recover/password', component: ForgetPasswordComponent
   },
   {
-    path: 'login/identify',
+    path: 'identify',
     component: IdentifyComponent,
   },
 

@@ -1,5 +1,6 @@
-import { filter } from 'rxjs/operators';
-import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { filter, concatMap, debounceTime } from 'rxjs/operators';
+import { HttpEventType, HttpResponse, HttpClient } from '@angular/common/http';
 import {
   AfterViewInit,
   Component,
@@ -17,6 +18,18 @@ import { UploadFileService } from 'src/app/user/services/upload-file.service';
 import { CreatePostDialogComponent } from '../../dialog/create-post-dialog';
 import { ReviewPostComponent } from '../../../creation/components/review-post/review-post.component';
 import { JourneyComponent } from '../../../creation/components/journey/journey.component';
+import { FilterJourneyPost } from 'src/app/shared/models/model';
+import { FilterPostService } from 'src/app/user/services/filter-post.service';
+import { DirectLinkService } from 'src/app/user/services/direct-link.service';
+import {
+  JourneyPostResponse,
+  ParticipantResponse,
+} from 'src/app/shared/models/response';
+import { JourneyPostService } from 'src/app/user/services/journey-post.service';
+import { ParticipantService } from 'src/app/user/services/participant.service';
+import { UserService } from 'src/app/user/services/user.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ProgressBarService } from 'src/app/user/services/progress-bar.service';
 export interface User {
   name: string;
   url: string;
@@ -41,10 +54,11 @@ export interface Post {
 @Component({
   selector: 'app-journeys',
   templateUrl: './journeys.component.html',
-  styleUrls: ['./journeys.component.scss']
+  styleUrls: ['./journeys.component.scss'],
+  providers: [FilterPostService],
 })
-
 export class JourneysComponent implements OnInit {
+  currUser = this.userService.userBSub.value;
   posts: Post[] = [
     {
       id: 1,
@@ -118,31 +132,6 @@ export class JourneysComponent implements OnInit {
   isShowStoryFull: boolean = false;
   isShowPostFull: boolean = false;
   zoom: number = 15;
-  title = 'travel';
-  lat = 10.924067;
-  lng = 106.713028;
-  locations: any[] = [
-    {
-      lat: 10.8999964,
-      lng: 106.7999968,
-      label: { name: 'Di An', subName: 'Di An, Binh Duong Province, VietNam' },
-    },
-    {
-      lat: 10.762622,
-      lng: 106.660172,
-      label: { name: 'Ho Chi Minh City', subName: 'Ho Chi Minh City, VietNam' },
-    },
-    {
-      lat: 10.8999964,
-      lng: 106.7999968,
-      label: { name: 'Di An', subName: 'Di An, Binh Duong Province, VietNam' },
-    },
-    {
-      lat: 10.762622,
-      lng: 106.660172,
-      label: { name: 'Ho Chi Minh City', subName: 'Ho Chi Minh City, VietNam' },
-    },
-  ];
   /*  */
   selectedFiles!: FileList;
   currentFile!: File | null;
@@ -214,17 +203,120 @@ export class JourneysComponent implements OnInit {
   ];
   isShowComments: boolean = false;
   @ViewChild('firstElement') firstElement!: ElementRef;
+  /* data */
+  journeyPosts: JourneyPostResponse[] = [];
+  /* fg */
+  searchFormGroup!: FormGroup;
   constructor(
     private _uploadFileService: UploadFileService,
     private _dialog: MatDialog,
-    private renderer: Renderer2
-  ) {}
+    private renderer: Renderer2,
+    private filterPostService: FilterPostService,
+    public directLinkService: DirectLinkService,
+    private journeyPostSerivce: JourneyPostService,
+    private router: Router,
+    private participantService: ParticipantService,
+    private userService: UserService,
+    private fb: FormBuilder,
+    private progressBarService: ProgressBarService
+  ) {
+    this.searchFormGroup = this.fb.group({
+      order: this.fb.control('title'),
+      search: this.fb.control(''),
+    });
+    this.filterPostService.filterPost$
+      .pipe(
+        concatMap((filterPost) => {
+          return this.journeyPostSerivce.findAll(filterPost);
+        })
+      )
+      .subscribe((response) => {
+        console.log(response);
+        this.journeyPosts = this.journeyPosts.concat(response);
+        console.log(this.journeyPosts);
+        setTimeout(() => {
+          this.progressBarService.progressBarBSub.next(false)
+        }, 500);
+      }, error => {
+        this.progressBarService.progressBarBSub.next(false)
+      });
+    this.searchFormGroup.get('search')!.valueChanges.pipe(debounceTime(1000)).subscribe((term) => {
+      this.progressBarService.progressBarBSub.next(true)
+      this.journeyPosts = [];
+      let order = this.searchFormGroup.get('order')?.value;
+      let filter: FilterJourneyPost = {
+        pageable: {
+          pageIndex: 0,
+          pageSize: 1,
+          sortable: {
+            dir: "DESC",
+            order: "createdDate"
+          }
+        }
+      }
+      /* customize filter */
+      if(term){
+        if (order == 'title') {
+          filter.title = term;
+        }else if (order == 'totalDay') {
+          filter.totalDay = term;
+        }else if (order == 'totalCost') {
+          filter.totalCost = term;
+        }else if (order == 'totalParticipant') {
+          filter.totalParticipant = term;
+        }else if (order == 'departurePlace') {
+          filter.departurePlace = term;
+        }
+      }
+      this.filterPostService.filterPostBSub.next(filter);
+    });
+  }
   ngAfterViewInit(): void {}
 
   ngOnInit(): void {}
   selectedFile($event: any) {
     this.selectedFiles = $event.target.files;
   }
+  checkRequestJoinJourneyPost(journeyPost: JourneyPostResponse): boolean {
+    let currUserId: number = this.userService.userBSub.value!.id;
+    let particiPant = journeyPost.participants.find(
+      (participant) => participant.user.id == currUserId
+    );
+    if (particiPant && particiPant.status == 1) {
+      return true;
+    } else if (!particiPant || particiPant.status == 0) {
+      return false;
+    }
+    return false;
+  }
+  updateJourneyPostParticipant(journeyPostId: number, action: 0 | 1) {
+    let requestUserId = this.userService.userBSub.value?.id;
+    if (requestUserId) {
+      this.participantService
+        .updateJourneyPostParticipant(requestUserId, journeyPostId, action)
+        .subscribe((response) => {
+          if(response){
+            console.log(response);
+            let updatedPost = this.journeyPosts.find(
+              (journeyPost) => journeyPost.id == journeyPostId
+            );
+            if(updatedPost){
+              let participants = updatedPost.participants
+              let foundParticipant = participants.find(p => p.id === response.id)
+              if(foundParticipant){
+                foundParticipant.status = response.status
+              }else{
+                participants.push(response)
+              }
+            }
+          }else{
+            console.log("not participant");
+
+          }
+        });
+    }
+  }
+  
   upload() {
     // this.progress = 0;
     // this.currentFile = this.selectedFiles.item(0);
@@ -256,8 +348,12 @@ export class JourneysComponent implements OnInit {
   }
   openCreatePostDialog() {
     const dialogRef = this._dialog.open(JourneyComponent, {
-      width: '90vw',
-      height: '90vh'
+      width: 'auto',
+      height: '90vh',
+    });
+    dialogRef.afterClosed().subscribe((response) => {
+      this.journeyPosts.unshift(response.createdJourneyPost);
+      this.journeyPosts = this.journeyPosts;
     });
   }
   navigateTo(element: any) {
@@ -645,5 +741,17 @@ export class JourneysComponent implements OnInit {
       }
     });
   }
-
+  onScrollDown($event: any) {
+    let currFilter: FilterJourneyPost = this.filterPostService.filterPostBSub.value;
+    let pageable = currFilter.pageable;
+    pageable.pageIndex++;
+    this.filterPostService.filterPostBSub.next(currFilter);
+  }
+  dateTimeFormula(timestamp: Date) {
+    return new Date(timestamp).toLocaleString();
+  }
+  openJourneyDetail(journeyPostId: number) {
+    this.router.navigate([`/home/journey-posts/${journeyPostId}`]);
+  }
+  
 }

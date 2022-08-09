@@ -7,5 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 export class ProgressBarService {
   progressBarBSub = new BehaviorSubject<boolean>(false)
   progressBar$ = this.progressBarBSub.asObservable()
-  constructor() { }
+  constructor() {
+    this.progressBar$.subscribe(v => console.log(v))
+  }
 }

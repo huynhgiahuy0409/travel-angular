@@ -1,15 +1,16 @@
 .container {
     width: 100vw;
-    height: 100vh;;
     overflow-y: auto;
-    position: fixed;
-    top: 0;
+    position: absolute;
     left: 0;
     background: #fff;
     z-index: 999;
 }
-.close-btn{
-    position: absolute; right: 40px; top: 40px;
+
+.close-btn {
+    position: absolute;
+    right: 50px;
+    top: 50px;
     border-radius: 50%;
     width: 40px;
     height: 40px;
@@ -17,12 +18,14 @@
     align-items: center;
     justify-content: center;
 }
-.close-btn:hover{
+
+.close-btn:hover {
     background-color: rgba(245, 245, 245, 0.5)
-    
 }
-.close-btn i{
-    font-size: 2rem; color: white;
+
+.close-btn i {
+    font-size: 2rem;
+    color: white;
 }
 
 
@@ -171,8 +174,7 @@
     padding: 5px 10px;
 }
 
-.action__item i {
-}
+.action__item i {}
 
 .main .header {}
 
@@ -213,12 +215,12 @@
 }
 
 /* Author post */
-.author-post__list{
-    
-}
-.author-post__item{
+.author-post__list {}
+
+.author-post__item {
     margin: 10px 0
 }
+
 .author-post {
     height: 200px;
 }
@@ -249,17 +251,24 @@
 }
 
 /* relative post */
-.relative-post__list{
+.relative-post__list {}
 
-}
-.relative-post__item{
+.relative-post__item {
     height: 150px;
     overflow: hidden;
     margin: 10px 0
 }
-.relative-post{
+
+.relative-post__item .relative-post__thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.relative-post {
     margin: auto 0;
 }
+
 .relative-post__content {
     padding: 20px;
 }
@@ -268,6 +277,7 @@
     font-size: 1.6rem;
     font-weight: 550;
 }
+
 .relative-post__content .relative-post__bio {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -280,12 +290,15 @@
 .comment-detail__info.comment-detail__info--background {
     background-color: var(--background-color-1--);
 }
-.comment-box{
+
+.comment-box {
     background-color: var(--background-color-1--);
 }
-.comment-box input{
+
+.comment-box input {
     background-color: transparent
 }
+
 /* customize comment list end */
 /* Responsive */
 /* Mobile */

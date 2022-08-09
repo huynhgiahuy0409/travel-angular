@@ -1,5 +1,5 @@
 import { ReviewPostDetailComponent } from './../../../post-detail/components/review-post-detail/review-post-detail.component';
-import { concatMap, filter } from 'rxjs/operators';
+import { concatMap, filter, debounceTime } from 'rxjs/operators';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import {
   AfterViewInit,
@@ -21,12 +21,14 @@ import { ReviewPostComponent } from '../../../creation/components/review-post/re
 import { ReviewPostResponse, UploadFileResponse } from 'src/app/shared/models/response';
 import { ReviewPostService } from 'src/app/user/services/review-post.service';
 import { FilterPostService } from 'src/app/user/services/filter-post.service';
-import { FilterPost } from 'src/app/shared/models/model';
+import { FilterJourneyPost, FilterReviewPost } from 'src/app/shared/models/model';
 import { DIRECT_LINK_IMAGE, FEMALE_DEFAULT_AVATAR_URL, MALE_DEFAULT_AVATAR_URL, UNDEFINED_DEFAULT_AVATAR_URL } from 'src/app/shared/models/constant';
 import { UserService } from 'src/app/user/services/user.service';
 import { Router } from '@angular/router';
 import { ReviewPostDestroyService } from './review-post-destroy.service';
 import { DirectLinkService } from 'src/app/user/services/direct-link.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ProgressBarService } from 'src/app/user/services/progress-bar.service';
 export interface User {
   name: string;
   url: string;
@@ -52,6 +54,7 @@ export interface Post {
   selector: 'app-review-posts',
   templateUrl: './review-posts.component.html',
   styleUrls: ['./review-posts.component.scss'],
+  providers: [FilterPostService]
 })
 export class ReviewPostsComponent implements OnInit, AfterViewInit {
   @ViewChild(ReviewPostDetailComponent)
@@ -133,32 +136,6 @@ export class ReviewPostsComponent implements OnInit, AfterViewInit {
   reviewPosts: ReviewPostResponse[] = []
   isShowStoryFull: boolean = false;
   isShowPostFull: boolean = false;
-  zoom: number = 15;
-  title = 'travel';
-  lat = 10.924067;
-  lng = 106.713028;
-  locations: any[] = [
-    {
-      lat: 10.8999964,
-      lng: 106.7999968,
-      label: { name: 'Di An', subName: 'Di An, Binh Duong Province, VietNam' },
-    },
-    {
-      lat: 10.762622,
-      lng: 106.660172,
-      label: { name: 'Ho Chi Minh City', subName: 'Ho Chi Minh City, VietNam' },
-    },
-    {
-      lat: 10.8999964,
-      lng: 106.7999968,
-      label: { name: 'Di An', subName: 'Di An, Binh Duong Province, VietNam' },
-    },
-    {
-      lat: 10.762622,
-      lng: 106.660172,
-      label: { name: 'Ho Chi Minh City', subName: 'Ho Chi Minh City, VietNam' },
-    },
-  ];
   /*  */
   selectedFiles!: FileList;
   currentFile!: File | null;
@@ -230,24 +207,67 @@ export class ReviewPostsComponent implements OnInit, AfterViewInit {
   ];
   isShowComments: boolean = false;
   @ViewChild('firstElement') firstElement!: ElementRef;
+  /* fg */
+  searchFormGroup!: FormGroup;
   constructor(
     private _uploadFileService: UploadFileService,
     private _dialog: MatDialog,
     private renderer: Renderer2,
     private reviewPostService: ReviewPostService,
-    private filterPostService: FilterPostService,
     private userService: UserService,
     private router: Router,
     private reviewPostDestroyService: ReviewPostDestroyService,
-    public directLinkService: DirectLinkService
+    private filterPostService: FilterPostService,
+    public directLinkService: DirectLinkService,
+    private fb: FormBuilder,
+    public progressBarService: ProgressBarService
   ) {
+    /* init search fg */
+    this.searchFormGroup = this.fb.group({
+      order: this.fb.control('title'),
+      search: this.fb.control(''),
+    });
+
     this.filterPostService.filterPost$.pipe(concatMap(filterPost => {
-      return this.reviewPostService.findAll(filterPost.pageable);
+      return this.reviewPostService.findAll(filterPost);
     })).subscribe((response) => {
+      this.progressBarService.progressBarBSub.next(false)
       this.reviewPosts = this.reviewPosts.concat(response)
       console.log(this.reviewPosts);
+    },
+    error => {
+      this.progressBarService.progressBarBSub.next(false)
     }
     )
+
+    this.searchFormGroup.get('search')!.valueChanges.pipe(debounceTime(1000)).subscribe((term) => {
+      this.progressBarService.progressBarBSub.next(true)
+      this.reviewPosts = [];
+      let order = this.searchFormGroup.get('order')?.value;
+      let filter: FilterReviewPost = {
+        pageable: {
+          pageIndex: 0,
+          pageSize: 1,
+          sortable: {
+            dir: "DESC",
+            order: "createdDate"
+          }
+        }
+      }
+      /* customize filter */
+      if(term){
+        if (order == 'title') {
+          filter.title = term;
+        }else if (order == 'tag') {
+          filter.tag = term;
+        }else if (order == 'cost') {
+          filter.cost = term;
+        }else if (order == 'provinceName') {
+          filter.provinceName = term;
+        }
+      }
+      this.filterPostService.filterPostBSub.next(filter);
+    });
   }
   ngAfterViewInit(): void {
     console.log(this.reviewPostDetailComponent);
@@ -297,6 +317,10 @@ export class ReviewPostsComponent implements OnInit, AfterViewInit {
       width: 'auto',
       height: '90vh'
     });
+    dialogRef.afterClosed().subscribe(response => {
+      this.reviewPosts.unshift(response.createdReviewPost)
+      this.reviewPosts = this.reviewPosts
+    })
   }
   navigateTo(element: any) {
     element.scrollIntoView({ behavior: 'smooth' });
@@ -684,17 +708,14 @@ export class ReviewPostsComponent implements OnInit, AfterViewInit {
     });
   }
   openReviewDetail(reviewPostId: number){
-    this.router.navigate([`/home/review-post/${reviewPostId}`])
+    this.router.navigate([`/home/review-posts/${reviewPostId}`])
   }
   /* infinite scroll */
   onScrollDown($event: any){
-    console.log($event);
-    let currFilter: FilterPost = this.filterPostService.filterPostBSub.value
+    let currFilter: FilterReviewPost = this.filterPostService.filterPostBSub.value
     let pageable = currFilter.pageable
     pageable.pageIndex++
     this.filterPostService.filterPostBSub.next(currFilter)    
-
-    
   }
   onScrollUp($event: any){
     console.log($event);

@@ -18,6 +18,7 @@ import { IdentifyComponent } from './components/login/components/identify/identi
 import { HomeModule } from './components/home/home.module';
 import { JourneyDetailComponent } from './components/post-detail/components/journey-detail/journey-detail.component';
 import { CookieService } from 'ngx-cookie-service';
+
 @NgModule({
   declarations: [
     UserComponent,
