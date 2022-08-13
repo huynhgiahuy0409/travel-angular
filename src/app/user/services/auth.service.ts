@@ -7,7 +7,7 @@ import { APIResponse } from 'src/app/shared/models/model';
 import {
   AuthenticationResponse,
   JWTResponse,
-  UserInfoResponse,
+  UserProfileResponse,
 } from 'src/app/shared/models/response';
 import { BehaviorSubject } from 'rxjs';
 
@@ -46,9 +46,9 @@ export class AuthService {
       this.httpOptions
     );
   }
-  checkExistUser(username: string): Observable<UserInfoResponse> {
+  checkExistUser(username: string): Observable<UserProfileResponse> {
     const url = `${BASE_URL}/auth/exist/user/${username}`;
-    return this.httpClient.get<UserInfoResponse>(url, this.httpOptions);
+    return this.httpClient.get<UserProfileResponse>(url, this.httpOptions);
   }
   generateOTP(username: string): void{
     const url = `${BASE_URL}/auth/generate/otp/user/${username}`;
@@ -56,10 +56,10 @@ export class AuthService {
   }
   login(
     loginRequest: LoginRequest
-  ): Observable<APIResponse<UserInfoResponse | AuthenticationResponse | null>> {
+  ): Observable<APIResponse<UserProfileResponse | AuthenticationResponse | null>> {
     const url = `${BASE_URL}/public/users/login`;
     return this.httpClient.post<
-      APIResponse<UserInfoResponse | AuthenticationResponse | null>
+      APIResponse<UserProfileResponse | AuthenticationResponse | null>
     >(url, loginRequest, this.httpOptions);
   }
   recoveryPassword(password: string, code: string, userId: number): Observable<APIResponse<null>>{

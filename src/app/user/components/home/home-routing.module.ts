@@ -38,6 +38,7 @@ const routes: Routes = [
     {
         path: 'journey-post/:id/payment', component: MomoPaymentComponent
     },
+    { path: 'helps', loadChildren: () => import('./components/helps/helps.module').then(m => m.HelpsModule) },
 ];
 
 @NgModule({

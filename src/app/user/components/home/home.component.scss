@@ -16,25 +16,23 @@
 
 /* container */
 .home-container {
-  width: 100vw;
-  height: 100vh;
   position: relative;
-  overflow-y: auto;
+  height: calc(100vh - 60px);
+  overflow: hidden;
+  padding: 20px
 }
 
-.my-container {
-  overflow-y: hidden;
-}
 
 .left-sidebar,
 .right-sidebar {
-  height: 100vh;
+  padding-top: 10px;
+  padding-bottom: 10px;
   position: sticky;
-  overflow: auto;
   visibility: hidden;
-  padding: 20px;
   border-radius: 4px;
   color: #626262;
+  height: 100%;
+  overflow-y: auto;
 }
 
 .left-sidebar__content,
@@ -48,8 +46,6 @@
 
 /* main content */
 .main-content {
-  height: 100vh;
-  overflow-y: auto;
   margin: 0 20px
 }
 
@@ -166,8 +162,6 @@
   position: fixed;
   left: 0;
   top: 0;
-  height: 100vh;
-  width: 100vw;
   z-index: 999;
   display: none;
 }
@@ -213,7 +207,6 @@
 .story-content,
 .post-image-detail__left {
   flex-basis: 70%;
-  height: 100vh;
   background: var(--background-color-1--);
 }
 

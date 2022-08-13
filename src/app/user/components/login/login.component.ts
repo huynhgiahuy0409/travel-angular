@@ -1,30 +1,23 @@
-import { UserInfoResponse } from './../../../shared/models/response';
-import { CookieService } from 'ngx-cookie-service';
 import {
-  Component,
-  OnChanges,
-  OnInit,
-  Renderer2,
-  SimpleChanges,
+  Component, OnInit,
+  Renderer2
 } from '@angular/core';
 import {
-  AbstractControl,
-  AsyncValidatorFn,
-  FormBuilder,
+  AbstractControl, FormBuilder,
   FormControl,
   FormGroup,
-  NgForm,
-  ValidatorFn,
-  Validators,
+  NgForm, Validators
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { map, filter, scan, tap } from 'rxjs/operators';
-import { RegisterDialogComponent } from './dialog/register-dialog/register-dialog.component';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
+import { tap } from 'rxjs/operators';
+import { RegisterDialogComponent } from 'src/app/components/register-dialog/register-dialog.component';
 import { LoginRequest } from 'src/app/shared/models/request';
-import { AuthService } from '../../services/auth.service';
 import { AuthenticationResponse } from 'src/app/shared/models/response';
+import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
+import { UserProfileResponse } from './../../../shared/models/response';
 export function matchedPassword(c: AbstractControl) {
   const passwordValue = c.get('password')?.value;
   const confirmPasswordValue = c.get('confirmPassword')?.value;
@@ -226,7 +219,7 @@ export class LoginComponent implements OnInit {
     };
     this.authService.login(loginRequest).subscribe(response => {
       if(response){
-        let data: UserInfoResponse | AuthenticationResponse | null = response.data
+        let data: UserProfileResponse | AuthenticationResponse | null = response.data
         let message = response.message
         if(message ==='ACTIVE'){
           let authResponse = data as AuthenticationResponse
@@ -236,7 +229,7 @@ export class LoginComponent implements OnInit {
           this.authService.JWTBSub.next(JWT)
           this.router.navigate(['/home'])        
         }else if(message ==='INACTIVE'){
-          let userInfo  = data as UserInfoResponse
+          let userInfo  = data as UserProfileResponse
           let userId = userInfo.id
           this.cookieService.set("c-user", userId + "")
           this.router.navigate(['/confirmemail'])        

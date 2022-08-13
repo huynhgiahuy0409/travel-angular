@@ -3,9 +3,6 @@ import { HomeComponent } from './components/home/home.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UserComponent } from './user.component';
-import { LoginComponent } from './components/login';
-import { IdentifyComponent } from './components/login/components/identify/identify.component';
-import { AuthGuardService } from './services/auth-guard.service';
 
 const routes: Routes = [
   {

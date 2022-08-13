@@ -11,11 +11,12 @@ import { JourneysComponent } from './components/journeys/journeys.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ReviewPostDetailComponent } from '../post-detail/components/review-post-detail/review-post-detail.component';
 import { MomoPaymentComponent } from './components/momo-payment/momo-payment.component';
+import { ReviewPostComponent } from './components/review-posts/review-post/review-post.component';
 
 
 
 @NgModule({
-    declarations: [HomeComponent, ReviewPostsComponent, UserPostComponent, JourneysComponent, ReviewPostDetailComponent, MomoPaymentComponent],
+    declarations: [HomeComponent, ReviewPostsComponent, UserPostComponent, JourneysComponent, ReviewPostDetailComponent, MomoPaymentComponent, ReviewPostComponent],
     imports: [
         CommonModule,
         HomeRoutingModule,

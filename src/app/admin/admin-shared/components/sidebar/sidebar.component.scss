@@ -1,0 +1,41 @@
+.sidebar{
+    padding: 10px;
+    height: 100vh;
+    background-color: #fff;
+    box-shadow: 0 3px 20px -2px #0003, 0 2px 2px #00000024, 0 1px 5px #0000001f;
+}
+.sidebar__title{
+    padding: 5px 10px 10px;
+    border-bottom: 1px solid #ccc;
+}
+.menu__list{
+    
+}
+.menu__list .menu__item{
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 5px;
+}
+.menu__list .menu__item i{
+    font-size: 2rem;
+    margin-right: 10px;
+    color: black
+}
+.menu__list .menu__item p{
+    font-size: 1.6rem;
+    margin: 0
+}
+.menu__list .menu__item.selected{
+    background-color: var(--primary-color--);
+    color: var(--white-color--);
+    box-shadow: 0 3px 1px -2px #0003, 0 2px 2px #00000024, 0 1px 5px #0000001f;
+}
+.menu__list .menu__item.selected i{
+    color: var(--white-color--)
+}
+.menu__list .menu__item:hover{
+    background-color: var(--hover-color--);
+}
+.menu__list .menu__item:hover i, .menu__list .menu__item:hover p{
+    color: black
+}

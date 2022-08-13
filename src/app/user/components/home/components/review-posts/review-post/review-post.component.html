@@ -1,0 +1,498 @@
+<div class="post-container box-shadow">
+    <!-- header post -->
+    <div class="post-row user-profile">
+        <div class="user-avatar-wrap">
+            <img (mouseover)="fetchPostUser(postUser.id)" [src]="userAvatarSrc" alt="" class="user-avatar" />
+            <ng-container *ngTemplateOutlet="userInfoNotify">
+            </ng-container>
+        </div>
+        <div class="user-profile-name">
+            <div class="post-username-wrap">
+                <h3 class="post-username" (mouseover)="fetchPostUser(postUser.id)">
+                    {{ postUser.fullName }}
+                </h3>
+                <ng-container *ngTemplateOutlet="userInfoNotify">
+                </ng-container>
+            </div>
+            <div class="d-flex align-items-center" >
+                <span>{{ createdDate }}</span>
+                <mat-icon>public</mat-icon>
+            </div>
+        </div>
+    </div>
+    <ng-template #userInfoNotify>
+        <div class="user-info-notify user-info-notify--color box-shadow" *ngIf="postUserRefresh$ | async">
+            <div class="standard__list d-flex">
+                <div class="standard__item d-flex align-items-center justify-content-center">
+                    <img src="assets/image/member-1.png" alt="" class="user-avatar">
+                </div>
+                <div class="standard__item flex-fit">
+                    <div class="info__list">
+                        <p class="info__item username">
+                            {{ postUser.fullName }}
+                        </p>
+                        <div class="info__item">
+                            <i class="fa-solid fa-star"></i>
+                            <p>Danh tiếng: {{ postUser.reputation }}</p>
+                            <a [routerLink]="['/helps/reputation']">
+                                <i class="fa-solid fa-circle-question help-reputation-icon">
+                                </i>
+                            </a>
+                        </div>
+                        <div class="info__item">
+                            <i class="fa-solid fa-user-plus"></i>
+                            <p>Người theo dõi: 0</p>
+                        </div>
+                        <div class="info__item">
+                            <i class="fa-solid fa-users"></i>
+                            <p>Bài đánh giá: 0</p>
+                        </div>
+                        <div class="info__item">
+                            <i class="fa-solid fa-map"></i>
+                            <p>Bài tìm người đông hành: 0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="standard__list">
+                <div class="standard__item flex-fit">
+                    <button mat-raised-button class="d-flex primary-btn w-fit" *ngIf="isFollowed === false"
+                        (click)="requestFollow(postUser.id)">
+                        <i class="fa-solid fa-user-plus mr-r-5"></i>
+                        Theo dõi
+                    </button>
+                    <button mat-raised-button class="d-flex primary-btn w-fit" *ngIf="isFollowed === true"
+                        (click)="requestUnFollow(postUser.id)">
+                        <i class="fa-solid fa-user-check mr-r-5"></i>
+                        Đã theo dõi
+                    </button>
+                </div>
+                <div class="standard__item flex-fit">
+                    <button mat-raised-button class="d-flex w-fit">
+                        <i class="fa-brands fa-facebook-messenger mr-r-5"></i>
+                        Nhắn tin
+                    </button>
+                    <!-- <button mat-raised-button class="d-flex">
+                            <i class="fa-brands fa-facebook-messenger mr-r-5"></i>
+                            <p>Hủy theo dõi</p>
+                        </button> -->
+                </div>
+            </div>
+            <div class="standard__list" *ngIf="postUser.id === user!.id">
+                <div class="standard__item flex-fit">
+                    <button mat-raised-button class="d-flex w-fit">
+                        <i class="fa-solid fa-pen mr-r-5"></i>
+                        Chỉnh sửa trang cá nhân
+                    </button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <!-- post content -->
+    <div class="post-row post-title" (mouseover)="fetchPostUser(postUser.id)">
+        {{ reviewPost.title }}
+    </div>
+    <div class="post-row post-text">
+        {{ reviewPost.bio }}
+    </div>
+    <div class="post-row standard__list" *ngIf="reviewPost.reviewPostTags">
+        <div class="standard__item" *ngFor="let tag of reviewPost.reviewPostTags">
+            <span style="color: var(--primary-color--)">#{{tag.name}}</span>
+        </div>
+    </div>
+    <!------ Sorting display images ------>
+    <div class="review-post__image" (click)="openReviewDetail(reviewPost.id)">
+        <!-- 1 image -->
+        <div class="image__list one" *ngIf="reviewPost.images.length == 1">
+            <div class="image__item">
+                <img [src]="
+                directLinkService.getURLImage(
+            reviewPost.user.email,
+            reviewPost.images[0].image.name,
+            reviewPost.images[0].image.ext
+          )
+        " alt="" />
+            </div>
+        </div>
+        <!-- 2 images -->
+        <div class="image__list two" *ngIf="reviewPost.images.length == 2">
+            <div class="row">
+                <div class="col l-6 m-6 c-6" *ngFor="let reviewPostImage of reviewPost.images; index as idx">
+                    <div class="image__item">
+                        <img [src]="
+              directLinkService.getURLImage(
+                reviewPost.user.email,
+                reviewPostImage.image.name,
+                reviewPostImage.image.ext
+              )
+            " alt="" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 3 images -->
+        <div class="image__list three" *ngIf="reviewPost.images.length == 3">
+            <div class="row">
+                <ng-container *ngFor="let reviewPostImage of reviewPost.images; index as idx">
+                    <div class="col l-12 m-12 c-12" *ngIf="idx === 0">
+                        <div class="image__item">
+                            <img [src]="
+                directLinkService.getURLImage(
+                  reviewPost.user.email,
+                  reviewPostImage.image.name,
+                  reviewPostImage.image.ext
+                )
+              " alt="" />
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+            <div class="row">
+                <ng-container *ngFor="let reviewPostImage of reviewPost.images; index as idx">
+                    <div class="col l-6 m-6 c-6" *ngIf="idx > 0">
+                        <div class="image__item">
+                            <img [src]="
+                directLinkService.getURLImage(
+                  reviewPost.user.email,
+                  reviewPostImage.image.name,
+                  reviewPostImage.image.ext
+                )
+              " alt="" />
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+        <!-- 4 images -->
+        <div class="image__list four" *ngIf="reviewPost.images.length == 4">
+            <div class="row">
+                <ng-container *ngFor="let reviewPostImage of reviewPost.images; index as idx">
+                    <div class="col l-12 m-12 c-12" *ngIf="idx == 0">
+                        <div class="image__item">
+                            <img [src]="
+                directLinkService.getURLImage(
+                  reviewPost.user.email,
+                  reviewPostImage.image.name,
+                  reviewPostImage.image.ext
+                )
+              " alt="" />
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+            <div class="row">
+                <ng-container *ngFor="let reviewPostImage of reviewPost.images; index as idx">
+                    <div class="col l-4 m-4 c-4" *ngIf="idx > 0">
+                        <div class="image__item">
+                            <img [src]="
+                directLinkService.getURLImage(
+                  reviewPost.user.email,
+                  reviewPostImage.image.name,
+                  reviewPostImage.image.ext
+                )
+              " alt="" />
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+        <!-- 5 images -->
+        <div class="image__list five" *ngIf="reviewPost.images.length >= 5">
+            <div class="row">
+                <ng-container *ngFor="let reviewPostImage of reviewPost.images; index as idx">
+                    <div class="col l-6 m-6 c-6" *ngIf="idx >= 0 && idx <= 1">
+                        <div class="image__item">
+                            <img [src]="
+                directLinkService.getURLImage(
+                  reviewPost.user.email,
+                  reviewPostImage.image.name,
+                  reviewPostImage.image.ext
+                )
+              " alt="" />
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+            <div class="row">
+                <ng-container *ngFor="let reviewPostImage of reviewPost.images; index as idx">
+                    <div class="col l-4 m-4 c-4" *ngIf="idx > 1 && idx < 4">
+                        <div class="image__item">
+                            <img [src]="
+                directLinkService.getURLImage(
+                  reviewPost.user.email,
+                  reviewPostImage.image.name,
+                  reviewPostImage.image.ext
+                )
+              " alt="" />
+                        </div>
+                    </div>
+                </ng-container>
+                <div class="col l-4 m-4 c-4" *ngIf="reviewPost.images.length == 5">
+                    <div class="image__item">
+                        <img [src]="
+              directLinkService.getURLImage(
+                reviewPost.user.email,
+                reviewPost.images[4].image.name,
+                reviewPost.images[4].image.ext
+              )
+            " alt="" />
+                    </div>
+                </div>
+                <div class="col l-4 m-4 c-4" *ngIf="reviewPost.images.length > 5">
+                    <div class="image__item" style="position: relative">
+                        <img [src]="
+              directLinkService.getURLImage(
+                reviewPost.user.email,
+                reviewPost.images[4].image.name,
+                reviewPost.images[4].image.ext
+              )
+            " alt="" />
+                        <div class="image__item--overlay">
+                            <span>+{{ reviewPost.images.length - 5 }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- post react: like comment shared -->
+
+    <div class="post-row post-react">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="post-react-left d-flex">
+                <ng-container *ngIf="(postReact$ | async) as postReact">
+                    <!-- Like -->
+                    <div class="standard__item d-flex align-items-center">
+                        <i style="font-size:2rem; color: var(--primary-color--)" class="fa-solid fa-thumbs-up"></i>
+                        <p class="d-flex total-react">
+                            {{postReact.pagingLikeReact.totalLength}}
+                        </p>
+                        <div class="user-react__list user-react__list--color box-shadow">
+                            <div class="react-type">
+                                Like
+                            </div>
+                            <div class="user-react__item" *ngFor="let i of postReact.pagingLikeReact.data">
+                                <p class="user">
+                                    {{i.userFullName}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Dislike -->
+                    <div class="standard__item d-flex align-items-center">
+                        <i style="font-size:2rem; color: var(--primary-color--)" class="fa-solid fa-thumbs-down"></i>
+                        <p class="d-flex total-react">
+                            {{postReact.pagingDislikeReact.totalLength}}
+                        </p>
+                        <div class="user-react__list user-react__list--color box-shadow">
+                            <div class="react-type">
+                                Dislike
+                            </div>
+                            <div class="user-react__item" *ngFor="let i of postReact.pagingDislikeReact.data">
+                                <p class="user">
+                                    {{i.userFullName}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+            <div class="post-react-right d-flex">
+                <div class="">5K Comments</div>
+                <div class="">1.9K Shares</div>
+            </div>
+        </div>
+        <div class="separate-line"></div>
+        <ul class="react-btn__list">
+            <li class="react-btn__item" (click)="onClickVote(reviewPost, 1)">
+                <div class="react-btn-wrap">
+                    <i #likeIcon style="color:var(--primary-color--)" class="fa-solid fa-thumbs-up"
+                        *ngIf="reviewPost.userReact && reviewPost.userReact.react == 1"></i>
+                    <i #unLikeIcon class="fa-regular fa-thumbs-up"
+                        *ngIf="(!reviewPost.userReact || reviewPost.userReact.react != 1) || !reviewPost.userReact"></i>
+                    <p class="font-weight-550">Like</p>
+                </div>
+            </li>
+            <li class="react-btn__item" (click)="onClickVote(reviewPost, -1)">
+                <div class="react-btn-wrap">
+                    <i #dislikeIcon style="color:var(--primary-color--)" class="fa-solid fa-thumbs-down"
+                        *ngIf="reviewPost.userReact && (reviewPost.userReact.react == -1)"></i>
+                    <i #unDislikeIcon class="fa-regular fa-thumbs-down"
+                        *ngIf="(!reviewPost.userReact || reviewPost.userReact.react != -1) || !reviewPost.userReact"></i>
+                    <p class="font-weight-550">Dislike</p>
+                </div>
+            </li>
+            <li class="react-btn__item">
+                <div class="react-btn-wrap">
+                    <i class="fa-regular fa-message"></i>
+                    <p class="font-weight-550">Comment</p>
+                </div>
+            </li>
+            <li class="react-btn__item">
+                <div class="react-btn-wrap">
+                    <i class="fa-solid fa-share"></i>
+                    <p class="font-weight-550">Chia sẽ</p>
+                </div>
+            </li>
+        </ul>
+        <div class="separate-line"></div>
+    </div>
+
+
+    <ng-container>
+        <div class="post-row">
+            <img class="comment-avatar" src="assets/image/profile-pic.png" alt="" />
+            <div class="comment-box bg-cl">
+                <input #post1Id type="text" placeholder="Write a comment..." />
+                <div class="activate">
+                    <i class="emoji"></i>
+                    <i class="photo"></i>
+                    <i class="sticker"></i>
+                </div>
+            </div>
+        </div>
+        <!-- comment tree -->
+
+        <ul class="comment-list">
+            <ng-container *ngFor="let comment of commentTree; index as i">
+                <ul class="comment-item">
+                    <div class="comment-line parent-comment-line"></div>
+                    <!-- Comment detail of parent-->
+                    <div class="comment-detail comment-parent">
+                        <div class="comment-detail__wrapper-img comment-detail__wrapper-img--parent">
+                            <img src="assets/image/profile-pic.png" alt="" />
+                        </div>
+                        <div class="comment-detail__wrapper-info">
+                            <div class="comment-detail__info comment-detail__info--background">
+                                <p class="">{{ comment.user.name }}</p>
+                                <div class="comment-content">{{ comment.content }}</div>
+                            </div>
+                            <div class="comment-detail__react">
+                                <div class="comment-detail__react-like">
+                                    <div class="react-like">Like</div>
+                                    <div class="react-box">
+                                        <!-- <ng-container *ngFor="let src of srcReactIcons">
+                                            <img [src]="src.url" alt="" />
+                                        </ng-container> -->
+                                    </div>
+                                </div>
+                                <div class="comment-detail__react-reply">
+                                    Reply
+                                </div>
+                                <label class="comment-detail__react-time">11h</label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Child comment -->
+                    <ng-container *ngFor="let childComment of comment.comments">
+                        <ul class="comment-item comment-child">
+                            <div class="comment-line child-comment-line"></div>
+                            <div class="comment-detail">
+                                <div class="comment-detail__wrapper-img comment-detail__wrapper-img--child">
+                                    <div class="comment-link"></div>
+                                    <img src="assets/image/profile-pic.png" alt="" />
+                                </div>
+                                <div class="comment-detail__wrapper-info">
+                                    <div class="comment-detail__info comment-detail__info--background">
+                                        <p class="">{{ childComment.user.name }}</p>
+                                        <div class="comment-content">
+                                            {{ childComment.content }}
+                                        </div>
+                                    </div>
+                                    <div class="comment-detail__react">
+                                        <div class="comment-detail__react-like">
+                                            Like
+                                            <div class="react-box">
+                                                <!-- <ng-container *ngFor="let src of srcReactIcons">
+                                                    <img [src]="src.url" alt="" />
+                                                </ng-container> -->
+                                            </div>
+                                        </div>
+                                        <div class="comment-detail__react-reply">
+                                            Reply
+                                        </div>
+                                        <label class="comment-detail__react-time">11h</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Leaf child comment -->
+                            <ng-container *ngFor="let c of childComment.comments">
+                                <li class="comment-item comment-sibling">
+                                    <div class="comment-detail">
+                                        <div class="comment-detail__wrapper-img comment-detail__wrapper-img--child">
+                                            <div class="comment-link"></div>
+                                            <img src="assets/image/profile-pic.png" alt="" />
+                                        </div>
+                                        <div class="comment-detail__wrapper-info">
+                                            <div class="comment-detail__info comment-detail__info--background">
+                                                <p class="">{{ c.user.name }}</p>
+                                                <div class="comment-content">{{ c.content }}</div>
+                                            </div>
+                                            <div class="comment-detail__react">
+                                                <div class="comment-detail__react-like">
+                                                    Like
+                                                    <div class="react-box">
+                                                        <!-- <ng-container *ngFor="let src of srcReactIcons">
+                                                            <img [src]="src" alt="" />
+                                                        </ng-container> -->
+                                                    </div>
+                                                </div>
+                                                <div class="comment-detail__react-reply">
+                                                    Reply
+                                                </div>
+                                                <label class="comment-detail__react-time">11h</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ng-container>
+                            <!-- COMMENT INPUT -->
+                            <ul class="comment-item comment-sibling">
+                                <div class="comment-detail">
+                                    <div class="comment-detail__wrapper-img comment-detail__wrapper-img--child">
+                                        <div class="comment-link"></div>
+                                        <img src="assets/image/profile-pic.png" alt="" />
+                                    </div>
+                                    <div class="comment-box bg-cl">
+                                        <input #childReplyInput type="text" placeholder="Write a comment..." />
+                                        <div class="activate">
+                                            <i class="emoji"></i>
+                                            <i class="photo"></i>
+                                            <i class="sticker"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ul>
+                        </ul>
+                    </ng-container>
+                    <!-- COMMENT INPUT -->
+                    <ul class="comment-item comment-child">
+                        <div class="comment-detail">
+                            <div class="comment-detail__wrapper-img comment-detail__wrapper-img--child">
+                                <div class="comment-link"></div>
+                                <img src="assets/image/profile-pic.png" alt="" />
+                            </div>
+                            <div class="comment-box bg-cl">
+                                <input #rootReplyInput type="text" placeholder="Write a comment..." />
+                                <div class="activate">
+                                    <i class="emoji"></i>
+                                    <i class="photo"></i>
+                                    <i class="sticker"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </ul>
+                </ul>
+            </ng-container>
+            <div class="view-more-box d-flex justify-content-between align-items-center">
+                <p class="font-weight-600">View more comments</p>
+                <p>12 of 3,711</p>
+            </div>
+            <div class="write-a-comment d-flex justify-content-between align-items-center">
+                <p class="font-weight-600">
+                    Write a comment...
+                </p>
+            </div>
+        </ul>
+    </ng-container>
+</div>

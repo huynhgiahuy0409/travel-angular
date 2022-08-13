@@ -8,7 +8,7 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { UserInfoResponse } from 'src/app/shared/models/response';
+import { UserProfileResponse } from 'src/app/shared/models/response';
 import { UserService } from './user.service';
 
 @Injectable({
@@ -24,7 +24,7 @@ export class AuthGuardService implements CanActivate {
     | UrlTree
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
-    let user: UserInfoResponse | null = this.userService.userBSub.value;
+    let user: UserProfileResponse | null = this.userService.userBSub.value;
     if (user) {
       return of(true);
     } else {

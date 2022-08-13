@@ -1,5 +1,4 @@
 nav {
-  width: 100vw;
   align-items: center;
   justify-content: space-between;
   background-color: var(--primary-color--);
@@ -8,6 +7,7 @@ nav {
   z-index: 998;
   position: sticky;
   box-shadow: 0 0 9px black;
+  height: 60px;
 }
 
 .logo {
@@ -379,7 +379,6 @@ label {
 .right-sidebar {
   flex-basis: 25%;
   align-self: flex-start;
-  height: 100vh;
   position: sticky;
   overflow: scroll
 }

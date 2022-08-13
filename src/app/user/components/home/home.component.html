@@ -1,164 +1,158 @@
-<div class="overlay"  *ngIf="progressBarService.progressBar$ | async" mode="indeterminate">
+<div class="overlay" *ngIf="progressBarService.progressBar$ | async" mode="indeterminate">
   <mat-spinner></mat-spinner>
 </div>
 <shared-header></shared-header>
-<div class="home-container">
-  <div class="my-container grid">
-    <div class="row">
-      <!-- ----------left-sidebar---------- -->
-      <div class="col l-3 m-0 c-0">
-        <div class="left-sidebar">
-          <div class="left-sidebar__content">
-            <div class="imp-links">
-              <a href=""><img src="assets/image/news.png" alt="">Latest News</a>
-              <a href=""><img src="assets/image/friends.png" alt="">Friends</a>
-              <a href=""><img src="assets/image/group.png" alt="">Group</a>
-              <a href=""><img src="assets/image/marketplace.png" alt="">Market Place</a>
-              <a href=""><img src="assets/image/watch.png" alt="">Market Watch</a>
-              <a href="">See more</a>
-            </div>
-            <div class="shortcut-links">
-              <p>Your Shortcut</p>
-              <a href="">
-                <img src="assets/image/shortcut-1.png" alt="">
-                Web Developer
-              </a>
-              <a href="">
-                <img src="assets/image/shortcut-2.png" alt="">
-                Web Design Course
-              </a>
-              <a href="">
-                <img src="assets/image/shortcut-3.png" alt="">
-                Full Stack
-              </a>
-              <a href="">
-                <img src="assets/image/shortcut-4.png" alt="">
-                Website Experts
-              </a>
-              <a href="">
-                <img src="assets/image/shortcut-4.png" alt="">
-                Website Experts
-              </a>
-              <a href="">
-                <img src="assets/image/shortcut-4.png" alt="">
-                Website Experts
-              </a>
-              <a href="">
-                <img src="assets/image/shortcut-4.png" alt="">
-                Website Experts
-              </a>
-              <a href="">
-                <img src="assets/image/shortcut-4.png" alt="">
-                Website Experts
-              </a>
-              <a href="">
-                <img src="assets/image/shortcut-4.png" alt="">
-                Website Experts
-              </a>
-            </div>
+<div class="home-container grid">
+  <div class="row h-fit">
+    <!-- ----------left-sidebar---------- -->
+    <div class="left-sidebar h-fit col l-3 m-0 c-0">
+        <div class="left-sidebar__content">
+          <div class="imp-links">
+            <a href=""><img src="assets/image/news.png" alt="">Latest News</a>
+            <a href=""><img src="assets/image/friends.png" alt="">Friends</a>
+            <a href=""><img src="assets/image/group.png" alt="">Group</a>
+            <a href=""><img src="assets/image/marketplace.png" alt="">Market Place</a>
+            <a href=""><img src="assets/image/watch.png" alt="">Market Watch</a>
+            <a href="">See more</a>
+          </div>
+          <div class="shortcut-links">
+            <p>Your Shortcut</p>
+            <a href="">
+              <img src="assets/image/shortcut-1.png" alt="">
+              Web Developer
+            </a>
+            <a href="">
+              <img src="assets/image/shortcut-2.png" alt="">
+              Web Design Course
+            </a>
+            <a href="">
+              <img src="assets/image/shortcut-3.png" alt="">
+              Full Stack
+            </a>
+            <a href="">
+              <img src="assets/image/shortcut-4.png" alt="">
+              Website Experts
+            </a>
+            <a href="">
+              <img src="assets/image/shortcut-4.png" alt="">
+              Website Experts
+            </a>
+            <a href="">
+              <img src="assets/image/shortcut-4.png" alt="">
+              Website Experts
+            </a>
+            <a href="">
+              <img src="assets/image/shortcut-4.png" alt="">
+              Website Experts
+            </a>
+            <a href="">
+              <img src="assets/image/shortcut-4.png" alt="">
+              Website Experts
+            </a>
+            <a href="">
+              <img src="assets/image/shortcut-4.png" alt="">
+              Website Experts
+            </a>
           </div>
         </div>
-      </div>
-      <!-- ----------main-content---------- -->
-      <div class="col l-6 m-9 c-12">
-        <router-outlet></router-outlet>
-      </div>
-      <!-- ----------right-sidebar---------- -->
-      <div class="col l-3 m-3 c-0">
-        <div class="right-sidebar">
-          <div class="right-sidebar__content">
-            <div class="sidebar-title">
-              <h4>Events</h4>
-              <a href="">See All</a>
-            </div>
-            <div class="event">
-              <div class="left-event">
-                <h3>18</h3>
-                <span>March</span>
-              </div>
-              <div class="right-event">
-                <h4>Social Media</h4>
-                <p><i class="fa-solid fa-location-dot"></i> Willson Tech Park</p>
-                <a href="">More Info</a>
-              </div>
-            </div>
-            <div class="event">
-              <div class="left-event">
-                <h3>22</h3>
-                <span>June</span>
-              </div>
-              <div class="right-event">
-                <h4>Mobile Marketing</h4>
-                <p><i class="fa-solid fa-location-dot"></i> Willson Tech Park</p>
-                <a href="">More Info</a>
-              </div>
-            </div>
-
-            <div class="sidebar-title">
-              <h4>Advertisement</h4>
-              <a href="">Close</a>
-            </div>
-            <img src="assets/image/advertisement.png" alt="" class="sidebar-ads">
-
-            <div class="sidebar-title">
-              <h4>Conversation</h4>
-              <a href="">Hide Chat</a>
-            </div>
-            <div class="online-list">
-              <div class="online">
-                <img src="assets/image/member-1.png" alt="">
-              </div>
-              <p>Alison Mina</p>
-            </div>
-            <div class="online-list">
-              <div class="online">
-                <img src="assets/image/member-1.png" alt="">
-              </div>
-              <p>Alison Mina</p>
-            </div>
-            <div class="online-list">
-              <div class="online">
-                <img src="assets/image/member-1.png" alt="">
-              </div>
-              <p>Alison Mina</p>
-            </div>
-            <div class="online-list">
-              <div class="online">
-                <img src="assets/image/member-1.png" alt="">
-              </div>
-              <p>Alison Mina</p>
-            </div>
-            <div class="online-list">
-              <div class="online">
-                <img src="assets/image/member-1.png" alt="">
-              </div>
-              <p>Alison Mina</p>
-            </div>
-            <div class="online-list">
-              <div class="online">
-                <img src="assets/image/member-1.png" alt="">
-              </div>
-              <p>Alison Mina</p>
-            </div>
-            <div class="online-list">
-              <div class="online">
-                <img src="assets/image/member-1.png" alt="">
-              </div>
-              <p>Alison Mina</p>
-            </div>
-            <div class="online-list">
-              <div class="online">
-                <img src="assets/image/member-1.png" alt="">
-              </div>
-              <p>Alison Mina</p>
-            </div>
-            <div class="online-list">
-              <div class="online">
-                <img src="assets/image/member-1.png" alt="">
-              </div>
-              <p>Alison Mina</p>
-            </div>
+    </div>
+    <!-- ----------main-content---------- -->
+    <div class="col l-6 m-9 c-12">
+      <router-outlet></router-outlet>
+    </div>
+    <!-- ----------right-sidebar---------- -->
+    <div class="col l-3 m-3 c-0 right-sidebar">
+      <div class="right-sidebar__content">
+        <div class="sidebar-title">
+          <h4>Events</h4>
+          <a href="">See All</a>
+        </div>
+        <div class="event">
+          <div class="left-event">
+            <h3>18</h3>
+            <span>March</span>
           </div>
+          <div class="right-event">
+            <h4>Social Media</h4>
+            <p><i class="fa-solid fa-location-dot"></i> Willson Tech Park</p>
+            <a href="">More Info</a>
+          </div>
+        </div>
+        <div class="event">
+          <div class="left-event">
+            <h3>22</h3>
+            <span>June</span>
+          </div>
+          <div class="right-event">
+            <h4>Mobile Marketing</h4>
+            <p><i class="fa-solid fa-location-dot"></i> Willson Tech Park</p>
+            <a href="">More Info</a>
+          </div>
+        </div>
+
+        <div class="sidebar-title">
+          <h4>Advertisement</h4>
+          <a href="">Close</a>
+        </div>
+        <img src="assets/image/advertisement.png" alt="" class="sidebar-ads">
+
+        <div class="sidebar-title">
+          <h4>Conversation</h4>
+          <a href="">Hide Chat</a>
+        </div>
+        <div class="online-list">
+          <div class="online">
+            <img src="assets/image/member-1.png" alt="">
+          </div>
+          <p>Alison Mina</p>
+        </div>
+        <div class="online-list">
+          <div class="online">
+            <img src="assets/image/member-1.png" alt="">
+          </div>
+          <p>Alison Mina</p>
+        </div>
+        <div class="online-list">
+          <div class="online">
+            <img src="assets/image/member-1.png" alt="">
+          </div>
+          <p>Alison Mina</p>
+        </div>
+        <div class="online-list">
+          <div class="online">
+            <img src="assets/image/member-1.png" alt="">
+          </div>
+          <p>Alison Mina</p>
+        </div>
+        <div class="online-list">
+          <div class="online">
+            <img src="assets/image/member-1.png" alt="">
+          </div>
+          <p>Alison Mina</p>
+        </div>
+        <div class="online-list">
+          <div class="online">
+            <img src="assets/image/member-1.png" alt="">
+          </div>
+          <p>Alison Mina</p>
+        </div>
+        <div class="online-list">
+          <div class="online">
+            <img src="assets/image/member-1.png" alt="">
+          </div>
+          <p>Alison Mina</p>
+        </div>
+        <div class="online-list">
+          <div class="online">
+            <img src="assets/image/member-1.png" alt="">
+          </div>
+          <p>Alison Mina</p>
+        </div>
+        <div class="online-list">
+          <div class="online">
+            <img src="assets/image/member-1.png" alt="">
+          </div>
+          <p>Alison Mina</p>
         </div>
       </div>
     </div>

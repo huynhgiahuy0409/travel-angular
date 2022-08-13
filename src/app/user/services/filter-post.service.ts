@@ -1,21 +1,29 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { FilterJourneyPost, FilterReviewPost } from 'src/app/shared/models/model';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { FilterJourneyPost, FilterReviewPost, Pageable, Sortable } from 'src/app/shared/models/model';
 @Injectable({
   providedIn: 'root'
 })
 export class FilterPostService {
-  initFilter: FilterJourneyPost | FilterReviewPost= {
-    pageable: {
-      pageIndex: 0,
-      pageSize: 1,
-      sortable: {
-        dir: "DESC",
-        order: "createdDate"
+  initPageable: Pageable = {
+    pageIndex: 0,
+    pageSize: 20,
+  }
+  defaultSorter: Sortable = {
+    dir: "DESC",
+    order: "createdDate"
+  }
+  initFilter!: FilterJourneyPost | FilterReviewPost
+  filterPostBSub!: BehaviorSubject<FilterJourneyPost | FilterReviewPost>
+  filterPost$: Observable<FilterJourneyPost | FilterReviewPost>
+  constructor() {
+    this.initFilter = {
+      pageable: {
+        ...this.initPageable,
+        sortable: this.defaultSorter
       }
     }
+    this.filterPostBSub = new BehaviorSubject<FilterJourneyPost | FilterReviewPost>(this.initFilter)
+    this.filterPost$ = this.filterPostBSub.asObservable()
   }
-  filterPostBSub = new BehaviorSubject<FilterJourneyPost | FilterReviewPost>(this.initFilter)
-  filterPost$ = this.filterPostBSub.asObservable()
-  constructor() { }
 }

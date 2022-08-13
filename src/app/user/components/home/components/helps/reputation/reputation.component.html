@@ -1,0 +1,71 @@
+<shared-header></shared-header>
+<div class="grid wide container">
+    <div class="row">
+        <div class="col l-9">
+            <h1  class="title" style="font-size: 3rem;">Hệ thống tính Danh tiếng trên Travel</h1>
+            <br>
+            <h2 #content1 class="title">Danh tiếng là gì?</h2>
+            <div class="row no-gutters">
+                <div class="col l-12">
+                    <p>
+                        <span class="font-weight-550">Danh tiếng</span>, với nghĩa là "thanh danh, uy tín", là một chỉ
+                        số được Travel dùng để thể hiện những
+                        ghi nhận, quan tâm của người dùng đối với những cá nhân có nhiều đóng góp cho cộng đồng nhằm
+                        mang lại sự tin tưởng, tín hiệm đối với các cá nhân khác.
+                    </p>
+                </div>
+                <br>
+                <div class="col l-12">
+                    <p>
+                        Chỉ số <span class="font-weight-550">Danh tiếng</span> hiện cũng đang được sử dụng để xếp hạng
+                        người dùng. Cụ thể thì Top những người
+                        dùng có số lượng <span class="font-weight-550">Danh tiếng</span> nhận được nhiều nhất trong
+                        tuần, sẽ xuất hiện ở phần HOT AUTHORS tại
+                        trang Home Page. Bảng xếp hạn chi tiết có thể xem <span
+                            style="text-decoration: underline; font-weight: 550; color: var(--primary-color--);">Tại
+                            đây</span>.
+                    </p>
+                </div>
+                <br>
+                <div class="col l-12">
+                    <p>
+                        Bảng xếp hạng trên được cập nhật 1 lần/1 ngày.
+                    </p>
+                </div>
+            </div>
+            <h2 #content2 class="title">Chỉ số <span class="font-weight-550">Danh tiếng</span> được tính toán như thế nào?
+            </h2>
+            <div  class="row no-gutters">
+                <div class="col l-12">
+                    Hiện tại, bạn có thể nhận được <span class="font-weight-550">Danh tiếng</span> trong các trường hợp
+                    sau:
+                </div>
+                <ul class="point__list">
+                    <li class="point__item">
+                        Một bài viết của bạn được người dùng khác <span class="font-weight-550">Like</span>: +4 points
+                    </li>
+                    <li class="point__item">
+                        Một bài viết của bạn được người dùng khác <span class="font-weight-550">Dislike</span>: -4
+                        points
+                    </li>
+                    <li class="point__item">
+                        Một người dùng khác Follow bạn: +7 points
+                    </li>
+                </ul>
+                <br>
+                <div class="notify">
+                    Hiện các công thức tính toán chỉ số <span class="font-weight-550">Danh tiếng</span> vẫn đang ở trong quá trình thử nghiệm, và những con
+                    số đề cập ở trên có thể được thay đổi trong thời gian tới. Chúng tôi có quy
+                    định về điểm trừ cho <span class="font-weight-550">Danh tiếng</span> khi mà bài viết bị <span class="font-weight-550">Dislike</span>
+                </div>
+            </div>
+        </div>
+        <div class="col l-3">
+            <div class="table-content__list">
+                <h2>Mục lục</h2>
+                <div class="table-content__item" *ngFor="let content of tableOfContents; index as idx"
+                    (click)="selectContent(idx)" [class.selected]="sltContent == idx">{{content}}</div>
+            </div>
+        </div>
+    </div>
+</div>

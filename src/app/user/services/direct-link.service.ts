@@ -14,6 +14,9 @@ export class DirectLinkService {
   getURLImage(email: string, imageName: string, ext: string){
     return this.directLinkImageURL + email + "/" + imageName + "." + ext
   }
+  getUserAvatar(fileName: string, ext: string, username: string){
+    return this.directLinkImageURL + username  + "/avatar/" + fileName + "." + ext
+  }
   getURLProvincePlace(imageName: string){
     return this.defaultProvincePlaceURL + imageName
   }

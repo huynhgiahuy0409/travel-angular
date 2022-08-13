@@ -1,0 +1,25 @@
+<div class="login grid d-flex align-items-center justify-content-center">
+    <div class="row no-gutters ">
+        <div class="col l-6 d-flex align-items-center justify-content-center">
+                <p class="name-app">Traveling Crew</p>
+        </div>
+        <div class="col l-6">
+            <form action="" class="login-form box-shadow">
+                <p class="form-title">Đăng nhập với vai trò quản trị viên</p>
+                <div class="field field--color mr-b-10">
+                    <input type="text" placeholder="Email">
+                </div>
+                <div class="field field--color mr-b-10">
+                    <input type="text" placeholder="Mật khẩu">
+                </div>
+                <button mat-raised-button class="primary-btn w-fit">Đăng nhập</button>
+                <a [routerLink]="['/identify']" class="forget-password d-flex align-item-center justify-content-center">
+                    Quên mật khẩu?
+                </a>
+                <div class="create-account" (click)="onClickRegister()">
+                    <button mat-raised-button >Tạo tài khoản mới</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

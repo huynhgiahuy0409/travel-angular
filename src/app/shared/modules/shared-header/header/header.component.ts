@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { UserInfo } from 'os';
 import { Observable } from 'rxjs';
 import { FEMALE_DEFAULT_AVATAR_URL, MALE_DEFAULT_AVATAR_URL, UNDEFINED_DEFAULT_AVATAR_URL } from 'src/app/shared/models/constant';
-import { UserInfoResponse } from 'src/app/shared/models/response';
+import { UserProfileResponse } from 'src/app/shared/models/response';
 import { UserService } from 'src/app/user/services/user.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
   maleDefaultAvatarURL: string = MALE_DEFAULT_AVATAR_URL
   femaleDefaultAvatarURL: string = FEMALE_DEFAULT_AVATAR_URL
   undefinedDefaultAvatarURL: string = UNDEFINED_DEFAULT_AVATAR_URL
-  user$!: Observable<UserInfoResponse | null>
+  user$!: Observable<UserProfileResponse | null>
   constructor(private userService: UserService, private router: Router) {}
   
   ngOnInit(): void {

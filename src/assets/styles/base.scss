@@ -30,8 +30,6 @@ html {
 
 body {
   background-color: var(--background-color--);
-  height: 100vh;
-  overflow: hidden;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
@@ -160,9 +158,7 @@ section {
 }
 
 /* End custom scrollbar */
-body {
-  line-height: 1;
-}
+
 
 input,
 textarea {

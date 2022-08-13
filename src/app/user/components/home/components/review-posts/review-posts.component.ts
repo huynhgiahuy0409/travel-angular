@@ -18,7 +18,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { UploadFileService } from 'src/app/user/services/upload-file.service';
 import { CreatePostDialogComponent } from '../../dialog/create-post-dialog';
 import { ReviewPostComponent } from '../../../creation/components/review-post/review-post.component';
-import { ReviewPostResponse, UploadFileResponse } from 'src/app/shared/models/response';
+import { ReviewPostResponse, UploadFileResponse, UserProfileResponse, UserReactResponse } from 'src/app/shared/models/response';
 import { ReviewPostService } from 'src/app/user/services/review-post.service';
 import { FilterPostService } from 'src/app/user/services/filter-post.service';
 import { FilterJourneyPost, FilterReviewPost } from 'src/app/shared/models/model';
@@ -29,6 +29,7 @@ import { ReviewPostDestroyService } from './review-post-destroy.service';
 import { DirectLinkService } from 'src/app/user/services/direct-link.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProgressBarService } from 'src/app/user/services/progress-bar.service';
+import { UserReactService } from 'src/app/user/services/user-react.service';
 export interface User {
   name: string;
   url: string;
@@ -207,6 +208,7 @@ export class ReviewPostsComponent implements OnInit, AfterViewInit {
   ];
   isShowComments: boolean = false;
   @ViewChild('firstElement') firstElement!: ElementRef;
+  user: UserProfileResponse | null = this.userService.userBSub.value
   /* fg */
   searchFormGroup!: FormGroup;
   constructor(
@@ -220,7 +222,8 @@ export class ReviewPostsComponent implements OnInit, AfterViewInit {
     private filterPostService: FilterPostService,
     public directLinkService: DirectLinkService,
     private fb: FormBuilder,
-    public progressBarService: ProgressBarService
+    public progressBarService: ProgressBarService,
+    private userReactService: UserReactService
   ) {
     /* init search fg */
     this.searchFormGroup = this.fb.group({
@@ -707,9 +710,7 @@ export class ReviewPostsComponent implements OnInit, AfterViewInit {
       }
     });
   }
-  openReviewDetail(reviewPostId: number){
-    this.router.navigate([`/home/review-posts/${reviewPostId}`])
-  }
+
   /* infinite scroll */
   onScrollDown($event: any){
     let currFilter: FilterReviewPost = this.filterPostService.filterPostBSub.value
@@ -726,5 +727,19 @@ export class ReviewPostsComponent implements OnInit, AfterViewInit {
   }
   dateTimeFormula(timestamp: Date){
     return new Date(timestamp).toLocaleString()
+  }
+  /* user method */
+  isUserPost(postUser: UserProfileResponse): boolean{
+    return postUser.id == this.user!.id ? true: false
+  }
+  detectUpdatedPostUser($event: UserProfileResponse){
+    console.log($event)
+    this.reviewPosts.forEach(reviewPost => {
+      if(reviewPost.user.id === $event.id){
+        console.log('ok')
+        reviewPost.user = $event
+      }
+    })
+
   }
 }

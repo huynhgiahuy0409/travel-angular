@@ -102,19 +102,19 @@ export class ReviewPostService {
     const url = `${BASE_URL}/member/user/${userId}/review-posts`
     let params = new HttpParams()
     params = params.append('pageIndex', pageable.pageIndex)  
-    params = params.append('pageSize', pageable.pageSize)
-    if(pageable.sortable){
-      params = params.append("dir", pageable.sortable.dir)
-      params = params.append("order", pageable.sortable.order)
-    }
-    let httpOptions = {
-      headers: this.httpOptions.headers,
-      params: params
-    }
-    
-    return this.httpClient.get<ReviewPostResponse[]>(
-      url,
-      httpOptions
+          params = params.append('pageSize', pageable.pageSize)
+          if(pageable.sortable){
+            params = params.append("dir", pageable.sortable.dir)
+            params = params.append("order", pageable.sortable.order)
+          }
+          let httpOptions = {
+            headers: this.httpOptions.headers,
+            params: params
+          }
+          
+          return this.httpClient.get<ReviewPostResponse[]>(
+            url,
+            httpOptions
     );
   }
 }

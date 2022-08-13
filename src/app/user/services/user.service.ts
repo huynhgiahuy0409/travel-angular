@@ -2,14 +2,14 @@ import { APIResponse } from './../../shared/models/model';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BASE_URL } from 'src/app/shared/models/constant';
-import { UserInfoResponse } from 'src/app/shared/models/response';
+import { UserProfileResponse } from 'src/app/shared/models/response';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  userBSub = new BehaviorSubject<UserInfoResponse | null>(null);
+  userBSub = new BehaviorSubject<UserProfileResponse | null>(null);
   user$ = this.userBSub.asObservable();
   httpOptions = {
     headers: new HttpHeaders({
@@ -20,15 +20,16 @@ export class UserService {
   constructor(private httpClient: HttpClient) {
     this.user$.subscribe((v) => console.log(v));
   }
-  getUserInfo(userId: number): Observable<APIResponse<UserInfoResponse>> {
+  findByUserId(userId: number): Observable<UserProfileResponse> {
     const url = `${BASE_URL}/public/users/${userId}`;
-    return this.httpClient.get<APIResponse<UserInfoResponse>>(
+    return this.httpClient.get<UserProfileResponse>(
       url,
       this.httpOptions
     );
   }
-  findUserByUsername(username: string): Observable<UserInfoResponse> {
+  findUserByUsername(username: string): Observable<UserProfileResponse> {
     const url = `${BASE_URL}/public/users/username/${username}`;
-    return this.httpClient.get<UserInfoResponse>(url, this.httpOptions);
+    return this.httpClient.get<UserProfileResponse>(url, this.httpOptions);
   }
+  
 }

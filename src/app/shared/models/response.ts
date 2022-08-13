@@ -40,7 +40,7 @@ export interface JWTResponse{
 }
 
 export interface AuthenticationResponse{
-    user: UserInfoResponse
+    user: UserProfileResponse
     jwt: JWTResponse
 }
 export interface UploadFileResponse{
@@ -50,7 +50,7 @@ export interface UploadFileResponse{
     contentType: string
     createDate: Date
 }
-export interface UserInfoResponse extends BaseResponse{
+export interface UserProfileResponse extends BaseResponse{
     username: string;
     fullName: string;
     avt: string;
@@ -58,7 +58,9 @@ export interface UserInfoResponse extends BaseResponse{
     bio: string;
     background: string;
     isFollowed: string;
-    gender: string
+    gender: string;
+    reputation: number;
+    avatar: UploadFileResponse
 }
 export interface ReviewPostImageResponse extends BaseResponse{
     id: number
@@ -72,16 +74,32 @@ export interface ReviewPostResponse extends BaseResponse{
     title: string
     bio: string
     departureDay: string
-    totalDay: number
+    totalDay: number 
     cost: number
     content: string
     participantsNumber: number
     coverImage: UploadFileResponse
     images: ReviewPostImageResponse[]
-    user: UserInfoResponse
+    user: UserProfileResponse
     reviewPostTags: TagResponse[]
     province: ProvinceResponse
     district: DistrictResponse
+    userReact: UserReactResponse
+}
+/* react */
+export interface UserReactResponse{
+    id: number
+    react: number
+    userFullName: string
+} 
+export interface PagingResponse<T>{
+    data: T;
+    totalLength: number
+}
+export interface PostReactResponse{
+    totalReact: number
+    pagingLikeReact: PagingResponse<UserReactResponse[]>
+    pagingDislikeReact: PagingResponse<UserReactResponse[]>
 }
 /* local */
 export interface ProvinceResponse extends BaseResponse {
@@ -110,12 +128,12 @@ export interface JourneyPostResponse extends BaseResponse{
     journeyInfo: JourneyInfoResponse
     journeyDays: JourneyDayResponse[]
     departurePlace: GoongPlaceDetailResultResponse
-    user: UserInfoResponse,
+    user: UserProfileResponse,
     participants: ParticipantResponse[]
 }
 export interface ParticipantResponse extends BaseResponse{
     status: number
-    user: UserInfoResponse
+    user: UserProfileResponse
 }
 export interface JourneyInfoResponse extends BaseResponse{
     description: number

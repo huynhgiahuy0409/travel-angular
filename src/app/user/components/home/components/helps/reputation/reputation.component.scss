@@ -1,0 +1,33 @@
+.container{
+    line-height: 2;
+    font-size: 1.6rem;
+}
+.container .title{
+    margin: 10px 0;
+    font-weight: 550;
+}
+.table-content__list{
+    
+}
+.table-content__list .table-content__item{
+    padding: 0 10px;
+}
+.table-content__list .table-content__item.selected{
+    font-weight: 550;
+    color: var(--primary-color--);
+    border-left: 2px solid var(--primary-color--);
+}
+.table-content__list .table-content__item:hover{
+    color: var(--primary-color--)
+}
+.point__list{
+    
+}
+.point__list .point__item{
+    list-style: inside;
+}
+.notify{
+    padding: 5px 10px;
+    border-left: 2px solid var(--primary-color--);
+    background: #f8f8f8;
+}

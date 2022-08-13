@@ -1,8 +1,8 @@
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import "./assets/styles/base.scss";
 @import "./assets/styles/grid-customize.scss";
 @import "./assets/styles/responsive.scss";
 @import "./assets/styles/animation.scss";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 .show {
   display: block !important;
 }
@@ -28,7 +28,7 @@ i {
   padding-right: 5px
 }
 .pd-10{
-  padding: 5px
+  padding: 10px
 }
 
 .mr-0 {
@@ -112,7 +112,11 @@ i {
   background-color: var(--primary-color--) !important;
   /* change click effect color */
 }
-
+.mat-button-wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 /* customize indigo  */
 
 .mat-icon {
@@ -328,31 +332,6 @@ i {
   align-items: center;
 }
 
-.react-btn__list .react-btn__item .react-btn-wrap i {
-  background-image: url("/assets/bg-img/tNtc26NZCUe.png");
-  background-size: 26px 834px;
-  background-repeat: no-repeat;
-  display: inline-block;
-  filter: brightness(0) invert(0.3);
-  width: 18px;
-  height: 18px;
-}
-
-.react-btn__list .react-btn__item .react-btn-wrap p {
-  font-weight: 550;
-}
-
-.like-btn-icon {
-  background-position: 0px -336px;
-}
-
-.comment-btn-icon {
-  background-position: 0px -296px;
-}
-
-.shared-btn-icon {
-  background-position: 0px -356px;
-}
 
 .react-btn__list .react-btn__item .react-box,
 .comment-detail__react-like .react-box {
@@ -875,6 +854,7 @@ padding-right: unset
 .cover-image__action-option:hover {
   background: var(--hover-color--);
 }
+
 .standard__list{
   display: flex;
 }
@@ -886,14 +866,35 @@ padding-right: unset
 }
 .standard__item{
   margin: 0 5px;
-  margin-bottom: 10px
+  position: relative
 }
+
 .standard__item:first-child{
   margin-left: unset
 }
 .standard__item:last-child{
   margin-right: unset
 }
+.standard__item.flex-fit{
+  flex-basis: 100%;
+}
+.standard__item>.user-avatar{
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+}
+.standard__item .username{
+  font-size: 2.4rem;
+  font-weight: 550;
+}
+
+
+/* User info notify */
+.user-info-notify{
+  width: 400px;
+  position: absolute;
+}
+
 /* Rating */
 .clearfix {
   clear:both;
