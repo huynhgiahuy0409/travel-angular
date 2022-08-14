@@ -15,4 +15,7 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  onClickMenuItem(index: number){
+    this.sltTabIndex = index
+  }
 }

@@ -26,6 +26,12 @@ export interface ReviewPostRequest {
     provinceId: number;
     districtId: number;
 }
+export interface CommercialPostRequest {
+    title: string;
+    content: string;
+    tags: string[];
+    commercialSrc: string
+}
 export interface LoginRequest {
     email: string;
     password: string;

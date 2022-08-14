@@ -1,0 +1,105 @@
+<div class="post-container box-shadow">
+    <!-- header post -->
+    <div class="post-row user-profile">
+        <div class="user-avatar-wrap">
+            <img [src]="userAvatarSrc" alt="" class="user-avatar" />
+        </div>
+        <div class="user-profile-name">
+            <div class="post-username-wrap">
+                <h3 class="post-username">
+                    {{ postUser.fullName }}
+                </h3>
+            </div>
+            <div class="d-flex align-items-center" *ngIf="role">
+                <span>{{ role }}</span>
+            </div>
+        </div>
+    </div>
+    <!-- <ng-template #userInfoNotify>
+        <div class="user-info-notify user-info-notify--color box-shadow" *ngIf="postUserRefresh$ | async">
+            <div class="standard__list d-flex">
+                <div class="standard__item d-flex align-items-center justify-content-center">
+                    <img src="assets/image/member-1.png" alt="" class="user-avatar" />
+                </div>
+                <div class="standard__item flex-fit">
+                    <div class="info__list">
+                        <p class="info__item username">
+                            {{ postUser.fullName }}
+                        </p>
+                        <div class="info__item">
+                            <i class="fa-solid fa-star"></i>
+                            <p>Danh tiếng: {{ postUser.reputation }}</p>
+                            <a [routerLink]="['/helps/reputation']">
+                                <i class="fa-solid fa-circle-question help-reputation-icon">
+                                </i>
+                            </a>
+                        </div>
+                        <div class="info__item">
+                            <i class="fa-solid fa-user-plus"></i>
+                            <p>Người theo dõi: 0</p>
+                        </div>
+                        <div class="info__item">
+                            <i class="fa-solid fa-users"></i>
+                            <p>Bài đánh giá: 0</p>
+                        </div>
+                        <div class="info__item">
+                            <i class="fa-solid fa-map"></i>
+                            <p>Bài tìm người đông hành: 0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="standard__list">
+                <div class="standard__item flex-fit">
+                    <button mat-raised-button class="d-flex primary-btn w-fit" *ngIf="isFollowed === false"
+                        (click)="requestFollow(postUser.id)">
+                        <i class="fa-solid fa-user-plus mr-r-5"></i>
+                        Theo dõi
+                    </button>
+                    <button mat-raised-button class="d-flex primary-btn w-fit" *ngIf="isFollowed === true"
+                        (click)="requestUnFollow(postUser.id)">
+                        <i class="fa-solid fa-user-check mr-r-5"></i>
+                        Đã theo dõi
+                    </button>
+                </div>
+                <div class="standard__item flex-fit">
+                    <button mat-raised-button class="d-flex w-fit">
+                        <i class="fa-brands fa-facebook-messenger mr-r-5"></i>
+                        Nhắn tin
+                    </button>
+                </div>
+            </div>
+            <div class="standard__list" *ngIf="postUser.id === user!.id">
+                <div class="standard__item flex-fit">
+                    <button mat-raised-button class="d-flex w-fit">
+                        <i class="fa-solid fa-pen mr-r-5"></i>
+                        Chỉnh sửa trang cá nhân
+                    </button>
+                </div>
+            </div>
+        </div>
+    </ng-template> -->
+    <!-- post content -->
+    <div class="post-row post-title">
+        {{ commercialPost.title }}
+    </div>
+    <div class="post-row post-text">
+        {{ commercialPost.content }}
+    </div>
+    <div class="post-row standard__list" *ngIf="commercialPost.commercialTags">
+        <div class="standard__item" *ngFor="let tag of commercialPost.commercialTags">
+            <span style="color: var(--primary-color--)">#{{ tag.name }}</span>
+        </div>
+    </div>
+    <!------ Sorting display images ------>
+    <div class="review-post__image">
+        <!-- 1 image -->
+            <div class="image__item">
+                <img [src]="coverImageSrc" alt="" />
+            </div>
+    </div>
+    <!-- post react: like comment shared -->
+    <div class="d-flex align-item-center justify-content-center pd-b-10">
+        <a mat-raised-button [href]="commercialPost.commercialSrc" target="_blank">Xem chi tiết</a>
+    </div>
+</div>

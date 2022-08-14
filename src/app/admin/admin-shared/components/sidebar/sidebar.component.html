@@ -1,12 +1,13 @@
 <div class="sidebar">
     <div class="sidebar__title">
         <img src="" alt="" class="logo">
-        <h4 class="title"></h4>
+        <h4 class="header">Trang quản trị</h4>
     </div>
     <ul class="menu__list">
         <li class="menu__item d-flex align-items-center" [routerLink]="[menuItem.path]"
-            *ngFor="let menuItem of menuItems; index as idx" [class.selected]="idx === sltTabIndex">
-            <i class="fa-solid fa-chart-line mr-r-5"></i>
+            *ngFor="let menuItem of menuItems; index as idx" routerLinkActive="selected"
+              (click)="onClickMenuItem(idx)">
+            <i class="mr-r-5" [class]="menuItem.iconClass"></i>
             <p>{{menuItem.title}}</p>
         </li>
     </ul>

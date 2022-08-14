@@ -56,10 +56,10 @@ export class AuthService {
   }
   login(
     loginRequest: LoginRequest
-  ): Observable<APIResponse<UserProfileResponse | AuthenticationResponse | null>> {
+  ): Observable<APIResponse<AuthenticationResponse>> {
     const url = `${BASE_URL}/public/users/login`;
     return this.httpClient.post<
-      APIResponse<UserProfileResponse | AuthenticationResponse | null>
+      APIResponse<AuthenticationResponse>
     >(url, loginRequest, this.httpOptions);
   }
   recoveryPassword(password: string, code: string, userId: number): Observable<APIResponse<null>>{

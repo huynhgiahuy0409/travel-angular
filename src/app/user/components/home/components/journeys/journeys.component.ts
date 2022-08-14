@@ -317,35 +317,6 @@ export class JourneysComponent implements OnInit {
     }
   }
   
-  upload() {
-    // this.progress = 0;
-    // this.currentFile = this.selectedFiles.item(0);
-    // if (this.currentFile) {
-    //   this._uploadFileService.upload([this.currentFile]).subscribe(
-    //     (event) => {
-    //       if (event.type === HttpEventType.UploadProgress && event.total) {
-    //         this.progress = Math.round((100 * event.loaded) / event.total);
-    //       } else if (event instanceof HttpResponse) {
-    //         this.message = event.body ? event.body.message : '';
-    //         this.fileInfos = this._uploadFileService.getFiles();
-    //       }
-    //     },
-    //     (err) => {
-    //       this.progress = 0;
-    //       this.message = 'Could not upload the file';
-    //       this.fileInfos = undefined;
-    //     }
-    //   );
-    // }
-  }
-  getFiles() {
-    this._uploadFileService.getFiles().subscribe((files) => {});
-  }
-  showImage() {
-    this._uploadFileService.showImage().subscribe((v) => {
-      /* this.img = v; */
-    });
-  }
   openCreatePostDialog() {
     const dialogRef = this._dialog.open(JourneyComponent, {
       width: 'auto',

@@ -50,20 +50,4 @@ export class UploadFileService {
       }
     );
   }
-  getFiles(): Observable<any> {
-    return this.httpClient.get(`${BASE_URL}/public/files`);
-  }
-  showImage() {
-    return this.httpClient.get(`${BASE_URL}/public/filename`, this.httpOptions);
-  }
-  getFile() {
-    const httpParams = new HttpParams().set(
-      'filename',
-      'video-1650252391-1651060200520-1651980799675.mp4'
-    );
-    return this.httpClient.get(`${BASE_URL}/public/filename`, {
-      responseType: 'blob',
-      params: httpParams,
-    });
-  }
 }

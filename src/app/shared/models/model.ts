@@ -3,6 +3,10 @@ import { GoongPlaceDetailResultResponse, ProvincePlaceResponse } from "./respons
 export interface Base{
     id: number
 }
+export interface BaseFilter{
+    pageable: Pageable
+}
+
 export interface APIResponse<T>{
     message: string,
     data: T,
@@ -29,21 +33,23 @@ export interface Pageable{
     pageIndex: number
     pageSize: number,
     sortable?: Sortable
-}
-export interface FilterJourneyPost{
-    pageable: Pageable
+} 
+export interface FilterJourneyPost extends BaseFilter{
     title?: string
     totalDay?: number
     totalCost?: number
     totalParticipant?: number
     departurePlace?: string
 }
-export interface FilterReviewPost{
-    pageable: Pageable
+export interface FilterReviewPost extends BaseFilter{
     title?: string
     tag?: string
     cost?: number
     provinceName?: string
+}
+export interface FilterCommercialPost extends BaseFilter{
+    title?: string
+    tag?: string
 }
 /* journey day */
 export interface JourneyDay{

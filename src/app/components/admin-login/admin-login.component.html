@@ -1,23 +1,35 @@
 <div class="login grid d-flex align-items-center justify-content-center">
     <div class="row no-gutters ">
         <div class="col l-6 d-flex align-items-center justify-content-center">
-                <p class="name-app">Traveling Crew</p>
+            <p class="name-app" [routerLink]="['/login']">Traveling Crew</p>
         </div>
         <div class="col l-6">
-            <form action="" class="login-form box-shadow">
+            <form [formGroup]="loginForm" (ngSubmit)="loginSubmit()" action="" class="login-form box-shadow">
                 <p class="form-title">Đăng nhập với vai trò quản trị viên</p>
                 <div class="field field--color mr-b-10">
-                    <input type="text" placeholder="Email">
+                    <input type="text" placeholder="Email" formControlName="username">
+                </div>
+                <div class="content__form__input-notify" *ngIf=" isWrongUsername">
+                    <p>Sai tài khoản. Vui lòng thử lại!
+                    </p>
                 </div>
                 <div class="field field--color mr-b-10">
-                    <input type="text" placeholder="Mật khẩu">
+                    <input type="password" placeholder="Mật khẩu" formControlName="password">
+                </div>
+                <div class="content__form__input-notify" *ngIf=" isWrongPassword">
+                    <p>Sai mật khẩu. Vui lòng thử lại!
+                    </p>
+                </div>
+                <div class="content__form__input-notify" *ngIf="forbidden">
+                    <p>Không có quyền truy cập
+                    </p>
                 </div>
                 <button mat-raised-button class="primary-btn w-fit">Đăng nhập</button>
-                <a [routerLink]="['/identify']" class="forget-password d-flex align-item-center justify-content-center">
+                <a [routerLink]="['/identify']"  [queryParams]="{sPath: 'admin-login'}" class="forget-password d-flex align-item-center justify-content-center">
                     Quên mật khẩu?
                 </a>
                 <div class="create-account" (click)="onClickRegister()">
-                    <button mat-raised-button >Tạo tài khoản mới</button>
+                    <button mat-raised-button>Tạo tài khoản mới</button>
                 </div>
             </form>
         </div>

@@ -2,7 +2,7 @@
 <div mat-dialog-content>
     {{data.content}}
 </div>
-<div mat-dialog-actions>
+<div mat-dialog-actions *ngIf="data.routerPaths">
     <div *ngFor="let routerPath of data.routerPaths">
         <button mat-button mat-dialog-close (click)="navigate(routerPath[0])">{{routerPath[1]}}</button>
     </div>

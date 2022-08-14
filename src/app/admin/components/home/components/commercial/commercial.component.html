@@ -1,0 +1,35 @@
+<div class="main-content search-results" infinite-scroll [scrollWindow]="false" (scrolled)="onScrollDown($event)"
+    [infiniteScrollThrottle]="1">
+    <div class="standard__list mr-b-10">
+        <div class="standard__item">
+            <button mat-raised-button (click)="openCreateCommercialDialog()">Thêm quảng cáo</button>
+        </div>
+        <div class="standard__item" (click)="openCreateServiceDialog()">
+            <button mat-raised-button>Thêm dịch vụ</button>
+        </div>
+    </div>
+    <form [formGroup]="searchFormGroup" class="journey-search-box box-shadow mr-b-10" >
+        <i class="fa-solid fa-magnifying-glass" ></i>
+        <mat-form-field appearance="fill">
+            <mat-label>Tiêu chí tìm kiếm</mat-label>
+            <mat-select formControlName="order" >
+                <ng-container *ngIf="(criteriaOptions$ | async ) as criteriaOptions">
+                    <mat-option [value]="criteriaOption.value" *ngFor="let criteriaOption of criteriaOptions">{{criteriaOption.label}}</mat-option>
+                </ng-container>
+            </mat-select>
+        </mat-form-field>
+        <input type="text" formControlName="search"/>
+    </form>
+    <div class="grid">
+        <div class="standard__list ">
+            <div class="standard__item flex-fit">
+                <button mat-button class="w-fit" routerLinkActive="primary-btn" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/administrator/home/commercial/commercials']">Bài quảng cáo</button>
+            </div>
+            <div class="standard__item flex-fit">
+                <button mat-button class="w-fit" routerLinkActive="primary-btn" [routerLinkActiveOptions]="{exact: true}"  [routerLink]="['/administrator/home/commercial/shop-and-service']">Cửa hàng và dịch vụ</button>
+            </div>
+        </div>
+    </div>
+    <!-- posts -->
+    <router-outlet></router-outlet>
+</div>

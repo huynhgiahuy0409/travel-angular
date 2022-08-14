@@ -4,11 +4,11 @@
 @import "./assets/styles/animation.scss";
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 .show {
-  display: block !important;
+  display: block;
 }
 
 .hidden {
-  display: none !important
+  display: none 
 }
 i {
   color: #575758;
@@ -20,6 +20,15 @@ i {
 }
 .pd-5{
   padding: 5px
+}
+.pd-10{
+  padding: 5px
+}
+.pd-t-10{
+  padding: 5px
+}
+.pd-b-10{
+  padding: 10px
 }
 .pd-l-5{
   padding-left: 5px
@@ -928,8 +937,6 @@ border-radius: 4px;
 .header {
   padding:20px 0;
   position:relative;
-  margin-bottom:10px;
-  
 }
 
 .header h4 {

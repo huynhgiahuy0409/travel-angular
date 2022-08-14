@@ -60,7 +60,8 @@ export interface UserProfileResponse extends BaseResponse{
     isFollowed: string;
     gender: string;
     reputation: number;
-    avatar: UploadFileResponse
+    avatar: UploadFileResponse;
+    roleName: string
 }
 export interface ReviewPostImageResponse extends BaseResponse{
     id: number
@@ -85,6 +86,14 @@ export interface ReviewPostResponse extends BaseResponse{
     province: ProvinceResponse
     district: DistrictResponse
     userReact: UserReactResponse
+}
+export interface CommercialPostResponse extends BaseResponse{
+    title: string
+    content: string
+    commercialTags: TagResponse[]
+    commercialCoverImage: UploadFileResponse
+    commercialSrc: string
+    user: UserProfileResponse
 }
 /* react */
 export interface UserReactResponse{

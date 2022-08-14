@@ -278,14 +278,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
     //   );
     // }
   }
-  getFiles() {
-    this._uploadFileService.getFiles().subscribe((files) => { });
-  }
-  showImage() {
-    this._uploadFileService.showImage().subscribe((v) => {
-      /* this.img = v; */
-    });
-  }
   openCreatePostDialog() {
     const dialogRef = this._dialog.open(CreatePostDialogComponent, {
       width: 'auto',

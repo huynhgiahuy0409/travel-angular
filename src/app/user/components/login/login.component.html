@@ -66,11 +66,10 @@
                   loginForm.get('username')?.touched">
                     <p> Tài khoản không được để trống</p>
                   </div>
-                  <!-- <div class="content__form__input-notify" *ngIf="form.hasError('minlength', ['password']) &&
-                  form.get('password')?.touched">
-                    <p> Mật khẩu yêu cầu tối thiểu {{form.get('password')?.errors?.minlength.requiredLength}} kí tự
+                  <div class="content__form__input-notify" *ngIf=" isWrongUsername">
+                    <p>Sai tài khoản. Vui lòng thử lại!
                     </p>
-                  </div> -->
+                  </div>
                   <ng-container
                     *ngIf="loginForm.get('username')!.errors && loginForm.get('username')?.touched ; else validUsernameInput">
                     {{this.renderer.addClass(username.parentElement, 'content__form__input--invalid')}}
@@ -95,8 +94,8 @@
                     <p> Mật khẩu yêu cầu tối thiểu {{loginForm.get('password')?.errors?.minlength.requiredLength}} kí tự
                     </p>
                   </div>
-                  <div class="content__form__input-notify" *ngIf="notExistAccount">
-                    <p>Tài khoản hoặc mật khẩu không đúng
+                  <div class="content__form__input-notify" *ngIf=" isWrongPassword">
+                    <p>Sai mật khẩu. Vui lòng thử lại!
                     </p>
                   </div>
                   <ng-container
@@ -114,7 +113,7 @@
                 <div class="separate-line"></div>
                 <div class="content__form__more-wrap">
                   <p (click)="onClickRegister()">Đăng ký tài khoản</p>
-                  <p [routerLink]="'/identify'">Quên mật khẩu?</p>
+                  <p [routerLink]="'/identify'" [queryParams]="{sPath: 'user-login'}">Quên mật khẩu?</p>
                 </div>
               </form>
             </ng-container>

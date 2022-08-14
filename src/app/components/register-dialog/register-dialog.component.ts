@@ -50,7 +50,11 @@ export class RegisterDialogComponent {
         this.progressBarService.progressBarBSub.next(false);
         if (response.status === 200) {
           this.dialogRef.close();
-          this.router.navigate(['/confirmemail']);
+          this.router.navigate(['/confirmemail'], {
+            queryParams: {
+              sPath: 'user-login',
+            }
+          });
           this.cookieService.set("c-user", response.data)
         } else if (response.status === 409) {
           console.log(response);

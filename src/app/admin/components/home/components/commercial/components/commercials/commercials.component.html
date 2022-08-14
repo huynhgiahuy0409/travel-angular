@@ -1,0 +1,5 @@
+<div class="post__list">
+    <div class="post__item" *ngFor="let commercialPost of commercialPosts$ | async">
+        <app-commercial-item [commercialPost]="commercialPost"></app-commercial-item>
+    </div>
+</div>

@@ -9,7 +9,7 @@ export class NotifyDialogService {
 
   constructor(private dialog: MatDialog) { }
 
-  open(title: string, content: string, routerPaths: [string, string][]){
+  open(title: string, content: string, routerPaths?: [string, string][]){
     let dialogRef = this.dialog.open(NotifyDialogComponent, {
       data: {
         title: title,

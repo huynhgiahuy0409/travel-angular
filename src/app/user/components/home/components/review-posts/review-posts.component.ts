@@ -1,35 +1,42 @@
-import { ReviewPostDetailComponent } from './../../../post-detail/components/review-post-detail/review-post-detail.component';
-import { concatMap, filter, debounceTime } from 'rxjs/operators';
-import { HttpEventType, HttpResponse } from '@angular/common/http';
 import {
   AfterViewInit,
   Component,
   ComponentRef,
   ElementRef,
-  OnInit,
-  QueryList,
-  Renderer2,
-  ViewChild,
-  ViewChildren,
+  OnInit, Renderer2,
+  ViewChild
 } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatIcon } from '@angular/material/icon';
-import { Observable } from 'rxjs/internal/Observable';
-import { UploadFileService } from 'src/app/user/services/upload-file.service';
-import { CreatePostDialogComponent } from '../../dialog/create-post-dialog';
-import { ReviewPostComponent } from '../../../creation/components/review-post/review-post.component';
-import { ReviewPostResponse, UploadFileResponse, UserProfileResponse, UserReactResponse } from 'src/app/shared/models/response';
-import { ReviewPostService } from 'src/app/user/services/review-post.service';
-import { FilterPostService } from 'src/app/user/services/filter-post.service';
-import { FilterJourneyPost, FilterReviewPost } from 'src/app/shared/models/model';
-import { DIRECT_LINK_IMAGE, FEMALE_DEFAULT_AVATAR_URL, MALE_DEFAULT_AVATAR_URL, UNDEFINED_DEFAULT_AVATAR_URL } from 'src/app/shared/models/constant';
-import { UserService } from 'src/app/user/services/user.service';
-import { Router } from '@angular/router';
-import { ReviewPostDestroyService } from './review-post-destroy.service';
-import { DirectLinkService } from 'src/app/user/services/direct-link.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs/internal/Observable';
+import { concatMap, debounceTime } from 'rxjs/operators';
+import { CommercialPostService } from 'src/app/admin/services/commercial-post.service';
+import {
+  DIRECT_LINK_IMAGE,
+  FEMALE_DEFAULT_AVATAR_URL,
+  MALE_DEFAULT_AVATAR_URL,
+  UNDEFINED_DEFAULT_AVATAR_URL
+} from 'src/app/shared/models/constant';
+import {
+  FilterCommercialPost, FilterReviewPost
+} from 'src/app/shared/models/model';
+import {
+  CommercialPostResponse,
+  ReviewPostResponse,
+  UploadFileResponse,
+  UserProfileResponse
+} from 'src/app/shared/models/response';
+import { DirectLinkService } from 'src/app/user/services/direct-link.service';
+import { FilterPostService } from 'src/app/user/services/filter-post.service';
 import { ProgressBarService } from 'src/app/user/services/progress-bar.service';
+import { ReviewPostService } from 'src/app/user/services/review-post.service';
+import { UploadFileService } from 'src/app/user/services/upload-file.service';
 import { UserReactService } from 'src/app/user/services/user-react.service';
+import { UserService } from 'src/app/user/services/user.service';
+import { ReviewPostComponent } from '../../../creation/components/review-post/review-post.component';
+import { ReviewPostDetailComponent } from './../../../post-detail/components/review-post-detail/review-post-detail.component';
+import { ReviewPostDestroyService } from './review-post-destroy.service';
 export interface User {
   name: string;
   url: string;
@@ -55,15 +62,15 @@ export interface Post {
   selector: 'app-review-posts',
   templateUrl: './review-posts.component.html',
   styleUrls: ['./review-posts.component.scss'],
-  providers: [FilterPostService]
+  providers: [FilterPostService],
 })
 export class ReviewPostsComponent implements OnInit, AfterViewInit {
   @ViewChild(ReviewPostDetailComponent)
-  reviewPostDetailComponent!: ComponentRef<ReviewPostDetailComponent>
-  maleDefaultAvatarURL: string = MALE_DEFAULT_AVATAR_URL
-  femaleDefaultAvatarURL: string = FEMALE_DEFAULT_AVATAR_URL
-  undefinedDefaultAvatarURL: string = UNDEFINED_DEFAULT_AVATAR_URL
-  directLinkImageURL = DIRECT_LINK_IMAGE
+  reviewPostDetailComponent!: ComponentRef<ReviewPostDetailComponent>;
+  maleDefaultAvatarURL: string = MALE_DEFAULT_AVATAR_URL;
+  femaleDefaultAvatarURL: string = FEMALE_DEFAULT_AVATAR_URL;
+  undefinedDefaultAvatarURL: string = UNDEFINED_DEFAULT_AVATAR_URL;
+  directLinkImageURL = DIRECT_LINK_IMAGE;
   posts: Post[] = [
     {
       id: 1,
@@ -134,7 +141,8 @@ export class ReviewPostsComponent implements OnInit, AfterViewInit {
       ],
     },
   ];
-  reviewPosts: ReviewPostResponse[] = []
+  reviewPosts: ReviewPostResponse[] = [];
+  commercialPosts$!: Observable<CommercialPostResponse[]>
   isShowStoryFull: boolean = false;
   isShowPostFull: boolean = false;
   /*  */
@@ -208,7 +216,7 @@ export class ReviewPostsComponent implements OnInit, AfterViewInit {
   ];
   isShowComments: boolean = false;
   @ViewChild('firstElement') firstElement!: ElementRef;
-  user: UserProfileResponse | null = this.userService.userBSub.value
+  user: UserProfileResponse | null = this.userService.userBSub.value;
   /* fg */
   searchFormGroup!: FormGroup;
   constructor(
@@ -223,107 +231,99 @@ export class ReviewPostsComponent implements OnInit, AfterViewInit {
     public directLinkService: DirectLinkService,
     private fb: FormBuilder,
     public progressBarService: ProgressBarService,
-    private userReactService: UserReactService
+    private userReactService: UserReactService,
+    private commercialPostService: CommercialPostService
   ) {
     /* init search fg */
     this.searchFormGroup = this.fb.group({
       order: this.fb.control('title'),
       search: this.fb.control(''),
     });
-
-    this.filterPostService.filterPost$.pipe(concatMap(filterPost => {
-      return this.reviewPostService.findAll(filterPost);
-    })).subscribe((response) => {
-      this.progressBarService.progressBarBSub.next(false)
-      this.reviewPosts = this.reviewPosts.concat(response)
-      console.log(this.reviewPosts);
-    },
-    error => {
-      this.progressBarService.progressBarBSub.next(false)
+    let initFilterCommercialPost: FilterCommercialPost = {
+      pageable: {
+        pageIndex: 0,
+        pageSize: 2,
+        sortable: {
+          order: 'createdDate',
+          dir: "DESC"
+        }
+      }
     }
-    )
+    this.commercialPosts$ = this.commercialPostService.findAll(initFilterCommercialPost)
+    this.filterPostService.filterPost$
+      .pipe(
+        concatMap((filterPost) => {
+          return this.reviewPostService.findAll(filterPost);
+        })
+      )
+      .subscribe(
+        (response: ReviewPostResponse[]) => {
+          this.progressBarService.progressBarBSub.next(false);
+          this.reviewPosts = this.reviewPosts.concat(response);
+        },
+        (error) => {
+          this.progressBarService.progressBarBSub.next(false);
+        }
+      );
 
-    this.searchFormGroup.get('search')!.valueChanges.pipe(debounceTime(1000)).subscribe((term) => {
-      this.progressBarService.progressBarBSub.next(true)
-      this.reviewPosts = [];
-      let order = this.searchFormGroup.get('order')?.value;
-      let filter: FilterReviewPost = {
-        pageable: {
-          pageIndex: 0,
-          pageSize: 1,
-          sortable: {
-            dir: "DESC",
-            order: "createdDate"
+    this.searchFormGroup
+      .get('search')!
+      .valueChanges.pipe(debounceTime(1000))
+      .subscribe((term) => {
+        this.progressBarService.progressBarBSub.next(true);
+        this.reviewPosts = [];
+        let order = this.searchFormGroup.get('order')?.value;
+        let filter: FilterReviewPost = {
+          pageable: {
+            pageIndex: 0,
+            pageSize: 1,
+            sortable: {
+              dir: 'DESC',
+              order: 'createdDate',
+            },
+          },
+        };
+        /* customize filter */
+        if (term) {
+          if (order == 'title') {
+            filter.title = term;
+          } else if (order == 'tag') {
+            filter.tag = term;
+          } else if (order == 'cost') {
+            filter.cost = term;
+          } else if (order == 'provinceName') {
+            filter.provinceName = term;
           }
         }
-      }
-      /* customize filter */
-      if(term){
-        if (order == 'title') {
-          filter.title = term;
-        }else if (order == 'tag') {
-          filter.tag = term;
-        }else if (order == 'cost') {
-          filter.cost = term;
-        }else if (order == 'provinceName') {
-          filter.provinceName = term;
-        }
-      }
-      this.filterPostService.filterPostBSub.next(filter);
-    });
+        this.filterPostService.filterPostBSub.next(filter);
+      });
   }
   ngAfterViewInit(): void {
     console.log(this.reviewPostDetailComponent);
   }
 
   ngOnInit(): void {
-    this.reviewPostDestroyService.isDestroy$.subscribe(isCloseReviewPostDetail => {
-      if(isCloseReviewPostDetail){
-        this.reviewPostDetailComponent.destroy()
+    this.reviewPostDestroyService.isDestroy$.subscribe(
+      (isCloseReviewPostDetail) => {
+        if (isCloseReviewPostDetail) {
+          this.reviewPostDetailComponent.destroy();
+        }
       }
-    })
+    );
   }
   selectedFile($event: any) {
     this.selectedFiles = $event.target.files;
   }
-  upload() {
-    // this.progress = 0;
-    // this.currentFile = this.selectedFiles.item(0);
-    // if (this.currentFile) {
-    //   this._uploadFileService.upload([this.currentFile]).subscribe(
-    //     (event) => {
-    //       if (event.type === HttpEventType.UploadProgress && event.total) {
-    //         this.progress = Math.round((100 * event.loaded) / event.total);
-    //       } else if (event instanceof HttpResponse) {
-    //         this.message = event.body ? event.body.message : '';
-    //         this.fileInfos = this._uploadFileService.getFiles();
-    //       }
-    //     },
-    //     (err) => {
-    //       this.progress = 0;
-    //       this.message = 'Could not upload the file';
-    //       this.fileInfos = undefined;
-    //     }
-    //   );
-    // }
-  }
-  getFiles() {
-    this._uploadFileService.getFiles().subscribe((files) => {});
-  }
-  showImage() {
-    this._uploadFileService.showImage().subscribe((v) => {
-      /* this.img = v; */
-    });
-  }
+
   openCreatePostDialog() {
     const dialogRef = this._dialog.open(ReviewPostComponent, {
       width: 'auto',
-      height: '90vh'
+      height: '90vh',
     });
-    dialogRef.afterClosed().subscribe(response => {
-      this.reviewPosts.unshift(response.createdReviewPost)
-      this.reviewPosts = this.reviewPosts
-    })
+    dialogRef.afterClosed().subscribe((response) => {
+      this.reviewPosts.unshift(response.createdReviewPost);
+      this.reviewPosts = this.reviewPosts;
+    });
   }
   navigateTo(element: any) {
     element.scrollIntoView({ behavior: 'smooth' });
@@ -712,34 +712,34 @@ export class ReviewPostsComponent implements OnInit, AfterViewInit {
   }
 
   /* infinite scroll */
-  onScrollDown($event: any){
-    let currFilter: FilterReviewPost = this.filterPostService.filterPostBSub.value
-    let pageable = currFilter.pageable
-    pageable.pageIndex++
-    this.filterPostService.filterPostBSub.next(currFilter)    
+  onScrollDown($event: any) {
+    let currFilter: FilterReviewPost =
+      this.filterPostService.filterPostBSub.value;
+    let pageable = currFilter.pageable;
+    pageable.pageIndex++;
+    this.filterPostService.filterPostBSub.next(currFilter);
   }
-  onScrollUp($event: any){
+  onScrollUp($event: any) {
     console.log($event);
   }
-  determineFileType(uploadFile: UploadFileResponse){
-    let result = uploadFile.contentType.startsWith("image")? "IMAGE" : "VIDEO"
-    return result
+  determineFileType(uploadFile: UploadFileResponse) {
+    let result = uploadFile.contentType.startsWith('image') ? 'IMAGE' : 'VIDEO';
+    return result;
   }
-  dateTimeFormula(timestamp: Date){
-    return new Date(timestamp).toLocaleString()
+  dateTimeFormula(timestamp: Date) {
+    return new Date(timestamp).toLocaleString();
   }
   /* user method */
-  isUserPost(postUser: UserProfileResponse): boolean{
-    return postUser.id == this.user!.id ? true: false
+  isUserPost(postUser: UserProfileResponse): boolean {
+    return postUser.id == this.user!.id ? true : false;
   }
-  detectUpdatedPostUser($event: UserProfileResponse){
-    console.log($event)
-    this.reviewPosts.forEach(reviewPost => {
-      if(reviewPost.user.id === $event.id){
-        console.log('ok')
-        reviewPost.user = $event
+  detectUpdatedPostUser($event: UserProfileResponse) {
+    console.log($event);
+    this.reviewPosts.forEach((reviewPost) => {
+      if (reviewPost.user.id === $event.id) {
+        console.log('ok');
+        reviewPost.user = $event;
       }
-    })
-
+    });
   }
 }

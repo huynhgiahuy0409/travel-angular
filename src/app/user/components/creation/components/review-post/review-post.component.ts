@@ -50,7 +50,7 @@ export class ReviewPostComponent implements OnInit {
     'Austria (Áo)',
     'United Kingdom (Vương Quốc Anh)',
   ];
-  /*  */
+  /* view child */
   @ViewChild('editCoverImageBtn', { read: ElementRef })
   editCoverImageBtn!: ElementRef;
   @ViewChild('coverImageActionSelect') coverImageActionSelect!: ElementRef;

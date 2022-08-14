@@ -1,12 +1,12 @@
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import {
-  Component, OnInit,
-  Renderer2
-} from '@angular/core';
-import {
-  AbstractControl, FormBuilder,
+  AbstractControl,
+  FormBuilder,
   FormControl,
   FormGroup,
-  NgForm, Validators
+  NgForm,
+  Validators,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -38,7 +38,8 @@ export class LoginComponent implements OnInit {
   token: string | undefined;
   loginForm!: FormGroup;
   registerForm!: FormGroup;
-  notExistAccount: boolean = false
+  isWrongUsername: boolean = false;
+  isWrongPassword: boolean = false;
   public log: string[] = [];
   constructor(
     private router: Router,
@@ -47,7 +48,7 @@ export class LoginComponent implements OnInit {
     public renderer: Renderer2,
     private cookieService: CookieService,
     private authService: AuthService,
-    private userService: UserService,
+    private userService: UserService
   ) {
     this.loginForm = new FormGroup({
       username: new FormControl('', [Validators.required, Validators.email]),
@@ -212,31 +213,40 @@ export class LoginComponent implements OnInit {
     });
   }
   loginSubmit() {
+    this.isWrongPassword = false
+    this.isWrongUsername = false
     let loginFormValue = this.loginForm.value;
     let loginRequest: LoginRequest = {
       ...loginFormValue,
       email: loginFormValue.username,
     };
-    this.authService.login(loginRequest).subscribe(response => {
-      if(response){
-        let data: UserProfileResponse | AuthenticationResponse | null = response.data
-        let message = response.message
-        if(message ==='ACTIVE'){
-          let authResponse = data as AuthenticationResponse
-          let user = authResponse.user
-          let JWT = authResponse.jwt
-          this.userService.userBSub.next(user)
-          this.authService.JWTBSub.next(JWT)
-          this.router.navigate(['/home'])        
-        }else if(message ==='INACTIVE'){
-          let userInfo  = data as UserProfileResponse
-          let userId = userInfo.id
-          this.cookieService.set("c-user", userId + "")
-          this.router.navigate(['/confirmemail'])        
+    this.authService.login(loginRequest).subscribe(
+      (response) => {
+        let data: AuthenticationResponse =
+          response.data;
+        if (data) {
+          let user = data.user
+          let JWT = data.jwt
+          let message = response.message;
+          if (message === 'ACTIVE') {
+            this.userService.userBSub.next(user);
+            this.authService.JWTBSub.next(JWT);
+            this.router.navigate(['/home']);
+          } else if (message === 'INACTIVE') {
+            this.cookieService.set('c-user', user.id + '');
+            this.router.navigate(['/confirmemail']);
+          }
         }
-      }else{
-        this.notExistAccount = true
+      },
+      (errorResponse: HttpErrorResponse) => {
+        let {error} = errorResponse
+        if(error.message === "WRONG USERNAME"){
+          this.isWrongUsername = true
+        }else if(error.message === "WRONG PASSWORD"){
+          this.isWrongPassword = true
+        }
       }
-    })
+    );
   }
+ 
 }

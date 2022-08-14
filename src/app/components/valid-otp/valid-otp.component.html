@@ -27,8 +27,8 @@
             </li>
         </ul>
     </div>
-    <mat-progress-bar *ngIf="progressBarService.progressBar$ | async" mode="indeterminate"></mat-progress-bar>
-    <div class="row main d-flex justify-content-center align-items-center">
+    <div class="row no-gutters main d-flex justify-content-center align-items-center">
+        <mat-progress-bar *ngIf="progressBarService.progressBar$ | async" mode="indeterminate"></mat-progress-bar>
         <div class="find-account">
             <div class="find-account__header d-flex align-items-center">
                 <h1>Nhập mã xác nhận</h1>
@@ -44,7 +44,7 @@
                 <div *ngIf="isWrongCode" class="mr-l-5" style="color: var(--base-cherry-color--)">Số bạn đã nhập không khớp với mã. Vui lòng thử lại.</div>
             </div>
             <div class="find-account__footer d-flex align-items-center justify-content-end">
-                <button mat-raised-button [routerLink]="'/login'">Hủy</button>
+                <button mat-raised-button (click)="onClickCancel()">Hủy</button>
                 <button mat-raised-button class="primary-btn" [disabled]="OTPCtrl.invalid" (click)="validOTP()">Tiếp theo</button>
             </div>
         </div>

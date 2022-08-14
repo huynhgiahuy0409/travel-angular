@@ -10,6 +10,7 @@ import { matchedPassword } from '../../user/components/login/login.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/user/services/auth.service';
 import { NotifyDialogService } from 'src/app/user/services/notify-dialog.service';
+import { ifStmt } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-forget-password',
@@ -44,34 +45,44 @@ export class ForgetPasswordComponent implements OnInit {
 
   ngOnInit(): void {}
   confirmChangePassword() {
-    let codeParam = this.activatedRoute.snapshot.queryParams['code'];
-    let userId = this.activatedRoute.snapshot.queryParams['uid'];
-    
+    const {uid, code, sPath } = this.activatedRoute.snapshot.queryParams
     this.authService
       .recoveryPassword(
         this.resetFormGroup.get('password')?.value,
-        codeParam,
-        userId
+        code,
+        uid
       )
       .subscribe(
         (response) => {
           if (response.message == 'SUCCESS') {
-            this.notifyDialogService.open(
+            let dialogRef = this.notifyDialogService.open(
               'Thành công',
               'Mật khẩu của bạn đã được cập nhật',
-              [['/home', 'Trở về trang chủ']]
             );
+            dialogRef.afterClosed().subscribe(_ => {
+              if(sPath === 'admin-login'){
+                this.router.navigate(['/administrator/home'])
+              }else if(sPath === 'user-login'){
+                this.router.navigate(['/home'])
+              }
+            })
           }
         },
         (error) => {
           if (error.error.message == 'FAILED') {
             this.notifyDialogService.open(
               'Liên kết không hợp lệ',
-              'Liên kết mà bạn sử dụng không hợp lệ. Vui lòng thử lại.',
-              []
-            );
+              'Liên kết mà bạn sử dụng không hợp lệ. Vui lòng thử lại.'            );
           }
         }
       );
+  }
+  onClickCancel(){
+    const {uid, code, sPath } = this.activatedRoute.snapshot.queryParams
+    if(sPath === "user-login"){
+      this.router.navigate(['/login'])
+    }else if(sPath === "admin-login"){
+      this.router.navigate(['/administrator-login'])
+    }
   }
 }
