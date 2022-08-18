@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UserService } from 'src/app/user/services/user.service';
 
@@ -9,7 +9,7 @@ import { UserService } from 'src/app/user/services/user.service';
   styleUrls: ['./role-change-dialog.component.scss']
 })
 export class RoleChangeDialogComponent implements OnInit {
-  sltRoleCtrl: FormControl = new FormControl('', Validators.required);
+  sltRoleCtrl: UntypedFormControl = new UntypedFormControl('', Validators.required);
   constructor(
     public dialogRef: MatDialogRef<RoleChangeDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,

@@ -1,5 +1,5 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { concatMap, debounceTime } from 'rxjs/operators';
@@ -28,7 +28,7 @@ export class ReviewPostsComponent implements OnInit {
   /* prop */
   isAdmin = false
   /* fg */
-  searchFormGroup!: FormGroup;
+  searchFormGroup!: UntypedFormGroup;
   /* data */
   reviewPosts: ReviewPostResponse[] = [];
   constructor(
@@ -41,7 +41,7 @@ export class ReviewPostsComponent implements OnInit {
     private reviewPostDestroyService: ReviewPostDestroyService,
     private filterPostService: FilterPostService,
     public directLinkService: DirectLinkService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public progressBarService: ProgressBarService,
     private userReactService: UserReactService,
     private commercialPostService: CommercialPostService

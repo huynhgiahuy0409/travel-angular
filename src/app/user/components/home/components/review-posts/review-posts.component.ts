@@ -6,7 +6,7 @@ import {
   OnInit, Renderer2,
   ViewChild
 } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
@@ -219,7 +219,7 @@ export class ReviewPostsComponent implements OnInit, AfterViewInit {
   @ViewChild('firstElement') firstElement!: ElementRef;
   user: UserProfileResponse | null = this.userService.userBSub.value;
   /* fg */
-  searchFormGroup!: FormGroup;
+  searchFormGroup!: UntypedFormGroup;
   constructor(
     private _uploadFileService: UploadFileService,
     private _dialog: MatDialog,
@@ -230,7 +230,7 @@ export class ReviewPostsComponent implements OnInit, AfterViewInit {
     private reviewPostDestroyService: ReviewPostDestroyService,
     private filterPostService: FilterPostService,
     public directLinkService: DirectLinkService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public progressBarService: ProgressBarService,
     private userReactService: UserReactService,
     private commercialPostService: CommercialPostService

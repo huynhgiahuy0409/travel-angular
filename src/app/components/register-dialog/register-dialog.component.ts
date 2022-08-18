@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  FormBuilder,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormGroup,
   Validators,
   AbstractControl,
 } from '@angular/forms';
@@ -17,10 +17,10 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrls: ['./register-dialog.component.scss'],
 })
 export class RegisterDialogComponent {
-  registerFormGroup!: FormGroup;
+  registerFormGroup!: UntypedFormGroup;
   constructor(
     public dialogRef: MatDialogRef<RegisterDialogComponent>,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private authService: AuthService,
     private router: Router,
     public progressBarService: ProgressBarService,

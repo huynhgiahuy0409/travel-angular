@@ -2,7 +2,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Component, OnInit } from '@angular/core';
 import { FilterPostService } from 'src/app/user/services/filter-post.service';
 import { ReviewPostComponent } from 'src/app/user/components/creation/components/review-post/review-post.component';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { CommercialDialogComponent } from './creation/commercial-dialog/commercial-dialog.component';
 import { CommercialPostService } from 'src/app/admin/services/commercial-post.service';
 import { CriteriaOption, SearchService } from './services/search.service';
@@ -16,13 +16,13 @@ import { Observable } from 'rxjs';
 export class CommercialComponent implements OnInit {
   slt = 0
   /* fg */
-  searchFormGroup!: FormGroup;
+  searchFormGroup!: UntypedFormGroup;
   /* data */
   criteriaOptions$!: Observable<CriteriaOption[] | null>
   constructor(
     private filterPostService: FilterPostService,
     private _dialog: MatDialog,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private commercialPostService: CommercialPostService,
     private searchService: SearchService
   ) {

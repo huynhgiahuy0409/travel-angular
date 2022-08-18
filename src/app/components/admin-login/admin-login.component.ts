@@ -1,9 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -25,22 +25,22 @@ import { RegisterDialogComponent } from '../register-dialog/register-dialog.comp
   styleUrls: ['./admin-login.component.scss'],
 })
 export class AdminLoginComponent implements OnInit {
-  loginForm!: FormGroup;
+  loginForm!: UntypedFormGroup;
   isWrongUsername: boolean = false;
   isWrongPassword: boolean = false;
   forbidden: boolean = false
   constructor(
     private router: Router,
     private matDialog: MatDialog,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public renderer: Renderer2,
     private cookieService: CookieService,
     private authService: AuthService,
     private userService: UserService
   ) {
-    this.loginForm = new FormGroup({
-      username: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [
+    this.loginForm = new UntypedFormGroup({
+      username: new UntypedFormControl('', [Validators.required, Validators.email]),
+      password: new UntypedFormControl('', [
         Validators.required,
         Validators.minLength(10),
       ]),

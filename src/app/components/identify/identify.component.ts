@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { TransitionCheckState } from '@angular/material/checkbox';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AuthService } from 'src/app/user/services/auth.service';
@@ -14,7 +14,7 @@ import { ProgressBarService } from 'src/app/user/services/progress-bar.service';
   styleUrls: ['./identify.component.scss'],
 })
 export class IdentifyComponent implements OnInit {
-  usernameCtrl: FormControl = new FormControl('', [
+  usernameCtrl: UntypedFormControl = new UntypedFormControl('', [
     Validators.required,
     Validators.email,
   ]);

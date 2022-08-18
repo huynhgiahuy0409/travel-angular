@@ -1,8 +1,8 @@
 import { CookieService } from 'ngx-cookie-service';
 import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
@@ -17,22 +17,22 @@ import { NotifyDialogService } from 'src/app/user/services/notify-dialog.service
   styleUrls: ['./forget-password.component.scss'],
 })
 export class ForgetPasswordComponent implements OnInit {
-  resetFormGroup!: FormGroup;
+  resetFormGroup!: UntypedFormGroup;
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private router: Router,
     private authService: AuthService,
     private activatedRoute: ActivatedRoute,
     private notifyDialogService: NotifyDialogService,
     private CookieService: CookieService
   ) {
-    this.resetFormGroup = new FormGroup(
+    this.resetFormGroup = new UntypedFormGroup(
       {
-        password: new FormControl('', [
+        password: new UntypedFormControl('', [
           Validators.required,
           Validators.minLength(6),
         ]),
-        confirmPassword: new FormControl('', [
+        confirmPassword: new UntypedFormControl('', [
           Validators.required,
           Validators.minLength(6),
         ]),

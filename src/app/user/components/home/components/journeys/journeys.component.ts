@@ -28,7 +28,7 @@ import {
 import { JourneyPostService } from 'src/app/user/services/journey-post.service';
 import { ParticipantService } from 'src/app/user/services/participant.service';
 import { UserService } from 'src/app/user/services/user.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ProgressBarService } from 'src/app/user/services/progress-bar.service';
 export interface User {
   name: string;
@@ -206,7 +206,7 @@ export class JourneysComponent implements OnInit {
   /* data */
   journeyPosts: JourneyPostResponse[] = [];
   /* fg */
-  searchFormGroup!: FormGroup;
+  searchFormGroup!: UntypedFormGroup;
   constructor(
     private _uploadFileService: UploadFileService,
     private _dialog: MatDialog,
@@ -217,7 +217,7 @@ export class JourneysComponent implements OnInit {
     private router: Router,
     private participantService: ParticipantService,
     private userService: UserService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private progressBarService: ProgressBarService
   ) {
     this.searchFormGroup = this.fb.group({

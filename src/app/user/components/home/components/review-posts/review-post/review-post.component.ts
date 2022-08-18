@@ -7,7 +7,7 @@ import {
   Output,
   Renderer2,
 } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { concat, forkJoin, Observable, ObservableInput, of } from 'rxjs';
@@ -116,7 +116,7 @@ export class ReviewPostComponent implements OnInit {
     private reviewPostDestroyService: ReviewPostDestroyService,
     private filterPostService: FilterPostService,
     public directLinkService: DirectLinkService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public progressBarService: ProgressBarService,
     private userReactService: UserReactService,
     private dateUtilsService: DateUtilsService,

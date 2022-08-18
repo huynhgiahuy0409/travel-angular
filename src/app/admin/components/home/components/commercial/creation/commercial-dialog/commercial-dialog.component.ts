@@ -1,6 +1,6 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -21,7 +21,7 @@ import { UploadFileService } from 'src/app/user/services/upload-file.service';
 })
 export class CommercialDialogComponent implements OnInit {
   /* form */
-  commercialPostFromGroup!: FormGroup;
+  commercialPostFromGroup!: UntypedFormGroup;
   /* file */
   coverImageFile!: File | null;
   coverImageSrc!: string | ArrayBuffer | null;
@@ -33,7 +33,7 @@ export class CommercialDialogComponent implements OnInit {
   locationTagInput!: ElementRef<HTMLInputElement>;
   /* tag */
   filteredLocationTags!: Observable<string[]>;
-  locationTagCtrl = new FormControl('');
+  locationTagCtrl = new UntypedFormControl('');
   sltLocationTags: string[] = [];
   allLocations: string[] = [
     'India (Ấn độ)',
@@ -42,7 +42,7 @@ export class CommercialDialogComponent implements OnInit {
   ];
   separatorKeysCodes: number[] = [ENTER, COMMA];
   constructor( private renderer: Renderer2,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private uploadFileService: UploadFileService,
     private commercialPostService: CommercialPostService,
     private localService: LocalService,

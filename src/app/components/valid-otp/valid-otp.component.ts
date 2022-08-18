@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import {
@@ -18,7 +18,7 @@ import { UserService } from 'src/app/user/services/user.service';
 })
 export class ValidOTPComponent implements OnInit, OnDestroy {
   userProfile!: UserProfileResponse;
-  OTPCtrl: FormControl = new FormControl('', [Validators.required]);
+  OTPCtrl: UntypedFormControl = new UntypedFormControl('', [Validators.required]);
   routerPath: string | undefined;
   sourcePath!: string
   isWrongCode: boolean = false; 

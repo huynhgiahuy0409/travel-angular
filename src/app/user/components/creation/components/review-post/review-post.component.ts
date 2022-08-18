@@ -8,9 +8,9 @@ import {
 } from '@angular/core';
 import {
   AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { forkJoin, Observable, of } from 'rxjs';
@@ -43,7 +43,7 @@ export class ReviewPostComponent implements OnInit {
   coverImageFile?: File;
   coverImageSrc!: string | ArrayBuffer | null;
   filteredLocationTags!: Observable<string[]>;
-  locationTagCtrl = new FormControl('');
+  locationTagCtrl = new UntypedFormControl('');
   sltLocationTags: string[] = [];
   allLocations: string[] = [
     'India (Ấn độ)',
@@ -59,14 +59,14 @@ export class ReviewPostComponent implements OnInit {
   @ViewChild('addImagesInput')
   addImagesInput!: ElementRef<HTMLInputElement>;
   /* form */
-  reviewPostFromGroup!: FormGroup;
+  reviewPostFromGroup!: UntypedFormGroup;
   /* local */
   provinces$!: Observable<ProvinceResponse[]>
   district$!: Observable<DistrictResponse[]>
   constructor(
     private renderer: Renderer2,
     private reviewPostService: ReviewPostService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private uploadFileService: UploadFileService,
     private localService: LocalService,
     private notifyDialogService: NotifyDialogService,

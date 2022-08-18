@@ -1,6 +1,6 @@
 import { debounceTime, switchMap } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { forkJoin, Observable, of } from 'rxjs';
 import { ADMIN_ROLE } from 'src/app/shared/models/constant';
@@ -29,7 +29,7 @@ export class AdminsComponent implements OnInit {
     active: 1,
   };
   searchUsers: UserProfileResponse[] = []
-  searchCtrl: FormControl = new FormControl('')
+  searchCtrl: UntypedFormControl = new UntypedFormControl('')
   initSearchUser: FilterUser = {
     pageable: {
       pageIndex: 0,

@@ -11,10 +11,10 @@ import {
 } from './../../../../../shared/models/response';
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import {
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormArray,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -59,7 +59,7 @@ import { UploadFileService } from 'src/app/user/services/upload-file.service';
 export class JourneyComponent implements OnInit {
   defaultProvincePlaceURL: string = DEFAULT_PROVINCE_PLACE_URL;
   tabs: string[] = [];
-  selected:FormControl = new FormControl(0);
+  selected:UntypedFormControl = new UntypedFormControl(0);
   /* step */
   firstFormGroup = this._formBuilder.group({
     firstCtrl: ['', Validators.required],
@@ -70,12 +70,12 @@ export class JourneyComponent implements OnInit {
   isEditable = false;
   /* slt ngModel */
   /* form data */
-  journeyFormGroup!: FormGroup;
+  journeyFormGroup!: UntypedFormGroup;
   /* ctrl */
-  placeChoiceMethodCtrl: FormControl = new FormControl('');
-  provinceCtrl: FormControl = new FormControl('');
-  searchedPlaceCtrl: FormControl = new FormControl('');
-  searchedDeparturePlaceCtrl: FormControl = new FormControl('');
+  placeChoiceMethodCtrl: UntypedFormControl = new UntypedFormControl('');
+  provinceCtrl: UntypedFormControl = new UntypedFormControl('');
+  searchedPlaceCtrl: UntypedFormControl = new UntypedFormControl('');
+  searchedDeparturePlaceCtrl: UntypedFormControl = new UntypedFormControl('');
   /* data */
   visitPlaceAutocompleteResponse$!: Observable<GoongPlaceAutocompleteResponse | null>;
   departurePlaceAutocompleteResponse$!: Observable<GoongPlaceAutocompleteResponse | null>;
@@ -92,7 +92,7 @@ export class JourneyComponent implements OnInit {
   editCoverImageBtn!: ElementRef;
   @ViewChild('coverImageActionSelect') coverImageActionSelect!: ElementRef;
   constructor(
-    private _formBuilder: FormBuilder,
+    private _formBuilder: UntypedFormBuilder,
     private matDialog: MatDialog,
     private goongService: GoongMapService,
     public localService: LocalService,
@@ -103,75 +103,75 @@ export class JourneyComponent implements OnInit {
   ) {
     this.tabs = [`Ngày ${this.tabs.length + 1}`];
     this.journeyFormGroup = this._formBuilder.group({
-      title: new FormControl(''),
-      journeyDayArray: new FormArray([
-        new FormControl({
+      title: new UntypedFormControl(''),
+      journeyDayArray: new UntypedFormArray([
+        new UntypedFormControl({
           day: 1,
           journeyDayPlaces: [],
         }),
       ]),
       journeyInfoGroup: this._formBuilder.group({
-        description: new FormControl(''),
-        journeyDetailArray: new FormArray([
-          new FormArray([
-            new FormControl('Ngày 1'),
-            new FormControl(''),
+        description: new UntypedFormControl(''),
+        journeyDetailArray: new UntypedFormArray([
+          new UntypedFormArray([
+            new UntypedFormControl('Ngày 1'),
+            new UntypedFormControl(''),
           ])
         ]),
-        journeyCostArray: new FormArray([
-          new FormArray([
-            new FormControl(''),
-            new FormControl(''),
-            new FormControl('')
+        journeyCostArray: new UntypedFormArray([
+          new UntypedFormArray([
+            new UntypedFormControl(''),
+            new UntypedFormControl(''),
+            new UntypedFormControl('')
           ]),
         ]),
-        totalPayment: new FormControl('0'),
+        totalPayment: new UntypedFormControl('0'),
       }),
       moreInfoGroup: this._formBuilder.group({
-        departureDay: new FormControl(''),
-        totalParticipant: new FormControl(''),
-        totalCost: new FormControl(''),
-        totalDay: new FormControl(''),
-        vehicle: new FormControl(''),
+        departureDay: new UntypedFormControl(''),
+        totalParticipant: new UntypedFormControl(''),
+        totalCost: new UntypedFormControl(''),
+        totalDay: new UntypedFormControl(''),
+        vehicle: new UntypedFormControl(''),
       }),
-      departurePlace: new FormControl(''),
-      note: new FormControl(''),
-      momoPhone: new FormControl(''),
-      momoContent: new FormControl(''),
+      departurePlace: new UntypedFormControl(''),
+      note: new UntypedFormControl(''),
+      momoPhone: new UntypedFormControl(''),
+      momoContent: new UntypedFormControl(''),
     });
   }
-  get journeyDayArray(): FormArray {
-    return this.journeyFormGroup.get('journeyDayArray') as FormArray;
+  get journeyDayArray(): UntypedFormArray {
+    return this.journeyFormGroup.get('journeyDayArray') as UntypedFormArray;
   }
-  get journeyInfoGroup(): FormGroup {
-    return this.journeyFormGroup.get('journeyInfoGroup') as FormGroup;
+  get journeyInfoGroup(): UntypedFormGroup {
+    return this.journeyFormGroup.get('journeyInfoGroup') as UntypedFormGroup;
   }
-  get journeyMoreInfoGroup(): FormGroup {
-    return this.journeyFormGroup.get('moreInfoGroup') as FormGroup;
+  get journeyMoreInfoGroup(): UntypedFormGroup {
+    return this.journeyFormGroup.get('moreInfoGroup') as UntypedFormGroup;
   }
-  get journeyDetailArray(): FormArray {
-    return this.journeyInfoGroup.get('journeyDetailArray') as FormArray;
+  get journeyDetailArray(): UntypedFormArray {
+    return this.journeyInfoGroup.get('journeyDetailArray') as UntypedFormArray;
   }
-  get journeyCostArray(): FormArray {
-    return this.journeyInfoGroup.get('journeyCostArray') as FormArray;
+  get journeyCostArray(): UntypedFormArray {
+    return this.journeyInfoGroup.get('journeyCostArray') as UntypedFormArray;
   }
-  getJourneyDetailItem(index: number): FormArray {
-    return this.journeyDetailArray.controls[index] as FormArray;
+  getJourneyDetailItem(index: number): UntypedFormArray {
+    return this.journeyDetailArray.controls[index] as UntypedFormArray;
   }
-  getJourneyCostItem(index: number): FormArray {
-    return this.journeyCostArray.controls[index] as FormArray;
+  getJourneyCostItem(index: number): UntypedFormArray {
+    return this.journeyCostArray.controls[index] as UntypedFormArray;
   }
-  getJourneyCostItemCtrl(itemIndex: number, ctrlIndex: number): FormControl {
-    return this.getJourneyCostItem(itemIndex).controls[ctrlIndex] as FormControl
+  getJourneyCostItemCtrl(itemIndex: number, ctrlIndex: number): UntypedFormControl {
+    return this.getJourneyCostItem(itemIndex).controls[ctrlIndex] as UntypedFormControl
   }
-  getJourneyDetailItemCtrl(itemIndex: number, ctrlIndex: number): FormControl {
-    return this.getJourneyDetailItem(itemIndex).controls[ctrlIndex] as FormControl
+  getJourneyDetailItemCtrl(itemIndex: number, ctrlIndex: number): UntypedFormControl {
+    return this.getJourneyDetailItem(itemIndex).controls[ctrlIndex] as UntypedFormControl
   }
   addJourneyCostItem() {
-    this.journeyCostArray.push(new FormArray([
-      new FormControl(''),
-      new FormControl(''),
-      new FormControl('')
+    this.journeyCostArray.push(new UntypedFormArray([
+      new UntypedFormControl(''),
+      new UntypedFormControl(''),
+      new UntypedFormControl('')
     ]))
   }
   removeJourneyCostItem(index: number) {
@@ -179,8 +179,8 @@ export class JourneyComponent implements OnInit {
       this.journeyCostArray.removeAt(index)
     }
   }
-  getJourneyDayCtrl(index: number): FormControl {
-    return this.journeyDayArray.controls[index] as FormControl;
+  getJourneyDayCtrl(index: number): UntypedFormControl {
+    return this.journeyDayArray.controls[index] as UntypedFormControl;
   }
   getJourneyDayPlacesValue(index: number): JourneyDayPlace[] {
     let journeyDayValue: JourneyDay = this.getJourneyDayCtrl(index).value;
@@ -253,9 +253,9 @@ export class JourneyComponent implements OnInit {
         journeyDayPlaces: [],
       })
     );
-    this.journeyDetailArray.push(new FormArray([
-      new FormControl(`Ngày ${this.tabs.length}`),
-      new FormControl(''),
+    this.journeyDetailArray.push(new UntypedFormArray([
+      new UntypedFormControl(`Ngày ${this.tabs.length}`),
+      new UntypedFormControl(''),
     ]))
   }
 

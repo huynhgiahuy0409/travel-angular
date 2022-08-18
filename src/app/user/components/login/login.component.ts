@@ -2,9 +2,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import {
   AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   NgForm,
   Validators,
 } from '@angular/forms';
@@ -37,36 +37,36 @@ export class LoginComponent implements OnInit {
   isLogin: boolean = true;
   countSlide: number = 0;
   token: string | undefined;
-  loginForm!: FormGroup;
-  registerForm!: FormGroup;
+  loginForm!: UntypedFormGroup;
+  registerForm!: UntypedFormGroup;
   isWrongUsername: boolean = false;
   isWrongPassword: boolean = false;
   public log: string[] = [];
   constructor(
     private router: Router,
     private matDialog: MatDialog,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public renderer: Renderer2,
     private cookieService: CookieService,
     private authService: AuthService,
     private userService: UserService,
     private matDialogService: NotifyDialogService
   ) {
-    this.loginForm = new FormGroup({
-      username: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [
+    this.loginForm = new UntypedFormGroup({
+      username: new UntypedFormControl('', [Validators.required, Validators.email]),
+      password: new UntypedFormControl('', [
         Validators.required,
         Validators.minLength(10),
       ]),
       // recaptchaReactive: new FormControl('recaptcha', Validators.required),
     });
-    this.registerForm = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email]),
-      fullName: new FormControl('', [Validators.required]),
-      passwordGr: new FormGroup(
+    this.registerForm = new UntypedFormGroup({
+      email: new UntypedFormControl('', [Validators.required, Validators.email]),
+      fullName: new UntypedFormControl('', [Validators.required]),
+      passwordGr: new UntypedFormGroup(
         {
-          password: new FormControl(null, Validators.required),
-          confirmPassword: new FormControl(null, Validators.required),
+          password: new UntypedFormControl(null, Validators.required),
+          confirmPassword: new UntypedFormControl(null, Validators.required),
         },
         matchedPassword
       ),

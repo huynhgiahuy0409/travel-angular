@@ -1,6 +1,6 @@
 import { debounceTime, tap, switchMap } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, forkJoin, of } from 'rxjs';
 import { ADMIN_ROLE, CENSOR_ROLE } from 'src/app/shared/models/constant';
@@ -17,7 +17,7 @@ export class MembersComponent implements OnInit {
   currUser!: UserProfileResponse | null
   users$!: Observable<[UserProfileResponse[], number, UserProfileResponse[], number, number]>
   searchUsers: UserProfileResponse[] = []
-  searchCtrl: FormControl = new FormControl('')
+  searchCtrl: UntypedFormControl = new UntypedFormControl('')
   initSearchUser: FilterUser = {
     pageable: {
       pageIndex: 0,
