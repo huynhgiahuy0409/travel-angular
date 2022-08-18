@@ -1,0 +1,30 @@
+<h2 mat-dialog-title align="center" style="font-weight: 550;">{{data.title}}</h2>
+<mat-dialog-content class="mat-typography">
+    <div class="grid">
+        <div class="row">
+            <div class="col l-3 title">Tên người dùng</div>
+            <div class="col l-3 title">Vai trò hiện tại</div>
+            <div class="col l-3 title">Điểm danh tiếng</div>
+            <div class="col l-3 title">Chọn vai trò</div>
+        </div>
+        <div class="row">
+            <div class="col l-3 align-center">{{data.user.fullName}}</div>
+            <div class="col l-3 align-center">{{data.user.role.label}}</div>
+            <div class="col l-3 align-center">{{data.user.reputation}}</div>
+            <div class="col l-3 align-center">
+                <mat-form-field appearance="fill" class="w-fit">
+                    <mat-label>Chọn vai trò mới</mat-label>
+                    <mat-select [formControl]="sltRoleCtrl">
+                    <mat-option value="ROLE_ADMIN" [disabled]="">Quản trị viên</mat-option>
+                    <mat-option value="ROLE_CENSOR">Kiểm duyệt viên</mat-option>
+                    <mat-option value="ROLE_ADMIN">Thành viên</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Hủy</button>
+  <button mat-button cdkFocusInitial class="primary-btn" [disabled]="sltRoleCtrl.invalid" (click)="confirmChangeRole(sltRoleCtrl.value, data.user.id)">Xác nhận</button>
+</mat-dialog-actions>

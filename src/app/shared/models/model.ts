@@ -46,10 +46,16 @@ export interface FilterReviewPost extends BaseFilter{
     tag?: string
     cost?: number
     provinceName?: string
+    status?: string
 }
 export interface FilterCommercialPost extends BaseFilter{
     title?: string
     tag?: string
+}
+export interface FilterUser extends BaseFilter{
+    role?: string
+    active?: number,
+    fullName?: string
 }
 /* journey day */
 export interface JourneyDay{

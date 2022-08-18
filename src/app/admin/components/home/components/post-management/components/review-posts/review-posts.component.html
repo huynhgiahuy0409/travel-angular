@@ -1,0 +1,23 @@
+<div class="main-content search-results" infinite-scroll [scrollWindow]="false" (scrolled)="onScrollDown($event)"
+    [infiniteScrollThrottle]="1">
+    <!-- write-post-container -->
+    <form [formGroup]="searchFormGroup" class="journey-search-box box-shadow">
+        <i class="fa-solid fa-magnifying-glass" ></i>
+        <mat-form-field appearance="fill">
+            <mat-label>Tiêu chí tìm kiếm</mat-label>
+            <mat-select formControlName="order">
+                <mat-option value="title">Tiêu đề bài viết</mat-option>
+                <mat-option value="tag">Tag</mat-option>
+                <mat-option value="cost">Chi phí chuyến đi</mat-option>
+                <mat-option value="provinceName">Tỉnh/Thành phố</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <input type="text" formControlName="search"/>
+    </form>
+    <!-- posts -->
+    <div class="post__list">
+        <div class="post__item" *ngFor="let reviewPost of reviewPosts">
+            <app-review-post [reviewPost]="reviewPost" [isAdmin]="isAdmin"></app-review-post>
+        </div>
+    </div>
+</div>

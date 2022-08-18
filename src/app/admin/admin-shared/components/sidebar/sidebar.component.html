@@ -4,11 +4,25 @@
         <h4 class="header">Trang quản trị</h4>
     </div>
     <ul class="menu__list">
-        <li class="menu__item d-flex align-items-center" [routerLink]="[menuItem.path]"
-            *ngFor="let menuItem of menuItems; index as idx" routerLinkActive="selected"
-              (click)="onClickMenuItem(idx)">
-            <i class="mr-r-5" [class]="menuItem.iconClass"></i>
-            <p>{{menuItem.title}}</p>
-        </li>
+        <ng-container  *ngFor="let menuItem of menuItems; index as idx">
+            <ng-container *ngIf="idx === 3">
+                <ng-container *ngIf="user && user.role.name ==='ROLE_ADMIN' ">
+                    <li class="menu__item d-flex align-items-center" [routerLink]="[menuItem.path]"
+                        routerLinkActive="selected"
+                          (click)="onClickMenuItem(idx)">
+                        <i class="mr-r-5" [class]="menuItem.iconClass"></i>
+                        <p>{{menuItem.title}}</p>
+                    </li>
+                </ng-container>
+            </ng-container>
+            <ng-container *ngIf="idx !== 3">
+                    <li class="menu__item d-flex align-items-center" [routerLink]="[menuItem.path]"
+                        routerLinkActive="selected"
+                          (click)="onClickMenuItem(idx)">
+                        <i class="mr-r-5" [class]="menuItem.iconClass"></i>
+                        <p>{{menuItem.title}}</p>
+                    </li>
+            </ng-container>
+        </ng-container>
     </ul>
 </div>

@@ -14,7 +14,7 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('./user/user.module').then((m) => m.UserModule), canActivate: [AuthGuardService]
   },
-  { path: 'administrator', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
+  { path: 'administrator', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule), canActivate: [AuthGuardService] },
   { path: 'messenger', loadChildren: () => import('./messenger/messenger.module').then(m => m.MessengerModule) },
   {
     path: 'login',

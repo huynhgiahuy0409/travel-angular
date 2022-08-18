@@ -13,6 +13,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { concatMap, debounceTime } from 'rxjs/operators';
 import { CommercialPostService } from 'src/app/admin/services/commercial-post.service';
 import {
+  APPROVE_STATUS,
   DIRECT_LINK_IMAGE,
   FEMALE_DEFAULT_AVATAR_URL,
   MALE_DEFAULT_AVATAR_URL,
@@ -247,9 +248,12 @@ export class ReviewPostsComponent implements OnInit, AfterViewInit {
           order: 'createdDate',
           dir: "DESC"
         }
-      }
+      },
     }
     this.commercialPosts$ = this.commercialPostService.findAll(initFilterCommercialPost)
+    let initFilterReviewPost: FilterReviewPost = this.filterPostService.filterPostBSub.value
+    initFilterReviewPost.status = APPROVE_STATUS
+    this.filterPostService.filterPostBSub.next(initFilterReviewPost)
     this.filterPostService.filterPost$
       .pipe(
         concatMap((filterPost) => {
@@ -299,7 +303,6 @@ export class ReviewPostsComponent implements OnInit, AfterViewInit {
       });
   }
   ngAfterViewInit(): void {
-    console.log(this.reviewPostDetailComponent);
   }
 
   ngOnInit(): void {
@@ -721,25 +724,5 @@ export class ReviewPostsComponent implements OnInit, AfterViewInit {
   }
   onScrollUp($event: any) {
     console.log($event);
-  }
-  determineFileType(uploadFile: UploadFileResponse) {
-    let result = uploadFile.contentType.startsWith('image') ? 'IMAGE' : 'VIDEO';
-    return result;
-  }
-  dateTimeFormula(timestamp: Date) {
-    return new Date(timestamp).toLocaleString();
-  }
-  /* user method */
-  isUserPost(postUser: UserProfileResponse): boolean {
-    return postUser.id == this.user!.id ? true : false;
-  }
-  detectUpdatedPostUser($event: UserProfileResponse) {
-    console.log($event);
-    this.reviewPosts.forEach((reviewPost) => {
-      if (reviewPost.user.id === $event.id) {
-        console.log('ok');
-        reviewPost.user = $event;
-      }
-    });
   }
 }

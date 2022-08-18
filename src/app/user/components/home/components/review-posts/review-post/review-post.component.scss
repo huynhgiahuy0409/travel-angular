@@ -1,45 +1,6 @@
 p{
   margin-bottom: 0
 }
-.user-profile {
-  display: flex;
-  align-items: center;
-}
-
-.user-profile-name {
-  flex: 1;
-}
-
-.user-profile .user-profile-name .post-username-wrap{
-  display: inline-block;
-  position: relative;
-}
-.user-profile .user-profile-name .post-username-wrap .post-username {
-  margin: 0;
-  font-weight: 550;
-}
-
-.user-profile .user-profile-name .post-username:hover {
-  text-decoration: underline;
-}
-
-.user-profile .user-avatar-wrap {
-  position: relative
-}
-
-.user-profile .user-avatar {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  margin-right: 10px;
-  object-fit: cover;
-}
-
-
-
-.user-profile small {
-  font-size: 12px;
-}
 
 .post-input-container {
   padding: 20px 0 0 55px;

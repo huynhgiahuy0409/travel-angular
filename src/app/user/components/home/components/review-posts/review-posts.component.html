@@ -83,8 +83,7 @@
     </div>
     <div class="post__list">
         <div class="post__item" *ngFor="let reviewPost of reviewPosts">
-            <app-review-post [reviewPost]="reviewPost" (updatedPostUser)="detectUpdatedPostUser($event)"></app-review-post>
+            <app-review-post [reviewPost]="reviewPost"></app-review-post>
         </div>
     </div>
-    <button class="load-more-btn">Load more</button>
 </div>

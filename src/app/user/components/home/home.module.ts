@@ -12,6 +12,7 @@ import { ReviewPostDetailComponent } from '../post-detail/components/review-post
 import { JourneysComponent } from './components/journeys/journeys.component';
 import { MomoPaymentComponent } from './components/momo-payment/momo-payment.component';
 import { ReviewPostComponent } from './components/review-posts/review-post/review-post.component';
+import { ReviewPostModule } from './components/review-posts/review-post/review-post.module';
 import { ReviewPostsComponent } from './components/review-posts/review-posts.component';
 import { UserPostComponent } from './components/user-post/user-post.component';
 import { HomeRoutingModule } from './home-routing.module';
@@ -25,18 +26,19 @@ import { HomeComponent } from './home.component';
     JourneysComponent,
     ReviewPostDetailComponent,
     MomoPaymentComponent,
-    ReviewPostComponent,
   ],
   imports: [
     CommonModule,
     HomeRoutingModule,
     FormsModule,
+    SharedHeaderModule,
     ReactiveFormsModule,
     SharedMaterialModule,
-    SharedHeaderModule,
     InfiniteScrollModule,
     QRCodeModule,
-    CommercialModule
+    CommercialModule,
+    ReviewPostModule,
+    ReviewPostModule
   ],
 })
 export class HomeModule {}

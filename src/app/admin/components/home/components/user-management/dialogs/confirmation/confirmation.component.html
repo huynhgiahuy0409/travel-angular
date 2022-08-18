@@ -1,0 +1,9 @@
+<h2 mat-dialog-title align="center" style="font-weight: 550;">{{data.title}}</h2>
+<mat-dialog-content class="mat-typography">
+    {{data.content}}
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Hủy</button>
+  <button mat-button cdkFocusInitial class="primary-btn"  *ngIf="data.type === 'CHANGE_ROLE'" (click)="changeUserRole(data.changedRole, data.userId)">Xác nhận</button>
+  <button mat-button cdkFocusInitial class="primary-btn" *ngIf="data.type === 'CHANGE_ACTIVE'" (click)="changeActiveUser(data.active, data.userId)">Xóa</button>
+</mat-dialog-actions>

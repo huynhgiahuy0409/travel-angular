@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuardService } from 'src/app/user/services/auth-guard.service';
 import { CommercialComponent } from './components/commercial/commercial.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PostManagementComponent } from './components/post-management/post-management.component';
@@ -23,11 +24,11 @@ const routes: Routes = [
       },
       {
         path: 'post-management',
-        component: PostManagementComponent,
+        loadChildren: () => import('./components/post-management/post-management.module').then(m => m.PostManagementModule)
       },
       {
         path: 'user-management',
-        component: UserManagementComponent,
+        loadChildren: () => import('./components/user-management/user-management.module').then(m => m.UserManagementModule), canActivate: [AuthGuardService]
       },
       {
         path: 'statistic',

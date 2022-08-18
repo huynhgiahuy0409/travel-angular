@@ -5,13 +5,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { SharedHeaderModule, SharedMaterialModule } from 'src/app/shared/modules';
 import { AdminSharedModule } from '../../admin-shared/admin-shared.module';
-import { CommercialComponent } from './components/commercial/commercial.component';
 import { CommercialModule } from './components/commercial/commercial.module';
-import { CommercialItemComponent } from './components/commercial/components/commercials/commercial-item/commercial-item.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { PostManagementComponent } from './components/post-management/post-management.component';
+import { PostManagementModule } from './components/post-management/post-management.module';
 import { StatisticComponent } from './components/statistic/statistic.component';
 import { UserManagementComponent } from './components/user-management/user-management.component';
+import { UserManagementModule } from './components/user-management/user-management.module';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 
@@ -20,8 +19,6 @@ import { HomeComponent } from './home.component';
   declarations: [
     HomeComponent,
     DashboardComponent,
-    PostManagementComponent,
-    UserManagementComponent,
     StatisticComponent,
   ],
   imports: [
@@ -33,10 +30,9 @@ import { HomeComponent } from './home.component';
     ReactiveFormsModule,
     InfiniteScrollModule,
     SharedMaterialModule,
-    CommercialModule
+    CommercialModule,
+    PostManagementModule,
+    UserManagementModule
   ],
-  // exports: [
-  //   CommercialItemComponent
-  // ]
 })
 export class HomeModule { }

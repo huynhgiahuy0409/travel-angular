@@ -50,6 +50,11 @@ export interface UploadFileResponse{
     contentType: string
     createDate: Date
 }
+export interface RoleResponse{
+    name: string
+    label: string
+}
+
 export interface UserProfileResponse extends BaseResponse{
     username: string;
     fullName: string;
@@ -61,7 +66,8 @@ export interface UserProfileResponse extends BaseResponse{
     gender: string;
     reputation: number;
     avatar: UploadFileResponse;
-    roleName: string
+    role: RoleResponse;
+    active: number; 
 }
 export interface ReviewPostImageResponse extends BaseResponse{
     id: number
@@ -86,6 +92,7 @@ export interface ReviewPostResponse extends BaseResponse{
     province: ProvinceResponse
     district: DistrictResponse
     userReact: UserReactResponse
+    status: string
 }
 export interface CommercialPostResponse extends BaseResponse{
     title: string

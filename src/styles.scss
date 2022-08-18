@@ -1029,3 +1029,91 @@ border-radius: 4px;
 .rating-stars ul > li.star.selected > i.fa {
   color:#FF912C;
 }
+/* User profile */
+.user-profile {
+  display: flex;
+  align-items: center;
+}
+
+.user-profile .user-info{
+  flex: 1
+
+}
+.user-profile .user-info {
+  flex: 1
+}
+.user-profile .more-btn{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative
+}
+.user-profile .more-btn .notification__list{
+  background-color: var(--white-color--);
+  z-index: 9999;
+  border-radius: 5px;
+  padding: 10px;
+  position: absolute;
+  right: 0;
+  bottom: 115%;
+  width: 350px;
+  display: none;
+}
+.user-profile .more-btn .notification__list.show{
+  display: block;
+}
+.user-profile .more-btn .notification__list .notification__item{
+  padding: inherit;
+  border-radius: inherit;
+  font-weight: 550;
+}
+.user-profile .more-btn .notification__list .notification__item:hover{
+  background: var(--hover-color--);
+}
+
+
+
+.user-profile .more-btn:hover{
+  background-color: var(--hover-color--);
+}
+.user-profile .more-btn i{
+  font-size: 2rem;
+}
+
+.user-profile .user-info .username{
+  position: relative;
+  font-weight: 550;
+}
+
+.user-profile .user-info .username:hover {
+  text-decoration: underline;
+}
+
+.user-profile .user-info .sub-info {
+  font-size: 13px;
+  color: #9a9a9a;
+}
+.user-profile .user-info .sub-info.user-role {
+  color: var(--primary-color--);
+  background: var(--primary-background--);
+  padding: 2px;
+  border-radius: 3px;
+}
+
+/* user avatar */
+.user-profile .user-avatar {
+  position: relative;
+  width: 45px;
+  height: 45px;
+  margin-right: 10px;
+}
+
+.user-profile .user-avatar .avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}

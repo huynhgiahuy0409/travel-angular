@@ -1,5 +1,12 @@
 import { FollowService } from './../../../../../services/follow.service';
-import { Component, EventEmitter, Input, OnInit, Output, Renderer2 } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  Renderer2,
+} from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -23,6 +30,7 @@ import { UploadFileService } from 'src/app/user/services/upload-file.service';
 import { UserReactService } from 'src/app/user/services/user-react.service';
 import { UserService } from 'src/app/user/services/user.service';
 import { ReviewPostDestroyService } from '../review-post-destroy.service';
+import { APPROVE_STATUS, DENY_STATUS } from 'src/app/shared/models/constant';
 
 @Component({
   selector: 'app-review-post',
@@ -33,16 +41,18 @@ import { ReviewPostDestroyService } from '../review-post-destroy.service';
 export class ReviewPostComponent implements OnInit {
   @Input()
   reviewPost!: ReviewPostResponse;
+  @Input()
+  isAdmin!: boolean;
   @Output()
-  updatedPostUser = new EventEmitter<UserProfileResponse>()
+  updatedPostUser = new EventEmitter<UserProfileResponse>();
   postUser!: UserProfileResponse;
   user!: UserProfileResponse | null;
   createdDate!: string;
   postReact$!: Observable<PostReactResponse>;
   postUserReputation!: number;
   userAvatarSrc!: string;
-  isFollowed!: Boolean
-  postUserRefresh$!: Observable<[UserProfileResponse, Boolean]>
+  isFollowed!: Boolean;
+  postUserRefresh$!: Observable<[UserProfileResponse, Boolean]>;
   /* Fake data */
   commentTree: any = [
     {
@@ -111,26 +121,31 @@ export class ReviewPostComponent implements OnInit {
     private userReactService: UserReactService,
     private dateUtilsService: DateUtilsService,
     private postReactService: PostReactService,
-    private followService: FollowService,
-
-  ) {
-  }
+    private followService: FollowService
+  ) {}
 
   ngOnInit(): void {
-    this.postUser = this.reviewPost.user
-    this.user = this.userService.userBSub.value
+    this.postUser = this.reviewPost.user;
+    this.user = this.userService.userBSub.value;
     /* Setup user avatar */
     if (this.postUser.avatar) {
-      this.userAvatarSrc = this.directLinkService.getUserAvatar(this.postUser.avatar.name, this.postUser.avatar.ext, this.postUser.username)
+      this.userAvatarSrc = this.directLinkService.getUserAvatar(
+        this.postUser.avatar.name,
+        this.postUser.avatar.ext,
+        this.postUser.username
+      );
     } else {
-      this.userAvatarSrc = this.directLinkService.getDefaultAvatarURL(this.postUser.gender)
+      this.userAvatarSrc = this.directLinkService.getDefaultAvatarURL(
+        this.postUser.gender
+      );
     }
     this.createdDate = this.dateUtilsService.dateTimeFormula(
       this.reviewPost.createdDate
     );
     /* Fetch post react */
-    this.postReact$ = this.postReactService.findByReviewPostId(this.reviewPost.id)
-   
+    this.postReact$ = this.postReactService.findByReviewPostId(
+      this.reviewPost.id
+    );
   }
 
   openReviewDetail(reviewPostId: number) {
@@ -142,42 +157,64 @@ export class ReviewPostComponent implements OnInit {
       .updateUserReact(user!.id, react, reviewPost.id)
       .pipe(
         tap((userReact: UserReactResponse) => {
-          this.reviewPost.userReact = userReact
+          this.reviewPost.userReact = userReact;
         }),
         tap((_) => {
-          this.postReact$ = this.postReactService.findByReviewPostId(this.reviewPost.id)
-          this.userService.findByUserId(this.postUser.id).subscribe(postUser => {
-            if (postUser) {
-              this.postUserReputation = postUser.reputation
-              this.updatedPostUser.emit(postUser)
-            }
-          })
-        }
-        ))
+          this.postReact$ = this.postReactService.findByReviewPostId(
+            this.reviewPost.id
+          );
+          this.userService
+            .findByUserId(this.postUser.id)
+            .subscribe((postUser) => {
+              if (postUser) {
+                this.postUserReputation = postUser.reputation;
+                this.updatedPostUser.emit(postUser);
+              }
+            });
+        })
+      )
       .subscribe();
   }
   requestFollow(userId: number) {
-    this.followService.requestFollow(userId).subscribe(_ => {
-      this.isFollowed = true
-    },
-      error => {
-
-      })
+    this.followService.requestFollow(userId).subscribe(
+      (_) => {
+        this.isFollowed = true;
+      },
+      (error) => {}
+    );
   }
   requestUnFollow(userId: number) {
-    this.followService.requestUnfollow(userId).subscribe(_ => {
-      this.isFollowed = false
-    },
-      error => {
-
+    this.followService.requestUnfollow(userId).subscribe(
+      (_) => {
+        this.isFollowed = false;
+      },
+      (error) => {}
+    );
+  }
+  fetchPostUser(postUserId: number) {
+    this.postUserRefresh$ = forkJoin([
+      this.userService.findByUserId(postUserId),
+      this.followService.checkFollowPostUser(this.postUser.id),
+    ]).pipe(
+      tap((response) => {
+        this.postUser = response[0];
+        this.isFollowed = response[1];
+        console.log(response);
       })
+    );
   }
-  fetchPostUser(postUserId: number){
-    this.postUserRefresh$ = forkJoin([this.userService.findByUserId(postUserId), this.followService.checkFollowPostUser(this.postUser.id)]).pipe(tap(response => {
-      this.postUser = response[0]
-      this.isFollowed = response[1]
-      console.log(response)
-    }))
+  /* ADMIN */
+  onClickApprove(reviewPost: ReviewPostResponse) {
+    reviewPost.status = APPROVE_STATUS;
   }
-   
+  onClickDeny(reviewPost: ReviewPostResponse) {
+    reviewPost.status = DENY_STATUS;
+  }
+  updateReviewPostByStatus(reviewPost: ReviewPostResponse, status: string) {
+    this.reviewPostService
+      .updateByStatus(reviewPost.id, status)
+      .subscribe((response) => {
+        reviewPost.status = response.status
+      });
+  }
 }

@@ -1,23 +1,22 @@
 <div class="post-container box-shadow">
     <!-- header post -->
     <div class="post-row user-profile">
-        <div class="user-avatar-wrap">
-            <img (mouseover)="fetchPostUser(postUser.id)" [src]="userAvatarSrc" alt="" class="user-avatar" />
+        <div class="user-avatar">
+            <img (mouseover)="fetchPostUser(postUser.id)" [src]="userAvatarSrc" alt="" class="avatar" />
             <ng-container *ngTemplateOutlet="userInfoNotify">
             </ng-container>
         </div>
-        <div class="user-profile-name">
-            <div class="post-username-wrap">
-                <h3 class="post-username" (mouseover)="fetchPostUser(postUser.id)">
-                    {{ postUser.fullName }}
-                </h3>
+
+        <div class="user-info">
+            <div class="username">
+                {{ postUser.fullName }}
                 <ng-container *ngTemplateOutlet="userInfoNotify">
                 </ng-container>
             </div>
-            <div class="d-flex align-items-center" >
-                <span>{{ createdDate }}</span>
+            <span class="sub-info d-flex align-items-center" >
+                {{ createdDate }}
                 <mat-icon>public</mat-icon>
-            </div>
+            </span>
         </div>
     </div>
     <ng-template #userInfoNotify>
@@ -256,8 +255,27 @@
         </div>
     </div>
     <!-- post react: like comment shared -->
-
-    <div class="post-row post-react">
+    <div class="standard__list justify-content-end pd-10" *ngIf="isAdmin">
+        <ng-container *ngIf="reviewPost.status === 'PENDING' ">
+            <div class="standard__item">
+                <button mat-raised-button class="primary-btn" (click)="updateReviewPostByStatus(reviewPost, 'APPROVE')">Phê duyệt</button>
+            </div>
+            <div class="standard__item">
+                <button mat-raised-button class="warn-btn" (click)="updateReviewPostByStatus(reviewPost, 'DENY')">Từ chối</button>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="reviewPost.status === 'DENY' ">
+            <div class="standard__item">
+                <button mat-raised-button class="warn-btn">Đã từ chối</button>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="reviewPost.status === 'APPROVE' ">
+            <div class="standard__item">
+                <button mat-raised-button class="primary-btn">Đã duyệt</button>
+            </div>
+        </ng-container>
+    </div>
+    <div class="post-row post-react" *ngIf="!isAdmin">
         <div class="d-flex justify-content-between align-items-center">
             <div class="post-react-left d-flex">
                 <ng-container *ngIf="(postReact$ | async) as postReact">
@@ -339,7 +357,7 @@
     </div>
 
 
-    <ng-container>
+    <ng-container *ngIf="!isAdmin">
         <div class="post-row">
             <img class="comment-avatar" src="assets/image/profile-pic.png" alt="" />
             <div class="comment-box bg-cl">

@@ -16,6 +16,7 @@ import { RegisterDialogComponent } from 'src/app/components/register-dialog/regi
 import { LoginRequest } from 'src/app/shared/models/request';
 import { AuthenticationResponse } from 'src/app/shared/models/response';
 import { AuthService } from '../../services/auth.service';
+import { NotifyDialogService } from '../../services/notify-dialog.service';
 import { UserService } from '../../services/user.service';
 import { UserProfileResponse } from './../../../shared/models/response';
 export function matchedPassword(c: AbstractControl) {
@@ -48,7 +49,8 @@ export class LoginComponent implements OnInit {
     public renderer: Renderer2,
     private cookieService: CookieService,
     private authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private matDialogService: NotifyDialogService
   ) {
     this.loginForm = new FormGroup({
       username: new FormControl('', [Validators.required, Validators.email]),
@@ -222,6 +224,8 @@ export class LoginComponent implements OnInit {
     };
     this.authService.login(loginRequest).subscribe(
       (response) => {
+        console.log(response);
+        
         let data: AuthenticationResponse =
           response.data;
         if (data) {
@@ -239,11 +243,15 @@ export class LoginComponent implements OnInit {
         }
       },
       (errorResponse: HttpErrorResponse) => {
+        console.log(errorResponse);
+        
         let {error} = errorResponse
         if(error.message === "WRONG USERNAME"){
           this.isWrongUsername = true
         }else if(error.message === "WRONG PASSWORD"){
           this.isWrongPassword = true
+        }else {
+          this.matDialogService.open("Tài khoản bị khóa","Tài khoản của bạn đã bị khóa do vi phạm tiêu chuẩn cộng đồng")
         }
       }
     );

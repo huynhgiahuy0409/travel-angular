@@ -1,0 +1,38 @@
+<div class="user-profile" *ngIf="user">
+    <div class="user-avatar" style="width: 60px; height: 60px">
+        <img [src]="avatarSrc" alt="" class="avatar" />
+    </div>
+    <div class="user-info">
+        <div class="username">
+            {{ user.fullName }}
+        </div>
+        <span class="sub-info user-role" *ngIf="user.role">
+            {{ user.role.label }}
+        </span>
+    </div>
+    <div #moreBtn class="more-btn" *ngIf="user.id != currUser!.id" (click)="onClickMoreBtn(notificationList)">
+        <i class="fa-solid fa-ellipsis"></i>
+        <div #notificationList class="notification__list box-shadow">
+            <div class="notification__item" (click)="
+            openDialogChangeRole(user)
+          ">Thay đổi quyền</div>
+
+            <div class="notification__item" (click)="
+          confirmChangeRole(
+            user.role.name,
+            'ROLE_MEMBER',
+            user.id,
+            user.fullName
+          )
+        ">
+                <ng-container *ngIf="user.role.name === 'ROLE_ADMIN'">
+                    Gỡ vai trò quản trị viên
+                </ng-container>
+                <ng-container *ngIf="user.role.name === 'ROLE_CENSOR'">
+                    Gỡ vai trò kiểm duyệt viên
+                </ng-container>
+            </div>
+            <div class="notification__item" (click)="confirmChangeActiveUser(-1, user.id)">Xóa thành viên</div>
+        </div>
+    </div>
+</div>

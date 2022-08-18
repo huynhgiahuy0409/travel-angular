@@ -9,6 +9,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { ADMIN_ROLE, MEMBER_ROLE } from 'src/app/shared/models/constant';
 import { LoginRequest } from 'src/app/shared/models/request';
 import {
   UserProfileResponse,
@@ -63,11 +64,11 @@ export class AdminLoginComponent implements OnInit {
           response.data;
           let user = data.user;
           let JWT = data.jwt;
-          if(user.roleName === "ROLE_ADMIN"){
+          if(user.role.name !== MEMBER_ROLE ){
             this.userService.userBSub.next(user);
             this.authService.JWTBSub.next(JWT);
             this.router.navigate(['/administrator/home']);
-          }else if(user.roleName !== "ROLE_ADMIN"){
+          }else if((user.role.name === MEMBER_ROLE )){
             this.forbidden = true
           }
       },

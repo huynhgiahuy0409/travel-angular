@@ -1,0 +1,46 @@
+<div class="container" infinite-scroll [scrollWindow]="false" (scrolled)="onScrollDown($event)"
+[infiniteScrollThrottle]="1">
+    <div class="grid wide">
+        <div class="user-group__list box-shadow">
+            <div class="user-group__item">
+                <div class="title">
+                    Thành viên
+                    <span> · {{ totalUsers }}</span>
+                </div>
+                <div class="sub-title">
+                    Người tham gia nhóm này sẽ hiển thị tại đây
+                    <a> Tìm hiểu thêm</a>
+                </div>
+                <div class="search-box">
+                    <img src="assets/image/search.png" alt="" />
+                    <input type="text" placeholder="Tìm kiếm thành viên" [formControl]="searchCtrl"/>
+                </div>
+            </div>
+            <div class="user-group__list"  *ngIf="searchUsers.length === 0">
+                <div class="user-group__item">
+                    <div class="title">
+                        Quản trị viên
+                        <span>  · {{totalAdminUsers}}</span>
+                    </div>
+                    <div class="user-profile__list">
+                        <div class="user-profile__item" *ngFor="let admin of admins">
+                            <app-user-profile [user]=admin *ngIf="admin.role.name === 'ROLE_ADMIN' && admin.active === 1"></app-user-profile>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="user-group__list" *ngIf="searchUsers.length > 0">
+                <div class="user-group__item">
+                    <div class="title">
+                        Kết quả tìm kiếm · {{searchUsers.length}}
+                    </div>
+                    <div class="user-profile__list">
+                        <div class="user-profile__item" *ngFor="let searchUser of searchUsers">
+                            <app-user-profile [user]=searchUser *ngIf="searchUser.active === 1"></app-user-profile>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -33,7 +33,6 @@ export class CommercialItemComponent implements OnInit {
   coverImageSrc!: string;
   isFollowed!: Boolean;
   postUserRefresh$!: Observable<[UserProfileResponse, Boolean]>;
-  role?: string
   constructor(
     private _uploadFileService: UploadFileService,
     private _dialog: MatDialog,
@@ -56,7 +55,6 @@ export class CommercialItemComponent implements OnInit {
   ngOnInit(): void {
     this.postUser = this.commercialPost.user;
     this.user = this.userService.userBSub.value;
-    this.role = this.user?.roleName === "ROLE_ADMIN"? "Quản trị viên": undefined
     /* Setup user avatar */
     if (this.postUser.avatar) {
       this.userAvatarSrc = this.directLinkService.getUserAvatar(
