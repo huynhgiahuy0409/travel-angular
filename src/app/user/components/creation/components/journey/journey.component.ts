@@ -59,7 +59,7 @@ import { UploadFileService } from 'src/app/user/services/upload-file.service';
 export class JourneyComponent implements OnInit {
   defaultProvincePlaceURL: string = DEFAULT_PROVINCE_PLACE_URL;
   tabs: string[] = [];
-  selected = new FormControl(0);
+  selected:FormControl = new FormControl(0);
   /* step */
   firstFormGroup = this._formBuilder.group({
     firstCtrl: ['', Validators.required],
