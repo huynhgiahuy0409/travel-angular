@@ -27,7 +27,8 @@ const routes: Routes = [
     CommonModule,
     SharedMaterialModule,
     RouterModule.forChild(routes),
-    NgChartsModule
+    NgChartsModule,
   ]
 })
 export class StatisticModule { }
+ 

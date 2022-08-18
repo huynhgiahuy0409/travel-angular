@@ -28,7 +28,6 @@ export class AuthGuardService implements CanActivate {
     let user: UserProfileResponse | null = this.userService.userBSub.value;
     console.log(route);
     console.log(state);
-    
     if (user) {
       if(state.url === "/administrator/home/user-management"){
         if(user.role.name === ADMIN_ROLE){
@@ -39,18 +38,18 @@ export class AuthGuardService implements CanActivate {
           return of(false)
         }
       }
-      return of(true);
-    } else {
+      return of(true)
+    }else {
       if(route.routeConfig){
         if(route.routeConfig.path === 'administrator'){
           this.router.navigate(['/administrator-login']);
-        }else if(route.routeConfig.path === 'user'){
+          return of(false);
+        }else{
           this.router.navigate(['/login']);
+          return of(false);
         }
-      }else{
-        this.router.navigate(['/login']);
       }
-      return of(false);
+      return of(false)
     }
   }
 }
