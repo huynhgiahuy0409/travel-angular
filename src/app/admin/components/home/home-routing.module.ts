@@ -32,7 +32,7 @@ const routes: Routes = [
       },
       {
         path: 'statistic',
-        component: StatisticComponent,
+        loadChildren: () => import('./components/statistic/statistic.module').then(m => m.StatisticModule)
       },
     ],
   },

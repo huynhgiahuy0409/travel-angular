@@ -1,1 +1,13 @@
-<p>statistic works!</p>
+<div class="main-content">
+    <div class="grid">
+        <div class="standard__list ">
+            <div class="standard__item flex-fit">
+                <button mat-button class="w-fit" routerLinkActive="primary-btn" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/administrator/home/statistic/bar-chart']">Biểu đồ cột</button>
+            </div>
+            <div class="standard__item flex-fit">
+                <button mat-button class="w-fit" routerLinkActive="primary-btn" [routerLinkActiveOptions]="{exact: true}"  [routerLink]="['/administrator/home/statistic/pie-chart']">Biểu đồ tròn</button>
+            </div>
+        </div>
+    </div>
+    <router-outlet></router-outlet>
+</div>

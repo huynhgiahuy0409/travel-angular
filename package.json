@@ -27,6 +27,7 @@
     "angularx-qrcode": "^12.0.3",
     "bootstrap": "^5.2.0",
     "ng-recaptcha": "^8.0.0",
+    "ng2-charts": "^3.1.2",
     "ngx-cookie-service": "^12.0.0",
     "ngx-infinite-scroll": "^10.0.1",
     "require": "^2.4.20",
