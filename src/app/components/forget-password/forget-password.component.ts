@@ -10,7 +10,6 @@ import { matchedPassword } from '../../user/components/login/login.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/user/services/auth.service';
 import { NotifyDialogService } from 'src/app/user/services/notify-dialog.service';
-import { ifStmt } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-forget-password',
