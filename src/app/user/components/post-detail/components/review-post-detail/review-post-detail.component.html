@@ -1,4 +1,4 @@
-<div class="container" *ngIf="reviewPostResponse$ | async as reviewPost">
+<div class="container" *ngIf="reviewPost$ | async as reviewPost">
   <div class="header box-shadow">
     <div class="cover-image-wrap">
       <img
@@ -133,7 +133,7 @@
                 >
                   <div class="image__item">
                     <img
-                      [src]="
+                      [src]="directLinkService.
                         directLinkService.getURLImage(
                           reviewPost.user.email,
                           reviewPost.images[0].image.name,
@@ -369,51 +369,52 @@
             </div>
             <div
               class="content__item"
-              *ngIf="authorReviewPostsResponse$ | async as authorReviewPosts"
+              *ngIf="(authorReviewPosts$ | async) as authorReviewPosts"
             >
               <h4 class="content__title">Bài viết cùng tác giả mới nhất</h4>
 
               <div class="grid">
                 <div class="row">
-                  <div
-                    class="col l-3 m-6 c-6"
-                    *ngFor="let authorReviewPost of authorReviewPosts"
-                  >
-                    <div class="d-flex author-post__list">
-                      <div
-                        class="l-12 m-12 c-12 box-shadow p-0 border-radius-5 author-post__list author-post"
-                      >
-                        <img
-                          [src]="
-                            directLinkService.getURLImage(
-                              authorReviewPost.user.email,
-                              authorReviewPost.coverImage.name,
-                              authorReviewPost.coverImage.ext
-                            )
-                          "
-                          alt=""
-                        />
-                        <div class="author-post__content">
-                          <div class="author-post__title">
-                            {{ authorReviewPost.title }}
-                          </div>
-                          <div class="author-post__bio">
-                            {{ authorReviewPost.bio }}
+                  <ng-container *ngFor="let authorReviewPost of authorReviewPosts">
+                    <div
+                      class="col l-3 m-6 c-6"
+                    >
+                      <div class="d-flex author-post__list">
+                        <div
+                          class="l-12 m-12 c-12 box-shadow p-0 border-radius-5 author-post__list author-post"
+                        >
+                          <img
+                            [src]="
+                              directLinkService.getURLImage(
+                                authorReviewPost.user.email,
+                                authorReviewPost.coverImage.name,
+                                authorReviewPost.coverImage.ext
+                              )
+                            "
+                            alt=""
+                          />
+                          <div class="author-post__content">
+                            <div class="author-post__title">
+                              {{ authorReviewPost.title }}
+                            </div>
+                            <div class="author-post__bio">
+                              {{ authorReviewPost.bio }}
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </ng-container>
                 </div>
               </div>
             </div>
             <div class="content__item">
               <h4 class="content__title">Bài viết liên quan</h4>
-              <div class="grid" *ngIf="(relativeReviewPostsResponse$ | async) as relativeReviewPosts">
+              <div class="grid" *ngIf="(relativeReviewPosts$ | async) as relativeReviewPosts">
                 <div class="row no-gutters relative-post__list">
                   <div
                     class="col l-12 m-12 c-12 relative-post__item box-shadow p-0 border-radius-5"
-                    *ngFor="let relativeReviewPost of relativeReviewPosts"
+                    *ngFor="let relativeReviewPost of relativeReviewPosts" [routerLink]="['/home/review-posts',relativeReviewPost.id]"
                   >
                     <div class="row h-fit no-gutters">
                       <div class="col l-3 m-6 c-6 h-fit">
@@ -509,19 +510,19 @@
                 <!-- Rating Stars Box -->
                 <div class='rating-stars text-center'>
                   <ul #starsTemplateRef id='stars'>
-                    <li class='star' title='Poor' data-value='1' (mouseover)="mouseOver($event)">
+                    <li class='star' title='Poor' data-value='1' >
                       <i class='fa fa-star fa-fw'></i>
                     </li>
-                    <li class='star' title='Fair' data-value='2' (mouseover)="mouseOver($event)">
+                    <li class='star' title='Fair' data-value='2' >
                       <i class='fa fa-star fa-fw'></i>
                     </li>
-                    <li class='star' title='Good' data-value='3' (mouseover)="mouseOver($event)">
+                    <li class='star' title='Good' data-value='3' >
                       <i class='fa fa-star fa-fw'></i>
                     </li>
-                    <li class='star' title='Excellent' data-value='4' (mouseover)="mouseOver($event)">
+                    <li class='star' title='Excellent' data-value='4' >
                       <i class='fa fa-star fa-fw'></i>
                     </li>
-                    <li class='star' title='WOW!!!' data-value='5' (mouseover)="mouseOver($event)">
+                    <li class='star' title='WOW!!!' data-value='5' >
                       <i class='fa fa-star fa-fw'></i>
                     </li>
                   </ul>

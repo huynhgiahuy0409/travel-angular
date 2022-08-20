@@ -32,20 +32,12 @@ export class ReviewPostsComponent implements OnInit {
   /* data */
   reviewPosts: ReviewPostResponse[] = [];
   constructor(
-    private _uploadFileService: UploadFileService,
-    private _dialog: MatDialog,
-    private renderer: Renderer2,
     private reviewPostService: ReviewPostService,
     private userService: UserService,
-    private router: Router,
-    private reviewPostDestroyService: ReviewPostDestroyService,
     private filterPostService: FilterPostService,
     public directLinkService: DirectLinkService,
     private fb: UntypedFormBuilder,
-    public progressBarService: ProgressBarService,
-    private userReactService: UserReactService,
-    private commercialPostService: CommercialPostService
-  ) {
+    public progressBarService: ProgressBarService  ) {
     let user: UserProfileResponse | null = this.userService.userBSub!.value
     if(user){
       this.isAdmin = user.role.name === ADMIN_ROLE ? true: false
@@ -55,20 +47,9 @@ export class ReviewPostsComponent implements OnInit {
       order: this.fb.control('title'),
       search: this.fb.control(''),
     });
-    let initFilterCommercialPost: FilterCommercialPost = {
-      pageable: {
-        pageIndex: 0,
-        pageSize: 2,
-        sortable: {
-          order: 'createdDate',
-          dir: 'DESC',
-        },
-      },
-    };
-    let initFilterReviewPost: FilterReviewPost = this.filterPostService.filterPostBSub.value
+    let initFilterReviewPost: FilterReviewPost = this.filterPostService.reviewPostFilterBSub.value
     initFilterReviewPost.status = PENDING_STATUS
-    this.filterPostService.filterPostBSub.next(initFilterReviewPost)
-    this.filterPostService.filterPost$
+    this.filterPostService.reviewPostFilter$
       .pipe(
         concatMap((filterPost) => {
           return this.reviewPostService.findAll(filterPost);
@@ -79,7 +60,7 @@ export class ReviewPostsComponent implements OnInit {
           this.progressBarService.progressBarBSub.next(false);
           this.reviewPosts = this.reviewPosts.concat(response);
         },
-        (error) => {
+        () => {
           this.progressBarService.progressBarBSub.next(false);
         }
       );
@@ -91,40 +72,32 @@ export class ReviewPostsComponent implements OnInit {
         this.progressBarService.progressBarBSub.next(true);
         this.reviewPosts = [];
         let order = this.searchFormGroup.get('order')?.value;
-        let filter: FilterReviewPost = {
-          pageable: {
-            pageIndex: 0,
-            pageSize: 1,
-            sortable: {
-              dir: 'DESC',
-              order: 'createdDate',
-            },
-          },
-        };
+        let filter: FilterReviewPost = this.filterPostService.reviewPostFilterBSub.value
+        filter.pageable!.pageIndex = 0
+        filter.title = undefined
+        filter.tag = undefined
         /* customize filter */
         if (term) {
           if (order == 'title') {
             filter.title = term;
           } else if (order == 'tag') {
             filter.tag = term;
-          } else if (order == 'cost') {
-            filter.cost = term;
-          } else if (order == 'provinceName') {
-            filter.provinceName = term;
           }
         }
-        this.filterPostService.filterPostBSub.next(filter);
+        this.filterPostService.reviewPostFilterBSub.next(filter);
       });
   }
 
   ngOnInit(): void {
   }
   /* infinite scroll */
-  onScrollDown($event: any) {
+  onScrollDown() {
     let currFilter: FilterReviewPost =
-      this.filterPostService.filterPostBSub.value;
-    let pageable = currFilter.pageable;
-    pageable.pageIndex++;
-    this.filterPostService.filterPostBSub.next(currFilter);
+      this.filterPostService.reviewPostFilterBSub.value;
+    if(currFilter.pageable){
+      let pageable = currFilter.pageable;
+      pageable.pageIndex++;
+      this.filterPostService.reviewPostFilterBSub.next(currFilter);
+    }
   }
 }

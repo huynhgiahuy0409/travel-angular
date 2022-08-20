@@ -1,35 +1,27 @@
-import { Router } from '@angular/router';
-import { filter, concatMap, debounceTime } from 'rxjs/operators';
-import { HttpEventType, HttpResponse, HttpClient } from '@angular/common/http';
 import {
-  AfterViewInit,
   Component,
   ElementRef,
-  OnInit,
-  QueryList,
-  Renderer2,
-  ViewChild,
-  ViewChildren,
+  OnInit, Renderer2,
+  ViewChild
 } from '@angular/core';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatIcon } from '@angular/material/icon';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
-import { UploadFileService } from 'src/app/user/services/upload-file.service';
-import { CreatePostDialogComponent } from '../../dialog/create-post-dialog';
-import { ReviewPostComponent } from '../../../creation/components/review-post/review-post.component';
-import { JourneyComponent } from '../../../creation/components/journey/journey.component';
+import { concatMap, debounceTime } from 'rxjs/operators';
+import { APPROVE_STATUS } from 'src/app/shared/models/constant';
 import { FilterJourneyPost } from 'src/app/shared/models/model';
-import { FilterPostService } from 'src/app/user/services/filter-post.service';
-import { DirectLinkService } from 'src/app/user/services/direct-link.service';
 import {
-  JourneyPostResponse,
-  ParticipantResponse,
+  JourneyPostResponse
 } from 'src/app/shared/models/response';
+import { DirectLinkService } from 'src/app/user/services/direct-link.service';
+import { FilterPostService } from 'src/app/user/services/filter-post.service';
 import { JourneyPostService } from 'src/app/user/services/journey-post.service';
 import { ParticipantService } from 'src/app/user/services/participant.service';
-import { UserService } from 'src/app/user/services/user.service';
-import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ProgressBarService } from 'src/app/user/services/progress-bar.service';
+import { UploadFileService } from 'src/app/user/services/upload-file.service';
+import { UserService } from 'src/app/user/services/user.service';
+import { JourneyComponent } from '../../../creation/components/journey/journey.component';
 export interface User {
   name: string;
   url: string;
@@ -224,7 +216,10 @@ export class JourneysComponent implements OnInit {
       order: this.fb.control('title'),
       search: this.fb.control(''),
     });
-    this.filterPostService.filterPost$
+    let initFilterJourneyPost: FilterJourneyPost = this.filterPostService.journeyPostFilterBSub.value
+    initFilterJourneyPost.status = APPROVE_STATUS
+    this.filterPostService.journeyPostFilterBSub.next(initFilterJourneyPost)
+    this.filterPostService.journeyPostFilter$
       .pipe(
         concatMap((filterPost) => {
           return this.journeyPostSerivce.findAll(filterPost);
@@ -268,7 +263,7 @@ export class JourneysComponent implements OnInit {
           filter.departurePlace = term;
         }
       }
-      this.filterPostService.filterPostBSub.next(filter);
+      this.filterPostService.reviewPostFilterBSub.next(filter);
     });
   }
   ngAfterViewInit(): void {}
@@ -713,16 +708,14 @@ export class JourneysComponent implements OnInit {
     });
   }
   onScrollDown($event: any) {
-    let currFilter: FilterJourneyPost = this.filterPostService.filterPostBSub.value;
+    let currFilter: FilterJourneyPost = this.filterPostService.journeyPostFilterBSub.value;
     let pageable = currFilter.pageable;
-    pageable.pageIndex++;
-    this.filterPostService.filterPostBSub.next(currFilter);
+    if(pageable){
+      pageable.pageIndex++;
+      this.filterPostService.reviewPostFilterBSub.next(currFilter);
+    }
   }
   dateTimeFormula(timestamp: Date) {
     return new Date(timestamp).toLocaleString();
   }
-  openJourneyDetail(journeyPostId: number) {
-    this.router.navigate([`/home/journey-posts/${journeyPostId}`]);
-  }
-  
 }

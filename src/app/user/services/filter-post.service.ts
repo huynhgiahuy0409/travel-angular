@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { FilterJourneyPost, FilterReviewPost, Pageable, Sortable } from 'src/app/shared/models/model';
+import { FilterCommercialPost, FilterJourneyPost, FilterReviewPost, Pageable, Sortable } from 'src/app/shared/models/model';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,9 +13,15 @@ export class FilterPostService {
     dir: "DESC",
     order: "createdDate"
   }
-  initFilter!: FilterJourneyPost | FilterReviewPost
-  filterPostBSub!: BehaviorSubject<FilterJourneyPost | FilterReviewPost>
-  filterPost$: Observable<FilterJourneyPost | FilterReviewPost>
+  initFilter!: FilterReviewPost | FilterJourneyPost | FilterCommercialPost
+  initJourneyPostFilter!: FilterJourneyPost
+  initCommercialFilter!: FilterCommercialPost
+  reviewPostFilterBSub!: BehaviorSubject<FilterReviewPost>
+  reviewPostFilter$: Observable<FilterReviewPost>
+  journeyPostFilterBSub!: BehaviorSubject<FilterJourneyPost>
+  journeyPostFilter$!: Observable<FilterJourneyPost>
+  commercialFilterBSub!: BehaviorSubject<FilterCommercialPost>
+  commercialFilter$!: Observable<FilterCommercialPost>
   constructor() {
     this.initFilter = {
       pageable: {
@@ -23,7 +29,11 @@ export class FilterPostService {
         sortable: this.defaultSorter
       }
     }
-    this.filterPostBSub = new BehaviorSubject<FilterJourneyPost | FilterReviewPost>(this.initFilter)
-    this.filterPost$ = this.filterPostBSub.asObservable()
+    this.reviewPostFilterBSub = new BehaviorSubject<FilterReviewPost>(this.initFilter)
+    this.reviewPostFilter$ = this.reviewPostFilterBSub.asObservable()
+    this.journeyPostFilterBSub = new BehaviorSubject<FilterJourneyPost>(this.initFilter)
+    this.journeyPostFilter$ = this.journeyPostFilterBSub.asObservable()
+    this.commercialFilterBSub = new BehaviorSubject<FilterCommercialPost>(this.initFilter)
+    this.commercialFilter$ = this.commercialFilterBSub.asObservable()
   }
 }

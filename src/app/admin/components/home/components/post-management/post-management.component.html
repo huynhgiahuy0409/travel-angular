@@ -1,1 +1,25 @@
-<router-outlet></router-outlet>
+<div class="container">
+    <div class="grid" style="height: 100%;">
+        <div class="row" style="height: 100%;">
+            <div class="col l-3" style="height: 100%;">
+                <div class="row sidebar__list">
+                    <div class="col l-12 sidebar__item">
+                        <button mat-button routerLinkActive="primary-btn"
+                        [routerLinkActiveOptions]="{ exact: true }" [routerLink]="'/administrator/home/post-management/review-posts'">
+                            Bài viết đánh giá
+                        </button>
+                    </div>
+                    <div class="col l-12 sidebar__item" >
+                        <button mat-button routerLinkActive="primary-btn"
+                        [routerLinkActiveOptions]="{ exact: true }" [routerLink]="'/administrator/home/post-management/journey-posts'">
+                            Bài viết tìm kiếm người đi cùng
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col l-9" style="height: 100%;">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>

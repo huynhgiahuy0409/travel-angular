@@ -2,7 +2,7 @@
     <!-- header post -->
     <div class="post-row user-profile">
         <div class="user-avatar">
-            <img (mouseover)="refetchPostUsers(postUser.id)" [src]="userAvatarSrc" alt="" class="avatar" />
+            <img (mouseover)="fetchPostUser(postUser.id)" [src]="userAvatarSrc" alt="" class="avatar" />
             <ng-container *ngTemplateOutlet="userInfoNotify">
             </ng-container>
         </div>
@@ -53,7 +53,7 @@
                     </div>
                 </div>
             </div>
-            <div class="standard__list" *ngIf="postUser.id !== user!.id">
+            <div class="standard__list">
                 <div class="standard__item flex-fit">
                     <button mat-raised-button class="d-flex primary-btn w-fit" *ngIf="isFollowed === false"
                         (click)="requestFollow(postUser.id)">
@@ -71,6 +71,10 @@
                         <i class="fa-brands fa-facebook-messenger mr-r-5"></i>
                         Nhắn tin
                     </button>
+                    <!-- <button mat-raised-button class="d-flex">
+                            <i class="fa-brands fa-facebook-messenger mr-r-5"></i>
+                            <p>Hủy theo dõi</p>
+                        </button> -->
                 </div>
             </div>
             <div class="standard__list" *ngIf="postUser.id === user!.id">
@@ -85,187 +89,42 @@
     </ng-template>
     <!-- post content -->
     <div class="post-row post-title">
-        {{ reviewPost.title }}
+        {{ journeyPost.title }}
     </div>
     <div class="post-row post-text">
-        {{ reviewPost.bio }}
-    </div>
-    <div class="post-row standard__list" *ngIf="reviewPost.reviewPostTags">
-        <div class="standard__item" *ngFor="let tag of reviewPost.reviewPostTags">
-            <span style="color: var(--primary-color--)">#{{tag.name}}</span>
-        </div>
+        {{ journeyPost.note }}
     </div>
     <!------ Sorting display images ------>
-    <div class="review-post__image" [routerLink]="['/home/review-posts',reviewPost.id]">
+    <div class="review-post__image" (click)="openJourneyDetail(journeyPost.id)">
         <!-- 1 image -->
-        <div class="image__list one" *ngIf="reviewPost.images.length == 1">
+        <div class="image__list one">
             <div class="image__item">
                 <img [src]="
                 directLinkService.getURLImage(
-            reviewPost.user.email,
-            reviewPost.images[0].image.name,
-            reviewPost.images[0].image.ext
+            journeyPost.user.email,
+            journeyPost.coverImage.name,
+            journeyPost.coverImage.ext
           )
         " alt="" />
-            </div>
-        </div>
-        <!-- 2 images -->
-        <div class="image__list two" *ngIf="reviewPost.images.length == 2">
-            <div class="row">
-                <div class="col l-6 m-6 c-6" *ngFor="let reviewPostImage of reviewPost.images; index as idx">
-                    <div class="image__item">
-                        <img [src]="
-              directLinkService.getURLImage(
-                reviewPost.user.email,
-                reviewPostImage.image.name,
-                reviewPostImage.image.ext
-              )
-            " alt="" />
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- 3 images -->
-        <div class="image__list three" *ngIf="reviewPost.images.length == 3">
-            <div class="row">
-                <ng-container *ngFor="let reviewPostImage of reviewPost.images; index as idx">
-                    <div class="col l-12 m-12 c-12" *ngIf="idx === 0">
-                        <div class="image__item">
-                            <img [src]="
-                directLinkService.getURLImage(
-                  reviewPost.user.email,
-                  reviewPostImage.image.name,
-                  reviewPostImage.image.ext
-                )
-              " alt="" />
-                        </div>
-                    </div>
-                </ng-container>
-            </div>
-            <div class="row">
-                <ng-container *ngFor="let reviewPostImage of reviewPost.images; index as idx">
-                    <div class="col l-6 m-6 c-6" *ngIf="idx > 0">
-                        <div class="image__item">
-                            <img [src]="
-                directLinkService.getURLImage(
-                  reviewPost.user.email,
-                  reviewPostImage.image.name,
-                  reviewPostImage.image.ext
-                )
-              " alt="" />
-                        </div>
-                    </div>
-                </ng-container>
-            </div>
-        </div>
-        <!-- 4 images -->
-        <div class="image__list four" *ngIf="reviewPost.images.length == 4">
-            <div class="row">
-                <ng-container *ngFor="let reviewPostImage of reviewPost.images; index as idx">
-                    <div class="col l-12 m-12 c-12" *ngIf="idx == 0">
-                        <div class="image__item">
-                            <img [src]="
-                directLinkService.getURLImage(
-                  reviewPost.user.email,
-                  reviewPostImage.image.name,
-                  reviewPostImage.image.ext
-                )
-              " alt="" />
-                        </div>
-                    </div>
-                </ng-container>
-            </div>
-            <div class="row">
-                <ng-container *ngFor="let reviewPostImage of reviewPost.images; index as idx">
-                    <div class="col l-4 m-4 c-4" *ngIf="idx > 0">
-                        <div class="image__item">
-                            <img [src]="
-                directLinkService.getURLImage(
-                  reviewPost.user.email,
-                  reviewPostImage.image.name,
-                  reviewPostImage.image.ext
-                )
-              " alt="" />
-                        </div>
-                    </div>
-                </ng-container>
-            </div>
-        </div>
-        <!-- 5 images -->
-        <div class="image__list five" *ngIf="reviewPost.images.length >= 5">
-            <div class="row">
-                <ng-container *ngFor="let reviewPostImage of reviewPost.images; index as idx">
-                    <div class="col l-6 m-6 c-6" *ngIf="idx >= 0 && idx <= 1">
-                        <div class="image__item">
-                            <img [src]="
-                directLinkService.getURLImage(
-                  reviewPost.user.email,
-                  reviewPostImage.image.name,
-                  reviewPostImage.image.ext
-                )
-              " alt="" />
-                        </div>
-                    </div>
-                </ng-container>
-            </div>
-            <div class="row">
-                <ng-container *ngFor="let reviewPostImage of reviewPost.images; index as idx">
-                    <div class="col l-4 m-4 c-4" *ngIf="idx > 1 && idx < 4">
-                        <div class="image__item">
-                            <img [src]="
-                directLinkService.getURLImage(
-                  reviewPost.user.email,
-                  reviewPostImage.image.name,
-                  reviewPostImage.image.ext
-                )
-              " alt="" />
-                        </div>
-                    </div>
-                </ng-container>
-                <div class="col l-4 m-4 c-4" *ngIf="reviewPost.images.length == 5">
-                    <div class="image__item">
-                        <img [src]="
-              directLinkService.getURLImage(
-                reviewPost.user.email,
-                reviewPost.images[4].image.name,
-                reviewPost.images[4].image.ext
-              )
-            " alt="" />
-                    </div>
-                </div>
-                <div class="col l-4 m-4 c-4" *ngIf="reviewPost.images.length > 5">
-                    <div class="image__item" style="position: relative">
-                        <img [src]="
-              directLinkService.getURLImage(
-                reviewPost.user.email,
-                reviewPost.images[4].image.name,
-                reviewPost.images[4].image.ext
-              )
-            " alt="" />
-                        <div class="image__item--overlay">
-                            <span>+{{ reviewPost.images.length - 5 }}</span>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
     <!-- post react: like comment shared -->
     <div class="standard__list justify-content-end pd-10" *ngIf="isAdmin">
-        <ng-container *ngIf="reviewPost.status === 'PENDING' ">
+        <ng-container *ngIf="journeyPost.status === 'PENDING' " >
             <div class="standard__item">
-                <button mat-raised-button class="primary-btn" (click)="updateReviewPostByStatus(reviewPost, 'APPROVE')">Phê duyệt</button>
+                <button mat-raised-button class="primary-btn" (click)="updateByStatus(journeyPost, 'APPROVE')">Phê duyệt</button>
             </div>
             <div class="standard__item">
-                <button mat-raised-button class="warn-btn" (click)="updateReviewPostByStatus(reviewPost, 'DENY')">Từ chối</button>
+                <button mat-raised-button class="warn-btn" (click)="updateByStatus(journeyPost, 'DENY')">Từ chối</button>
             </div>
         </ng-container>
-        <ng-container *ngIf="reviewPost.status === 'DENY' ">
+        <ng-container *ngIf="journeyPost.status === 'DENY' ">
             <div class="standard__item">
                 <button mat-raised-button class="warn-btn">Đã từ chối</button>
             </div>
         </ng-container>
-        <ng-container *ngIf="reviewPost.status === 'APPROVE' ">
+        <ng-container *ngIf="journeyPost.status === 'APPROVE' ">
             <div class="standard__item">
                 <button mat-raised-button class="primary-btn">Đã duyệt</button>
             </div>
@@ -274,7 +133,7 @@
     <div class="post-row post-react" *ngIf="!isAdmin">
         <div class="d-flex justify-content-between align-items-center">
             <div class="post-react-left d-flex">
-                <ng-container *ngIf="(postReacts$ | async) as postReact">
+                <ng-container *ngIf="(postReact$ | async) as postReact">
                     <!-- Like -->
                     <div class="standard__item d-flex align-items-center">
                         <i style="font-size:2rem; color: var(--primary-color--)" class="fa-solid fa-thumbs-up"></i>
@@ -318,21 +177,21 @@
         </div>
         <div class="separate-line"></div>
         <ul class="react-btn__list">
-            <li class="react-btn__item" (click)="onClickVote(reviewPost, 1)">
+            <li class="react-btn__item" (click)="onClickVote(journeyPost, 1)">
                 <div class="react-btn-wrap">
                     <i #likeIcon style="color:var(--primary-color--)" class="fa-solid fa-thumbs-up"
-                        *ngIf="reviewPost.userReact && reviewPost.userReact.react == 1"></i>
+                        *ngIf="journeyPost.userReact && journeyPost.userReact.react == 1"></i>
                     <i #unLikeIcon class="fa-regular fa-thumbs-up"
-                        *ngIf="(!reviewPost.userReact || reviewPost.userReact.react != 1) || !reviewPost.userReact"></i>
+                        *ngIf="(!journeyPost.userReact || journeyPost.userReact.react != 1) || !journeyPost.userReact"></i>
                     <p class="font-weight-550">Like</p>
                 </div>
             </li>
-            <li class="react-btn__item" (click)="onClickVote(reviewPost, -1)">
+            <li class="react-btn__item" (click)="onClickVote(journeyPost, -1)">
                 <div class="react-btn-wrap">
                     <i #dislikeIcon style="color:var(--primary-color--)" class="fa-solid fa-thumbs-down"
-                        *ngIf="reviewPost.userReact && (reviewPost.userReact.react == -1)"></i>
+                        *ngIf="journeyPost.userReact && (journeyPost.userReact.react == -1)"></i>
                     <i #unDislikeIcon class="fa-regular fa-thumbs-down"
-                        *ngIf="(!reviewPost.userReact || reviewPost.userReact.react != -1) || !reviewPost.userReact"></i>
+                        *ngIf="(!journeyPost.userReact || journeyPost.userReact.react != -1) || !journeyPost.userReact"></i>
                     <p class="font-weight-550">Dislike</p>
                 </div>
             </li>

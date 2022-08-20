@@ -17,13 +17,15 @@ import { ReviewPostsComponent } from './components/review-posts/review-posts.com
 import { UserPostComponent } from './components/user-post/user-post.component';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
+import { JourneyPostComponent } from './components/journeys/journey-post/journey-post.component';
+import { JourneyPostModule } from './components/journeys/journey-post/journey-post.module';
 
 @NgModule({
   declarations: [
     HomeComponent,
     ReviewPostsComponent,
-    UserPostComponent,
     JourneysComponent,
+    UserPostComponent,
     ReviewPostDetailComponent,
     MomoPaymentComponent,
   ],
@@ -38,7 +40,7 @@ import { HomeComponent } from './home.component';
     QRCodeModule,
     CommercialModule,
     ReviewPostModule,
-    ReviewPostModule
+    JourneyPostModule
   ],
 })
 export class HomeModule {}

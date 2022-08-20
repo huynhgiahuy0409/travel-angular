@@ -41,9 +41,11 @@ export class CommercialPostService {
   findAll(filter: FilterCommercialPost): Observable<CommercialPostResponse[]>{
     const url = `${BASE_URL}/member/commercial-posts`;
     let params = new HttpParams()
-    params = params.append('pageIndex', filter.pageable.pageIndex)  
-    params = params.append('pageSize', filter.pageable.pageSize)
-    if(filter.pageable.sortable){
+    if(filter.pageable){
+      params = params.append('pageIndex', filter.pageable.pageIndex)  
+      params = params.append('pageSize', filter.pageable.pageSize)
+    }
+    if(filter.pageable && filter.pageable.sortable){
       params = params.append("dir", filter.pageable.sortable.dir)
       params = params.append("order", filter.pageable.sortable.order)
     }
@@ -56,6 +58,8 @@ export class CommercialPostService {
       headers: this.httpOptions.headers,
       params: params
     }
+    console.log(params);
+    
     return this.httpClient.get<CommercialPostResponse[]>(
       url,
       httpOptions

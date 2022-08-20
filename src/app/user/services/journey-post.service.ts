@@ -31,11 +31,14 @@ export class JourneyPostService {
   findAll(filter: FilterJourneyPost){
     const url = `${BASE_URL}/member/journey-posts`;
     let params = new HttpParams()
-    params = params.append('pageIndex', filter.pageable.pageIndex)  
-    params = params.append('pageSize', filter.pageable.pageSize)
-    if(filter.pageable.sortable){
-      params = params.append("dir", filter.pageable.sortable.dir)
-      params = params.append("order", filter.pageable.sortable.order)
+    if(filter.pageable){
+      params = params.append('pageIndex', filter.pageable.pageIndex);
+      params = params.append('pageSize', filter.pageable.pageSize);
+    }
+    if (filter.pageable && filter.pageable.sortable) {
+      params = params.append('dir', filter.pageable.sortable.dir);
+      params = params.append('order', filter.pageable.sortable.order);
+      
     }
     if(filter.title){
       params = params.append("title", filter.title)
@@ -47,6 +50,13 @@ export class JourneyPostService {
       params = params.append("totalParticipant", filter.totalParticipant)
     }else if(filter.departurePlace){
       params = params.append("departurePlace", filter.departurePlace)
+    }
+    if (filter.createDateRange) {
+      params = params.append('srcCreateDate', filter.createDateRange[0]);
+      params = params.append('desCreateDate', filter.createDateRange[1]);
+    }
+    if (filter.status) {
+      params = params.append('status', filter.status);
     }
     let httpOptions = {
       headers: this.httpOptions.headers,
@@ -83,5 +93,24 @@ export class JourneyPostService {
       url,
       httpOptions
     );
+  }
+  countAll(status?: string){
+    const url = `${BASE_URL}/member/count/journey-posts`;
+    let params = new HttpParams();
+    if (status) {
+      params = params.append('status', status);
+    }
+    let httpOptions = {
+      headers: this.httpOptions.headers,
+      params: params,
+    };
+    return this.httpClient.get<number>(url, httpOptions);
+  }
+  updateByStatus(
+    postId: number,
+    status: String
+  ): Observable<JourneyPostResponse> {
+    const url = `${BASE_URL}/admin/status/${status}/journey-post/${postId}`;
+    return this.httpClient.post<JourneyPostResponse>(url, this.httpOptions);
   }
 }

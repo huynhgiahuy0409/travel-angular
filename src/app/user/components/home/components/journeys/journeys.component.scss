@@ -40,7 +40,8 @@ p, h1,h2,h3,h4,h5,h6{
 .main-content {
   height: 100vh;
   overflow-y: auto;
-  margin: 0 20px
+  margin: 0 20px;
+  padding: 5px
 }
 .main-content::-webkit-scrollbar {
   display: none;

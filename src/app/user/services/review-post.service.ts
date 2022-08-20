@@ -51,16 +51,18 @@ export class ReviewPostService {
       httpOptions
     );
   }
-  findById(id: number) {
+  findById(id: number): Observable<ReviewPostResponse> {
     const url = `${BASE_URL}/member/review-post/${id}`;
     return this.httpClient.get<ReviewPostResponse>(url, this.httpOptions);
   }
   findAll(filter: FilterReviewPost) {
     const url = `${BASE_URL}/member/review-posts`;
     let params = new HttpParams();
-    params = params.append('pageIndex', filter.pageable.pageIndex);
-    params = params.append('pageSize', filter.pageable.pageSize);
-    if (filter.pageable.sortable) {
+    if(filter.pageable){
+      params = params.append('pageIndex', filter.pageable.pageIndex);
+      params = params.append('pageSize', filter.pageable.pageSize);
+    }
+    if (filter.pageable && filter.pageable.sortable) {
       params = params.append('dir', filter.pageable.sortable.dir);
       params = params.append('order', filter.pageable.sortable.order);
     }
@@ -77,43 +79,17 @@ export class ReviewPostService {
     if (filter.status) {
       params = params.append('status', filter.status);
     }
-    let httpOptions = {
-      headers: this.httpOptions.headers,
-      params: params,
-    };
+    if (filter.createDateRange) {
+      params = params.append('srcCreateDate', filter.createDateRange[0]);
+      params = params.append('desCreateDate', filter.createDateRange[1]);
+    }
+    if (filter.provinceId) {
+      params = params.append('provinceId', filter.provinceId);
+    }
+    if (filter.postUserId) {
+      params = params.append('postUserId', filter.postUserId);
+    }
 
-    return this.httpClient.get<ReviewPostResponse[]>(url, httpOptions);
-  }
-  findAllByProvinceIdWithPaging(
-    provinceId: number,
-    pageable: Pageable
-  ): Observable<ReviewPostResponse[]> {
-    const url = `${BASE_URL}/member/province/${provinceId}/review-posts`;
-    let params = new HttpParams();
-    params = params.append('pageIndex', pageable.pageIndex);
-    params = params.append('pageSize', pageable.pageSize);
-    if (pageable.sortable) {
-      params = params.append('dir', pageable.sortable.dir);
-      params = params.append('order', pageable.sortable.order);
-    }
-    let httpOptions = {
-      headers: this.httpOptions.headers,
-      params: params,
-    };
-    return this.httpClient.get<ReviewPostResponse[]>(url, httpOptions);
-  }
-  findAllByUserIdWithPaging(
-    userId: number,
-    pageable: Pageable
-  ): Observable<ReviewPostResponse[]> {
-    const url = `${BASE_URL}/member/user/${userId}/review-posts`;
-    let params = new HttpParams();
-    params = params.append('pageIndex', pageable.pageIndex);
-    params = params.append('pageSize', pageable.pageSize);
-    if (pageable.sortable) {
-      params = params.append('dir', pageable.sortable.dir);
-      params = params.append('order', pageable.sortable.order);
-    }
     let httpOptions = {
       headers: this.httpOptions.headers,
       params: params,
@@ -127,5 +103,17 @@ export class ReviewPostService {
   ): Observable<ReviewPostResponse> {
     const url = `${BASE_URL}/admin/status/${status}/review-post/${postId}`;
     return this.httpClient.post<ReviewPostResponse>(url, this.httpOptions);
+  }
+  countAll(status?: string){
+    const url = `${BASE_URL}/member/count/review-posts`;
+    let params = new HttpParams();
+    if (status) {
+      params = params.append('status', status);
+    }
+    let httpOptions = {
+      headers: this.httpOptions.headers,
+      params: params,
+    };
+    return this.httpClient.get<number>(url, httpOptions);
   }
 }

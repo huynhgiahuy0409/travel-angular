@@ -387,8 +387,8 @@ p{
   z-index: 999;
   display: none
 }
-.user-profile .user-profile-name .post-username-wrap:hover .user-info-notify,
-.user-profile .user-avatar-wrap:hover .user-info-notify {
+.user-profile .user-info .username:hover .user-info-notify,
+.user-profile .user-avatar:hover .user-info-notify {
   display: block;
 }
 

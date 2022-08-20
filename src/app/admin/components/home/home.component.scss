@@ -1,3 +1,14 @@
+.grid .row{
+    margin: 0
+}
+.grid .row .col{
+    padding: 0
+}
 .container{
     background-color: #f8f8f8;
+}
+.content-container{
+    padding: 10px;
+    height: calc(100vh - 60px);
+    overflow: hidden;
 }

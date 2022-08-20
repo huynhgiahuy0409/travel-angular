@@ -9,6 +9,8 @@ import { SharedMaterialModule } from 'src/app/shared/modules';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ReviewPostComponent } from 'src/app/user/components/home/components/review-posts/review-post/review-post.component';
 import { ReviewPostModule } from 'src/app/user/components/home/components/review-posts/review-post/review-post.module';
+import { JourneyPostComponent } from 'src/app/user/components/home/components/journeys/journey-post/journey-post.component';
+import { JourneyPostModule } from 'src/app/user/components/home/components/journeys/journey-post/journey-post.module';
 
 const routes: Routes = [
   {
@@ -40,7 +42,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     SharedMaterialModule,
     InfiniteScrollModule,
-    ReviewPostModule
+    ReviewPostModule,
+    JourneyPostModule
   ],
 })
 export class PostManagementModule {}

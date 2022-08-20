@@ -9,7 +9,7 @@ import { JourneyPostService } from 'src/app/user/services/journey-post.service';
 import { ParticipantService } from 'src/app/user/services/participant.service';
 import { UploadFileService } from 'src/app/user/services/upload-file.service';
 import { UserService } from 'src/app/user/services/user.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { FilterJourneyPost } from 'src/app/shared/models/model';
 import { JourneyComponent } from '../../../creation/components/journey/journey.component';
 import { ParticipantManagermentComponent } from './dialog/participant-managerment/participant-managerment.component';
@@ -199,8 +199,12 @@ export class JourneyPostComponent implements OnInit {
     private userService: UserService
   ) {
     let userId = this.userService.userBSub.value!.id
-    this.filterPostService.filterPost$.pipe(concatMap(filterPost => {
-      return this.journeyPostSerivce.findAllByUserIdWithPaging(userId, filterPost.pageable);
+    this.filterPostService.journeyPostFilter$.pipe(concatMap(filterPost => {
+      if(filterPost.pageable){
+        return this.journeyPostSerivce.findAllByUserIdWithPaging(userId, filterPost.pageable);
+      }else{
+        return of([])
+      }
     })).subscribe((response) => {
       this.journeyPosts = this.journeyPosts.concat(response)
       console.log(this.journeyPosts);
@@ -628,10 +632,12 @@ export class JourneyPostComponent implements OnInit {
   }
   onScrollDown($event: any) {
     console.log($event);
-    let currFilter: FilterJourneyPost = this.filterPostService.filterPostBSub.value
+    let currFilter: FilterJourneyPost = this.filterPostService.journeyPostFilterBSub.value
     let pageable = currFilter.pageable
-    pageable.pageIndex++
-    this.filterPostService.filterPostBSub.next(currFilter)
+    if(pageable){
+      pageable.pageIndex++
+      this.filterPostService.reviewPostFilterBSub.next(currFilter)
+    }
   }
   dateTimeFormula(timestamp: Date) {
     return new Date(timestamp).toLocaleString()

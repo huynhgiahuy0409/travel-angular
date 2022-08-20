@@ -30,10 +30,9 @@
   
   /* main-content */
   .main-content {
-    height: 100vh;
-    overflow-y: auto;
+    height: 100%;
     margin: 0 20px;
-    padding: 5px
+    overflow: auto;
   }
   
   .main-content::-webkit-scrollbar {

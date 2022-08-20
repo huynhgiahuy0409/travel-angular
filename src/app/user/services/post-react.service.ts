@@ -23,4 +23,11 @@ export class PostReactService {
       this.httpOptions
     );
   }
+  findByJourneyPostId(postId: number): Observable<PostReactResponse> {
+    const url = `${BASE_URL}/member/journey-post/${postId}/post-react`;
+    return this.httpClient.get<PostReactResponse>(
+      url,
+      this.httpOptions
+    );
+  }
 }

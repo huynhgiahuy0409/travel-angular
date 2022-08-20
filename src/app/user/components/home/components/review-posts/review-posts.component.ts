@@ -240,6 +240,7 @@ export class ReviewPostsComponent implements OnInit, AfterViewInit {
       order: this.fb.control('title'),
       search: this.fb.control(''),
     });
+    /* Fetch commercial post */
     let initFilterCommercialPost: FilterCommercialPost = {
       pageable: {
         pageIndex: 0,
@@ -251,10 +252,11 @@ export class ReviewPostsComponent implements OnInit, AfterViewInit {
       },
     }
     this.commercialPosts$ = this.commercialPostService.findAll(initFilterCommercialPost)
-    let initFilterReviewPost: FilterReviewPost = this.filterPostService.filterPostBSub.value
+    /* Fetcg review post */
+    let initFilterReviewPost: FilterReviewPost = this.filterPostService.reviewPostFilterBSub.value
     initFilterReviewPost.status = APPROVE_STATUS
-    this.filterPostService.filterPostBSub.next(initFilterReviewPost)
-    this.filterPostService.filterPost$
+    this.filterPostService.reviewPostFilterBSub.next(initFilterReviewPost)
+    this.filterPostService.reviewPostFilter$
       .pipe(
         concatMap((filterPost) => {
           return this.reviewPostService.findAll(filterPost);
@@ -277,29 +279,31 @@ export class ReviewPostsComponent implements OnInit, AfterViewInit {
         this.progressBarService.progressBarBSub.next(true);
         this.reviewPosts = [];
         let order = this.searchFormGroup.get('order')?.value;
-        let filter: FilterReviewPost = {
+        let currFilter: FilterReviewPost = this.filterPostService.reviewPostFilterBSub.value
+        currFilter = {
           pageable: {
             pageIndex: 0,
-            pageSize: 1,
+            pageSize: currFilter!.pageable!.pageSize,
             sortable: {
-              dir: 'DESC',
-              order: 'createdDate',
-            },
+              dir: currFilter.pageable!.sortable!.dir,
+              order: currFilter.pageable!.sortable!.order,
+            }
           },
-        };
-        /* customize filter */
+          status: APPROVE_STATUS
+        }
+        /* Customize filter */
         if (term) {
           if (order == 'title') {
-            filter.title = term;
+            currFilter.title = term;
           } else if (order == 'tag') {
-            filter.tag = term;
+            currFilter.tag = term;
           } else if (order == 'cost') {
-            filter.cost = term;
+            currFilter.cost = term;
           } else if (order == 'provinceName') {
-            filter.provinceName = term;
+            currFilter.provinceName = term;
           }
         }
-        this.filterPostService.filterPostBSub.next(filter);
+        this.filterPostService.reviewPostFilterBSub.next(currFilter);
       });
   }
   ngAfterViewInit(): void {
@@ -717,10 +721,12 @@ export class ReviewPostsComponent implements OnInit, AfterViewInit {
   /* infinite scroll */
   onScrollDown($event: any) {
     let currFilter: FilterReviewPost =
-      this.filterPostService.filterPostBSub.value;
-    let pageable = currFilter.pageable;
-    pageable.pageIndex++;
-    this.filterPostService.filterPostBSub.next(currFilter);
+      this.filterPostService.reviewPostFilterBSub.value;
+    if(currFilter.pageable){
+      let pageable = currFilter.pageable;
+      pageable.pageIndex++;
+      this.filterPostService.reviewPostFilterBSub.next(currFilter);
+    }
   }
   onScrollUp($event: any) {
     console.log($event);

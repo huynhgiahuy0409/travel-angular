@@ -1,6 +1,23 @@
-<canvas baseChart
-        [data]="barChartData"
-        [type]="barChartType"
-        (chartHover)="chartHovered($event)"
-        (chartClick)="chartClicked($event)">
-</canvas>
+<div class="container">
+    <div class="standard__list" class="mr-t-10">
+        <div class="standard__item">
+            <mat-form-field appearance="fill" class="box-shadow">
+                <mat-label>Enter a date range</mat-label>
+                <mat-date-range-input [formGroup]="dateRangeGroup" [rangePicker]="picker">
+                    <input matStartDate formControlName="start" placeholder="Start date" />
+                    <input matEndDate formControlName="end" placeholder="End date" />
+                </mat-date-range-input>
+                <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+                <mat-error *ngIf="dateRangeGroup.controls.start.hasError('matStartDateInvalid')">Invalid start date
+                </mat-error>
+                <mat-error *ngIf="dateRangeGroup.controls.end.hasError('matEndDateInvalid')">Invalid end date
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <canvas baseChart [options]="barChartOptions" [data]="barChartData" [type]="barChartType">
+    </canvas>
+</div>

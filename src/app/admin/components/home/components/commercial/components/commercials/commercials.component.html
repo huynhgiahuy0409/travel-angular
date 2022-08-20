@@ -1,5 +1,25 @@
-<div class="post__list">
-    <div class="post__item" *ngFor="let commercialPost of commercialPosts$ | async">
-        <app-commercial-item [commercialPost]="commercialPost"></app-commercial-item>
+<div class="container search-results" infinite-scroll [scrollWindow]="false" (scrolled)="onScrollDown($event)"
+    [infiniteScrollThrottle]="1">
+    <div class="standard__list mr-b-10">
+        <div class="standard__item">
+            <button mat-raised-button (click)="openCreateCommercialDialog()">Thêm quảng cáo</button>
+        </div>
+    </div>
+    <!-- posts -->
+    <form [formGroup]="searchFormGroup" class="journey-search-box box-shadow mr-t-10" >
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <mat-form-field appearance="fill">
+        <mat-label>Tiêu chí tìm kiếm</mat-label>
+        <mat-select formControlName="order">
+            <mat-option value="title">Tên bài viết</mat-option>
+            <mat-option value="tag">Tag</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <input type="text" formControlName="search" />
+    </form>
+    <div class="post__list">
+        <div class="post__item" *ngFor="let commercialPost of commercialPosts">
+            <app-commercial-item [commercialPost]="commercialPost"></app-commercial-item>
+        </div>
     </div>
 </div>

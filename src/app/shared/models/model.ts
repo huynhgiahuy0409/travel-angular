@@ -34,21 +34,29 @@ export interface Pageable{
     pageSize: number,
     sortable?: Sortable
 } 
-export interface FilterJourneyPost extends BaseFilter{
+export interface FilterJourneyPost{
+    pageable?: Pageable
     title?: string
     totalDay?: number
     totalCost?: number
     totalParticipant?: number
     departurePlace?: string
+    createDateRange?: [number,number]
+    status?: string
 }
-export interface FilterReviewPost extends BaseFilter{
+export interface FilterReviewPost{
+    pageable?: Pageable
     title?: string
     tag?: string
     cost?: number
     provinceName?: string
-    status?: string
+    status?: string;
+    createDateRange?: [number,number]
+    provinceId?: number;
+    postUserId?: number
 }
-export interface FilterCommercialPost extends BaseFilter{
+export interface FilterCommercialPost{
+    pageable?: Pageable
     title?: string
     tag?: string
 }

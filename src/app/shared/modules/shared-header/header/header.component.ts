@@ -16,12 +16,17 @@ export class HeaderComponent implements OnInit {
   femaleDefaultAvatarURL: string = FEMALE_DEFAULT_AVATAR_URL
   undefinedDefaultAvatarURL: string = UNDEFINED_DEFAULT_AVATAR_URL
   user$!: Observable<UserProfileResponse | null>
+  isAdmin = false
   constructor(private userService: UserService, private router: Router) {}
   
   ngOnInit(): void {
     this.user$ = this.userService.user$
-    this.user$.subscribe(v => {
-      console.log(v);
+    this.user$.subscribe(user => {
+      if(user){
+        if(user.role.name === 'ROLE_ADMIN' || user?.role.name === 'ROLE_CENSOR'){
+          this.isAdmin = true
+        }
+      }
     })
   }
   logout(){

@@ -24,8 +24,9 @@ nav {
 .nav-right__list {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: flex-end;
   height: 40px;
+  width: 100%;
 }
 
 
@@ -36,6 +37,7 @@ nav {
   justify-content: space-between;
   height: 100%;
   padding: 0 5px;
+  overflow: hidden;
 }
 
 

@@ -4,13 +4,6 @@
       <img src="assets/image/search.png" alt="" />
       <input type="text" placeholder="Search" />
     </div>
-    <ul class="nav-right__list">
-      <li
-        class="nav-right__item d-flex align-items-center justify-content-center hide-on-pc"
-      >
-        <i class="fa-solid fa-magnifying-glass"></i>
-      </li>
-    </ul>
   </div>
   <div class="col l-6 m-3 c-12  nav-main">
     <div class="home__list d-flex align-items-center justify-content-center">
@@ -45,9 +38,6 @@
         <img [src]="maleDefaultAvatarURL" alt="" *ngIf="!user.avt && user.gender === 'MALE' "/>
         <img [src]="femaleDefaultAvatarURL" alt="" *ngIf="!user.avt && user.gender === 'FEMALE' "/>
         <img [src]="undefinedDefaultAvatarURL" alt="" *ngIf="!user.avt && user.gender === 'UNDEFINED' "/>
-        <h3 class="hide-on-mobile hide-on-tablet hide-on-big-tablet">
-          {{user.fullName}}
-        </h3>
       </div>
       <li class="nav-right__item">
         <div class="menu-btn d-flex align-items-center">
@@ -260,17 +250,32 @@
             ></path>
           </svg>
         </div>
-        <ul class="notification">
+        <ul class="notification" *ngIf="user$ | async as user">
           <li [routerLink]="['/blog/1']">
             <div class="notification__left">
-              <img src="assets/84c1252b0128cf769639.jpg" alt="" />
+              <img [src]="maleDefaultAvatarURL" alt="" *ngIf="!user.avt && user.gender === 'MALE' "/>
+              <img [src]="femaleDefaultAvatarURL" alt="" *ngIf="!user.avt && user.gender === 'FEMALE' "/>
+              <img [src]="undefinedDefaultAvatarURL" alt="" *ngIf="!user.avt && user.gender === 'UNDEFINED' "/>
             </div>
             <div class="notification__main">
-              <h4>Huỳnh Gia Huy</h4>
+              <h4>{{user.fullName}}</h4>
               <p>See your profile</p>
             </div>
           </li>
           <div class="separate-line"></div>
+          <li [routerLink]="['/administrator']" *ngIf="isAdmin">
+            <div class="notification__left">
+              <div class="notification__left-wrapper">
+                <mat-icon>settings</mat-icon>
+              </div>
+            </div>
+            <div class="notification__main">
+              <h4>Trang quản trị</h4>
+            </div>
+            <div class="notification__right">
+              <mat-icon>keyboard_arrow_right</mat-icon>
+            </div>
+          </li>
           <li [routerLink]="['/settings/account']">
             <div class="notification__left">
               <div class="notification__left-wrapper">
@@ -278,7 +283,7 @@
               </div>
             </div>
             <div class="notification__main">
-              <h4>Setting</h4>
+              <h4>Cài đặt</h4>
             </div>
             <div class="notification__right">
               <mat-icon>keyboard_arrow_right</mat-icon>
@@ -291,7 +296,7 @@
               </div>
             </div>
             <div class="notification__main">
-              <h4>Log out</h4>
+              <h4>Đăng xuất</h4>
             </div>
             <div class="notification__right">
               <mat-icon>keyboard_arrow_right</mat-icon>

@@ -93,6 +93,7 @@ export interface ReviewPostResponse extends BaseResponse{
     district: DistrictResponse
     userReact: UserReactResponse
     status: string
+    createdDate: Date
 }
 export interface CommercialPostResponse extends BaseResponse{
     title: string
@@ -146,6 +147,8 @@ export interface JourneyPostResponse extends BaseResponse{
     departurePlace: GoongPlaceDetailResultResponse
     user: UserProfileResponse,
     participants: ParticipantResponse[]
+    userReact: UserReactResponse
+    status: string
 }
 export interface ParticipantResponse extends BaseResponse{
     status: number

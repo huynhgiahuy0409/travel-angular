@@ -5,6 +5,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { SharedMaterialModule } from 'src/app/shared/modules';
 import { NgChartsModule } from 'ng2-charts';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 
 const routes: Routes = [
   {
@@ -15,19 +17,25 @@ const routes: Routes = [
       {
         path: 'bar-chart', component: BarChartComponent
       },
+      {
+        path: 'pie-chart', component: PieChartComponent
+      },
     ]
   }
 ]
 @NgModule({
   declarations: [
     StatisticComponent,
-    BarChartComponent
+    BarChartComponent,
+    PieChartComponent
   ],
   imports: [
     CommonModule,
     SharedMaterialModule,
     RouterModule.forChild(routes),
     NgChartsModule,
+    FormsModule,
+    ReactiveFormsModule,
   ]
 })
 export class StatisticModule { }
