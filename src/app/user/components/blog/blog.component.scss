@@ -2,23 +2,18 @@
     z-index: 999;
 }
 .container {
-  width: 100vw;
-  height: 100vh;
-  overflow-y: auto;
+  height: calc(100vh - 60px);
+  overflow: auto;
 }
 .container .header {
+  padding:unset;
   z-index: 1;
   background: var(--white-color--);
 }
 .image-wrap {
   position: relative;
 }
-.container .header img {
-  height: 480px;
-  width: 100%;
-  object-fit: cover;
-  padding: 20px;
-}
+
 .nav__list {
   margin: auto;
 }
@@ -34,7 +29,6 @@
   color: var(--primary-color--);
 }
 .main {
-  margin: 10px;
 }
 .main .main__left {
   padding: 10px;
@@ -46,13 +40,25 @@
   border-bottom: 1px solid #ccc;
   padding: 10px 0;
 }
+.main .main__left .user-info__item:last-child{
+  border-bottom: unset
+}
+.main .main__left .user-info__item .title{
+  font-weight: 550;
+  margin: 0
+}
 .main .main__left .user-info__item .avatar {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--primary-color--);
+  margin: auto
 }
 .main .main__left .user-info__item img {
-  width: 120px;
-  object-fit: contain;
-  border-radius: 50%;
-  border: 1px solid var(--primary-color--);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .main .main__left .user-info__item .username {
   text-align: center;
@@ -66,7 +72,97 @@
   cursor: pointer;
 }
 .main .main__left .user-info__item i {
-  color: var(--primary-color--);
+}
+
+.user-intro__list{
+  
+}
+.user-intro__item{
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+}
+.user-intro__item .icon{
+  font-size: 2rem;
+}
+.user-intro__item .label{
+  padding-left: 10px;
+}
+
+/* cover image */
+.cover{
+  height: 480px;
+  width: 100%;
+  padding: 20px
+}
+.cover .cover-image {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.cover .cover-image .cover-image__action {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1;
+}
+
+.cover .cover-image .cover-image__action::before {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  right: 0;
+  top: 100%;
+}
+
+.cover .cover-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#edit-cover-image-btn {
+  position: relative;
+}
+#edit-cover-image-btn ::ng-deep.mat-button-wrapper{
+  pointer-events: none;
+}
+
+.cover-image__action-option {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.cover-image__action-option span {
+  flex: 1;
+}
+
+.cover-image__action-option:hover {
+  background: var(--hover-color--);
+}
+
+
+
+.field__list {}
+
+.field__item {
+  margin: 20px 0;
+}
+
+.addition-images h4:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.description-box {
+  max-width: 100%;
+  min-height: 200px;
+  max-height: 400px;
+  padding: 20px;
 }
 
 /* Responsive */

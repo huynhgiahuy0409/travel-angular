@@ -49,6 +49,7 @@ export interface UploadFileResponse{
     ext: string
     contentType: string
     createDate: Date
+    directLink: string
 }
 export interface RoleResponse{
     name: string
@@ -58,7 +59,6 @@ export interface RoleResponse{
 export interface UserProfileResponse extends BaseResponse{
     username: string;
     fullName: string;
-    avt: string;
     email: string;
     bio: string;
     background: string;
@@ -66,8 +66,10 @@ export interface UserProfileResponse extends BaseResponse{
     gender: string;
     reputation: number;
     avatar: UploadFileResponse;
+    defaultAvatarURL: string
+    coverImage: UploadFileResponse | null;
     role: RoleResponse;
-    active: number; 
+    active: number;
 }
 export interface ReviewPostImageResponse extends BaseResponse{
     id: number

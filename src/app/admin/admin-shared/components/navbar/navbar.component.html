@@ -10,9 +10,9 @@
     <div class="col l-3 m-3 c-8  nav-right">
       <ul class="nav-right__list">
         <div class="profile__item" [routerLink]="['/blog/1']">
-          <img [src]="maleDefaultAvatarURL" alt="" *ngIf="!user.avt && user.gender === 'MALE' "/>
-          <img [src]="femaleDefaultAvatarURL" alt="" *ngIf="!user.avt && user.gender === 'FEMALE' "/>
-          <img [src]="undefinedDefaultAvatarURL" alt="" *ngIf="!user.avt && user.gender === 'UNDEFINED' "/>
+          <img [src]="maleDefaultAvatarURL" alt="" *ngIf="!user.avatar && user.gender === 'MALE' "/>
+          <img [src]="femaleDefaultAvatarURL" alt="" *ngIf="!user.avatar && user.gender === 'FEMALE' "/>
+          <img [src]="undefinedDefaultAvatarURL" alt="" *ngIf="!user.avatar && user.gender === 'UNDEFINED' "/>
         </div>
         <li class="nav-right__item">
           <div class="menu-btn d-flex align-items-center">
@@ -228,9 +228,9 @@
           <ul class="notification" *ngIf="user$ | async as user">
             <li [routerLink]="['/blog/1']">
               <div class="notification__left">
-                <img [src]="maleDefaultAvatarURL" alt="" *ngIf="!user.avt && user.gender === 'MALE' "/>
-                <img [src]="femaleDefaultAvatarURL" alt="" *ngIf="!user.avt && user.gender === 'FEMALE' "/>
-                <img [src]="undefinedDefaultAvatarURL" alt="" *ngIf="!user.avt && user.gender === 'UNDEFINED' "/>
+                <img [src]="maleDefaultAvatarURL" alt="" *ngIf="!user.avatar && user.gender === 'MALE' "/>
+                <img [src]="femaleDefaultAvatarURL" alt="" *ngIf="!user.avatar && user.gender === 'FEMALE' "/>
+                <img [src]="undefinedDefaultAvatarURL" alt="" *ngIf="!user.avatar && user.gender === 'UNDEFINED' "/>
               </div>
               <div class="notification__main">
                 <h4>{{user.fullName}}</h4>

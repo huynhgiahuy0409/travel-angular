@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { FilterCommercialPost, FilterJourneyPost, FilterReviewPost, Pageable, Sortable } from 'src/app/shared/models/model';
+import { FilterCommercialPost, FilterFileUpload, FilterJourneyPost, FilterReviewPost, Pageable, Sortable } from 'src/app/shared/models/model';
 @Injectable({
   providedIn: 'root'
 })
@@ -22,6 +22,8 @@ export class FilterPostService {
   journeyPostFilter$!: Observable<FilterJourneyPost>
   commercialFilterBSub!: BehaviorSubject<FilterCommercialPost>
   commercialFilter$!: Observable<FilterCommercialPost>
+  fileUploadFilterBSub!: BehaviorSubject<FilterFileUpload>
+  fileUploadFilter$!: Observable<FilterFileUpload>
   constructor() {
     this.initFilter = {
       pageable: {
@@ -35,5 +37,16 @@ export class FilterPostService {
     this.journeyPostFilter$ = this.journeyPostFilterBSub.asObservable()
     this.commercialFilterBSub = new BehaviorSubject<FilterCommercialPost>(this.initFilter)
     this.commercialFilter$ = this.commercialFilterBSub.asObservable()
+    this.fileUploadFilterBSub = new BehaviorSubject<FilterFileUpload>({
+      pageable: {
+        pageIndex: 0,
+        pageSize: 9,
+        sortable: {
+          dir: "DESC",
+          order: "createDate"
+        }
+      }
+    })
+    this.fileUploadFilter$ = this.fileUploadFilterBSub.asObservable()
   }
 }

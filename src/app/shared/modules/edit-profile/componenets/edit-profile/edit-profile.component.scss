@@ -1,0 +1,87 @@
+.group__list {}
+
+.group__item {}
+
+.group__item .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.group__item .header .title {
+    font-weight: 550;
+    margin: 0
+}
+
+.group__item .header .modifier-btn {
+    color: var(--primary-color--);
+    cursor: pointer;
+}
+
+/* avatar */
+.main .avatar-wrap {
+    width: 170px;
+    height: 170px;
+    border-radius: 100rem;
+    position: relative;
+    cursor: pointer;
+  
+}
+
+.main .avatar-wrap .avatar-wrap--overplay {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    display: none;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+}
+
+.main .avatar-wrap:hover .avatar-wrap--overplay {
+    display: block;
+}
+
+.main .avatar-wrap #avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 100rem;
+    object-fit: cover;
+}
+
+.main .avatar-wrap .edit-icon {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translate(-50%, -50%);
+    background: white;
+    z-index: 1;
+}
+
+/* cover image */
+.main .cover-image-wrap {
+    width: 500px;
+    height: 190px;
+    border-radius: 5px;
+    position: relative;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.main .cover-image-wrap .cover-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* bio */
+.main .bio{
+    padding: 5px 0
+}

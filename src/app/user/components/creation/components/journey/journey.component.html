@@ -9,11 +9,13 @@
         <div class="col c-12 m-12 c-12">
           <div class="cover box-shadow">
             <div class="init-cover-image" *ngIf="!coverImageSrc">
-              <label for="add-media-input" class="content d-flex align-items-center justify-content-center">
+              <label for="add-media-input" class="content d-flex
+                align-items-center justify-content-center">
                 <div class="content__image-logo mr-r-10">
                   <i class="fa-solid fa-circle-plus"></i>
                 </div>
-                <div class="content__text d-flex align-items-center justify-content-center">
+                <div class="content__text d-flex align-items-center
+                  justify-content-center">
                   <h1>Thêm ảnh bìa cho bài viết</h1>
                 </div>
 
@@ -22,23 +24,29 @@
             </div>
             <div class="cover-image" *ngIf="coverImageSrc">
               <div class="cover-image__action">
-                <button id="edit-cover-image-btn" (click)="onClickEditCoverImage()" mat-raised-button #editCoverImageBtn
+                <button id="edit-cover-image-btn"
+                  (click)="onClickEditCoverImage(coverImageActionSelect)" mat-raised-button
+                  #editCoverImageBtn
                   class="d-flex align-items-center">
                   <i class="fa-solid fa-camera mr-r-5"></i>
                   <span>Chỉnh sửa ảnh bìa</span>
                 </button>
-                <div #coverImageActionSelect class="cover-image__action-select box-shadow">
-                  <div class="cover-image__action-option " (click)="coverImageInput.click()">
+                <div #coverImageActionSelect class="cover-image__action-select
+                  box-shadow">
+                  <div class="cover-image__action-option "
+                    (click)="coverImageInput.click()">
                     <i class="fa-solid fa-upload mr-r-10"></i>
                     <span> Tải ảnh lên </span>
                   </div>
-                  <div class="cover-image__action-option" (click)="removeCoverImage()">
+                  <div class="cover-image__action-option"
+                    (click)="removeCoverImage()">
                     <i class="fa-solid fa-trash-can mr-r-10"></i>
                     <span>Xóa</span>
                   </div>
                 </div>
               </div>
-              <img [src]="coverImageSrc" class="cover-image" *ngIf="coverImageSrc" />
+              <img [src]="coverImageSrc" class="cover-image"
+                *ngIf="coverImageSrc" />
             </div>
           </div>
         </div>
@@ -46,7 +54,8 @@
       <div class="row mr-t-10">
         <div class="col l-12 m-6 c-6">
           <div class="field box-shadow">
-            <input type="text" placeholder="Tiêu đề bài viết" formControlName="title">
+            <input type="text" placeholder="Tiêu đề bài viết"
+              formControlName="title">
           </div>
         </div>
       </div>
@@ -62,20 +71,24 @@
                 Thêm ngày mới
               </button>
             </div>
-            <button mat-raised-button class="example-delete-tab-button" [disabled]="tabs.length === 1"
+            <button mat-raised-button class="example-delete-tab-button"
+              [disabled]="tabs.length === 1"
               (click)="removeTab(selected.value)">
               Xóa ngày
             </button>
           </div>
-          <mat-tab-group [selectedIndex]="selected.value" (selectedIndexChange)="selectedIndexChange($event)">
-            <mat-tab *ngFor="let tab of tabs; let index = index" [label]="tab">
-              <div class="standard__list no-wrap">
-                <div class="col l-8 standard__item">
+          <mat-tab-group [selectedIndex]="selected.value"
+            (selectedIndexChange)="selectedIndexChange($event)">
+            <mat-tab *ngFor="let tab of tabs; let index= index" [label]="tab">
+              <div class="row no-gutters">
+                <div class="col l-8">
                   <p class="step__title">Bước 1: Chọn địa điểm khám phá</p>
-                  <div class="standard__list no-wrap">
-                    <div class="col l-6" [class.l-12]="!placeChoiceMethodCtrl.value">
+                  <div class="row no-gutters" style="padding: 0 10px">
+                    <div class="col l-6"
+                      [class.l-12]="!placeChoiceMethodCtrl.value">
                       <!-- slt method -->
-                      <mat-form-field appearance="fill" class="w-fit box-shadow">
+                      <mat-form-field appearance="fill" class="w-fit
+                        box-shadow">
                         <mat-label>Chọn địa điểm dựa trên</mat-label>
                         <mat-select [formControl]="placeChoiceMethodCtrl">
                           <mat-option value="1">Địa điểm có sẵn</mat-option>
@@ -83,16 +96,21 @@
                         </mat-select>
                       </mat-form-field>
                     </div>
-                    <div class="col l-6" *ngIf="placeChoiceMethodCtrl.value">
+                    <div class="col l-6" style="padding-left: 5px"
+                      *ngIf="placeChoiceMethodCtrl.value">
                       <!-- result slt method -->
                       <div class="row no-gutters flex-fit">
                         <!-- default province place -->
-                        <div class="col l-12" *ngIf="placeChoiceMethodCtrl.value == 1">
-                          <mat-form-field appearance="fill" class="w-fit box-shadow ">
+                        <div class="col l-12" *ngIf="placeChoiceMethodCtrl.value
+                          == 1">
+                          <mat-form-field appearance="fill" class="w-fit
+                            box-shadow ">
                             <mat-label>Chọn tỉnh thành phố</mat-label>
                             <mat-select [formControl]="provinceCtrl">
-                              <ng-container *ngIf="provinces$ | async as provinces">
-                                <mat-option [value]="province.id" *ngFor="let province of provinces">{{ province.name }}
+                              <ng-container *ngIf="provinces$ | async as
+                                provinces">
+                                <mat-option [value]="province.id" *ngFor="let
+                                  province of provinces">{{ province.name }}
                                 </mat-option>
                               </ng-container>
                             </mat-select>
@@ -100,10 +118,11 @@
                         </div>
                         <!-- search map -->
                         <div class="col l-12">
-                          <div class="field box-shadow d-flex align-items-center"
+                          <div class="field d-flex align-items-center"
                             *ngIf="placeChoiceMethodCtrl.value == 2">
                             <i class="fa-solid fa-magnifying-glass mr-r-10"></i>
-                            <input #searchPlaceInput type="text" placeholder="Tìm kiếm"
+                            <input #searchPlaceInput type="text"
+                              placeholder="Tìm kiếm"
                               [formControl]="searchedPlaceCtrl" />
                           </div>
                         </div>
@@ -113,20 +132,22 @@
                   <div class="content" *ngIf="placeChoiceMethodCtrl.value">
                     <!--Result of Default province-->
                     <div class="content-place__list row mr-0" *ngIf="
-                        provinceCtrl.value && placeChoiceMethodCtrl.value == 1
+                      provinceCtrl.value && placeChoiceMethodCtrl.value == 1
                       ">
-                      <ng-container *ngIf="provincePlaces$ | async as provincePlaces">
-                        <div class="col l-4" *ngFor="let provincePlace of provincePlaces">
+                      <ng-container *ngIf="provincePlaces$ | async as
+                        provincePlaces">
+                        <div class="col l-4" *ngFor="let provincePlace of
+                          provincePlaces">
                           <div class="content-place__item box-shadow" (click)="
-                              selectExistProvincePlace(
-                                selected.value,
-                                provincePlace
-                              )
+                            selectExistProvincePlace(
+                            selected.value,
+                            provincePlace
+                            )
                             ">
                             <div class="content-place__image-wrap">
                               <img class="place-image-detail" [src]="
-                                  defaultProvincePlaceURL +
-                                  provincePlace.thumbnailFilename
+                                defaultProvincePlaceURL +
+                                provincePlace.thumbnailFilename
                                 " alt="" />
                             </div>
                             <div class="place-name">
@@ -156,18 +177,19 @@
                     </div>
                     <!--Result of Default province-->
                     <div class="content-map w-fit h-fit" *ngIf="
-                        searchedPlaceCtrl.value &&
-                        placeChoiceMethodCtrl.value == 2
+                      searchedPlaceCtrl.value &&
+                      placeChoiceMethodCtrl.value == 2
                       ">
                       <!-- autocomplete -->
                       <div class="autocomplete__list box-shadow" *ngIf="
-                          visitPlaceAutocompleteResponse$
-                            | async as visitPlaceAutocompleteResponse
+                        visitPlaceAutocompleteResponse$
+                        | async as visitPlaceAutocompleteResponse
                         ">
                         <div class="autocomplete__item" *ngFor="
-                            let prediction of visitPlaceAutocompleteResponse.predictions
+                          let prediction of
+                          visitPlaceAutocompleteResponse.predictions
                           " (click)="
-                            selectPlaceFromMapAutoComplete(prediction, 'visit')
+                          selectPlaceFromMapAutoComplete(prediction, 'visit')
                           ">
                           <span>{{ prediction.description }}</span>
                         </div>
@@ -175,7 +197,8 @@
                       <!-- slted map from autocomplete -->
                       <div class="map-wrap mr-t-10" *ngIf="haveVisitMap">
                         <div id="visit-map" class="w-fit h-fit"></div>
-                        <button id="confirm-map-place-btn" class="primary-btn" mat-raised-button
+                        <button id="confirm-map-place-btn" class="primary-btn"
+                          mat-raised-button
                           (click)="confirmMapPlace(selected.value)">
                           Xác nhận
                         </button>
@@ -184,21 +207,21 @@
                   </div>
                 </div>
 
-                <div class="col l-4 standard__item">
+                <div class="col l-4">
                   <p class="step__title">Bước 2: Chi tiết hành trình</p>
                   <div class="timeline__list">
                     <div class="timeline__item" *ngFor="
-                        let journeyDayPlace of getJourneyDayPlacesValue(
-                          selected.value
-                        );
-                        index as idx
+                      let journeyDayPlace of getJourneyDayPlacesValue(
+                      selected.value
+                      );
+                      index as idx
                       ">
                       <ng-container *ngIf="journeyDayPlace.provincePlace">
                         <div class="header" (click)="
-                            openMapLocationDetail(
-                              journeyDayPlace.provincePlace.lat,
-                              journeyDayPlace.provincePlace.lng
-                            )
+                          openMapLocationDetail(
+                          journeyDayPlace.provincePlace.lat,
+                          journeyDayPlace.provincePlace.lng
+                          )
                           ">
                           <div class="name">
                             <i class="fa-solid fa-location-dot mr-r-5"></i>
@@ -221,11 +244,13 @@
                         </div>
                       </ng-container>
 
-                      <ng-container *ngIf="journeyDayPlace.goongPlaceDetailResult">
+                      <ng-container
+                        *ngIf="journeyDayPlace.goongPlaceDetailResult">
                         <div class="header">
                           <div class="name">
                             <i class="fa-solid fa-location-dot mr-r-5"></i>
-                            <span>{{ journeyDayPlace.goongPlaceDetailResult.name }}</span>
+                            <span>{{ journeyDayPlace.goongPlaceDetailResult.name
+                              }}</span>
                           </div>
                           <div class="option d-flex">
                             <i class="fa-solid fa-bars mr-r-10"></i>
@@ -256,28 +281,32 @@
         <div class="row journey-detail__list">
           <div class="col l-12 journey-detail__item">
             <p class="journey__title">Mô tả</p>
-            <textarea class="description-box field text-area box-shadow w-fit" type="text"
-              placeholder="Sơ lượt về chuyến đi của bạn" formControlName="description"></textarea>
+            <textarea class="description-box field text-area box-shadow w-fit"
+              type="text"
+              placeholder="Sơ lượt về chuyến đi của bạn"
+              formControlName="description"></textarea>
           </div>
-          <div formArrayName="journeyDetailArray" class="col l-12 journey-detail__item mr-t-10">
+          <div formArrayName="journeyDetailArray" class="col l-12
+            journey-detail__item mr-t-10">
             <p class="journey__title">Chi tiết hành trình</p>
             <div class="journey-cost__list">
               <ng-container *ngFor="
-                  let journeyDetailItem of journeyDetailArray.controls;
-                  index as journeyDetailItemIdx
+                let journeyDetailItem of journeyDetailArray.controls;
+                index as journeyDetailItemIdx
                 ">
                 <div class="journey-cost__item mr-b-10">
                   <div class="row" [formArrayName]="journeyDetailItemIdx">
                     <div class="col l-2 m-6 c-6">
                       <div class="field box-shadow">
                         <input type="text" [formControl]="
-                            getJourneyDetailItemCtrl(journeyDetailItemIdx, 0)
+                          getJourneyDetailItemCtrl(journeyDetailItemIdx, 0)
                           " />
                       </div>
                     </div>
                     <div class="col l-10 m-6 c-6">
-                      <textarea class="field text-area box-shadow w-fit" type="text" placeholder="Mô tả" [formControl]="
-                          getJourneyDetailItemCtrl(journeyDetailItemIdx, 1)
+                      <textarea class="field text-area box-shadow w-fit"
+                        type="text" placeholder="Mô tả" [formControl]="
+                        getJourneyDetailItemCtrl(journeyDetailItemIdx, 1)
                         "></textarea>
                     </div>
                   </div>
@@ -285,50 +314,61 @@
               </ng-container>
             </div>
           </div>
-          <div formArrayName="journeyCostArray" class="col l-12 journey-detail__item mr-t-10">
+          <div formArrayName="journeyCostArray" class="col l-12
+            journey-detail__item mr-t-10">
             <p class="journey__title">Chi tiết chi phí (**)</p>
-            <p style="color: var(--base-cherry-color--)">(**) Chi tiết chi phí được xem là các khoảng tiền đề nghị thanh toán trước khi chuyến đi được diễn ra.</p>
+            <p style="color: var(--base-cherry-color--)">(**) Chi tiết chi phí
+              được xem là các khoảng tiền đề nghị thanh toán trước khi chuyến đi
+              được diễn ra.</p>
             <div class="journey-cost__list">
               <ng-container *ngFor="
-                  let journeyCostItem of journeyCostArray.controls;
-                  index as journeyCostItemIdx
+                let journeyCostItem of journeyCostArray.controls;
+                index as journeyCostItemIdx
                 ">
                 <div class="journey-cost__item mr-b-10">
-                  <div class="row field__item align-items-center" [formArrayName]="journeyCostItemIdx">
+                  <div class="row field__item align-items-center"
+                    [formArrayName]="journeyCostItemIdx">
                     <div class="col l-2 m-6 c-6">
                       <div class="field box-shadow">
-                        <input type="text" placeholder="Tên chi phí" [formControl]="
-                            getJourneyCostItemCtrl(journeyCostItemIdx, 0)
+                        <input type="text" placeholder="Tên chi phí"
+                          [formControl]="
+                          getJourneyCostItemCtrl(journeyCostItemIdx, 0)
                           " />
                       </div>
                     </div>
                     <div class="col l-2 m-6 c-6">
-                      <mat-form-field appearance="fill" class="w-fit box-shadow" floatLabel="always">
+                      <mat-form-field appearance="fill" class="w-fit box-shadow"
+                        floatLabel="always">
                         <mat-label>Số tiền</mat-label>
-                        <input matInput type="number" placeholder="0" [formControl]="
-                        getJourneyCostItemCtrl(journeyCostItemIdx, 1)
+                        <input matInput type="number" placeholder="0"
+                          [formControl]="
+                          getJourneyCostItemCtrl(journeyCostItemIdx, 1)
                           ">
                         <span matSuffix>$&nbsp;</span>
                       </mat-form-field>
                     </div>
-                    <div class="col l-6 m-6 c-6">
-                      <mat-form-field class="w-fit box-shadow" appearance="fill">
+                    <div class="col l-7 m-6 c-6">
+                      <mat-form-field class="w-fit box-shadow"
+                        appearance="fill">
                         <mat-label>Mô tả</mat-label>
                         <textarea matInput [formControl]="
                           getJourneyCostItemCtrl(journeyCostItemIdx, 2)
-                        "></textarea>
+                          "></textarea>
                       </mat-form-field>
                     </div>
 
-                    <div class="col l-2 m-6 c-6">
-                      <div class="action__list row mr-t-10">
-                        <div class="action__item col" (click)="removeJourneyCostItem(journeyCostItemIdx)">
-                          <button class="warn-btn" mat-raised-button [disabled]="journeyCostArray.length == 1">
+                    <div class="col l-1 m-6 c-6">
+                      <div class="standard__list justify-content-around">
+                        <div class="standard__item"
+                          (click)="removeJourneyCostItem(journeyCostItemIdx)">
+                          <button class="warn-btn circle-btn d-flex align-items-center justify-content-center"
+                            [disabled]="journeyCostArray.length == 1">
                             <i class="fa-solid fa-xmark"></i>
                           </button>
                         </div>
-                        <div class="action__item col">
-                          <button mat-raised-button class="primary-btn" (click)="addJourneyCostItem()">
+                        <div class="standard__item">
+                          <button class="primary-btn circle-btn d-flex align-items-center justify-content-center"
+                            (click)="addJourneyCostItem()">
                             <i class="fa-solid fa-plus"></i>
                           </button>
                         </div>
@@ -340,7 +380,8 @@
             </div>
             <div class="d-flex justify-content-end">
               <p><span class="mr-r-5 font-weight-550">Tổng thanh
-                  toán:</span>{{journeyInfoGroup.get('totalPayment')!.value | currency: "VND"}}</p>
+                  toán:</span>{{journeyInfoGroup.get('totalPayment')!.value |
+                currency: "VND"}}</p>
             </div>
           </div>
         </div>
@@ -348,16 +389,20 @@
     </fieldset>
     <div class="journey__item box-shadow">
       <h4 class="journey__title">3. Thông tin thanh toán</h4>
-      <p style="color: var(--base-cherry-color--)">*Lưu ý: Hiện tại hệ thống hỗ trợ việc thanh toán chi phí thông qua
-        ứng dụng MOMO. Việc thanh toán được xem là hoàn tất khi bạn nhận được đủ tiền trước lúc khởi hành hoặc theo hợp
-        đồng thỏa thuận giữa hai bên. Bất kỳ mọi sự thanh toán chậm trễ hoặc vấn đề khác không thuộc trách nhiệm của
+      <p style="color: var(--base-cherry-color--)">*Lưu ý: Hiện tại hệ thống hỗ
+        trợ việc thanh toán chi phí thông qua
+        ứng dụng MOMO. Việc thanh toán được xem là hoàn tất khi bạn nhận được đủ
+        tiền trước lúc khởi hành hoặc theo hợp
+        đồng thỏa thuận giữa hai bên. Bất kỳ mọi sự thanh toán chậm trễ hoặc vấn
+        đề khác không thuộc trách nhiệm của
         chúng tôi</p>
       <div class="row">
         <div class="col l-6 m-6 c-6">
           <mat-form-field class="w-fit box-shadow" appearance="fill">
             <mat-label>Số điện thoại</mat-label>
             <span matPrefix>+86 &nbsp;</span>
-            <input type="tel" matInput placeholder="0776425942" formControlName="momoPhone">
+            <input type="tel" matInput placeholder="0776425942"
+              formControlName="momoPhone">
             <mat-icon matSuffix>mode_edit</mat-icon>
           </mat-form-field>
         </div>
@@ -375,12 +420,14 @@
         <div class="col l-2comma5 m-6 c-6">
           <mat-form-field appearance="fill" class="box-shadow w-fit">
             <mat-label>Ngày khởi hành</mat-label>
-            <input matInput [matDatepicker]="datepicker" formControlName="departureDay">
+            <input matInput [matDatepicker]="datepicker"
+              formControlName="departureDay">
             <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
             <mat-datepicker #datepicker>
               <mat-datepicker-actions>
                 <button mat-button matDatepickerCancel>Hủy</button>
-                <button mat-raised-button color="primary" matDatepickerApply>Xác nhận</button>
+                <button mat-raised-button color="primary" matDatepickerApply>Xác
+                  nhận</button>
               </mat-datepicker-actions>
             </mat-datepicker>
           </mat-form-field>
@@ -393,9 +440,11 @@
           </mat-form-field>
         </div>
         <div class="col l-2comma5 m-6 c-6">
-          <mat-form-field appearance="fill" class="w-fit box-shadow" floatLabel="always">
+          <mat-form-field appearance="fill" class="w-fit box-shadow"
+            floatLabel="always">
             <mat-label>Tổng tiền dự kiến</mat-label>
-            <input matInput type="number" placeholder="0" style="text-align: right;" formControlName="totalCost">
+            <input matInput type="number" placeholder="0" style="text-align:
+              right;" formControlName="totalCost">
             <span matPrefix>$&nbsp;</span>
           </mat-form-field>
         </div>
@@ -430,18 +479,21 @@
       <!-- departure place -->
       <div class="row">
         <div class="col l-12">
-          <div id="departure-place-search" class="field d-flex align-items-center box-shadow">
+          <div id="departure-place-search" class="field d-flex
+            align-items-center box-shadow">
             <i class="fa-solid fa-magnifying-glass mr-r-10"></i>
-            <input #searchPlaceInput type="text" placeholder="Tìm kiếm" [formControl]="searchedDeparturePlaceCtrl" />
+            <input #searchPlaceInput type="text" placeholder="Tìm kiếm"
+              [formControl]="searchedDeparturePlaceCtrl" />
             <ng-container *ngIf="searchedDeparturePlaceCtrl.value">
               <div class="autocomplete__list box-shadow" *ngIf="
-              departurePlaceAutocompleteResponse$
-                    | async as departurePlaceAutocompleteResponse
+                departurePlaceAutocompleteResponse$
+                | async as departurePlaceAutocompleteResponse
                 ">
                 <div class="autocomplete__item" *ngFor="
-                    let prediction of departurePlaceAutocompleteResponse.predictions
+                  let prediction of
+                  departurePlaceAutocompleteResponse.predictions
                   " (click)="
-                    selectPlaceFromMapAutoComplete(prediction, 'departure')
+                  selectPlaceFromMapAutoComplete(prediction, 'departure')
                   ">
                   <span>{{ prediction.description }}</span>
                 </div>
@@ -458,7 +510,8 @@
         <div class="col l-12">
           <h4><span class="font-weight-550">Địa
               điểm:</span>{{sltDeparturePlace.name}},{{sltDeparturePlace.formatted_address}}</h4>
-          <button id="confirm-map-place-btn" class="primary-btn" mat-raised-button
+          <button id="confirm-map-place-btn" class="primary-btn"
+            mat-raised-button
             (click)="confirmDeparturePlace(sltDeparturePlace)">
             Xác nhận điểm điểm khởi hành
           </button>
@@ -469,7 +522,8 @@
       <h4 class="journey__title">6. Lưu ý chung</h4>
       <div class="row">
         <div class="col l-12 m-6 c-6">
-          <textarea class="field text-area box-shadow w-fit" type="text" placeholder="Lưu ý về chuyến đi"
+          <textarea class="field text-area box-shadow w-fit" type="text"
+            placeholder="Lưu ý về chuyến đi"
             formControlName="note"></textarea>
         </div>
       </div>
@@ -478,9 +532,11 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Hủy</button>
-  <button mat-button cdkFocusInitial class="primary-btn" (click)="createJourneyPost()">
+  <button mat-button cdkFocusInitial class="primary-btn"
+    (click)="createJourneyPost()">
     Tạo bài viết
   </button>
 </mat-dialog-actions>
-<input #coverImageInput (change)="coverImageChange(coverImageInput)" style="display: none" type="file"
+<input #coverImageInput (change)="coverImageChange(coverImageInput)"
+  style="display: none" type="file"
   id="add-media-input" accept="image/*" />

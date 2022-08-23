@@ -1,0 +1,88 @@
+<h2 mat-dialog-title align="center" style="font-weight: 550">Chỉnh sửa trang cá nhân</h2>
+<mat-dialog-content class="mat-typography" *ngIf="currUser$ | async as currUser">
+    <div class="group__list">
+        <div class="group__item">
+            <div class="header">
+                <h2 class="title">Ảnh đại diện</h2>
+                <div class="modifier-btn" (click)="openDialogAvatarUpdate()">
+                    Chỉnh sửa
+                </div>
+            </div>
+            <div class="main d-flex justify-content-center align-items-center">
+                <div class="avatar-wrap">
+                    <img id="avatar" [src]="currUser.defaultAvatarURL" alt="" *ngIf="!currUser.avatar">
+                    <img id="avatar" [src]="currUser.avatar.directLink" *ngIf="currUser.avatar">
+                    <div class="edit-icon">
+                        <i class="fa-solid fa-camera"></i>
+                    </div>
+                    <div class="avatar-wrap--overplay"></div>
+                </div>
+            </div>
+            <div class="standard__list justify-content-center align-items-center mr-t-10">
+                <div class="standard__item d-flex justify-content-center align-items-center">
+                    <h1 class="username">{{currUser.fullName}}</h1>
+                </div>
+                <div class="standard__item d-flex justify-content-center align-items-center" (click)="onClickEditUsername()">
+                    <i class="fa-solid fa-pen"></i>
+                </div>
+            </div>
+        </div>
+        <div class="group__item">
+            <div class="header">
+                <h2 class="title">Ảnh bìa</h2>
+                <div class="modifier-btn" (click)="openDialogUpdateCoverImage()">
+                    Chỉnh sửa
+                </div>
+            </div>
+            <div class="main d-flex justify-content-center align-items-center">
+                <div class="cover-image-wrap">
+                    <img src="assets/image/anhbia.jpg" alt="" class="cover-image"
+                    *ngIf="!currUser.coverImage">
+                    <img class="cover-image" [src]="currUser.coverImage.directLink"  *ngIf="currUser.coverImage">
+                </div>
+            </div>
+        </div>
+        <div class="group__item">
+            <div class="header">
+                <h2 class="title">Tiểu sử</h2>
+                <div class="modifier-btn" *ngIf="currUser.bio">
+                    Chỉnh sửa
+                </div>
+                <div class="modifier-btn" *ngIf="!currUser.bio && !isAddBio" (click)="addUserBio()">
+                    Thêm 
+                </div>
+                <div class="modifier-btn" *ngIf="isAddBio" (click)="cancelAddUserBio()">
+                    Hủy 
+                </div>
+            </div>
+            <div class="main d-flex justify-content-center align-items-center">
+                <div class="bio" class="w-fit">
+                    <p *ngIf="!currUser.bio && !isAddBio">Mô tả bản thân...</p>
+                    <p *ngIf="currUser.bio && !isAddBio">{{currUser.bio}}</p>
+                    <div class="add-bio-wrap" *ngIf="isAddBio" >
+                        <mat-form-field appearance="fill" class="w-fit box-shadow">
+                            <mat-label>Mô tả về bạn</mat-label>
+                            <input [formControl]="bioCtrl" matInput #message maxlength="100">
+                            <mat-hint align="end">{{message.value.length}} / 100</mat-hint>
+                          </mat-form-field>
+                          <div class="standard__list justify-content-end mr-b-10">
+                            <div class="standard__item">
+                                <button mat-raised-button (click)="cancelAddUserBio()">Hủy</button>
+                            </div>
+                            <div class="standard__item">
+                                <button mat-raised-button class="primary-btn" [disabled]="bioCtrl.invalid" (click)="updateUserBio(bioCtrl!.value, currUser.id)">Lưu</button>
+                            </div>
+                          </div>
+                    </div>
+                </div>
+                <div class="main">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+<!-- <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button>
+</mat-dialog-actions> -->

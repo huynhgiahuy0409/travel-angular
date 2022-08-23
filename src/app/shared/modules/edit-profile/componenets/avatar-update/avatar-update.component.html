@@ -1,0 +1,93 @@
+<h2 mat-dialog-title align="center" style="font-weight: 550">Cập nhật ảnh đại
+    diện</h2>
+<input #avatarInput (change)="coverImageChange(avatarInput)" style="display: none" type="file" accept="image/*" />
+<mat-dialog-content class="mat-typography">
+    <ng-container *ngIf="!avatarSrc">
+        <div class="standard__list">
+            <div class="standard__item" (click)="avatarInput.click()">
+                <button mat-raised-button class="primary-btn">Tải ảnh lên</button>
+            </div>
+        </div>`
+        <div class="container">
+            <div class="header">
+                <div class="standard__list">
+                    <div class="standard__item flex-fit"
+                        class="font-weight-550">
+                        Ảnh đại diện
+                    </div>
+                </div>
+            </div>
+            <div class="main">
+                <div class="grid">
+                    <div class="row">
+                        <div class="col l-2" *ngFor="let uploadedAvatar of
+                            uploadedAvatars"
+                            (click)="choiceExistImage(uploadedAvatar)">
+                            <img [src]="uploadedAvatar.directLink">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="header">
+                <div class="standard__list">
+                    <div class="standard__item flex-fit"
+                        class="font-weight-550">
+                        Ảnh bìa
+                    </div>
+                </div>
+            </div>
+            <div class="main">
+                <div class="grid">
+                    <div class="row">
+                        <div class="col l-2" *ngFor="let uploadedCover of
+                            uploadedCovers"
+                            (click)="choiceExistImage(uploadedCover)">
+                            <img [src]="uploadedCover.directLink">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="header">
+                <div class="standard__list">
+                    <div class="standard__item flex-fit"
+                        class="font-weight-550">
+                        Ảnh trên dòng thời gian
+                    </div>
+                </div>
+            </div>
+            <div class="main">
+                <div class="grid">
+                    <div class="row">
+                        <div class="col l-2" *ngFor="let uploadedPost of
+                            uploadedPosts"
+                            (click)="choiceExistImage(uploadedPost)">
+                            <img [src]="uploadedPost.directLink">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="avatarSrc">
+        <div class="slt-avatar-image">
+            <div class="avatar">
+                <div class="avatar-wrap">
+                    <img [src]="avatarSrc" id="avatar" />
+                </div>
+            </div>
+            <div class="standard__list" class="mr-t-10">
+                <div class="standard__item d-flex">
+                    <i class="fa-solid fa-earth-americas" style="font-size:
+                        2rem;"></i>
+                    <span class="pd-l-5">Ảnh đại diện của bạn hiển thị công
+                        khai.</span>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</mat-dialog-content>
+<mat-dialog-actions align="end" *ngIf="avatarSrc">
+    <button mat-button mat-dialog-close>Hủy</button>
+    <button mat-button cdkFocusInitial class="primary-btn"
+        (click)="saveUpdateAvatar()">Lưu</button>
+</mat-dialog-actions>

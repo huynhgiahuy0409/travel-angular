@@ -1,0 +1,36 @@
+<h2 mat-dialog-title align="center" style="font-weight: 550">Cập nhật ảnh bìa</h2>
+<input #coverImageInput (change)="coverImageChange(coverImageInput)" style="display: none" type="file"
+    id="add-media-input" accept="image/*" />
+<mat-dialog-content class="mat-typography">
+    <div class="upload-option__list" *ngIf="!coverImageSrc">
+        <div class="upload-option__item" (click)="sltUploadType(0)">
+            <div class="icon">
+                <i class="fa-solid fa-image"></i>
+            </div>
+            <span class="title">Chọn ảnh</span>
+        </div>
+        <div class="upload-option__item" (click)="sltUploadType(1)">
+            <div class="icon">
+                <i class="fa-solid fa-upload"></i>
+            </div>
+            <span class="title">Tải ảnh lên</span>
+        </div>
+    </div>
+    <div class="slt-cover-image" *ngIf="coverImageSrc">
+        <div class="cover">
+            <div class="cover-image">
+                <img [src]="coverImageSrc" class="cover-image" *ngIf="coverImageSrc" />
+            </div>
+        </div>
+        <div class="standard__list" class="mr-t-10">
+            <div class="standard__item d-flex">
+                <i class="fa-solid fa-earth-americas" style="font-size: 2rem;"></i>
+                <span class="pd-l-5">Ảnh bìa của bạn hiển thị công khai.</span>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content >
+<mat-dialog-actions align="end" *ngIf="coverImageSrc">
+    <button mat-button mat-dialog-close>Hủy</button>
+    <button mat-button cdkFocusInitial class="primary-btn" (click)="saveCoverImage()">Lưu</button>
+</mat-dialog-actions>

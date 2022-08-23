@@ -1,0 +1,19 @@
+<div class="l-12 m-12 c-12 box-shadow
+    author-post__item" [routerLink]="['/home/review-posts', authorReviewPost.id]">
+    <img [src]="
+        directLinkService.directLinkImageURL +
+        postUser.id +
+        '/' +
+        postCoverImage.name +
+        '.' +
+        postCoverImage.ext
+        " alt="" *ngIf="postCoverImage"/>
+    <div class="author-post__content">
+        <div class="author-post__title">
+            {{ authorReviewPost.title }}
+        </div>
+        <div class="author-post__bio">
+            {{ authorReviewPost.bio }}
+        </div>
+    </div>
+</div>

@@ -144,8 +144,10 @@ export class ReviewPostComponent implements OnInit {
       };
     }
   }
-  onClickEditCoverImage() {
-    this.coverImageActionSelect.nativeElement.classList.toggle('show');
+  onClickEditCoverImage(coverImageActionSelect: HTMLElement) {
+    console.log(coverImageActionSelect);
+    
+    coverImageActionSelect.classList.toggle('show');
   }
   @HostListener('click', ['$event'])
   clickOutEditCoverImageBtn(event: any) {

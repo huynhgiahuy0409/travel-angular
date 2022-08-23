@@ -1,0 +1,98 @@
+<!------ Sorting display images ------>
+<div class="review-post__image">
+    <!-- 1 image -->
+    <div class="image__list one" *ngIf="reviewPostImages.length == 1">
+        <app-review-post-image-item [postUserId]="postUserId" [imageFileName]="reviewPostImages[0].image.name"
+            [imageFileExt]="reviewPostImages[0].image.ext"></app-review-post-image-item>
+    </div>
+    <!-- 2 images -->
+    <div class="image__list two" *ngIf="reviewPostImages.length == 2">
+        <div class="row">
+            <div class="col l-6 m-6 c-6" *ngFor="let reviewPostImage of reviewPostImages; index as idx">
+                <app-review-post-image-item [postUserId]="postUserId" [imageFileName]="reviewPostImage.image.name"
+                    [imageFileExt]="reviewPostImage.image.ext"></app-review-post-image-item>
+            </div>
+        </div>
+    </div>
+    <!-- 3 images -->
+    <div class="image__list three" *ngIf="reviewPostImages.length == 3">
+        <div class="row">
+            <ng-container *ngFor="let reviewPostImage of reviewPostImages; index as idx">
+                <div class="col l-12 m-12 c-12" *ngIf="idx === 0">
+                    <app-review-post-image-item [postUserId]="postUserId" [imageFileName]="reviewPostImage.image.name"
+                        [imageFileExt]="reviewPostImage.image.ext"></app-review-post-image-item>
+                </div>
+            </ng-container>
+        </div>
+        <div class="row">
+            <ng-container *ngFor="let reviewPostImage of reviewPostImages; index as idx">
+                <div class="col l-6 m-6 c-6" *ngIf="idx> 0">
+                    <app-review-post-image-item [postUserId]="postUserId" [imageFileName]="reviewPostImage.image.name"
+                        [imageFileExt]="reviewPostImage.image.ext"></app-review-post-image-item>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+    <!-- 4 images -->
+    <div class="image__list four" *ngIf="reviewPostImages.length == 4">
+        <div class="row">
+            <ng-container *ngFor="let reviewPostImage of reviewPostImages; index as idx">
+                <div class="col l-12 m-12 c-12" *ngIf="idx == 0">
+                    <app-review-post-image-item [postUserId]="postUserId" [imageFileName]="reviewPostImage.image.name"
+                        [imageFileExt]="reviewPostImage.image.ext"></app-review-post-image-item>
+                </div>
+            </ng-container>
+        </div>
+        <div class="row">
+            <ng-container *ngFor="let reviewPostImage of reviewPostImages; index as idx">
+                <div class="col l-4 m-4 c-4" *ngIf="idx> 0">
+                    <app-review-post-image-item [postUserId]="postUserId" [imageFileName]="reviewPostImage.image.name"
+                        [imageFileExt]="reviewPostImage.image.ext"></app-review-post-image-item>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+    <!-- 5 images -->
+    <div class="image__list five" *ngIf="reviewPostImages.length>= 5">
+        <div class="row">
+            <ng-container *ngFor="let reviewPostImage of reviewPostImages; index as idx">
+                <div class="col l-6 m-6 c-6" *ngIf="idx>= 0 && idx <= 1">
+                    <app-review-post-image-item [postUserId]="postUserId" [imageFileName]="reviewPostImage.image.name"
+                        [imageFileExt]="reviewPostImage.image.ext"></app-review-post-image-item>
+                </div>
+            </ng-container>
+        </div>
+
+        <div class="row">
+            <ng-container *ngFor="let reviewPostImage of reviewPostImages; index as
+                    idx">
+                <div class="col l-4 m-4 c-4" *ngIf="idx> 1 && idx <4">
+                    <app-review-post-image-item [postUserId]="postUserId" [imageFileName]="reviewPostImage.image.name" s
+                        [imageFileExt]="reviewPostImage.image.ext">
+                    </app-review-post-image-item>
+                </div>
+            </ng-container>
+            <div class="col l-4 m-4 c-4" *ngIf="reviewPostImages.length
+                        == 5">
+                <app-review-post-image-item [postUserId]="postUserId" [imageFileName]="reviewPostImages[4].image.name"
+                    [imageFileExt]="reviewPostImages[4].image.ext"></app-review-post-image-item>
+            </div>
+            <div class="col l-4 m-4 c-4" *ngIf="reviewPostImages.length>
+                        5">
+                <div class="image__item" style="position: relative">
+                    <img [src]="
+                                directLinkService.directLinkImageURL +
+                                postUserId +
+                                '/' +
+                                reviewPostImages[4].image.name +
+                                '.' +
+                                reviewPostImages[4].image.ext
+                                " alt="" />
+                    <div class="image__item--overlay">
+                        <span>+{{ reviewPostImages.length - 5 }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

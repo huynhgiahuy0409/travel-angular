@@ -1,3 +1,4 @@
+
 .container {
     overflow-y: auto;
     height: 100vh;
@@ -82,26 +83,8 @@
 #edit-cover-image-btn {
     position: relative;
 }
-
-#edit-cover-image-btn::before {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: 9999;
-}
-
-.cover-image__action-select {
-    position: absolute;
-    width: 345px;
-    padding: 10px;
-    border-radius: 5px;
-    top: 125%;
-    right: 0;
-    background-color: var(--white-color--);
-    display: none;
+#edit-cover-image-btn ::ng-deep.mat-button-wrapper{
+    pointer-events: none;
 }
 
 .cover-image__action-option {

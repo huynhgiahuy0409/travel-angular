@@ -31,6 +31,7 @@ import { UserReactService } from 'src/app/user/services/user-react.service';
 import { UserService } from 'src/app/user/services/user.service';
 import { ReviewPostDestroyService } from '../review-post-destroy.service';
 import { APPROVE_STATUS, DENY_STATUS } from 'src/app/shared/models/constant';
+import { EditProfileComponent } from 'src/app/shared/modules/edit-profile/componenets/edit-profile/edit-profile.component';
 
 @Component({
   selector: 'app-review-post',
@@ -45,14 +46,15 @@ export class ReviewPostComponent implements OnInit {
   isAdmin!: boolean;
   @Output()
   updatedPostUser = new EventEmitter<UserProfileResponse>();
-  postUser!: UserProfileResponse;
-  user!: UserProfileResponse | null;
+  postUser$!: Observable<UserProfileResponse | null>;
+  currUser$!: Observable<UserProfileResponse | null>;
   createdDate!: string;
   postReacts$!: Observable<PostReactResponse>;
   postUserReputation!: number;
   userAvatarSrc!: string;
   isFollowed!: Boolean;
   postUserRefresh$!: Observable<[UserProfileResponse, Boolean]>;
+  isCurrUser = false;
   /* Fake data */
   commentTree: any = [
     {
@@ -115,24 +117,24 @@ export class ReviewPostComponent implements OnInit {
     private userReactService: UserReactService,
     private dateUtilsService: DateUtilsService,
     private postReactService: PostReactService,
-    private followService: FollowService
+    private followService: FollowService,
+    private matDialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-    this.postUser = this.reviewPost.user;
-    this.user = this.userService.userBSub.value;
-    /* Setup user avatar */
-    if (this.postUser.avatar) {
-      this.userAvatarSrc = this.directLinkService.getUserAvatar(
-        this.postUser.avatar.name,
-        this.postUser.avatar.ext,
-        this.postUser.username
-      );
-    } else {
-      this.userAvatarSrc = this.directLinkService.getDefaultAvatarURL(
-        this.postUser.gender
-      );
-    }
+    let postUserId = this.reviewPost.user.id;
+    let currUserId = this.userService.userBSub.value!.id;
+    this.userService.user$.subscribe(user => {
+      if(user){
+        if (postUserId === user.id) {
+          this.isCurrUser = true;
+          this.postUser$ = this.userService.user$;
+        } else {
+          this.isCurrUser = false;
+          this.postUser$ = of(this.reviewPost.user);
+        }
+      }
+    })
     this.createdDate = this.dateUtilsService.dateTimeFormula(
       this.reviewPost.createdDate
     );
@@ -174,23 +176,33 @@ export class ReviewPostComponent implements OnInit {
       () => {}
     );
   }
-  refetchPostUsers(postUserId: number) {
-    this.postUserRefresh$ = forkJoin([
-      this.userService.findByUserId(postUserId),
-      this.followService.checkFollowPostUser(postUserId),
-    ]).pipe(
-      tap((response) => {
-        this.postUser = response[0];
-        this.isFollowed = response[1];
-      })
-    );
+  refetchPostUser(postUser: UserProfileResponse) {
+    forkJoin([
+      this.userService.findByUserId(postUser.id),
+      this.followService.checkFollowPostUser(postUser.id),
+    ])
+      .pipe(
+        tap((response) => {
+          this.postUser$ = of(response[0]);
+          this.isFollowed = response[1];
+        })
+      )
+      .subscribe();
   }
   /* ADMIN */
   updateReviewPostByStatus(reviewPost: ReviewPostResponse, status: string) {
     this.reviewPostService
       .updateByStatus(reviewPost.id, status)
       .subscribe((response) => {
-        reviewPost.status = response.status
+        reviewPost.status = response.status;
       });
+  }
+  openDialogEditProfile(currUser: UserProfileResponse | null) {
+    this.matDialog.open(EditProfileComponent, {
+      data: {
+        currUser: currUser,
+      },
+      minWidth: '700px',
+    });
   }
 }

@@ -2,40 +2,65 @@
   <div class="header box-shadow">
     <div class="cover-image-wrap">
       <img class="cover-image" [src]="
-            directLinkService.getURLImage(
-              journeyPost.user.email,
-              journeyPost.coverImage.name,
-              journeyPost.coverImage.ext
-            )
-          " alt="" />
+        directLinkService.directLinkImageURL +
+        journeyPost.user.id +
+        '/' +
+        journeyPost.coverImage.name +
+        '.' +
+        journeyPost.coverImage.ext
+        " alt="" />
+      <div class="close-btn" style="position: absolute; right: 40px; top: 40px"
+        (click)="onClickClose()">
+        <i class="fa-solid fa-xmark" style="font-size: 2rem; color: white"></i>
+      </div>
     </div>
     <div class="row no-gutters">
       <div class="col l-3 m-4 c-12">
         <div class="user-info">
           <div class="avatar d-flex align-items-center justify-content-center">
-            <img [src]="
-                  directLinkService.getDefaultAvatarURL(journeyPost.user.gender)
-                " alt="" />
+            <img
+              [src]="
+              directLinkService.directLinkImageURL +
+              journeyPost.id +
+              '/' +
+              'avatar' +
+              '/' +
+              journeyPost.user.avatar.name +
+              '.' +
+              journeyPost.user.avatar.ext
+              "
+              alt=""
+              *ngIf="journeyPost.user.avatar"
+              />
+            <img
+              [src]="defaultAvatarUrl"
+              alt=""
+              *ngIf="!journeyPost.user.avatar"
+              />
             <div class="title hide-on-mobile">
               <h1>{{ journeyPost.title }}</h1>
             </div>
           </div>
-          <div class="username d-flex align-items-center justify-content-center">
+          <div class="username d-flex align-items-center
+            justify-content-center">
             <span>{{ journeyPost.user.fullName }}</span>
           </div>
         </div>
       </div>
       <div class="col l-9 m-8 c-0">
-        <div class="row no-gutters justify-content-between align-item-center">
-          <div class="follow-btn box-shadow d-flex align-items-center justify-content-center">
-            <i style="margin-right: 10px" class="fa fa-rss xs:d-none" aria-hidden="true"></i>
+        <!-- <div class="row no-gutters justify-content-between align-item-center">
+          <div class="follow-btn box-shadow d-flex align-items-center
+            justify-content-center">
+            <i style="margin-right: 10px" class="fa fa-rss xs:d-none"
+              aria-hidden="true"></i>
             <span>Follow</span>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="row hide-on-pc hide-on-tablet hide-on-big-tablet">
-      <div class="col l-0 m-0 c-12 d-flex align-item-center justify-content-center">
+      <div class="col l-0 m-0 c-12 d-flex align-item-center
+        justify-content-center">
         <div class="title">
           <h1>
             {{ journeyPost.title }}
@@ -61,7 +86,7 @@
                   dateUtilsService.dateTimeFormula(journeyPost.createdDate)
                   }}</span>
               </li>
-              <li class="action__item">
+              <!-- <li class="action__item">
                 <i class="fa-regular fa-heart mr-r-5"></i>
                 <span>20</span>
               </li>
@@ -71,26 +96,31 @@
               </li>
               <li class="action__item">
                 <i class="fa-solid fa-share"></i>
-              </li>
+              </li> -->
             </ul>
           </div>
           <div class="content__list">
             <div class="content__item">
               <h4 class="content__title">Chi tiết hành trình</h4>
-              <div class="grid" *ngIf="(journeyPostResponse$ | async) as journeyPostResponse">
+              <div class="grid" *ngIf="(journeyPostResponse$ | async) as
+                journeyPostResponse">
                 <div class="row">
                   <div class="col l-4">
                     <div class="day__list">
-                      <div class="day__item selected" [class.selected]="idx == sltDayIndex"
-                        *ngFor="let  journeyDay of journeyPostResponse.journeyDays; index as idx">
+                      <div class="day__item selected" [class.selected]="idx ==
+                        sltDayIndex"
+                        *ngFor="let journeyDay of
+                        journeyPostResponse.journeyDays; index as idx">
                         <span (click)="selectDay(idx)">Ngày {{journeyDay.day}}
                         </span>
                         <div class="day-place__list">
-                          <div class="day-place__item" *ngFor="let journeyDayPlace of journeyDay.journeyDayPlaces">
+                          <div class="day-place__item" *ngFor="let
+                            journeyDayPlace of journeyDay.journeyDayPlaces">
                             <ng-container *ngIf="journeyDayPlace.provincePlace">
                               {{journeyDayPlace.provincePlace.name}}
                             </ng-container>
-                            <ng-container *ngIf="journeyDayPlace.goongPlaceDetailResult">
+                            <ng-container
+                              *ngIf="journeyDayPlace.goongPlaceDetailResult">
                               {{journeyDayPlace.goongPlaceDetailResult.name}}
                             </ng-container>
                             <div class="point"></div>
@@ -101,11 +131,14 @@
                   </div>
                   <div class="col l-8">
                     <div class="journey-day__list">
-                      <div [id]="journeyDayPlaces + idx" class="journey-day__item"
-                        *ngFor="let journeyDay of journeyPostResponse.journeyDays; index as idx">
+                      <div [id]="journeyDayPlaces + idx"
+                        class="journey-day__item"
+                        *ngFor="let journeyDay of
+                        journeyPostResponse.journeyDays; index as idx">
                         <h4> Ngày {{journeyDay.day}}</h4>
                         <div class="timeline__list">
-                          <div class="timeline__item" *ngFor="let journeyDayPlace of journeyDay.journeyDayPlaces">
+                          <div class="timeline__item" *ngFor="let
+                            journeyDayPlace of journeyDay.journeyDayPlaces">
                             <ng-container *ngIf="journeyDayPlace.provincePlace">
                               <div class="header">
                                 <div class="content-place__item box-shadow">
@@ -122,7 +155,8 @@
                                       Thành viên đã đến
                                     </p>
                                     <p>
-                                      <i class="fa-solid fa-location-dot mr-r-5"></i>
+                                      <i class="fa-solid fa-location-dot
+                                        mr-r-5"></i>
                                       {{
                                       localService.combineToAddress(
                                       journeyDayPlace.provincePlace.province,
@@ -136,7 +170,9 @@
                               </div>
                               <div class="main">
                                 <div class="liner"></div>
-                                <button mat-raised-button class="route-detail-btn" (click)="openMapRouteDetail(0,1)">
+                                <button mat-raised-button
+                                  class="route-detail-btn"
+                                  (click)="openMapRouteDetail(0,1)">
                                   <i class="fa-solid fa-map-location mr-r-10"></i>
                                   <span>Xem chi tiết đường đi</span>
                                 </button>
@@ -181,7 +217,8 @@
               <h4 class="content__title">Mô tả chi tiết hành trình</h4>
               <div class="journey-detail__list">
                 <div class="journey-detail__item row"
-                  *ngFor="let journeyDetail of journeyPost.journeyInfo.journeyDetails">
+                  *ngFor="let journeyDetail of
+                  journeyPost.journeyInfo.journeyDetails">
                   <div class="col l-2">
                     <p class="font-weight-550">
                       {{journeyDetail.title}}
@@ -193,7 +230,8 @@
                 </div>
               </div>
               <div class="content__item">
-                <h4 class="content__title">Mô tả chi phí (thanh toán khi tham gia)</h4>
+                <h4 class="content__title">Mô tả chi phí (thanh toán khi tham
+                  gia)</h4>
                 <div class="journey-detail__list">
                   <div class="row">
                     <div class="col l-3">
@@ -207,7 +245,8 @@
                     </div>
                   </div>
                   <div class="journey-detail__item d-flex row"
-                    *ngFor="let journeyCostDetail of journeyPost.journeyInfo.journeyCostDetails">
+                    *ngFor="let journeyCostDetail of
+                    journeyPost.journeyInfo.journeyCostDetails">
                     <div class="col l-3">
                       <p>{{journeyCostDetail.name}}</p>
                     </div>
@@ -219,16 +258,22 @@
                     </div>
                   </div>
                 </div>
-                <p style="color: var(--base-cherry-color--)">*Lưu ý: Hiện tại hệ thống hỗ trợ việc thanh toán chi phí thông qua
-                  ứng dụng MOMO. Việc thanh toán được xem là hoàn tất khi bạn nhận được đủ tiền trước lúc khởi hành hoặc theo hợp
-                  đồng thỏa thuận giữa hai bên. Bất kỳ mọi sự thanh toán chậm trễ hoặc vấn đề khác không thuộc trách nhiệm của
+                <p style="color: var(--base-cherry-color--)">*Lưu ý: Hiện tại hệ
+                  thống hỗ trợ việc thanh toán chi phí thông qua
+                  ứng dụng MOMO. Việc thanh toán được xem là hoàn tất khi bạn
+                  nhận được đủ tiền trước lúc khởi hành hoặc theo hợp
+                  đồng thỏa thuận giữa hai bên. Bất kỳ mọi sự thanh toán chậm
+                  trễ hoặc vấn đề khác không thuộc trách nhiệm của
                   chúng tôi</p>
-                <div class="standard__list justify-content-end align-items-center">
+                <div class="standard__list justify-content-end
+                  align-items-center">
                   <div class="standard__item">
-                    <p><span class="mr-r-5 font-weight-550">Tổng thanh toán:</span>{{journeyPost.journeyInfo.totalPayment | currency: "VND"}}</p>
+                    <p><span class="mr-r-5 font-weight-550">Tổng thanh toán:</span>{{journeyPost.journeyInfo.totalPayment
+                      | currency: "VND"}}</p>
                   </div>
                   <div class="standard__item">
-                    <button mat-raised-button class="warn-btn" (click)="navigateMomoPayment(journeyPost.id)">Thanh toán</button>
+                    <button mat-raised-button class="warn-btn"
+                      (click)="navigateMomoPayment(journeyPost.id)">Thanh toán</button>
                   </div>
                 </div>
                 <!------ Sorting display images ------>
@@ -244,21 +289,17 @@
               </div>
               <!------ Sorting display images ------>
             </div>
-            <div class="content__item" *ngIf="relativeJourneyPostsResponse$ | async as relativeJourneyPosts">
+            <div class="content__item" *ngIf="relativeJourneyPostsResponse$ |
+              async as relativeJourneyPosts">
               <h4 class="content__title">Bài viết cùng tác giả mới nhất</h4>
-
               <div class="grid">
                 <div class="row">
-                  <div class="col l-3 m-6 c-6" *ngFor="let relativeJourneyPost of relativeJourneyPosts">
+                  <div class="col l-3 m-6 c-6" *ngFor="let relativeJourneyPost
+                    of relativeJourneyPosts">
                     <div class="d-flex author-post__list">
-                      <div class="l-12 m-12 c-12 box-shadow p-0 border-radius-5 author-post__list author-post">
-                        <img [src]="
-                              directLinkService.getURLImage(
-                                relativeJourneyPost.user.email,
-                                relativeJourneyPost.coverImage.name,
-                                relativeJourneyPost.coverImage.ext
-                              )
-                            " alt="" />
+                      <div class="l-12 m-12 c-12 box-shadow p-0 border-radius-5
+                        author-post__list author-post">
+                        <img [src]="" alt="" />
                         <div class="author-post__content">
                           <div class="author-post__title">
                             {{ relativeJourneyPost.title }}
@@ -295,10 +336,11 @@
                     </li>
                   </ul>
                 </div>
-                
+
                 <div class='success-box'>
                   <div class='clearfix'></div>
-                  <img alt='tick image' width='32' src='data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA0MjYuNjY3IDQyNi42NjciIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQyNi42NjcgNDI2LjY2NzsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSI1MTJweCIgaGVpZ2h0PSI1MTJweCI+CjxwYXRoIHN0eWxlPSJmaWxsOiM2QUMyNTk7IiBkPSJNMjEzLjMzMywwQzk1LjUxOCwwLDAsOTUuNTE0LDAsMjEzLjMzM3M5NS41MTgsMjEzLjMzMywyMTMuMzMzLDIxMy4zMzMgIGMxMTcuODI4LDAsMjEzLjMzMy05NS41MTQsMjEzLjMzMy0yMTMuMzMzUzMzMS4xNTcsMCwyMTMuMzMzLDB6IE0xNzQuMTk5LDMyMi45MThsLTkzLjkzNS05My45MzFsMzEuMzA5LTMxLjMwOWw2Mi42MjYsNjIuNjIyICBsMTQwLjg5NC0xNDAuODk4bDMxLjMwOSwzMS4zMDlMMTc0LjE5OSwzMjIuOTE4eiIvPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K'/>
+                  <img alt='tick image' width='32'
+                    src='data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA0MjYuNjY3IDQyNi42NjciIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQyNi42NjcgNDI2LjY2NzsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSI1MTJweCIgaGVpZ2h0PSI1MTJweCI+CjxwYXRoIHN0eWxlPSJmaWxsOiM2QUMyNTk7IiBkPSJNMjEzLjMzMywwQzk1LjUxOCwwLDAsOTUuNTE0LDAsMjEzLjMzM3M5NS41MTgsMjEzLjMzMywyMTMuMzMzLDIxMy4zMzMgIGMxMTcuODI4LDAsMjEzLjMzMy05NS41MTQsMjEzLjMzMy0yMTMuMzMzUzMzMS4xNTcsMCwyMTMuMzMzLDB6IE0xNzQuMTk5LDMyMi45MThsLTkzLjkzNS05My45MzFsMzEuMzA5LTMxLjMwOWw2Mi42MjYsNjIuNjIyICBsMTQwLjg5NC0xNDAuODk4bDMxLjMwOSwzMS4zMDlMMTc0LjE5OSwzMjIuOTE4eiIvPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K'/>
                   <div class='text-message'></div>
                   <div class='clearfix'></div>
                 </div>
@@ -308,8 +350,5 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="close-btn" style="position: absolute; right: 40px; top: 40px" (click)="onClickClose()">
-    <i class="fa-solid fa-xmark" style="font-size: 2rem; color: white"></i>
   </div>
 </div>

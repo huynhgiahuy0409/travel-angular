@@ -1,23 +1,19 @@
-import { switchMap, concatMap, tap } from 'rxjs/operators';
-import { DateUtilsService } from './../../../../services/date-utils.service';
-import { ActivatedRoute, Router } from '@angular/router';
 import {
-  AfterContentInit,
-  AfterViewInit,
-  ChangeDetectorRef,
   Component,
   ElementRef,
   HostListener,
   OnInit,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
-import { ReviewPostDestroyService } from '../../../home/components/review-posts/review-post-destroy.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
-import { ReviewPostResponse } from 'src/app/shared/models/response';
-import { ReviewPostService } from 'src/app/user/services/review-post.service';
+import { tap } from 'rxjs/operators';
+import { FilterReviewPost } from 'src/app/shared/models/model';
+import { ReviewPostResponse, UserProfileResponse } from 'src/app/shared/models/response';
 import { DirectLinkService } from 'src/app/user/services/direct-link.service';
-import { FilterReviewPost, Pageable } from 'src/app/shared/models/model';
 import { FilterPostService } from 'src/app/user/services/filter-post.service';
+import { ReviewPostService } from 'src/app/user/services/review-post.service';
+import { DateUtilsService } from './../../../../services/date-utils.service';
 export interface User {
   name: string;
   url: string;
@@ -39,7 +35,8 @@ export class ReviewPostDetailComponent implements OnInit {
   relativeReviewPosts$!: Observable<ReviewPostResponse[]>;
   @ViewChild('starsTemplateRef', { read: ElementRef, static: false })
   startsElementRef!: ElementRef;
-
+  defaultAvatarUrl!: string
+  postUser!: UserProfileResponse
   constructor(
     private activatedRoute: ActivatedRoute,
     private route: Router,
@@ -49,21 +46,27 @@ export class ReviewPostDetailComponent implements OnInit {
     private filterPostService: FilterPostService
   ) {}
   ngOnInit(): void {
-    let reviewPostId = this.activatedRoute.snapshot.params.id;
-    if (reviewPostId) {
-      this.reviewPost$ = this.reviewPostService.findById(reviewPostId).pipe(
-        tap(reviewPost => {
-          let reviewPostFilter: FilterReviewPost = this.filterPostService.reviewPostFilterBSub.value
-          reviewPostFilter.pageable!.pageSize = 4
-          this.authorReviewPosts$ = this.reviewPostService.findAll({...reviewPostFilter, postUserId: reviewPost.user.id})
-          this.relativeReviewPosts$ = this.reviewPostService.findAll({...reviewPostFilter, provinceId: reviewPost.province.id})
-          this.authorReviewPosts$.subscribe(v => console.log(v))
-          this.relativeReviewPosts$.subscribe(v => console.log(v))
-        })
-      );
-    } else {
-      this.route.navigate(['/page-not-found']);
-    }
+    this.activatedRoute.params.subscribe(routeParams => { 
+      let reviewPostId = routeParams.id;
+      if (reviewPostId) {
+        this.reviewPost$ = this.reviewPostService.findById(reviewPostId).pipe(
+          tap(reviewPost => {
+            let reviewPostFilter: FilterReviewPost = this.filterPostService.reviewPostFilterBSub.value
+            reviewPostFilter.pageable!.pageSize = 4
+            this.authorReviewPosts$ = this.reviewPostService.findAll({...reviewPostFilter, postUserId: reviewPost.user.id})
+            this.relativeReviewPosts$ = this.reviewPostService.findAll({...reviewPostFilter, provinceId: reviewPost.province.id})
+            this.authorReviewPosts$.subscribe(v => console.log(v))
+            this.relativeReviewPosts$.subscribe(v => console.log(v))
+            this.postUser = reviewPost.user
+            if(!reviewPost.user.avatar){
+              this.defaultAvatarUrl = this.directLinkService.getDefaultAvatarURL(this.postUser.gender)
+            }
+          })
+        );
+      } else {
+        this.route.navigate(['/page-not-found']);
+      }
+    });
   }
   onClickClose() {
     this.route.navigate(['/home/review-posts']);

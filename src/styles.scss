@@ -848,6 +848,9 @@ padding-right: unset
   background-color: var(--white-color--);
   display: none;
 }
+.cover-image__action-select.show{
+  display: block;
+}
 
 .cover-image__action-option {
   display: flex;
@@ -1117,3 +1120,4 @@ border-radius: 4px;
   border-radius: 50%;
   object-fit: cover;
 }
+

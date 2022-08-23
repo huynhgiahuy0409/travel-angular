@@ -16,6 +16,14 @@ export class UserReactService {
     params: {},
   };
   constructor(private httpClient: HttpClient){ }
+  findByUserAndReviewPost(userId: number, reviewPostId: number){
+    let url = `${BASE_URL}/member/user/${userId}/review-post/${reviewPostId}/user-react`;
+    return this.httpClient.post<UserReactResponse>(url, null, this.httpOptions)
+  }
+  findByUserAndJourneyPost(userId: number, journeyPost: number){
+    let url = `${BASE_URL}/member/user/${userId}/journey-post/${journeyPost}/user-react`;
+    return this.httpClient.post<UserReactResponse>(url, null, this.httpOptions)
+  }
   updateReviewPostUserReact(userId: number, react: number, reviewPostId: number): Observable<UserReactResponse>{
     let url = `${BASE_URL}/member/user/${userId}/react/${react}/review-post/${reviewPostId}`;
     return this.httpClient.post<UserReactResponse>(url, null, this.httpOptions)

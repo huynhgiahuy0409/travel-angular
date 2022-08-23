@@ -58,6 +58,9 @@ export class JourneyPostService {
     if (filter.status) {
       params = params.append('status', filter.status);
     }
+    if (filter.postUserId) {
+      params = params.append('postUserId', filter.postUserId);
+    }
     let httpOptions = {
       headers: this.httpOptions.headers,
       params: params

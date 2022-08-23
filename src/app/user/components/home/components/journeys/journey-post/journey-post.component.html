@@ -77,7 +77,7 @@
                         </button> -->
                 </div>
             </div>
-            <div class="standard__list" *ngIf="postUser.id === user!.id">
+            <div class="standard__list" *ngIf="postUser.id === currUser!.id">
                 <div class="standard__item flex-fit">
                     <button mat-raised-button class="d-flex w-fit">
                         <i class="fa-solid fa-pen mr-r-5"></i>
@@ -99,14 +99,21 @@
         <!-- 1 image -->
         <div class="image__list one">
             <div class="image__item">
-                <img [src]="
-                directLinkService.getURLImage(
-            journeyPost.user.email,
-            journeyPost.coverImage.name,
-            journeyPost.coverImage.ext
-          )
-        " alt="" />
+                <img [src]="directLinkService.directLinkImageURL +
+                journeyPost.user.id +
+                '/' +
+                journeyPost.coverImage.name +
+                '.' +
+                journeyPost.coverImage.ext
+                " alt="" />
             </div>
+        </div>
+    </div>
+    <div class="post-row action__list" *ngIf="currUser!.id === postUser!.id">
+        <div class="action__item">
+            <button mat-raised-button class="primary-btn" (click)="openParticipantManagementDialog(journeyPost)">
+                Quản lí thành viên
+            </button>
         </div>
     </div>
     <!-- post react: like comment shared -->

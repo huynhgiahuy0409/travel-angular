@@ -223,12 +223,18 @@ button {
 button:disabled, button[disabled]{
   cursor: not-allowed;
   pointer-events: all !important;
-
+  background-color: rgb(196, 196, 196);
+  color: white
 }
 
 .primary-btn {
   background-color: var(--primary-color--);
   color: var(--white-color--)
+}
+.circle-btn{
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
 }
 .warn-btn {
   background-color: var(--base-cherry-color--);

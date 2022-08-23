@@ -10,6 +10,8 @@ import { UserComponent } from './user.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeModule } from './components/home/home.module';
 import { JourneyDetailComponent } from './components/post-detail/components/journey-detail/journey-detail.component';
+import { ReviewPostImageListComponent } from './components/post-detail/components/review-post-detail/review-post-image-list/review-post-image-list.component';
+import { ReviewPostImageItemComponent } from './components/post-detail/components/review-post-detail/review-post-image-list/review-post-image-item/review-post-image-item.component';
 
 @NgModule({
   declarations: [

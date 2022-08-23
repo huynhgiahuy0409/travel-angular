@@ -1,88 +1,271 @@
 <div class="header-wrap" style="position: sticky">
     <shared-header></shared-header>
 </div>
-<div class="container">
+<input
+    #coverImageInput
+    (change)="coverImageChange(coverImageInput)"
+    style="display: none"
+    type="file"
+    id="add-media-input"
+    accept="image/*"
+    />
+<div class="container" *ngIf="blogUser$ | async as blogUser">
     <div class="header box-shadow">
-        <img src="assets/image/anhbia.jpg" alt="">
+        <div class="cover" (click)="showCover(blogUser)">
+            <div class="cover-image">
+                <img
+                    src="assets/image/anhbia.jpg"
+                    alt=""
+                    id="default-cover-image"
+                    *ngIf="!blogUser.coverImage && !coverImageSrc"
+                    />
+                <img
+                    [src]="blogUser.coverImage.directLink"
+                    alt=""
+                    alt=""
+                    id="
+                    user-cover-image"
+                    *ngIf="blogUser.coverImage && !coverImageSrc"
+                    />
+                <img [src]="coverImageSrc" class="cover-image"
+                    *ngIf="coverImageSrc" />
+                <div class="cover-image__action" *ngIf="isCurrUser">
+                    <button
+                        id="edit-cover-image-btn"
+                        mat-raised-button
+                        #editCoverImageBtn
+                        class="d-flex align-items-center"
+                        (click)="onClickEditCoverImage($event, coverImageActionSelect)"
+                        *ngIf="!coverImageSrc">
+                        <i class="fa-solid fa-camera mr-r-5"></i>
+                        <span>Chỉnh sửa ảnh bìa</span>
+                    </button>
+                    <div class="standard__list" *ngIf="coverImageSrc">
+                        <div class="standard__item">
+                            <button mat-raised-button
+                                (click)="cancelCoverImage($event)">
+                                Hủy
+                            </button>
+                        </div>
+                        <div class="standard__item">
+                            <button
+                                mat-raised-button
+                                class="primary-btn"
+                                (click)="saveCoverImage($event)">
+                                Lưu thay đổi
+                            </button>
+                        </div>
+                    </div>
+                    <div
+                        #coverImageActionSelect
+                        class="cover-image__action-select box-shadow">
+                        <div class="cover-image__action-option"
+                            (click)="sltUploadType($event, 0)">
+                            <i class="fa-solid fa-image mr-r-10"></i>
+                            <span> Chọn ảnh </span>
+                        </div>
+                        <div class="cover-image__action-option"
+                            (click)="sltUploadType($event, 1)">
+                            <i class="fa-solid fa-upload mr-r-10"></i>
+                            <span> Tải ảnh lên </span>
+                        </div>
+                        <div
+                            class="cover-image__action-option"
+                            *ngIf="blogUser.coverImage"
+                            (click)="removeCoverImage($event, blogUser)">
+                            <i class="fa-solid fa-trash-can mr-r-10"></i>
+                            <span>Gỡ</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="grid wide">
-            <div class="nav__list row ">
-                <div class="nav__item col l-2 m-2 c-2" routerLinkActive="nav__item--slt"
-                    [routerLinkActiveOptions]="{ exact: true }" [routerLink]="'/blog/b'">Bài viết</div>
-                <div class="nav__item col l-2 m-2 c-2" routerLinkActive="nav__item--slt"
-                    [routerLinkActiveOptions]="{ exact: true }" [routerLink]="'/blog/1/review-post'">Bài chia sẽ</div>
-                <div class="nav__item col l-2 m-2 c-2" routerLinkActive="nav__item--slt"
-                    [routerLinkActiveOptions]="{ exact: true }" [routerLink]="'/blog/1/journey-post'">Bài tìm bạn đồng hành</div>
-                <div class="nav__item col l-2 m-2 c-2" routerLinkActive="nav__item--slt"
-                    [routerLinkActiveOptions]="{ exact: true }" [routerLink]="'/blog/aa'">Giới thiệu</div>
-                <div class="nav__item col l-2 m-2 c-2" routerLinkActive="nav__item--slt"
-                    [routerLink]="'/blog/1/follower'">Theo dõi</div>
-                <div class="nav__item col l-2 m-2 c-2" routerLinkActive="nav__item--slt"
-                    [routerLink]="'/blog/1/following'">Đang theo dõi</div>
+            <div class="nav__list row">
+                <div
+                    class="nav__item col l-2 m-2 c-2"
+                    routerLinkActive="nav__item--slt"
+                    [routerLinkActiveOptions]="{ exact: true }"
+                    [routerLink]="'/blog/b'">
+                    Bài viết
+                </div>
+                <div
+                    class="nav__item col l-2 m-2 c-2"
+                    routerLinkActive="nav__item--slt"
+                    [routerLinkActiveOptions]="{ exact: true }"
+                    [routerLink]="['/profile/', blogUser.id]"
+                    [queryParams]="{ uid: blogUserId }">
+                    Bài chia sẽ
+                </div>
+                <div
+                    class="nav__item col l-2 m-2 c-2"
+                    routerLinkActive="nav__item--slt"
+                    [routerLinkActiveOptions]="{ exact: true }"
+                    [routerLink]="'/blog/journey-posts'"
+                    [queryParams]="{ uid: blogUserId }">
+                    Bài tìm bạn đồng hành
+                </div>
+                <div
+                    class="nav__item col l-2 m-2 c-2"
+                    routerLinkActive="nav__item--slt"
+                    [routerLinkActiveOptions]="{ exact: true }"
+                    [routerLink]="'/blog/aa'">
+                    Giới thiệu
+                </div>
+                <div
+                    class="nav__item col l-2 m-2 c-2"
+                    routerLinkActive="nav__item--slt"
+                    [routerLink]="'/blog/1/followers'">
+                    Theo dõi
+                </div>
+                <div
+                    class="nav__item col l-2 m-2 c-2"
+                    routerLinkActive="nav__item--slt"
+                    [routerLink]="'/blog/1/followings'">
+                    Đang theo dõi
+                </div>
             </div>
         </div>
     </div>
     <div class="main">
         <div class="grid">
-            <div class="row">
-                <div class="col l-3 m-0 c-0">
+            <div class="row no-gutters">
+                <div class="col l-4 m-0 c-0">
                     <div class="main__left">
                         <div class="user-info__list">
                             <div class="user-info__item">
-                                <div class="avatar d-flex align-items-center justify-content-center">
-                                    <img src="assets/image/member-1.png" alt="">
+                                <div
+                                    class="avatar d-flex align-items-center
+                                    justify-content-center" (click)="showAvatar(blogUser)">
+                                    <img
+                                        [src]="blogUser.defaultAvatarURL"
+                                        alt=""
+                                        *ngIf="!blogUser.avatar"
+                                        />
+                                    <img
+                                        [src]="blogUser.avatar.directLink"
+                                        alt=""
+                                        *ngIf="blogUser.avatar"
+                                        />
                                 </div>
-                                <h1 class="username">Sam Nguyen</h1>
-                                <div class="d-flex align-items-center justify-content-center">
-                                    <div class="follow-btn d-flex align-items-center justify-content-center">
-                                        <i style="margin-right: 10px;" class="fa fa-rss xs:d-none"
-                                            aria-hidden="true"></i>
-                                        <span>Follow</span>
+                                <h1 class="username">{{ blogUser.fullName }}</h1>
+                                <div
+                                    class="standard__list
+                                    justify-content-center"
+                                    *ngIf="isCurrUser">
+                                    <div class="standard__item">
+                                        <button
+                                            mat-raised-button
+                                            class="d-flex"
+                                            (click)="openDialogEditProfile(blogUser)">
+                                            <i class="fa-solid fa-pen mr-r-5"></i>
+                                            <span>Chỉnh sửa trang cá nhân</span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                             <div class="user-info__item">
-                                <div class="row no-gutters" style="margin: 5px 0">
-                                    <div class="mr-r-5">
-                                        <i class="fa-solid fa-earth-americas"></i>
+                                <h2 class="title">Giới thiệu</h2>
+                                <div class="bio-wrap" style="border-bottom: 1px
+                                    solid #ccc">
+                                    <ng-container *ngIf="!isAddBio">
+                                        <div class="bio" *ngIf="blogUser.bio">
+                                            <p>
+                                                {{ blogUser.bio }}
+                                            </p>
+                                        </div>
+                                        <ng-container *ngIf="isCurrUser">
+                                            <button
+                                                *ngIf="blogUser.bio"
+                                                mat-raised-button
+                                                class="w-fit"
+                                                (click)="onClickEditUserBio(blogUser.bio)">
+                                                Chỉnh sửa tiêu sử
+                                            </button>
+                                            <button
+                                                *ngIf="!blogUser.bio"
+                                                mat-raised-button
+                                                class="w-fit"
+                                                (click)="isAddBio= !isAddBio">
+                                                Thêm tiểu sử
+                                            </button>
+                                        </ng-container>
+                                    </ng-container>
+                                    <ng-container
+                                        *ngTemplateOutlet="updateBioRef">
+                                    </ng-container>
+                                </div>
+                                <ng-template #updateBioRef>
+                                    <div *ngIf="isAddBio">
+                                        <mat-form-field appearance="fill"
+                                            class="w-fit box-shadow">
+                                            <mat-label>Mô tả về bạn</mat-label>
+                                            <input
+                                                [formControl]="bioCtrl"
+                                                matInput
+                                                #message
+                                                maxlength="100"
+                                                />
+                                            <mat-hint align="end">{{
+                                                message.value.length }} / 100</mat-hint>
+                                        </mat-form-field>
+                                        <div class="standard__list
+                                            justify-content-end mr-b-10">
+                                            <div class="standard__item">
+                                                <button
+                                                    mat-raised-button
+                                                    (click)="isAddBio=
+                                                    !isAddBio">
+                                                    Hủy
+                                                </button>
+                                            </div>
+                                            <div class="standard__item">
+                                                <button
+                                                    mat-raised-button
+                                                    class="primary-btn"
+                                                    [disabled]="bioCtrl.invalid || bioCtrl.dirty"
+                                                    (click)="updateUserBio(bioCtrl!.value,
+                                                    blogUser.id)">
+                                                    Lưu
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="">
-                                        <span class="primary-color mr-r-5">0</span>
-                                        <span>nước</span>
+                                </ng-template>
+                                <div class="user-intro__list">
+                                    <div class="user-intro__item">
+                                        <i class="icon fa-solid fa-user-plus"></i>
+                                        <div class="label">
+                                            Đang theo dõi <span
+                                                class="font-weight-550">0 người</span>
+                                        </div>
+                                    </div>
+                                    <div class="user-intro__item">
+                                        <i class="icon fa-solid fa-user"></i>
+                                        <div class="label">
+                                            Có <span class="font-weight-550">0
+                                                người</span> Theo dõi
+                                        </div>
+                                    </div>
+                                    <div class="user-intro__item">
+                                        <i class="icon fa-solid fa-user"></i>
+                                        <div class="label">
+                                            Sống tại <span
+                                                class="font-weight-550">Hà Nội</span>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row no-gutters" style="margin: 5px 0">
-                                    <div class="mr-r-5">
-                                        <i class="fa-solid fa-location-dot"></i>
-                                    </div>
-                                    <div class="">
-                                        <span class="primary-color mr-r-5">28</span>
-                                        <span>tỉnh thành</span>
-                                    </div>
+                                <div class="user-info__item">
+                                    <h2 class="title">Ảnh</h2>
                                 </div>
-                                <div class="row no-gutters" style="margin: 5px 0">
-                                    <div class="mr-r-5">
-                                        <i class="fa-solid fa-user"></i>
-                                    </div>
-                                    <div class="">
-                                        <span class=" mr-r-5">Có</span>
-                                        <span class="primary-color mr-r-5">0 người</span>
-                                        <span>theo dõi</span>
-                                    </div>
-                                </div>
-                                <div class="row no-gutters" style="margin: 5px 0">
-                                    <div class="mr-r-5">
-                                        <i class="fa-solid fa-user-plus"></i>
-                                    </div>
-                                    <div class="">
-                                        <span class=" mr-r-5">Đang theo dõi</span>
-                                        <span class="primary-color">0 người</span>
-                                    </div>
+                                <div class="user-info__item">
+                                    <h2 class="title">Người theo dõi</h2>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col l-9 m-12 c-12">
+                <div class="col l-8 m-12 c-12">
                     <router-outlet></router-outlet>
                 </div>
             </div>

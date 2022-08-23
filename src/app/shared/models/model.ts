@@ -43,7 +43,8 @@ export interface FilterJourneyPost{
     departurePlace?: string
     createDateRange?: [number,number]
     status?: string
-}
+    postUserId?: number
+} 
 export interface FilterReviewPost{
     pageable?: Pageable
     title?: string
@@ -64,6 +65,11 @@ export interface FilterUser extends BaseFilter{
     role?: string
     active?: number,
     fullName?: string
+}
+export interface FilterFileUpload{
+    pageable?: Pageable
+    userId?: number
+    specie?: string
 }
 /* journey day */
 export interface JourneyDay{

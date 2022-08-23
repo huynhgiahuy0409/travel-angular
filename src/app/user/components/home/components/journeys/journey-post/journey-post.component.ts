@@ -6,6 +6,7 @@ import { Observable, forkJoin } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { APPROVE_STATUS, DENY_STATUS } from 'src/app/shared/models/constant';
 import { JourneyPostResponse, UserProfileResponse, PostReactResponse, UserReactResponse } from 'src/app/shared/models/response';
+import { ParticipantManagermentComponent } from 'src/app/user/components/blog/components/journey-post/dialog/participant-managerment/participant-managerment.component';
 import { DateUtilsService } from 'src/app/user/services/date-utils.service';
 import { DirectLinkService } from 'src/app/user/services/direct-link.service';
 import { FilterPostService } from 'src/app/user/services/filter-post.service';
@@ -22,7 +23,8 @@ import { ReviewPostDestroyService } from '../../review-posts/review-post-destroy
 @Component({
   selector: 'app-journey-post',
   templateUrl: './journey-post.component.html',
-  styleUrls: ['./journey-post.component.scss']
+  styleUrls: ['./journey-post.component.scss'],
+  providers: [FilterPostService]
 })
 export class JourneyPostComponent implements OnInit {
   @Input()
@@ -32,7 +34,7 @@ export class JourneyPostComponent implements OnInit {
   @Output()
   updatedPostUser = new EventEmitter<UserProfileResponse>();
   postUser!: UserProfileResponse;
-  user!: UserProfileResponse | null;
+  currUser!: UserProfileResponse | null;
   createdDate!: string;
   postReact$!: Observable<PostReactResponse>;
   postUserReputation!: number;
@@ -101,20 +103,19 @@ export class JourneyPostComponent implements OnInit {
     private dateUtilsService: DateUtilsService,
     private postReactService: PostReactService,
     private followService: FollowService,
-    private journeyPostService: JourneyPostService
+    private journeyPostService: JourneyPostService,
+    private _dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-    console.log(this.journeyPost);
-    
     this.postUser = this.journeyPost.user;
-    this.user = this.userService.userBSub.value;
+    this.currUser = this.userService.userBSub.value;
     /* Setup user avatar */
     if (this.postUser.avatar) {
-      this.userAvatarSrc = this.directLinkService.getUserAvatar(
+      this.userAvatarSrc = this.directLinkService.getDirectLinkImage(
+        this.postUser.id,
         this.postUser.avatar.name,
-        this.postUser.avatar.ext,
-        this.postUser.username
+        this.postUser.avatar.ext
       );
     } else {
       this.userAvatarSrc = this.directLinkService.getDefaultAvatarURL(
@@ -130,7 +131,6 @@ export class JourneyPostComponent implements OnInit {
     );
     this.postReact$.subscribe(v => {
       console.log(v);
-      
     })
   }
 
@@ -201,5 +201,10 @@ export class JourneyPostComponent implements OnInit {
       .subscribe((response) => {
         journeyPost.status = response.status
       });
+  }
+  openParticipantManagementDialog(journeyPost: JourneyPostResponse) {
+    let matDialog = this._dialog.open(ParticipantManagermentComponent, {
+      data: { journeyPostId: journeyPost.id },
+    });
   }
 }

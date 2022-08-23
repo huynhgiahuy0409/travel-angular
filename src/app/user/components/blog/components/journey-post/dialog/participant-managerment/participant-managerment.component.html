@@ -5,9 +5,9 @@
             <div class="participant__list">
                 <div class="participant__item d-flex align-items-center" *ngFor="let waitingParticipant of waitingParticipants">
                     <div class="avatar">
-                        <img [src]="maleDefaultAvatarURL" alt="" *ngIf="!waitingParticipant.user.avt && waitingParticipant.user.gender === 'MALE' "/>
-                        <img [src]="femaleDefaultAvatarURL" alt="" *ngIf="!waitingParticipant.user.avt && waitingParticipant.user.gender === 'FEMALE' "/>
-                        <img [src]="undefinedDefaultAvatarURL" alt="" *ngIf="!waitingParticipant.user.avt && waitingParticipant.user.gender === 'UNDEFINED' "/>
+                        <img [src]="maleDefaultAvatarURL" alt="" *ngIf="!waitingParticipant.user.avatar && waitingParticipant.user.gender === 'MALE' "/>
+                        <img [src]="femaleDefaultAvatarURL" alt="" *ngIf="!waitingParticipant.user.avatar && waitingParticipant.user.gender === 'FEMALE' "/>
+                        <img [src]="undefinedDefaultAvatarURL" alt="" *ngIf="!waitingParticipant.user.avatar && waitingParticipant.user.gender === 'UNDEFINED' "/>
                     </div>
                     <div class="name" style="flex: 1">
                         {{waitingParticipant.user.fullName}}
@@ -26,9 +26,9 @@
         <mat-tab label="Đã duyệt">
             <div class="participant__item d-flex align-items-center" *ngFor="let approvedParticipant of approvedParticipants">
                 <div class="avatar">
-                    <img [src]="maleDefaultAvatarURL" alt="" *ngIf="!approvedParticipant.user.avt && approvedParticipant.user.gender === 'MALE' "/>
-                    <img [src]="femaleDefaultAvatarURL" alt="" *ngIf="!approvedParticipant.user.avt && approvedParticipant.user.gender === 'FEMALE' "/>
-                    <img [src]="undefinedDefaultAvatarURL" alt="" *ngIf="!approvedParticipant.user.avt && approvedParticipant.user.gender === 'UNDEFINED' "/>
+                    <img [src]="maleDefaultAvatarURL" alt="" *ngIf="!approvedParticipant.user.avatar && approvedParticipant.user.gender === 'MALE' "/>
+                    <img [src]="femaleDefaultAvatarURL" alt="" *ngIf="!approvedParticipant.user.avatar && approvedParticipant.user.gender === 'FEMALE' "/>
+                    <img [src]="undefinedDefaultAvatarURL" alt="" *ngIf="!approvedParticipant.user.avatar && approvedParticipant.user.gender === 'UNDEFINED' "/>
                 </div>
                 <div class="name" style="flex: 1">
                     {{approvedParticipant.user.fullName}}
@@ -38,9 +38,9 @@
         <mat-tab label="Đã từ chối">
             <div class="participant__item d-flex align-items-center" *ngFor="let denyParticipant of denyParticipants">
                 <div class="avatar">
-                    <img [src]="maleDefaultAvatarURL" alt="" *ngIf="!denyParticipant.user.avt && denyParticipant.user.gender === 'MALE' "/>
-                    <img [src]="femaleDefaultAvatarURL" alt="" *ngIf="!denyParticipant.user.avt && denyParticipant.user.gender === 'FEMALE' "/>
-                    <img [src]="undefinedDefaultAvatarURL" alt="" *ngIf="!denyParticipant.user.avt && denyParticipant.user.gender === 'UNDEFINED' "/>
+                    <img [src]="maleDefaultAvatarURL" alt="" *ngIf="!denyParticipant.user.avatar && denyParticipant.user.gender === 'MALE' "/>
+                    <img [src]="femaleDefaultAvatarURL" alt="" *ngIf="!denyParticipant.user.avatar && denyParticipant.user.gender === 'FEMALE' "/>
+                    <img [src]="undefinedDefaultAvatarURL" alt="" *ngIf="!denyParticipant.user.avatar && denyParticipant.user.gender === 'UNDEFINED' "/>
                 </div>
                 <div class="name" style="flex: 1">
                     {{denyParticipant.user.fullName}}

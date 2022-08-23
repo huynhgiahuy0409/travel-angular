@@ -57,18 +57,18 @@ export class CommercialItemComponent implements OnInit {
     this.user = this.userService.userBSub.value;
     /* Setup user avatar */
     if (this.postUser.avatar) {
-      this.userAvatarSrc = this.directLinkService.getUserAvatar(
+      this.userAvatarSrc = this.directLinkService.getDirectLinkImage(
+        this.postUser.id,
         this.postUser.avatar.name,
         this.postUser.avatar.ext,
-        this.postUser.username
       );
     } else {
       this.userAvatarSrc = this.directLinkService.getDefaultAvatarURL(
         this.postUser.gender
       );
     }
-    this.coverImageSrc = this.directLinkService.getURLImage(
-      this.postUser.email,
+    this.coverImageSrc = this.directLinkService.getDirectLinkImage(
+      this.postUser.id,
       this.commercialPost.commercialCoverImage.name,
       this.commercialPost.commercialCoverImage.ext
     );

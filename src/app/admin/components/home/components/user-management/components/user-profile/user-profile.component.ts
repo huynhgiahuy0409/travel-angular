@@ -31,10 +31,10 @@ export class UserProfileComponent implements OnInit {
     if (this.user) {
       let { avatar } = this.user;
       if (avatar) {
-        this.avatarSrc = this.directLinkService.getUserAvatar(
+        this.avatarSrc = this.directLinkService.getDirectLinkImage(
+          this.user.id,
           avatar.name,
-          avatar.ext,
-          this.user.username
+          avatar.ext
         );
       } else {
         this.avatarSrc = this.directLinkService.getDefaultAvatarURL(

@@ -11,12 +11,16 @@ export class DirectLinkService {
   directLinkImageURL = DIRECT_LINK_IMAGE
   defaultProvincePlaceURL: string = DEFAULT_PROVINCE_PLACE_URL;
   constructor() { }
-  getURLImage(email: string, imageName: string, ext: string){
-    return this.directLinkImageURL + email + "/" + imageName + "." + ext
+  getDirectLinkImage(userId: number, imageName: string, ext: string){
+    return this.directLinkImageURL + userId + "/" + imageName + "." + ext
   }
-  getUserAvatar(fileName: string, ext: string, username: string){
-    return this.directLinkImageURL + username  + "/avatar/" + fileName + "." + ext
+  getDirectLinkCoverImage(userId: number, imageName: string, ext: string){
+    return this.directLinkImageURL + userId + "/cover-image/" + imageName + "." + ext
   }
+  getDirectLinkAvatar(userId: number, imageName: string, ext: string){
+    return this.directLinkImageURL + userId + "/avatar/" + imageName + "." + ext
+  }
+  
   getURLProvincePlace(imageName: string){
     return this.defaultProvincePlaceURL + imageName
   }

@@ -3,34 +3,34 @@ import { RouterModule, Routes } from '@angular/router';
 import { BlogComponent } from './blog.component';
 import { FollowerComponent } from './components/follower/follower.component';
 import { FollowingComponent } from './components/following/following.component';
-import { JourneyPostComponent } from './components/journey-post/journey-post.component';
-import { ReviewPostComponent } from './components/review-post/review-post.component';
+import { JourneyPostsComponent } from './components/journey-post/journey-posts.component';
+import { ReviewPostsComponent } from './components/review-post/review-posts.component';
 
 const routes: Routes = [
   {
-    path: ':id',
+    path: '',
     component: BlogComponent,
     children: [
       {
         path: '',
-        redirectTo: 'review-post',
+        redirectTo: 'review-posts',
         pathMatch: 'full'
       },
       {
-        path: 'review-post',
-        component: ReviewPostComponent,
+        path: 'review-posts',
+        component: ReviewPostsComponent,
       },
       {
-        path: 'journey-post',
-        component: JourneyPostComponent,
+        path: 'journey-posts',
+        component: JourneyPostsComponent,
       },
       {
-        path: 'follower',
+        path: 'followers',
         component: FollowerComponent,
         pathMatch: 'full'
       },
       {
-        path: 'following',
+        path: 'followings',
         component: FollowingComponent,
       },
     ],

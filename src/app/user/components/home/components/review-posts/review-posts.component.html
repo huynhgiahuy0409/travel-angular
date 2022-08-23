@@ -3,8 +3,9 @@
     (scrolledUp)="onScrollUp($event)" [infiniteScrollThrottle]="1">
     <!-- write-post-container -->
     <div class="box-shadow write-post-container">
-        <div class="d-flex align-items-center">
-            <img src="assets/image/profile-pic.png" alt="" />
+        <div class="d-flex align-items-center" *ngIf="userService.user$ | async as user">
+            <img [src]="directLinkService.getDefaultAvatarURL(user.gender)" alt="" *ngIf="!user.avatar"/>
+            <img [src]="user.avatar.directLink" alt="" *ngIf="user.avatar"/>
             <input type="text" placeholder="Chia sẽ trải nghiệm, blog..." (click)="openCreatePostDialog()" />
         </div>
         <div class="separate-line"></div>

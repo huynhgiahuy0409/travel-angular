@@ -379,6 +379,7 @@ p{
 
 /* user info notify */
 .user-info-notify {
+  position:absolute;
   top: 100%;
   left: 0;
   padding: 10px;
@@ -403,6 +404,7 @@ p{
   margin: unset;
   object-fit: cover;
 }
+
 
 .user-info-notify .info__list {}
 

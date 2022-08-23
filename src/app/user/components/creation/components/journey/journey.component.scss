@@ -19,6 +19,27 @@
 .journey__item .journey__title{
     font-weight: 550;
 }
+
+#edit-cover-image-btn {
+    position: relative;
+}
+#edit-cover-image-btn ::ng-deep.mat-button-wrapper{
+    pointer-events: none;
+}
+.cover-image__action-select {
+    position: absolute;
+    width: 345px;
+    padding: 10px;
+    border-radius: 5px;
+    top: 125%;
+    right: 0;
+    background-color: var(--white-color--);
+    display: none;
+}
+.cover-image__action-select.show{
+    display: block;
+}
+
 /*  */
 
 /* journey-detail */

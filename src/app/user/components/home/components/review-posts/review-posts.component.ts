@@ -225,7 +225,7 @@ export class ReviewPostsComponent implements OnInit, AfterViewInit {
     private _dialog: MatDialog,
     private renderer: Renderer2,
     private reviewPostService: ReviewPostService,
-    private userService: UserService,
+    public userService: UserService,
     private router: Router,
     private reviewPostDestroyService: ReviewPostDestroyService,
     private filterPostService: FilterPostService,
@@ -252,7 +252,7 @@ export class ReviewPostsComponent implements OnInit, AfterViewInit {
       },
     }
     this.commercialPosts$ = this.commercialPostService.findAll(initFilterCommercialPost)
-    /* Fetcg review post */
+    /* Fetch review post */
     let initFilterReviewPost: FilterReviewPost = this.filterPostService.reviewPostFilterBSub.value
     initFilterReviewPost.status = APPROVE_STATUS
     this.filterPostService.reviewPostFilterBSub.next(initFilterReviewPost)

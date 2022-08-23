@@ -1,55 +1,43 @@
-import { JourneyDayPlaceRequest } from './../../../../../shared/models/request';
-import { JourneyDetail } from './../../../../../shared/models/model';
-import {
-  ForwardGeocodingResponse,
-  GoongPlaceAutocompleteResponse,
-  GoongPlaceDetailResponse,
-  GoongPlaceDetailResultResponse,
-  JourneyPostResponse,
-  ProvincePlaceResponse,
-  ProvinceResponse,
-} from './../../../../../shared/models/response';
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import {
   UntypedFormArray,
   UntypedFormBuilder,
   UntypedFormControl,
   UntypedFormGroup,
-  Validators,
+  Validators
 } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import * as goongjs from '@goongmaps/goong-js';
 import { Observable, of } from 'rxjs';
 import {
-  debounceTime,
-  distinctUntilChanged,
-  switchMap,
-  tap,
+  debounceTime, switchMap,
+  tap
 } from 'rxjs/operators';
-import { GoongMapService } from 'src/app/user/services/goong-map.service';
-import { LocationDetailDialogComponent } from './dialog/location-detail-dialog/location-detail-dialog.component';
-import { RouteDetailMapDialogComponent } from './dialog/route-detail-map-dialog/route-detail-map-dialog.component';
-import { JourneyCostDetail, JourneyDay, JourneyDayPlace, Prediction, Uluru } from 'src/app/shared/models/model';
-import * as goongjs from '@goongmaps/goong-js';
-import * as goongsdk from '@goongmaps/goong-sdk';
-import * as polyline from '@mapbox/polyline';
 import {
-  DEFAULT_PROVINCE_PLACE_URL,
-  GOONG_API_KEY,
-  GOONG_MAPTILES_KEY,
+  DEFAULT_PROVINCE_PLACE_URL, GOONG_MAPTILES_KEY
 } from 'src/app/shared/models/constant';
+import { JourneyDay, JourneyDayPlace, Prediction, Uluru } from 'src/app/shared/models/model';
 import {
-  DayJourneyRequest,
   GoongPlaceDetailResultRequest,
   JourneyCostDetailRequest,
   JourneyDayRequest,
   JourneyDetailRequest,
-  JourneyPostRequest,
-  ProvincePlaceRequest,
+  JourneyPostRequest
 } from 'src/app/shared/models/request';
+import { GoongMapService } from 'src/app/user/services/goong-map.service';
+import { JourneyPostService } from 'src/app/user/services/journey-post.service';
 import { LocalService } from 'src/app/user/services/local.service';
 import { ProvincePlaceService } from 'src/app/user/services/province-place.service';
-import { JourneyPostService } from 'src/app/user/services/journey-post.service';
 import { UploadFileService } from 'src/app/user/services/upload-file.service';
+import { JourneyDayPlaceRequest } from './../../../../../shared/models/request';
+import {
+  GoongPlaceAutocompleteResponse, GoongPlaceDetailResultResponse,
+  JourneyPostResponse,
+  ProvincePlaceResponse,
+  ProvinceResponse
+} from './../../../../../shared/models/response';
+import { LocationDetailDialogComponent } from './dialog/location-detail-dialog/location-detail-dialog.component';
+import { RouteDetailMapDialogComponent } from './dialog/route-detail-map-dialog/route-detail-map-dialog.component';
 
 @Component({
   selector: 'app-journey',
@@ -446,8 +434,8 @@ export class JourneyComponent implements OnInit {
     })
   }
   /* cover image method */
-  onClickEditCoverImage() {
-    this.coverImageActionSelect.nativeElement.classList.toggle('show');
+  onClickEditCoverImage(coverImageActionSelect: HTMLElement) {
+    coverImageActionSelect.classList.toggle('show');
   }
   @HostListener('click', ['$event'])
   clickOutEditCoverImageBtn(event: any) {
