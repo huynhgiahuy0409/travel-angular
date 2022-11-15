@@ -89,3 +89,9 @@ export interface JourneyDetailRequest {
     title: string,
     description: string,
 }
+export interface CommentRequest{
+    postId?: number
+    byUserId: number
+    content: string
+    attachmentIds?: number[]
+}

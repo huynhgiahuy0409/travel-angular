@@ -30,7 +30,7 @@ import { RegisterDialogComponent } from './components/register-dialog/register-d
     ForgetPasswordComponent,
     IdentifyComponent,
     ValidOTPComponent,
-    RegisterDialogComponent
+    RegisterDialogComponent,
   ],
   imports: [
     BrowserModule,

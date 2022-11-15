@@ -1,0 +1,16 @@
+<ul class="comment-list" *ngIf="postComment">
+    <ng-container *ngFor="let comment of postComment.comments; index as i">
+        <app-comment [comment]="comment" [isRoot]="true"></app-comment>
+    </ng-container>
+    <div class="view-more-box d-flex justify-content-between
+        align-items-center">
+        <p class="font-weight-550" *ngIf="postComment.postCommentTotal > postComment.comments.length" (click)="viewMorePostComments(postComment.postId, postType)">Xem thêm bình luận</p>
+        <p *ngIf="postComment.postCommentTotal > postComment.comments.length">{{postComment.comments.length}}/{{postComment.postCommentTotal}}</p>
+    </div>
+    <div class="write-a-comment d-flex justify-content-between
+        align-items-center">
+        <p class="font-weight-550">
+            Viết một bình luận...
+        </p>
+    </div>
+</ul>

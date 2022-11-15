@@ -71,6 +71,11 @@ export interface FilterFileUpload{
     userId?: number
     specie?: string
 }
+export interface FilterComment{
+    pageable?: Pageable
+    postId?: number
+    parentCommentId?: number
+}
 /* journey day */
 export interface JourneyDay{
     day: number,

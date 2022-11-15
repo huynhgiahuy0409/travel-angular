@@ -1,0 +1,60 @@
+<ul class="comment-item" [class.comment-child]="!isRoot">
+    <div class="comment-line" [class.parent-comment-line]="comment.childCommentTotal > 0 || isReply"></div>
+    <!-- Comment detail of parent-->
+    <div class="comment-detail comment-parent">
+        <div class="comment-detail__wrapper-img" [class.comment-detail__wrapper-img--root]="isRoot">
+            <ng-container *ngIf="!isRoot">
+                <div class="comment-link"></div>
+            </ng-container>
+            <img [src]="getAvatarDirectLink(comment.user)" alt="" />
+        </div>
+        <div class="comment-detail__wrapper-info">
+            <div class="comment-detail__info comment-detail__info--background">
+                <p class="">{{ comment.user.fullName }}</p>
+                <div class="comment-content">{{ comment.content }}</div>
+            </div>
+            <div class="comment-detail__react">
+                <div class="comment-detail__react-like">
+                    <div class="react-like">Like</div>
+                </div>
+                <div class="comment-detail__react-reply" (click)="onClickReply()">Reply</div>
+                <label class="comment-detail__react-time">11h</label>
+            </div>
+        </div>
+    </div>
+    <!-- Child comment -->
+    <ng-container *ngIf="isReply">
+        <ng-container *ngFor="let comment of comment.comments">
+            <app-comment [comment]="comment"></app-comment>
+        </ng-container>
+    </ng-container>
+    <!-- COMMENT INPUT -->
+    <ul class="comment-item comment-child" *ngIf="isReply">
+        <div class="comment-detail" *ngIf="currUser$ | async as currUser">
+            <div class="comment-detail__wrapper-img comment-detail__wrapper-img--child">
+                <div class="comment-link"></div>
+                <img #replyInput [src]="currUser.avatar.directLink" alt="" />
+            </div>
+            <div class="comment-box bg-cl">
+                <input [formControl]="commentContentCtrl" #rootReplyInput type="text" placeholder="Write a comment..." (keyup.enter)="replyAComment(currUser.id, comment)"/>
+                <div class="activate">
+                    <i class="emoji"></i>
+                    <i class="photo"></i>
+                    <i class="sticker"></i>
+                </div>
+            </div>
+        </div>
+    </ul>
+    <ul class="comment-item comment-child">
+        <div class="comment-detail">
+            <div class="" *ngIf="!isReply && comment.childCommentTotal > 0" >
+                <div class="comment-link"></div>
+                <p (click)="findChildComments()"  class="font-weight-550" style="margin: 0">{{comment.childCommentTotal}} Phản hồi</p>
+            </div>
+            <div class="" *ngIf="isReply && comment.comments.length < comment.childCommentTotal">
+                <div class="comment-link"></div>
+                <p (click)="findChildComments()" class="font-weight-550" style="margin: 0">Xem {{comment.childCommentTotal - comment.comments.length}} phản hồi trước</p>
+            </div>
+        </div>
+    </ul>
+</ul>

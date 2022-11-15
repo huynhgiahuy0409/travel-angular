@@ -7,8 +7,9 @@ import { ReviewPostComponent } from './review-post.component';
 import { ReviewPostDetailModule } from 'src/app/user/components/post-detail/components/review-post-detail/review-post-detail.module';
 import { ReviewPostImageItemComponent } from 'src/app/user/components/post-detail/components/review-post-detail/review-post-image-list/review-post-image-item/review-post-image-item.component';
 import { ReviewPostImageListComponent } from 'src/app/user/components/post-detail/components/review-post-detail/review-post-image-list/review-post-image-list.component';
-
-
+import { CommentModule } from 'src/app/shared/modules/comment/comment.module';
+import { CommentTreeComponent } from 'src/app/shared/modules/comment/comment-tree/comment-tree.component';
+import { CommentComponent } from 'src/app/shared/modules/comment/comment/comment.component';
 
 @NgModule({
   declarations: [ReviewPostComponent],
@@ -18,10 +19,9 @@ import { ReviewPostImageListComponent } from 'src/app/user/components/post-detai
     ReactiveFormsModule,
     SharedMaterialModule,
     RouterModule,
-    ReviewPostDetailModule
+    ReviewPostDetailModule,
+    CommentModule,
   ],
-  exports: [
-    ReviewPostComponent,
-  ]
+  exports: [ReviewPostComponent],
 })
-export class ReviewPostModule { }
+export class ReviewPostModule {}

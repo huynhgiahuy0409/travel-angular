@@ -185,3 +185,18 @@ export interface GoongPlaceDetailResultResponse extends BaseResponse{
     formatAddress: string
     name: string
 }
+/* Comment */
+
+export interface CommentResponse extends BaseResponse{
+    content: string
+    attachments: UploadFileResponse[]
+    user: UserProfileResponse
+    comments: CommentResponse[]
+    childCommentTotal: number
+}
+export interface PostCommentResponse{
+    postId: number
+    comments: CommentResponse[]
+    postCommentTotal: number
+}
+

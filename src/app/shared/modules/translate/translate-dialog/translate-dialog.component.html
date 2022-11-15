@@ -1,0 +1,18 @@
+<h1 mat-dialog-title align="center" class="font-weight-550">Chọn ngôn ngữ</h1>
+<div mat-dialog-content>
+    <mat-form-field appearance="fill">
+      <mat-label>Chọn 1 ngôn ngữ</mat-label>
+      <mat-select [formControl]="sltLanguageCtrl">
+        <mat-option value="en">
+            Tiếng Anh
+        </mat-option>
+        <mat-option value="vn">
+            Tiếng Việt
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Hủy</button>
+  <button mat-button cdkFocusInitial class="primary-btn" [disabled]="sltLanguageCtrl.invalid" (click)="changeLang(sltLanguageCtrl.value)">Lưu</button>
+</div>

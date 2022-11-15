@@ -7,7 +7,7 @@ import {
   Output,
   Renderer2,
 } from '@angular/core';
-import { UntypedFormBuilder } from '@angular/forms';
+import { FormControl, UntypedFormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { concat, forkJoin, Observable, ObservableInput, of } from 'rxjs';
@@ -15,6 +15,7 @@ import { map, switchMap, concatMap, tap } from 'rxjs/operators';
 import { APIResponse, Pageable } from 'src/app/shared/models/model';
 import {
   PagingResponse,
+  PostCommentResponse,
   PostReactResponse,
   ReviewPostResponse,
   UserProfileResponse,
@@ -30,16 +31,19 @@ import { UploadFileService } from 'src/app/user/services/upload-file.service';
 import { UserReactService } from 'src/app/user/services/user-react.service';
 import { UserService } from 'src/app/user/services/user.service';
 import { ReviewPostDestroyService } from '../review-post-destroy.service';
-import { APPROVE_STATUS, DENY_STATUS } from 'src/app/shared/models/constant';
+import { APPROVE_STATUS, DENY_STATUS, REVIEW_POST_TYPE } from 'src/app/shared/models/constant';
 import { EditProfileComponent } from 'src/app/shared/modules/edit-profile/componenets/edit-profile/edit-profile.component';
+import { CommentService } from 'src/app/user/services/comment.service';
+import { CommentRequest } from 'src/app/shared/models/request';
 
 @Component({
   selector: 'app-review-post',
   templateUrl: './review-post.component.html',
   styleUrls: ['./review-post.component.scss'],
-  providers: [FilterPostService],
+  providers: [FilterPostService, CommentService],
 })
 export class ReviewPostComponent implements OnInit {
+  reviewPostType: string = REVIEW_POST_TYPE
   @Input()
   reviewPost!: ReviewPostResponse;
   @Input()
@@ -50,6 +54,7 @@ export class ReviewPostComponent implements OnInit {
   currUser$!: Observable<UserProfileResponse | null>;
   createdDate!: string;
   postReacts$!: Observable<PostReactResponse>;
+  postComment!: PostCommentResponse
   postUserReputation!: number;
   userAvatarSrc!: string;
   isFollowed!: Boolean;
@@ -118,12 +123,13 @@ export class ReviewPostComponent implements OnInit {
     private dateUtilsService: DateUtilsService,
     private postReactService: PostReactService,
     private followService: FollowService,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private commentService: CommentService,
   ) {}
 
   ngOnInit(): void {
     let postUserId = this.reviewPost.user.id;
-    let currUserId = this.userService.userBSub.value!.id;
+    this.currUser$ = this.userService.user$
     this.userService.user$.subscribe(user => {
       if(user){
         if (postUserId === user.id) {
@@ -142,6 +148,17 @@ export class ReviewPostComponent implements OnInit {
     this.postReacts$ = this.postReactService.findByReviewPostId(
       this.reviewPost.id
     );
+    /* Fetch post comment */
+    let currCommentFilter = this.commentService.postCommentFilterBSub.value
+    currCommentFilter.postId = this.reviewPost.id
+    this.commentService.postCommentFilterBSub.next(currCommentFilter)
+    this.commentService.findPostComment(currCommentFilter, REVIEW_POST_TYPE).subscribe(
+      postComment => {
+        this.postComment = postComment
+        console.log(this.postComment);
+        
+      }
+    )
   }
 
   onClickVote(reviewPost: ReviewPostResponse, react: -1 | 1) {
@@ -204,5 +221,22 @@ export class ReviewPostComponent implements OnInit {
       },
       minWidth: '700px',
     });
+  }
+  /* Comment */
+  commentContentCtrl: FormControl = new FormControl('')
+  commentAPost(userId: number, postId: number){
+    let commentRequest: CommentRequest = {
+      postId: postId,
+      byUserId: userId,
+      content: this.commentContentCtrl.value
+    }
+    this.commentService.updateReviewPostComment(commentRequest)
+    .subscribe(response => {
+      this.postComment.comments.unshift(response)
+      this.commentContentCtrl.reset()
+      console.log(response);
+      console.log(this.postComment);
+    })
+    
   }
 }

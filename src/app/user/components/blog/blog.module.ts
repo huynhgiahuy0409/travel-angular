@@ -16,6 +16,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditProfileModule } from 'src/app/shared/modules/edit-profile/edit-profile.module';
 import { ShowAvatarComponent } from './dialogs/show-avatar/show-avatar.component';
 import { ShowCoverComponent } from './dialogs/show-cover/show-cover.component';
+import { SliderImageModule } from 'src/app/shared/modules/slider-image/slider-image.module';
+import { SliderImageComponent } from 'src/app/shared/modules/slider-image/slider-image/slider-image.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import { ShowCoverComponent } from './dialogs/show-cover/show-cover.component';
     ParticipantManagermentComponent,
     ShowAvatarComponent,
     ShowCoverComponent,
+    // SliderImageComponent
   ],
   imports: [
     CommonModule,
@@ -38,7 +41,8 @@ import { ShowCoverComponent } from './dialogs/show-cover/show-cover.component';
     ReviewPostModule,
     FormsModule,
     ReactiveFormsModule,
-    EditProfileModule
+    EditProfileModule,
+    SliderImageModule
   ]
 })
 export class BlogModule { }

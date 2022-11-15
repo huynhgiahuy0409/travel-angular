@@ -277,6 +277,16 @@
               <mat-icon>keyboard_arrow_right</mat-icon>
             </div>
           </li>
+          <li (click)="openDialogChoseLanguage()">
+            <div class="notification__left">
+              <div class="notification__left-wrapper">
+                <mat-icon>translate</mat-icon>
+              </div>
+            </div>
+            <div class="notification__main">
+              <h4>Chuyển ngôn ngữ</h4>
+            </div>
+          </li>
           <li [routerLink]="['/settings/account']">
             <div class="notification__left">
               <div class="notification__left-wrapper">

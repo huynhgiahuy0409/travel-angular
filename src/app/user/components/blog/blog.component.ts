@@ -1,4 +1,5 @@
-import { map, tap } from 'rxjs/operators';
+import { FilterFileUpload } from 'src/app/shared/models/model';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs/internal/Observable';
 import {
   Component,
@@ -21,15 +22,20 @@ import { UserService } from '../../services/user.service';
 import { FormControl, Validators } from '@angular/forms';
 import { ShowAvatarComponent } from './dialogs/show-avatar/show-avatar.component';
 import { ShowCoverComponent } from './dialogs/show-cover/show-cover.component';
+import { FilterPostService } from '../../services/filter-post.service';
+import { AVATAR_SPECIE } from 'src/app/shared/models/constant';
+import { SliderImageComponent } from 'src/app/shared/modules/slider-image/slider-image/slider-image.component';
 
 @Component({
   selector: 'app-blog',
   templateUrl: './blog.component.html',
   styleUrls: ['./blog.component.scss'],
+  providers: [FilterPostService]
 })
 export class BlogComponent implements OnInit {
   blogUserId!: number;
   blogUser$!: Observable<UserProfileResponse | null>;
+  blogUserImages$!: Observable<UploadFileResponse[]>
   isCurrUser: boolean = false;
   /* cover image */
   coverImageFile?: File;
@@ -49,13 +55,15 @@ export class BlogComponent implements OnInit {
     private userService: UserService,
     private matDialog: MatDialog,
     public directLinkService: DirectLinkService,
-    private uploadFileService: UploadFileService
+    private uploadFileService: UploadFileService,
+    private filterPostService: FilterPostService
   ) {}
 
   ngOnInit(): void {
     let currUserId = this.userService.userBSub.value!.id;
     this.activatedRoute.queryParams.subscribe((queryPrams) => {
       this.blogUserId = queryPrams.uid;
+      /* fetch init blogUser  */
       if (this.blogUserId != currUserId) {
         this.blogUser$ = this.userService.findByUserId(this.blogUserId);
         this.isCurrUser = false;
@@ -63,6 +71,20 @@ export class BlogComponent implements OnInit {
         this.blogUser$ = this.userService.user$;
         this.isCurrUser = true;
       }
+      /* fetch init blogUserImages */
+      let initFilterFileUpload: FilterFileUpload = this.filterPostService.fileUploadFilterBSub.value
+      initFilterFileUpload.pageable!.pageSize = 9
+      initFilterFileUpload.userId = this.blogUserId
+      initFilterFileUpload.specie = AVATAR_SPECIE
+      this.blogUserImages$ = this.uploadFileService.findAll(initFilterFileUpload).pipe(
+        map(
+          files => {
+            return files.map(file => {
+              return {...file, directLink: this.directLinkService.getDirectLinkAvatar(this.blogUserId,file.name, file.ext)}
+            })
+          }
+        )
+      )
     });
     this.blogUser$ = this.blogUser$.pipe(
       map((user) => {
@@ -92,7 +114,8 @@ export class BlogComponent implements OnInit {
         }
         return user;
       })
-    );
+      );
+      
   }
   openDialogEditProfile(currUser: UserProfileResponse | null) {
     this.matDialog.open(EditProfileComponent, {
@@ -225,6 +248,14 @@ export class BlogComponent implements OnInit {
     this.matDialog.open(ShowCoverComponent,{
       data: {
         blogUser: user,
+      },
+    })
+  }
+  showSliderImage(files: UploadFileResponse[], sltIndex: number){
+    this.matDialog.open(SliderImageComponent, {
+      data: {
+        files: files,
+        sltIndex: sltIndex
       },
     })
   }

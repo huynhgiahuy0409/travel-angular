@@ -1,0 +1,43 @@
+.image__list{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.image__list .image__item{
+    min-width: 500px;
+    width: 1000px;
+    height: 90vh;
+}
+.image__list .image__item img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.image__list .previous-btn, .image__list .next-btn{
+    width: 45px;
+    height: 45px;
+    border-radius: 100rem;
+    background-color: rgba(255, 255, 255, 0.5);
+    position: absolute;
+    transform: translate(0, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.image__list .previous-btn i, .image__list .next-btn i{
+    color: rgba(0, 0, 0, 0.5);
+}
+.image__list .previous-btn{
+    top: 50%;
+    left: 10px;
+}
+.image__list .next-btn{
+    top: 50%;
+    right: 10px;
+}
+.image__list .previous-btn:hover, .image__list .next-btn:hover{
+    background-color: rgba(255, 255, 255, 0.8);
+}
+.image__list .previous-btn:hover i, .image__list .next-btn:hover i{
+    color: rgba(0, 0, 0, 1);
+}

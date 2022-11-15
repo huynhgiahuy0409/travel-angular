@@ -164,6 +164,23 @@
   max-height: 400px;
   padding: 20px;
 }
+/* blog user images */
+
+.blog-user_images{
+  margin: 0 -2px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.blog-user_images .blog-user_image{
+  padding: 0 2px;
+  height: 160px;
+  margin-bottom: 4px;
+}
+.blog-user_images .blog-user_item img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
 /* Responsive */
 /* Mobile */

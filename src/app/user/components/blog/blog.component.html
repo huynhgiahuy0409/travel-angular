@@ -257,6 +257,13 @@
                                 </div>
                                 <div class="user-info__item">
                                     <h2 class="title">Ảnh</h2>
+                                    <div class="grid" *ngIf="(blogUserImages$ | async) as blogUserImages">
+                                        <div class="row blog-user_images" >
+                                            <div class="col l-4 blog-user_image" *ngFor="let blogUserImage of blogUserImages; index as idx"  (click)="showSliderImage(blogUserImages, idx)">
+                                                <img [src]="blogUserImage.directLink" alt="" >
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="user-info__item">
                                     <h2 class="title">Người theo dõi</h2>

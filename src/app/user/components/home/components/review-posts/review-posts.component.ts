@@ -233,7 +233,7 @@ export class ReviewPostsComponent implements OnInit, AfterViewInit {
     private fb: UntypedFormBuilder,
     public progressBarService: ProgressBarService,
     private userReactService: UserReactService,
-    private commercialPostService: CommercialPostService
+    private commercialPostService: CommercialPostService,
   ) {
     /* init search fg */
     this.searchFormGroup = this.fb.group({
